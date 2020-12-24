@@ -11,3 +11,4 @@ D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.formSettings.resources
 D:\Dropbox\code\C#\Projects\Clips\bin\Debug\SharpClipboard.dll
 D:\Dropbox\code\C#\Projects\Clips\bin\Debug\SharpClipboard.xml
 D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.csproj.CopyComplete
+D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.csprojAssemblyReference.cache

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WK.Libraries.SharpClipboardNS;
 using System.Runtime.InteropServices;
+using System.IO;
+using Utility;
 
 namespace Clips
 {
@@ -66,6 +68,7 @@ namespace Clips
         private void formMain_Load(object sender, EventArgs e)
         {
             loadConfig();
+            loadItems();
         }
 
         private void menuClose_Click(object sender, EventArgs e)
@@ -145,7 +148,11 @@ namespace Clips
 
         private void loadItems()
         {
-
+            string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
+            foreach (string file in files)
+            {
+                
+            }
         }
 
         private void toggleShow()

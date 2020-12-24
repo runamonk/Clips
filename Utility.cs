@@ -16,5 +16,18 @@ namespace Utility
             return Path.GetDirectoryName(Application.ExecutablePath);
         }
 
+        public static string [] GetFiles(string path, string searchPattern)
+        {
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            string[] files;
+
+            if (searchPattern != "")
+                files = Directory.GetFiles(path, searchPattern);
+            else
+                files = Directory.GetFiles(path);
+
+            return files;
+        }
     }
 }
