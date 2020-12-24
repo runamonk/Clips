@@ -55,6 +55,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config.cs" />
+    <Compile Include="formPreview.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="formPreview.designer.cs">
+      <DependentUpon>formPreview.cs</DependentUpon>
+    </Compile>
     <Compile Include="formSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -70,6 +76,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utility.cs" />
+    <EmbeddedResource Include="formPreview.resx">
+      <DependentUpon>formPreview.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="formSettings.resx">
       <DependentUpon>formSettings.cs</DependentUpon>
     </EmbeddedResource>
