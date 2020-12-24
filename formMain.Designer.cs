@@ -266,7 +266,6 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
             this.Load += new System.EventHandler(this.formMain_Load);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.formMain_MouseDown);
             this.menuNotify.ResumeLayout(false);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();

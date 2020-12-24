@@ -148,11 +148,6 @@ namespace Clips
 
         }
 
-        private void formMain_MouseDown(object sender, MouseEventArgs e)
-        {
-
-        }
-
         private void toggleShow()
         {
             // for some reason during form closing event the opacity is set to 1.
