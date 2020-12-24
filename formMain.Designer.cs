@@ -40,20 +40,17 @@
             this.menuMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.cutToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.copyToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.pasteToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.listView1 = new System.Windows.Forms.ListView();
             this.clipboard = new WK.Libraries.SharpClipboardNS.SharpClipboard(this.components);
+            this.pMain = new System.Windows.Forms.Panel();
+            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
+            this.pClips = new System.Windows.Forms.Panel();
+            this.pTop = new System.Windows.Forms.Panel();
+            this.labelTimestamp = new System.Windows.Forms.Label();
+            this.labelClip = new System.Windows.Forms.Label();
             this.menuNotify.SuspendLayout();
             this.toolStripMain.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this.pMain.SuspendLayout();
+            this.pTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyClips
@@ -100,15 +97,7 @@
             // 
             this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripDropDownButton1,
-            this.newToolStripButton,
-            this.openToolStripButton,
-            this.saveToolStripButton,
-            this.printToolStripButton,
-            this.toolStripSeparator,
-            this.cutToolStripButton,
-            this.copyToolStripButton,
-            this.pasteToolStripButton});
+            this.toolStripDropDownButton1});
             this.toolStripMain.Location = new System.Drawing.Point(0, 0);
             this.toolStripMain.Name = "toolStripMain";
             this.toolStripMain.Size = new System.Drawing.Size(800, 25);
@@ -153,93 +142,6 @@
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
-            // newToolStripButton
-            // 
-            this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
-            this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.newToolStripButton.Name = "newToolStripButton";
-            this.newToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.newToolStripButton.Text = "&New";
-            // 
-            // openToolStripButton
-            // 
-            this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
-            this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openToolStripButton.Name = "openToolStripButton";
-            this.openToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.openToolStripButton.Text = "&Open";
-            // 
-            // saveToolStripButton
-            // 
-            this.saveToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
-            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripButton.Name = "saveToolStripButton";
-            this.saveToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.saveToolStripButton.Text = "&Save";
-            // 
-            // printToolStripButton
-            // 
-            this.printToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
-            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printToolStripButton.Name = "printToolStripButton";
-            this.printToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.printToolStripButton.Text = "&Print";
-            // 
-            // toolStripSeparator
-            // 
-            this.toolStripSeparator.Name = "toolStripSeparator";
-            this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
-            // 
-            // cutToolStripButton
-            // 
-            this.cutToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.cutToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("cutToolStripButton.Image")));
-            this.cutToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.cutToolStripButton.Name = "cutToolStripButton";
-            this.cutToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.cutToolStripButton.Text = "C&ut";
-            // 
-            // copyToolStripButton
-            // 
-            this.copyToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.copyToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("copyToolStripButton.Image")));
-            this.copyToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.copyToolStripButton.Name = "copyToolStripButton";
-            this.copyToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.copyToolStripButton.Text = "&Copy";
-            // 
-            // pasteToolStripButton
-            // 
-            this.pasteToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-            this.pasteToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("pasteToolStripButton.Image")));
-            this.pasteToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.pasteToolStripButton.Name = "pasteToolStripButton";
-            this.pasteToolStripButton.Size = new System.Drawing.Size(23, 22);
-            this.pasteToolStripButton.Text = "&Paste";
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.listView1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 25);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(800, 425);
-            this.panel1.TabIndex = 2;
-            // 
-            // listView1
-            // 
-            this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listView1.HideSelection = false;
-            this.listView1.Location = new System.Drawing.Point(0, 0);
-            this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(800, 425);
-            this.listView1.TabIndex = 0;
-            this.listView1.UseCompatibleStateImageBehavior = false;
-            // 
             // clipboard
             // 
             this.clipboard.MonitorClipboard = true;
@@ -252,13 +154,69 @@
             this.clipboard.Tag = null;
             this.clipboard.ClipboardChanged += new System.EventHandler<WK.Libraries.SharpClipboardNS.SharpClipboard.ClipboardChangedEventArgs>(this.clipBoard_ClipboardChanged);
             // 
+            // pMain
+            // 
+            this.pMain.Controls.Add(this.statusStrip1);
+            this.pMain.Controls.Add(this.pClips);
+            this.pMain.Controls.Add(this.pTop);
+            this.pMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pMain.Location = new System.Drawing.Point(0, 25);
+            this.pMain.Name = "pMain";
+            this.pMain.Size = new System.Drawing.Size(800, 425);
+            this.pMain.TabIndex = 2;
+            // 
+            // statusStrip1
+            // 
+            this.statusStrip1.Location = new System.Drawing.Point(0, 403);
+            this.statusStrip1.Name = "statusStrip1";
+            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
+            this.statusStrip1.TabIndex = 2;
+            this.statusStrip1.Text = "statusStrip1";
+            // 
+            // pClips
+            // 
+            this.pClips.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pClips.Location = new System.Drawing.Point(0, 35);
+            this.pClips.Name = "pClips";
+            this.pClips.Size = new System.Drawing.Size(800, 390);
+            this.pClips.TabIndex = 1;
+            // 
+            // pTop
+            // 
+            this.pTop.Controls.Add(this.labelTimestamp);
+            this.pTop.Controls.Add(this.labelClip);
+            this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pTop.Location = new System.Drawing.Point(0, 0);
+            this.pTop.Name = "pTop";
+            this.pTop.Size = new System.Drawing.Size(800, 35);
+            this.pTop.TabIndex = 0;
+            // 
+            // labelTimestamp
+            // 
+            this.labelTimestamp.BackColor = System.Drawing.SystemColors.Control;
+            this.labelTimestamp.Location = new System.Drawing.Point(688, 9);
+            this.labelTimestamp.Name = "labelTimestamp";
+            this.labelTimestamp.Size = new System.Drawing.Size(100, 16);
+            this.labelTimestamp.TabIndex = 2;
+            this.labelTimestamp.Text = "Timestamp";
+            this.labelTimestamp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // labelClip
+            // 
+            this.labelClip.BackColor = System.Drawing.SystemColors.Control;
+            this.labelClip.Location = new System.Drawing.Point(12, 9);
+            this.labelClip.Name = "labelClip";
+            this.labelClip.Size = new System.Drawing.Size(660, 16);
+            this.labelClip.TabIndex = 0;
+            this.labelClip.Text = "Clip";
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.pMain);
             this.Controls.Add(this.toolStripMain);
             this.Name = "formMain";
             this.ShowIcon = false;
@@ -269,7 +227,9 @@
             this.menuNotify.ResumeLayout(false);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
-            this.panel1.ResumeLayout(false);
+            this.pMain.ResumeLayout(false);
+            this.pMain.PerformLayout();
+            this.pTop.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -280,16 +240,7 @@
         private System.Windows.Forms.ToolStrip toolStripMain;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem menuClose;
-        private System.Windows.Forms.ToolStripButton newToolStripButton;
-        private System.Windows.Forms.ToolStripButton openToolStripButton;
-        private System.Windows.Forms.ToolStripButton saveToolStripButton;
-        private System.Windows.Forms.ToolStripButton printToolStripButton;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator;
-        private System.Windows.Forms.ToolStripButton cutToolStripButton;
-        private System.Windows.Forms.ToolStripButton copyToolStripButton;
-        private System.Windows.Forms.ToolStripButton pasteToolStripButton;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListView listView1;
+
         private System.Windows.Forms.ToolStripMenuItem menuSettings;
         private WK.Libraries.SharpClipboardNS.SharpClipboard clipboard;
         private System.Windows.Forms.ToolStripMenuItem menuMonitorClipboard;
@@ -297,6 +248,12 @@
         private System.Windows.Forms.ToolStripMenuItem notifyMenuSettings;
         private System.Windows.Forms.ToolStripMenuItem notifyMenuClose;
         private System.Windows.Forms.ToolStripMenuItem menuNotifyMonitorClipboard;
+        private System.Windows.Forms.Panel pMain;
+        private System.Windows.Forms.StatusStrip statusStrip1;
+        private System.Windows.Forms.Panel pClips;
+        private System.Windows.Forms.Panel pTop;
+        private System.Windows.Forms.Label labelClip;
+        private System.Windows.Forms.Label labelTimestamp;
     }
 }
 

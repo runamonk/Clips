@@ -134,6 +134,38 @@ namespace Clips
             string base64 = Convert.ToBase64String(plainTextBytes);
             if (saveToDisk)
                 Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
+
+            ClipItem sp = new ClipItem();
+            sp.Parent = pClips;
+            sp.Dock = DockStyle.Top;
+            sp.FullText = text;
+            sp.Height = 30;
+            sp.FixedPanel = FixedPanel.Panel2;
+            sp.IsSplitterFixed = true;
+            sp.SplitterWidth = 1;
+            sp.SplitterDistance = 680;
+            sp.Panel1.Padding = new Padding(10, 0, 10, 0);
+            sp.Panel1.BackColor = Color.RoyalBlue;
+            sp.Panel2.Padding = new Padding(10, 0, 10, 0);
+            sp.Panel2.BackColor = Color.Red;
+            Button b = new Button();
+            b.Parent = sp.Panel1;
+            b.Dock = DockStyle.Fill;
+
+            //b.BackColor = ControlPaint.Dark(_Config.BackColor, 75);
+            b.BackColor = _Config.BackColor;
+            b.ForeColor = _Config.FontColor;
+            b.FlatAppearance.BorderSize = 0;
+            b.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            b.TextAlign = ContentAlignment.TopLeft;
+            b.AutoEllipsis = false;
+            //b.ContextMenuStrip = menuClips;
+            b.ImageAlign = ContentAlignment.MiddleLeft;
+            b.Text = text.TrimStart();
+
+            // if (Uri.IsWellFormedUriString(Text, UriKind.Absolute))
+            //   b.Font = new Font (b.Font, FontStyle.Underline);
+
         }
 
         private void addItem(Image image, bool saveToDisk = false)
@@ -212,7 +244,7 @@ namespace Clips
     } // formMain
 
     // ClipItem
-    public partial class ClipItem : ListViewItem
+    public partial class ClipItem : SplitContainer
     {
         public ClipItem()
         {
