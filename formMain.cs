@@ -38,8 +38,9 @@ namespace Clips
         public static extern bool ReleaseCapture();
 
         Config _Config;
-        formPreview _formPreview = new formPreview();
-        private bool _InPreview = false;
+        formPreview formPreview = new formPreview();
+        private bool inPreview = false;
+        private bool inClose = false;
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -222,20 +223,22 @@ namespace Clips
 
         private void PreviewHide(object sender, EventArgs e)
         {
-            _formPreview.HidePreview();
-            _InPreview = false;
+            formPreview.HidePreview();
+            inPreview = false;
         }
 
         private void PreviewShow(object sender, EventArgs e)
         {
-            _InPreview = true;
-            _formPreview.BackColor = _Config.BackColor;
-            _formPreview.ForeColor = _Config.FontColor;
-            _formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay);
+            inPreview = true;
+            formPreview.BackColor = _Config.BackColor;
+            formPreview.ForeColor = _Config.FontColor;
+            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay);
         }
 
         private void toggleShow()
         {
+            if (inClose) return;
+
             // for some reason during form closing event the opacity is set to 1.
             if ((Visible) && (Opacity == 100) || (Opacity == 1))
             {
@@ -253,8 +256,13 @@ namespace Clips
 
         private void formMain_Deactivate(object sender, EventArgs e)
         {
-            if ((Visible == true) && (_InPreview == false))
+            if ((Visible == true) && (inPreview == false))
                 toggleShow();
+        }
+
+        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            inClose = true;
         }
     } // formMain
 
