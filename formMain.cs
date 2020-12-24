@@ -19,12 +19,22 @@ namespace Clips
             InitializeComponent();
         }
 
+        public const int WM_NCLBUTTONDOWN = 0xA1;
+        public const int HT_CAPTION = 0x2;
+
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
+        // allow form to be dragged.
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        public static extern bool ReleaseCapture();
+
         Config _Config;
+
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -53,12 +63,6 @@ namespace Clips
             }
         }
 
-        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            MessageBox.Show(sender.ToString());
-            e.Cancel = true;
-        }
-
         private void formMain_Load(object sender, EventArgs e)
         {
             loadConfig();
@@ -66,7 +70,7 @@ namespace Clips
 
         private void menuClose_Click(object sender, EventArgs e)
         {
-            closeForm();
+            Close();
         }
 
         private void menuSettings_Click(object sender, EventArgs e)
@@ -88,6 +92,16 @@ namespace Clips
         private void notifyClips_DoubleClick(object sender, EventArgs e)
         {
             toggleShow();
+        }
+
+        private void toolStripMain_MouseDown(object sender, MouseEventArgs e)
+        {
+            // drag form.
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -118,11 +132,6 @@ namespace Clips
 
         }
 
-        private void closeForm()
-        {
-            Close();
-        }
-
         private void loadConfig()
         {
             if (_Config == null)
@@ -135,6 +144,11 @@ namespace Clips
         }
 
         private void loadItems()
+        {
+
+        }
+
+        private void formMain_MouseDown(object sender, MouseEventArgs e)
         {
 
         }
@@ -152,6 +166,7 @@ namespace Clips
             {
                 Opacity = 100;
                 Visible = true;
+                Activate();
             }
         }
 

@@ -71,28 +71,28 @@
             this.notifyMenuSettings,
             this.notifyMenuClose});
             this.menuNotify.Name = "menuNotify";
-            this.menuNotify.Size = new System.Drawing.Size(181, 92);
+            this.menuNotify.Size = new System.Drawing.Size(171, 70);
             // 
             // menuNotifyMonitorClipboard
             // 
             this.menuNotifyMonitorClipboard.Checked = true;
             this.menuNotifyMonitorClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuNotifyMonitorClipboard.Name = "menuNotifyMonitorClipboard";
-            this.menuNotifyMonitorClipboard.Size = new System.Drawing.Size(180, 22);
+            this.menuNotifyMonitorClipboard.Size = new System.Drawing.Size(170, 22);
             this.menuNotifyMonitorClipboard.Text = "Monitor clipboard";
             this.menuNotifyMonitorClipboard.Click += new System.EventHandler(this.menuMonitorClipboard_Click);
             // 
             // notifyMenuSettings
             // 
             this.notifyMenuSettings.Name = "notifyMenuSettings";
-            this.notifyMenuSettings.Size = new System.Drawing.Size(180, 22);
+            this.notifyMenuSettings.Size = new System.Drawing.Size(170, 22);
             this.notifyMenuSettings.Text = "Settings";
             this.notifyMenuSettings.Click += new System.EventHandler(this.menuSettings_Click);
             // 
             // notifyMenuClose
             // 
             this.notifyMenuClose.Name = "notifyMenuClose";
-            this.notifyMenuClose.Size = new System.Drawing.Size(180, 22);
+            this.notifyMenuClose.Size = new System.Drawing.Size(170, 22);
             this.notifyMenuClose.Text = "Close";
             this.notifyMenuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -114,6 +114,7 @@
             this.toolStripMain.Size = new System.Drawing.Size(800, 25);
             this.toolStripMain.TabIndex = 1;
             this.toolStripMain.Text = "toolStrip1";
+            this.toolStripMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.toolStripMain_MouseDown);
             // 
             // toolStripDropDownButton1
             // 
@@ -134,21 +135,21 @@
             this.menuMonitorClipboard.CheckOnClick = true;
             this.menuMonitorClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuMonitorClipboard.Name = "menuMonitorClipboard";
-            this.menuMonitorClipboard.Size = new System.Drawing.Size(180, 22);
+            this.menuMonitorClipboard.Size = new System.Drawing.Size(170, 22);
             this.menuMonitorClipboard.Text = "Monitor clipboard";
             this.menuMonitorClipboard.Click += new System.EventHandler(this.menuMonitorClipboard_Click);
             // 
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(180, 22);
+            this.menuSettings.Size = new System.Drawing.Size(170, 22);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.menuSettings_Click);
             // 
             // menuClose
             // 
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(180, 22);
+            this.menuClose.Size = new System.Drawing.Size(170, 22);
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -256,6 +257,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ControlBox = false;
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.toolStripMain);
             this.Name = "formMain";
@@ -263,8 +265,8 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
             this.Load += new System.EventHandler(this.formMain_Load);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.formMain_MouseDown);
             this.menuNotify.ResumeLayout(false);
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
