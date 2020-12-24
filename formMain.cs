@@ -32,22 +32,6 @@ namespace Clips
             loadConfig();
         }
 
-        private void loadConfig()
-        {
-            if (_Config == null)
-            {
-                _Config = new Config();
-                _Config.ConfigChanged += new EventHandler(ConfigChanged);
-            }
-
-            RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
-        }
-
-        private void formMain_Load(object sender, EventArgs e)
-        {
-            loadConfig();
-        }
-
         private void clipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
@@ -69,6 +53,11 @@ namespace Clips
             }
         }
 
+        private void formMain_Load(object sender, EventArgs e)
+        {
+            loadConfig();
+        }
+
         private void menuClose_Click(object sender, EventArgs e)
         {
             Close();
@@ -81,11 +70,38 @@ namespace Clips
 
         private void menuMonitorClipboard_Click(object sender, EventArgs e)
         {
-            clipboard.MonitorClipboard = menuMonitorClipboard.Checked;
+            ToolStripMenuItem item = sender as ToolStripMenuItem;
+            clipboard.MonitorClipboard = item.Checked;
+
+            if (item != menuMonitorClipboard)
+                menuNotifyMonitorClipboard.Checked = item.Checked;
+            else
+                menuMonitorClipboard.Checked = item.Checked;
+        }
+
+        private void notifyClips_DoubleClick(object sender, EventArgs e)
+        {
+            ToggleShow();
+        }
+
+        protected override void OnLoad(EventArgs e)
+        {
+            Visible = false; 
+            Opacity = 0;
+            base.OnLoad(e);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x0312) //WM_HOTKEY
+            {
+                ToggleShow();
+            }
+            base.WndProc(ref m);
         }
 
         #endregion
-        
+
         // methods
         private void AddItem(string text)
         {
@@ -96,12 +112,46 @@ namespace Clips
         {
 
         }
+
+        private void loadConfig()
+        {
+            if (_Config == null)
+            {
+                _Config = new Config();
+                _Config.ConfigChanged += new EventHandler(ConfigChanged);
+            }
+
+            RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
+        }
+
         private void LoadItems()
         {
 
         }
+
+        private void ToggleShow()
+        {
+            // for some reason during form closing event the opacity is set to 1.
+            if ((Visible) && (Opacity == 100) || (Opacity == 1))
+            {
+                Visible = false;
+                Opacity = 0;
+            }
+                
+            else
+            {
+                Opacity = 100;
+                Visible = true;
+            }
+        }
+
+        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            ToggleShow();
+            e.Cancel = true;
+        }
     } // formMain
-    
+
 
     public partial class ClipItem: ListViewItem
     {

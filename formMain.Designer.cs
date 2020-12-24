@@ -31,7 +31,11 @@
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
             this.notifyClips = new System.Windows.Forms.NotifyIcon(this.components);
-            this.toolStrip1 = new System.Windows.Forms.ToolStrip();
+            this.menuNotify = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuNotifyMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyMenuSettings = new System.Windows.Forms.ToolStripMenuItem();
+            this.notifyMenuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
@@ -47,19 +51,55 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.listView1 = new System.Windows.Forms.ListView();
             this.clipboard = new WK.Libraries.SharpClipboardNS.SharpClipboard(this.components);
-            this.toolStrip1.SuspendLayout();
+            this.menuNotify.SuspendLayout();
+            this.toolStripMain.SuspendLayout();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyClips
             // 
+            this.notifyClips.ContextMenuStrip = this.menuNotify;
+            this.notifyClips.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyClips.Icon")));
             this.notifyClips.Text = "Clips";
             this.notifyClips.Visible = true;
+            this.notifyClips.DoubleClick += new System.EventHandler(this.notifyClips_DoubleClick);
             // 
-            // toolStrip1
+            // menuNotify
             // 
-            this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
-            this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuNotify.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuNotifyMonitorClipboard,
+            this.notifyMenuSettings,
+            this.notifyMenuClose});
+            this.menuNotify.Name = "menuNotify";
+            this.menuNotify.Size = new System.Drawing.Size(171, 70);
+            // 
+            // menuNotifyMonitorClipboard
+            // 
+            this.menuNotifyMonitorClipboard.Checked = true;
+            this.menuNotifyMonitorClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.menuNotifyMonitorClipboard.Name = "menuNotifyMonitorClipboard";
+            this.menuNotifyMonitorClipboard.Size = new System.Drawing.Size(170, 22);
+            this.menuNotifyMonitorClipboard.Text = "Monitor clipboard";
+            this.menuNotifyMonitorClipboard.Click += new System.EventHandler(this.menuMonitorClipboard_Click);
+            // 
+            // notifyMenuSettings
+            // 
+            this.notifyMenuSettings.Name = "notifyMenuSettings";
+            this.notifyMenuSettings.Size = new System.Drawing.Size(170, 22);
+            this.notifyMenuSettings.Text = "Settings";
+            this.notifyMenuSettings.Click += new System.EventHandler(this.menuSettings_Click);
+            // 
+            // notifyMenuClose
+            // 
+            this.notifyMenuClose.Name = "notifyMenuClose";
+            this.notifyMenuClose.Size = new System.Drawing.Size(170, 22);
+            this.notifyMenuClose.Text = "Close";
+            this.notifyMenuClose.Click += new System.EventHandler(this.menuClose_Click);
+            // 
+            // toolStripMain
+            // 
+            this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
+            this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1,
             this.newToolStripButton,
             this.openToolStripButton,
@@ -69,11 +109,11 @@
             this.cutToolStripButton,
             this.copyToolStripButton,
             this.pasteToolStripButton});
-            this.toolStrip1.Location = new System.Drawing.Point(0, 0);
-            this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(800, 25);
-            this.toolStrip1.TabIndex = 1;
-            this.toolStrip1.Text = "toolStrip1";
+            this.toolStripMain.Location = new System.Drawing.Point(0, 0);
+            this.toolStripMain.Name = "toolStripMain";
+            this.toolStripMain.Size = new System.Drawing.Size(800, 25);
+            this.toolStripMain.TabIndex = 1;
+            this.toolStripMain.Text = "toolStrip1";
             // 
             // toolStripDropDownButton1
             // 
@@ -94,21 +134,21 @@
             this.menuMonitorClipboard.CheckOnClick = true;
             this.menuMonitorClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuMonitorClipboard.Name = "menuMonitorClipboard";
-            this.menuMonitorClipboard.Size = new System.Drawing.Size(180, 22);
+            this.menuMonitorClipboard.Size = new System.Drawing.Size(170, 22);
             this.menuMonitorClipboard.Text = "Monitor clipboard";
             this.menuMonitorClipboard.Click += new System.EventHandler(this.menuMonitorClipboard_Click);
             // 
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(180, 22);
+            this.menuSettings.Size = new System.Drawing.Size(170, 22);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.menuSettings_Click);
             // 
             // menuClose
             // 
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(180, 22);
+            this.menuClose.Size = new System.Drawing.Size(170, 22);
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -217,14 +257,17 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.panel1);
-            this.Controls.Add(this.toolStrip1);
+            this.Controls.Add(this.toolStripMain);
             this.Name = "formMain";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.TopMost = true;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
             this.Load += new System.EventHandler(this.formMain_Load);
-            this.toolStrip1.ResumeLayout(false);
-            this.toolStrip1.PerformLayout();
+            this.menuNotify.ResumeLayout(false);
+            this.toolStripMain.ResumeLayout(false);
+            this.toolStripMain.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -233,7 +276,7 @@
 
         #endregion
         private System.Windows.Forms.NotifyIcon notifyClips;
-        private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStrip toolStripMain;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
         private System.Windows.Forms.ToolStripMenuItem menuClose;
         private System.Windows.Forms.ToolStripButton newToolStripButton;
@@ -249,6 +292,10 @@
         private System.Windows.Forms.ToolStripMenuItem menuSettings;
         private WK.Libraries.SharpClipboardNS.SharpClipboard clipboard;
         private System.Windows.Forms.ToolStripMenuItem menuMonitorClipboard;
+        private System.Windows.Forms.ContextMenuStrip menuNotify;
+        private System.Windows.Forms.ToolStripMenuItem notifyMenuSettings;
+        private System.Windows.Forms.ToolStripMenuItem notifyMenuClose;
+        private System.Windows.Forms.ToolStripMenuItem menuNotifyMonitorClipboard;
     }
 }
 
