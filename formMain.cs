@@ -10,7 +10,9 @@ using System.Windows.Forms;
 using WK.Libraries.SharpClipboardNS;
 using System.Runtime.InteropServices;
 using System.IO;
+using System.Xml;
 using Utility;
+using System.Drawing.Imaging;
 
 namespace Clips
 {
@@ -36,8 +38,7 @@ namespace Clips
         public static extern bool ReleaseCapture();
 
         Config _Config;
-
-
+        
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
@@ -48,16 +49,16 @@ namespace Clips
         {
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
-                addItem(clipboard.ClipboardText);
+                addItem(clipboard.ClipboardText, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Image)
             {
-                addItem(clipboard.ClipboardImage);
+                addItem(clipboard.ClipboardImage, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Files)
             {
                 string s = string.Join(", ", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
-                addItem(s);
+                addItem(s, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Other)
             {
@@ -124,15 +125,24 @@ namespace Clips
         }
         #endregion
 
+        string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+ 
         // methods
-        private void addItem(string text)
+        private void addItem(string text, bool saveToDisk = false)
         {
-
+            var plainTextBytes = Encoding.UTF8.GetBytes(text);
+            string base64 = Convert.ToBase64String(plainTextBytes);
+            if (saveToDisk)
+                Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
         }
 
-        private void addItem(Image image)
+        private void addItem(Image image, bool saveToDisk = false)
         {
-
+            MemoryStream ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Png);
+            string base64 = Convert.ToBase64String(ms.ToArray());
+            if (saveToDisk)
+                Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
         }
 
         private void loadConfig()
@@ -151,8 +161,34 @@ namespace Clips
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
             {
-                
+                XmlDocument doc = new XmlDocument();
+                doc.Load(file);
+                XmlNode data = doc.DocumentElement.SelectSingleNode("/DATA");
+                string type = data.Attributes["TYPE"]?.InnerText;
+
+                if (type == "IMAGE")
+                {
+                    MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
+                    try
+                    {
+                        Bitmap img = new Bitmap(ms);
+                        addItem(img);
+                        if (img != null) img = null;
+                    }
+                    finally
+                    {
+                        ms.Dispose();
+                    }
+                }
+                else
+                {
+                    var base64EncodedBytes = Convert.FromBase64String(data.InnerText);
+                    string decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
+                    addItem(decodedString);
+                }
+                doc = null;
             }
+
         }
 
         private void toggleShow()
@@ -176,11 +212,18 @@ namespace Clips
     } // formMain
 
     // ClipItem
-    public partial class ClipItem: ListViewItem
+    public partial class ClipItem : ListViewItem
     {
         public ClipItem()
         {
 
+        }
+
+        private string fileName;
+        public string FileName
+        {
+            get { return fileName; }
+            set { fileName = value; }
         }
 
         private Image fullImage;

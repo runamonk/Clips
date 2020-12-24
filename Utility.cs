@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace Utility
 {
@@ -15,11 +17,12 @@ namespace Utility
         {
             return Path.GetDirectoryName(Application.ExecutablePath);
         }
-
+               
         public static string [] GetFiles(string path, string searchPattern)
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
+
             string[] files;
 
             if (searchPattern != "")
@@ -28,6 +31,31 @@ namespace Utility
                 files = Directory.GetFiles(path);
 
             return files;
+        }
+        
+        public static string RandomString(int size, bool lowerCase)
+        {
+            const string src = "abcdefghijklmnopqrstuvwxyz0123456789";
+            var sb = new StringBuilder();
+            Random RNG = new Random();
+            for (var i = 0; i < size; i++)
+            {
+                var c = src[RNG.Next(0, src.Length)];
+                sb.Append(c);
+            }
+            if (lowerCase)
+                return sb.ToString().ToLower();
+            else
+                return sb.ToString();
+        }
+
+        public static void SaveToCache(string fileContents)
+        {
+            string randFileName = RandomString(25, true) + ".xml";
+            XmlDocument doc = new XmlDocument();
+            doc.LoadXml(fileContents);            
+            doc.Save(AppPath() + "\\Cache\\" + randFileName);
+            doc = null;
         }
     }
 }
