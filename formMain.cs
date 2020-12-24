@@ -36,21 +36,27 @@ namespace Clips
         {
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
-                AddItem(clipboard.ClipboardText);
+                addItem(clipboard.ClipboardText);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Image)
             {
-                AddItem(clipboard.ClipboardImage);
+                addItem(clipboard.ClipboardImage);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Files)
             {
                 string s = string.Join(", ", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
-                AddItem(s);
+                addItem(s);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Other)
             {
                 // Do something with 'clipboard.ClipboardObject' or 'e.Content' here...
             }
+        }
+
+        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            MessageBox.Show(sender.ToString());
+            e.Cancel = true;
         }
 
         private void formMain_Load(object sender, EventArgs e)
@@ -60,7 +66,7 @@ namespace Clips
 
         private void menuClose_Click(object sender, EventArgs e)
         {
-            Close();
+            closeForm();
         }
 
         private void menuSettings_Click(object sender, EventArgs e)
@@ -81,12 +87,12 @@ namespace Clips
 
         private void notifyClips_DoubleClick(object sender, EventArgs e)
         {
-            ToggleShow();
+            toggleShow();
         }
 
         protected override void OnLoad(EventArgs e)
         {
-            Visible = false; 
+            Visible = false;
             Opacity = 0;
             base.OnLoad(e);
         }
@@ -95,22 +101,26 @@ namespace Clips
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
             {
-                ToggleShow();
+                toggleShow();
             }
             base.WndProc(ref m);
         }
-
         #endregion
 
         // methods
-        private void AddItem(string text)
+        private void addItem(string text)
         {
 
         }
 
-        private void AddItem(Image image)
+        private void addItem(Image image)
         {
 
+        }
+
+        private void closeForm()
+        {
+            Close();
         }
 
         private void loadConfig()
@@ -124,12 +134,12 @@ namespace Clips
             RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
         }
 
-        private void LoadItems()
+        private void loadItems()
         {
 
         }
 
-        private void ToggleShow()
+        private void toggleShow()
         {
             // for some reason during form closing event the opacity is set to 1.
             if ((Visible) && (Opacity == 100) || (Opacity == 1))
@@ -145,14 +155,10 @@ namespace Clips
             }
         }
 
-        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            ToggleShow();
-            e.Cancel = true;
-        }
+
     } // formMain
 
-
+    // ClipItem
     public partial class ClipItem: ListViewItem
     {
         public ClipItem()
@@ -171,7 +177,7 @@ namespace Clips
         public string FullText
         {
             get { return fullText; }
-            set { FullText = value; }
+            set { fullText = value; }
         }
     } // ClipItem
 }
