@@ -35,22 +35,19 @@
             this.menuNotifyMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyMenuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyMenuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.clipboard = new WK.Libraries.SharpClipboardNS.SharpClipboard(this.components);
+            this.pTop = new System.Windows.Forms.Panel();
             this.toolStripMain = new System.Windows.Forms.ToolStrip();
             this.toolStripDropDownButton1 = new System.Windows.Forms.ToolStripDropDownButton();
             this.menuMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
-            this.clipboard = new WK.Libraries.SharpClipboardNS.SharpClipboard(this.components);
             this.pMain = new System.Windows.Forms.Panel();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.pClips = new System.Windows.Forms.Panel();
-            this.pTop = new System.Windows.Forms.Panel();
-            this.labelTimestamp = new System.Windows.Forms.Label();
-            this.labelClip = new System.Windows.Forms.Label();
             this.menuNotify.SuspendLayout();
+            this.pTop.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.pMain.SuspendLayout();
-            this.pTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyClips
@@ -93,15 +90,40 @@
             this.notifyMenuClose.Text = "Close";
             this.notifyMenuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
+            // clipboard
+            // 
+            this.clipboard.MonitorClipboard = true;
+            this.clipboard.ObservableFormats.All = true;
+            this.clipboard.ObservableFormats.Files = true;
+            this.clipboard.ObservableFormats.Images = true;
+            this.clipboard.ObservableFormats.Others = true;
+            this.clipboard.ObservableFormats.Texts = true;
+            this.clipboard.ObserveLastEntry = false;
+            this.clipboard.Tag = null;
+            this.clipboard.ClipboardChanged += new System.EventHandler<WK.Libraries.SharpClipboardNS.SharpClipboard.ClipboardChangedEventArgs>(this.clipBoard_ClipboardChanged);
+            // 
+            // pTop
+            // 
+            this.pTop.Controls.Add(this.toolStripMain);
+            this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pTop.Location = new System.Drawing.Point(0, 0);
+            this.pTop.Margin = new System.Windows.Forms.Padding(0);
+            this.pTop.Name = "pTop";
+            this.pTop.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
+            this.pTop.Size = new System.Drawing.Size(800, 28);
+            this.pTop.TabIndex = 3;
+            // 
             // toolStripMain
             // 
+            this.toolStripMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.toolStripMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripDropDownButton1});
-            this.toolStripMain.Location = new System.Drawing.Point(0, 0);
+            this.toolStripMain.Location = new System.Drawing.Point(5, 0);
             this.toolStripMain.Name = "toolStripMain";
-            this.toolStripMain.Size = new System.Drawing.Size(800, 25);
-            this.toolStripMain.TabIndex = 1;
+            this.toolStripMain.RenderMode = System.Windows.Forms.ToolStripRenderMode.System;
+            this.toolStripMain.Size = new System.Drawing.Size(790, 28);
+            this.toolStripMain.TabIndex = 2;
             this.toolStripMain.Text = "toolStrip1";
             this.toolStripMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.toolStripMain_MouseDown);
             // 
@@ -115,7 +137,7 @@
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
-            this.toolStripDropDownButton1.Size = new System.Drawing.Size(46, 22);
+            this.toolStripDropDownButton1.Size = new System.Drawing.Size(46, 25);
             this.toolStripDropDownButton1.Text = "Clips";
             // 
             // menuMonitorClipboard
@@ -142,73 +164,22 @@
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
-            // clipboard
-            // 
-            this.clipboard.MonitorClipboard = true;
-            this.clipboard.ObservableFormats.All = true;
-            this.clipboard.ObservableFormats.Files = true;
-            this.clipboard.ObservableFormats.Images = true;
-            this.clipboard.ObservableFormats.Others = true;
-            this.clipboard.ObservableFormats.Texts = true;
-            this.clipboard.ObserveLastEntry = false;
-            this.clipboard.Tag = null;
-            this.clipboard.ClipboardChanged += new System.EventHandler<WK.Libraries.SharpClipboardNS.SharpClipboard.ClipboardChangedEventArgs>(this.clipBoard_ClipboardChanged);
-            // 
             // pMain
             // 
-            this.pMain.Controls.Add(this.statusStrip1);
             this.pMain.Controls.Add(this.pClips);
-            this.pMain.Controls.Add(this.pTop);
             this.pMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pMain.Location = new System.Drawing.Point(0, 25);
+            this.pMain.Location = new System.Drawing.Point(0, 28);
             this.pMain.Name = "pMain";
-            this.pMain.Size = new System.Drawing.Size(800, 425);
-            this.pMain.TabIndex = 2;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Location = new System.Drawing.Point(0, 403);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(800, 22);
-            this.statusStrip1.TabIndex = 2;
-            this.statusStrip1.Text = "statusStrip1";
+            this.pMain.Size = new System.Drawing.Size(800, 422);
+            this.pMain.TabIndex = 4;
             // 
             // pClips
             // 
             this.pClips.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pClips.Location = new System.Drawing.Point(0, 35);
+            this.pClips.Location = new System.Drawing.Point(0, 0);
             this.pClips.Name = "pClips";
-            this.pClips.Size = new System.Drawing.Size(800, 390);
+            this.pClips.Size = new System.Drawing.Size(800, 422);
             this.pClips.TabIndex = 1;
-            // 
-            // pTop
-            // 
-            this.pTop.Controls.Add(this.labelTimestamp);
-            this.pTop.Controls.Add(this.labelClip);
-            this.pTop.Dock = System.Windows.Forms.DockStyle.Top;
-            this.pTop.Location = new System.Drawing.Point(0, 0);
-            this.pTop.Name = "pTop";
-            this.pTop.Size = new System.Drawing.Size(800, 35);
-            this.pTop.TabIndex = 0;
-            // 
-            // labelTimestamp
-            // 
-            this.labelTimestamp.BackColor = System.Drawing.SystemColors.Control;
-            this.labelTimestamp.Location = new System.Drawing.Point(688, 9);
-            this.labelTimestamp.Name = "labelTimestamp";
-            this.labelTimestamp.Size = new System.Drawing.Size(100, 16);
-            this.labelTimestamp.TabIndex = 2;
-            this.labelTimestamp.Text = "Timestamp";
-            this.labelTimestamp.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // labelClip
-            // 
-            this.labelClip.BackColor = System.Drawing.SystemColors.Control;
-            this.labelClip.Location = new System.Drawing.Point(12, 9);
-            this.labelClip.Name = "labelClip";
-            this.labelClip.Size = new System.Drawing.Size(660, 16);
-            this.labelClip.TabIndex = 0;
-            this.labelClip.Text = "Clip";
             // 
             // formMain
             // 
@@ -217,7 +188,7 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.ControlBox = false;
             this.Controls.Add(this.pMain);
-            this.Controls.Add(this.toolStripMain);
+            this.Controls.Add(this.pTop);
             this.Name = "formMain";
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
@@ -225,35 +196,30 @@
             this.TopMost = true;
             this.Load += new System.EventHandler(this.formMain_Load);
             this.menuNotify.ResumeLayout(false);
+            this.pTop.ResumeLayout(false);
+            this.pTop.PerformLayout();
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
             this.pMain.ResumeLayout(false);
-            this.pMain.PerformLayout();
-            this.pTop.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.NotifyIcon notifyClips;
-        private System.Windows.Forms.ToolStrip toolStripMain;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
-        private System.Windows.Forms.ToolStripMenuItem menuClose;
-
-        private System.Windows.Forms.ToolStripMenuItem menuSettings;
         private WK.Libraries.SharpClipboardNS.SharpClipboard clipboard;
-        private System.Windows.Forms.ToolStripMenuItem menuMonitorClipboard;
         private System.Windows.Forms.ContextMenuStrip menuNotify;
         private System.Windows.Forms.ToolStripMenuItem notifyMenuSettings;
         private System.Windows.Forms.ToolStripMenuItem notifyMenuClose;
         private System.Windows.Forms.ToolStripMenuItem menuNotifyMonitorClipboard;
-        private System.Windows.Forms.Panel pMain;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.Panel pClips;
         private System.Windows.Forms.Panel pTop;
-        private System.Windows.Forms.Label labelClip;
-        private System.Windows.Forms.Label labelTimestamp;
+        private System.Windows.Forms.ToolStrip toolStripMain;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButton1;
+        private System.Windows.Forms.ToolStripMenuItem menuMonitorClipboard;
+        private System.Windows.Forms.ToolStripMenuItem menuSettings;
+        private System.Windows.Forms.ToolStripMenuItem menuClose;
+        private System.Windows.Forms.Panel pMain;
+        private System.Windows.Forms.Panel pClips;
     }
 }
 

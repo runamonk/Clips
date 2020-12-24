@@ -38,7 +38,9 @@ namespace Clips
         public static extern bool ReleaseCapture();
 
         Config _Config;
-        
+        formPreview _formPreview = new formPreview();
+        private bool _InPreview = false;
+
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
@@ -135,37 +137,32 @@ namespace Clips
             if (saveToDisk)
                 Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
 
-            ClipItem sp = new ClipItem();
-            sp.Parent = pClips;
-            sp.Dock = DockStyle.Top;
-            sp.FullText = text;
-            sp.Height = 30;
-            sp.FixedPanel = FixedPanel.Panel2;
-            sp.IsSplitterFixed = true;
-            sp.SplitterWidth = 1;
-            sp.SplitterDistance = 680;
-            sp.Panel1.Padding = new Padding(10, 0, 10, 0);
-            sp.Panel1.BackColor = Color.RoyalBlue;
-            sp.Panel2.Padding = new Padding(10, 0, 10, 0);
-            sp.Panel2.BackColor = Color.Red;
-            Button b = new Button();
-            b.Parent = sp.Panel1;
-            b.Dock = DockStyle.Fill;
+            ClipButton b = new ClipButton();
+            b.Parent = pClips;
+            b.Dock = DockStyle.Top;
+            b.Height = 20;
+            //b.MouseUp += new MouseEventHandler(Button_Click);
+            b.MouseHover += new EventHandler(PreviewShow);
+            b.MouseLeave += new EventHandler(PreviewHide);
 
             //b.BackColor = ControlPaint.Dark(_Config.BackColor, 75);
-            b.BackColor = _Config.BackColor;
-            b.ForeColor = _Config.FontColor;
+            //b.BackColor = _Config.BackColor;
+            //b.ForeColor = _Config.FontColor;
+
             b.FlatAppearance.BorderSize = 0;
             b.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             b.TextAlign = ContentAlignment.TopLeft;
             b.AutoEllipsis = false;
             //b.ContextMenuStrip = menuClips;
             b.ImageAlign = ContentAlignment.MiddleLeft;
-            b.Text = text.TrimStart();
+            var result = text.TrimStart().Split(new string[] { "\\n" }, StringSplitOptions.None);
+ 
+            b.FullText = text;
+            b.Text = result[0];
 
             // if (Uri.IsWellFormedUriString(Text, UriKind.Absolute))
             //   b.Font = new Font (b.Font, FontStyle.Underline);
-
+            //b.Image = Image.GetThumbnailImage(_Config.DefaultClipHeight - 5, _Config.DefaultClipHeight - 5, null, IntPtr.Zero);
         }
 
         private void addItem(Image image, bool saveToDisk = false)
@@ -223,6 +220,20 @@ namespace Clips
 
         }
 
+        private void PreviewHide(object sender, EventArgs e)
+        {
+            _formPreview.HidePreview();
+            _InPreview = false;
+        }
+
+        private void PreviewShow(object sender, EventArgs e)
+        {
+            _InPreview = true;
+            _formPreview.BackColor = _Config.BackColor;
+            _formPreview.ForeColor = _Config.FontColor;
+            _formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay);
+        }
+
         private void toggleShow()
         {
             // for some reason during form closing event the opacity is set to 1.
@@ -243,12 +254,18 @@ namespace Clips
 
     } // formMain
 
-    // ClipItem
-    public partial class ClipItem : SplitContainer
+    // ClipButton
+    public partial class ClipButton : Button
     {
-        public ClipItem()
+        public ClipButton()
         {
 
+        }
+
+        // Stops the black default border from being displayed on button when the preview form is shown.
+        public override void NotifyDefault(bool value)
+        {
+            base.NotifyDefault(false);
         }
 
         private string fileName;
@@ -271,5 +288,5 @@ namespace Clips
             get { return fullText; }
             set { fullText = value; }
         }
-    } // ClipItem
+    } // ClipButton
 }
