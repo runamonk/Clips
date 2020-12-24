@@ -36,11 +36,11 @@ namespace Clips
                 textPreview.BackColor = BackColor;
                 textPreview.ForeColor = ForeColor;
 
-                // Limit the text preview to like 30 lines.
+                // TODO Limit the text preview to like 30 lines.
                 textPreview.Text = Text;
 
                 SizeF ss = TextRenderer.MeasureText(textPreview.Text, textPreview.Font);
-                ss.Height = ss.Height + 6;
+                ss.Height = ss.Height + 6; 
                 ss.Width = ss.Width + 6;
                 Size = ss.ToSize();
 

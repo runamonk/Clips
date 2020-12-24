@@ -251,7 +251,11 @@ namespace Clips
             }
         }
 
-
+        private void formMain_Deactivate(object sender, EventArgs e)
+        {
+            if ((Visible == true) && (_InPreview == false))
+                toggleShow();
+        }
     } // formMain
 
     // ClipButton

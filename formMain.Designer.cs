@@ -194,6 +194,7 @@
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.TopMost = true;
+            this.Deactivate += new System.EventHandler(this.formMain_Deactivate);
             this.Load += new System.EventHandler(this.formMain_Load);
             this.menuNotify.ResumeLayout(false);
             this.pTop.ResumeLayout(false);
