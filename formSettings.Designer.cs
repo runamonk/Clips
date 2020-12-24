@@ -39,12 +39,8 @@
             this.label1 = new System.Windows.Forms.Label();
             this.gbSizes = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.nudPopupHeight = new System.Windows.Forms.NumericUpDown();
-            this.nudPopupWidth = new System.Windows.Forms.NumericUpDown();
-            this.nudDefaultClipHeight = new System.Windows.Forms.NumericUpDown();
+            this.nudPreviewRows = new System.Windows.Forms.NumericUpDown();
             this.nudMaxClips = new System.Windows.Forms.NumericUpDown();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
@@ -60,9 +56,7 @@
             this.nudPreviewPopupDelay = new System.Windows.Forms.NumericUpDown();
             this.gbHotkey.SuspendLayout();
             this.gbSizes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPopupHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPopupWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDefaultClipHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPreviewRows)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxClips)).BeginInit();
             this.gbColors.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPreviewPopupDelay)).BeginInit();
@@ -106,11 +100,10 @@
             // 
             // label2
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 47);
+            this.label2.Location = new System.Drawing.Point(7, 46);
             this.label2.Margin = new System.Windows.Forms.Padding(0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(44, 13);
+            this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Modifier";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -147,11 +140,10 @@
             // 
             // label1
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(16, 22);
+            this.label1.Location = new System.Drawing.Point(7, 22);
             this.label1.Margin = new System.Windows.Forms.Padding(0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(41, 13);
+            this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Hotkey";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -159,16 +151,12 @@
             // gbSizes
             // 
             this.gbSizes.Controls.Add(this.label6);
-            this.gbSizes.Controls.Add(this.label5);
-            this.gbSizes.Controls.Add(this.label4);
             this.gbSizes.Controls.Add(this.label3);
-            this.gbSizes.Controls.Add(this.nudPopupHeight);
-            this.gbSizes.Controls.Add(this.nudPopupWidth);
-            this.gbSizes.Controls.Add(this.nudDefaultClipHeight);
+            this.gbSizes.Controls.Add(this.nudPreviewRows);
             this.gbSizes.Controls.Add(this.nudMaxClips);
             this.gbSizes.Location = new System.Drawing.Point(234, 8);
             this.gbSizes.Name = "gbSizes";
-            this.gbSizes.Size = new System.Drawing.Size(189, 124);
+            this.gbSizes.Size = new System.Drawing.Size(189, 93);
             this.gbSizes.TabIndex = 2;
             this.gbSizes.TabStop = false;
             this.gbSizes.Text = "Size";
@@ -176,7 +164,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 97);
+            this.label6.Location = new System.Drawing.Point(13, 49);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(76, 13);
@@ -184,78 +172,37 @@
             this.label6.Text = "Maximum Clips";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(13, 72);
-            this.label5.Margin = new System.Windows.Forms.Padding(0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(95, 13);
-            this.label5.TabIndex = 17;
-            this.label5.Text = "Default Clip Height";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 47);
-            this.label4.Margin = new System.Windows.Forms.Padding(0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(69, 13);
-            this.label4.TabIndex = 16;
-            this.label4.Text = "Popup Width";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 22);
             this.label3.Margin = new System.Windows.Forms.Padding(0);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(72, 13);
+            this.label3.Size = new System.Drawing.Size(75, 13);
             this.label3.TabIndex = 15;
-            this.label3.Text = "Popup Height";
+            this.label3.Text = "Preview Rows";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // nudPopupHeight
+            // nudPreviewRows
             // 
-            this.nudPopupHeight.Location = new System.Drawing.Point(115, 18);
-            this.nudPopupHeight.Maximum = new decimal(new int[] {
-            9000,
+            this.nudPreviewRows.Location = new System.Drawing.Point(115, 18);
+            this.nudPreviewRows.Maximum = new decimal(new int[] {
+            5,
             0,
             0,
             0});
-            this.nudPopupHeight.Name = "nudPopupHeight";
-            this.nudPopupHeight.Size = new System.Drawing.Size(62, 20);
-            this.nudPopupHeight.TabIndex = 0;
-            // 
-            // nudPopupWidth
-            // 
-            this.nudPopupWidth.Location = new System.Drawing.Point(115, 43);
-            this.nudPopupWidth.Maximum = new decimal(new int[] {
-            9000,
+            this.nudPreviewRows.Name = "nudPreviewRows";
+            this.nudPreviewRows.Size = new System.Drawing.Size(62, 20);
+            this.nudPreviewRows.TabIndex = 0;
+            this.nudPreviewRows.Value = new decimal(new int[] {
+            1,
             0,
             0,
             0});
-            this.nudPopupWidth.Name = "nudPopupWidth";
-            this.nudPopupWidth.Size = new System.Drawing.Size(62, 20);
-            this.nudPopupWidth.TabIndex = 1;
-            // 
-            // nudDefaultClipHeight
-            // 
-            this.nudDefaultClipHeight.Location = new System.Drawing.Point(115, 68);
-            this.nudDefaultClipHeight.Maximum = new decimal(new int[] {
-            9000,
-            0,
-            0,
-            0});
-            this.nudDefaultClipHeight.Name = "nudDefaultClipHeight";
-            this.nudDefaultClipHeight.Size = new System.Drawing.Size(62, 20);
-            this.nudDefaultClipHeight.TabIndex = 2;
             // 
             // nudMaxClips
             // 
-            this.nudMaxClips.Location = new System.Drawing.Point(115, 93);
+            this.nudMaxClips.Location = new System.Drawing.Point(115, 45);
             this.nudMaxClips.Maximum = new decimal(new int[] {
             9000,
             0,
@@ -264,6 +211,11 @@
             this.nudMaxClips.Name = "nudMaxClips";
             this.nudMaxClips.Size = new System.Drawing.Size(62, 20);
             this.nudMaxClips.TabIndex = 3;
+            this.nudMaxClips.Value = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
             // 
             // btnOK
             // 
@@ -402,9 +354,7 @@
             this.gbHotkey.PerformLayout();
             this.gbSizes.ResumeLayout(false);
             this.gbSizes.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPopupHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPopupWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudDefaultClipHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nudPreviewRows)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxClips)).EndInit();
             this.gbColors.ResumeLayout(false);
             this.gbColors.PerformLayout();
@@ -421,15 +371,11 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox gbSizes;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         public System.Windows.Forms.CheckBox chkShift;
         public System.Windows.Forms.CheckBox chkAlt;
         public System.Windows.Forms.CheckBox chkControl;
-        public System.Windows.Forms.NumericUpDown nudPopupHeight;
-        public System.Windows.Forms.NumericUpDown nudPopupWidth;
-        public System.Windows.Forms.NumericUpDown nudDefaultClipHeight;
+        public System.Windows.Forms.NumericUpDown nudPreviewRows;
         public System.Windows.Forms.NumericUpDown nudMaxClips;
         public System.Windows.Forms.Button btnOK;
         public System.Windows.Forms.Button btnCancel;

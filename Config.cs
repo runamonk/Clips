@@ -7,13 +7,14 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using Microsoft.Win32;
-using Constants;
 using Utility;
 
 namespace Clips
 {
     class Config
     {
+        public const string CONFIG_FILENAME = "Clips.cfg";
+
         public partial class _formSettings : formSettings
         {
             public _formSettings()
@@ -29,7 +30,6 @@ namespace Clips
                 {
                     _Config = Config;
                     btnOK.Click += new EventHandler(ButtonClick);
-                    
                     textHotkey.Text = _Config.PopupHotkey;
 
                     // fill out the hotkey modifiers
@@ -41,14 +41,12 @@ namespace Clips
                        WinKey = 8*/
 
                     int m = _Config.PopupHotkeyModifier;
-                    chkAlt.Checked = (m==1||m==3||m==5||m==9);
-                    chkControl.Checked = (m==2||m==3||m==6||m==10);
-                    chkShift.Checked = (m==4||m==5||m==6||m==12);
+                    chkAlt.Checked = (m == 1 || m == 3 || m == 5 || m == 9);
+                    chkControl.Checked = (m == 2 || m == 3 || m == 6 || m == 10);
+                    chkShift.Checked = (m == 4 || m == 5 || m == 6 || m == 12);
                     chkWin.Checked = (m == 8 || m == 9 || m == 10 || m == 12);
                     chkStartup.Checked = _Config.StartWithWindows;
-                    nudDefaultClipHeight.Value = _Config.DefaultClipHeight;
-                    nudPopupHeight.Value = _Config.PopupSize.Height;
-                    nudPopupWidth.Value = _Config.PopupSize.Width;
+                    nudPreviewRows.Value = _Config.PreviewRows;
                     nudMaxClips.Value = _Config.MaxClips;
                     nudPreviewPopupDelay.Value = _Config.PreviewPopupDelay;
                     pnlBackColor.BackColor = _Config.BackColor;
@@ -60,9 +58,9 @@ namespace Clips
             public Config Config
             {
                 get { return _Config; }
-                set {_Config = value; }
+                set { _Config = value; }
             }
-            
+
             private void ButtonClick(object sender, EventArgs e)
             {
                 _Config.PopupHotkey = textHotkey.Text;
@@ -80,22 +78,18 @@ namespace Clips
 
                 _Config.PopupHotkeyModifier = i;
                 _Config.MaxClips = Convert.ToInt32(nudMaxClips.Value);
-                _Config.DefaultClipHeight = Convert.ToInt32(nudDefaultClipHeight.Value);
-                Size s = new Size(Convert.ToInt32(nudPopupWidth.Value), Convert.ToInt32(nudPopupHeight.Value));
-                _Config.PopupSize = s;
+                _Config.PreviewRows = Convert.ToInt32(nudPreviewRows.Value);
                 _Config.PreviewPopupDelay = Convert.ToInt32(nudPreviewPopupDelay.Value);
                 _Config.StartWithWindows = chkStartup.Checked;
                 _Config.BackColor = pnlBackColor.BackColor;
                 _Config.FontColor = pnlFontColor.BackColor;
-                DialogResult = System.Windows.Forms.DialogResult.OK;   
+                DialogResult = System.Windows.Forms.DialogResult.OK;
             }
         }
-        
+
         public event EventHandler ConfigChanged;
-        
-        
         List<string> _Config;
-        
+
         public Config()
         {
             _Config = new List<string>();
@@ -106,12 +100,11 @@ namespace Clips
             _Config.Clear();
             _Config = null;
         }
-      
+
         private int GetKeyIndex(string Key)
         {
             for (int i = 0; i < _Config.Count; i++)
             {
-                //if (_Config[i].Length >= Key.Length && _Config[i].Substring(0, Key.Length) == Key)
                 if (_Config[i].IndexOf(Key) > -1 && _Config[i].Substring(0, Key.Length) == Key)
                 {
                     return i;
@@ -122,12 +115,12 @@ namespace Clips
 
         private string FindKey(string Key)
         {
-            foreach (String s in _Config) 
+            foreach (String s in _Config)
             {
-                
+
                 if ((s.Length > 0) && (s.Substring(0, s.IndexOf('=')) == Key))
                 {
-                    return s.Substring((s.IndexOf('=') + 1), (s.Length - (s.IndexOf('=')+1)));
+                    return s.Substring((s.IndexOf('=') + 1), (s.Length - (s.IndexOf('=') + 1)));
                 }
             }
 
@@ -147,13 +140,13 @@ namespace Clips
         {
             try
             {
-                if (!(File.Exists(Funcs.AppPath(Consts.CONFIG_FILENAME))))
+                if (!(File.Exists(Funcs.AppPath(CONFIG_FILENAME))))
                 {
-                    FileStream fs = File.Create(Funcs.AppPath(Consts.CONFIG_FILENAME));
+                    FileStream fs = File.Create(Funcs.AppPath(CONFIG_FILENAME));
                     fs.Close();
                 }
 
-                _Config = File.ReadAllLines(Funcs.AppPath(Consts.CONFIG_FILENAME), Encoding.ASCII).ToList();
+                _Config = File.ReadAllLines(Funcs.AppPath(CONFIG_FILENAME), Encoding.ASCII).ToList();
             }
             catch (Exception ee)
             {
@@ -163,9 +156,9 @@ namespace Clips
 
         public void SaveConfiguration()
         {
-            if (File.Exists(Funcs.AppPath(Consts.CONFIG_FILENAME)))
-                File.Delete(Funcs.AppPath(Consts.CONFIG_FILENAME));
-            File.WriteAllLines(Funcs.AppPath(Consts.CONFIG_FILENAME), _Config.ToArray());
+            if (File.Exists(Funcs.AppPath(CONFIG_FILENAME)))
+                File.Delete(Funcs.AppPath(CONFIG_FILENAME));
+            File.WriteAllLines(Funcs.AppPath(CONFIG_FILENAME), _Config.ToArray());
         }
 
         public void ShowConfigForm()
@@ -178,7 +171,7 @@ namespace Clips
                 ConfigChanged(this, null);
             }
             f.Close();
-        }    
+        }
 
         // properties
 
@@ -214,39 +207,19 @@ namespace Clips
             set { SetKey("font_color", value.ToArgb().ToString()); }
         }
 
-        public Boolean StartWithWindows
+        public int MaxClips
         {
-            get
-            {
-                RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
-                string subKey = (string)key.GetValue(Application.ProductName, "");
-                key.Close();
-
-                if (subKey != "")
+            get {
+                string s = FindKey("max_clips");
+                if (s == "")
                 {
-                    return true;
+                    SetKey("max_clips", "50");
+                    return 50;
                 }
                 else
-                    return false;
+                    return Convert.ToInt32(s);
             }
-            set
-            {
-                if (value == false)
-                {
-                    RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
-                    if (key != null)
-                    {
-                        key.DeleteValue(Application.ProductName, false);
-                        key.Close();
-                    }
-                }
-                else
-                {
-                    RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
-                    key.SetValue(Application.ProductName, '"' + Application.ExecutablePath.ToString() + '"');
-                    key.Close();
-                }
-            }
+            set { SetKey("max_clips", value.ToString()); }
         }
 
         public string PopupHotkey
@@ -288,22 +261,6 @@ namespace Clips
             set { SetKey("popup_hotkey_modifier", value.ToString()); }        
         }
 
-        public int DefaultClipHeight
-        {
-            get
-            {
-                string s = FindKey("default_clip_height");
-                if (s == "")
-                {
-                    SetKey("default_clip_height", "50");
-                    return 50;
-                }
-                else
-                    return Convert.ToInt32(s);
-            }
-            set { SetKey("default_clip_height", value.ToString()); }
-        }
-
         public int PreviewPopupDelay
         {
             get
@@ -320,46 +277,52 @@ namespace Clips
             set { SetKey("preview_popup_delay", value.ToString()); }
         }
 
-        public Size PopupSize
+        public int PreviewRows
         {
-            get
-            {
-                string s = FindKey("popup_size");
+            get {
+                string s = FindKey("preview_rows");
                 if (s == "")
                 {
-                    Size sz = new Size(200, 300);
-                    SizeConverter sc = new SizeConverter();
-                    SetKey("popup_size", sc.ConvertToString(sz));
-                    return sz;
-                }
-                else
-                {
-                    SizeConverter sc = new SizeConverter();
-                    Size sz = (Size)sc.ConvertFromString(s);
-                    return sz;
-                }
-            }
-            set 
-            {
-                SizeConverter sc = new SizeConverter();
-                SetKey("popup_size", sc.ConvertToString(value));
-            }
-        }
-
-        public int MaxClips
-        {
-            get
-            {
-                string s = FindKey("max_clips");
-                if (s == "")
-                {
-                    SetKey("max_clips", "50");
-                    return 50;
+                    SetKey("preview_rows", "1");
+                    return 1;
                 }
                 else
                     return Convert.ToInt32(s);
             }
-            set { SetKey("max_clips", value.ToString()); }
+            set { SetKey("preview_rows", value.ToString()); }
+        }
+
+        public Boolean StartWithWindows
+        {
+            get {
+                RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
+                string subKey = (string)key.GetValue(Application.ProductName, "");
+                key.Close();
+
+                if (subKey != "")
+                {
+                    return true;
+                }
+                else
+                    return false;
+            }
+            set {
+                if (value == false)
+                {
+                    RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
+                    if (key != null)
+                    {
+                        key.DeleteValue(Application.ProductName, false);
+                        key.Close();
+                    }
+                }
+                else
+                {
+                    RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
+                    key.SetValue(Application.ProductName, '"' + Application.ExecutablePath.ToString() + '"');
+                    key.Close();
+                }
+            }
         }
 
     }
