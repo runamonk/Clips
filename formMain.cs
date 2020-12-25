@@ -52,16 +52,16 @@ namespace Clips
         {
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
-                addItem(clipboard.ClipboardText, true);
+                addItem(clipboard.ClipboardText, null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Image)
             {
-                addItem(clipboard.ClipboardImage, true);
+                addItem(clipboard.ClipboardImage, null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Files)
             {
                 string s = string.Join(", ", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
-                addItem(s, true);
+                addItem(s, null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Other)
             {
@@ -69,10 +69,90 @@ namespace Clips
             }
         }
 
+        private void ClipsButtonClick(Object sender, MouseEventArgs e)
+        {
+            if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
+                return;
+
+            //DoSwapVisibility();
+            //// Copy to clipboard
+            //// Remove old clip (shift it to the top)
+
+            //if (((ClipsButton)sender).FullImage != null)
+            //{
+            //    Image i = ((ClipsButton)sender).FullImage;
+            //    panelClips.Controls.Remove((ClipsButton)sender);
+            //    Clipboard.SetImage(i);
+            //}
+            //else
+            //    if (((ClipsButton)sender).Text != "")
+            //{
+            //    string s = ((ClipsButton)sender).Text;
+            //    panelClips.Controls.Remove((ClipsButton)sender);
+            //    Clipboard.SetText(s);
+
+            //    if (((Form.ModifierKeys == Keys.Shift) || (e.Button == MouseButtons.Middle)) && (Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute) == true))
+            //    {
+            //        System.Diagnostics.Process.Start(s);
+            //    }
+            //}
+
+            //DoSetSize();
+            //DoSaveClips();
+        }
+
+        private void formMain_Deactivate(object sender, EventArgs e)
+        {
+            if ((Visible == true) && (inPreview == false))
+                toggleShow();
+        }
+
+        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            inClose = true;
+        }
+
         private void formMain_Load(object sender, EventArgs e)
         {
             loadConfig();
             loadItems();
+        }
+
+        private void menuClips_Click(object sender, EventArgs e)
+        {
+            inPreview = true;
+
+            if (sender == menuSave)
+            {
+                SaveFileDialog dlg = new SaveFileDialog();
+
+                dlg.InitialDirectory = "c:\\";
+
+                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text != "")
+                {
+                    dlg.Filter = "Text (*.txt)|Any (*.*)";
+                    dlg.FilterIndex = 1;
+                    if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
+                }
+                else
+                    if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage != null)
+                {
+                    dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
+                    dlg.FilterIndex = 1;
+                    if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                        ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage.Save(dlg.FileName);
+                }
+            }
+            else
+            if (sender == menuDelete)
+            {
+                ClipButton b = ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
+                if (File.Exists(b.FileName))
+                    File.Delete(b.FileName);
+                pClips.Controls.Remove(b);
+
+            }
         }
 
         private void menuClose_Click(object sender, EventArgs e)
@@ -129,50 +209,40 @@ namespace Clips
         #endregion
 
         string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
- 
+
         // methods
-        private void addItem(string text, bool saveToDisk = false)
+        private void addItem(string text, string fileName, bool saveToDisk = false)
         {
+            ClipButton b = newClipButton();
+            b.FullText = text;
+
             var plainTextBytes = Encoding.UTF8.GetBytes(text);
             string base64 = Convert.ToBase64String(plainTextBytes);
             if (saveToDisk)
-                Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
+                b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
+            else
+                b.FileName = fileName;
 
-            ClipButton b = new ClipButton();
-            b.Parent = pClips;
-            b.Dock = DockStyle.Top;
-            b.Height = 20;
-            //b.MouseUp += new MouseEventHandler(Button_Click);
-            b.MouseHover += new EventHandler(PreviewShow);
-            b.MouseLeave += new EventHandler(PreviewHide);
-
-            //b.BackColor = ControlPaint.Dark(_Config.BackColor, 75);
-            //b.BackColor = _Config.BackColor;
-            //b.ForeColor = _Config.FontColor;
-
-            b.FlatAppearance.BorderSize = 0;
-            b.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            b.TextAlign = ContentAlignment.TopLeft;
-            b.AutoEllipsis = false;
-            //b.ContextMenuStrip = menuClips;
-            b.ImageAlign = ContentAlignment.MiddleLeft;
             var result = text.TrimStart().Split(new string[] { "\\n" }, StringSplitOptions.None);
- 
-            b.FullText = text;
-            b.Text = result[0];
-
             // if (Uri.IsWellFormedUriString(Text, UriKind.Absolute))
             //   b.Font = new Font (b.Font, FontStyle.Underline);
-            //b.Image = Image.GetThumbnailImage(_Config.DefaultClipHeight - 5, _Config.DefaultClipHeight - 5, null, IntPtr.Zero);
+            b.Text = result[0];
         }
 
-        private void addItem(Image image, bool saveToDisk = false)
+        private void addItem(Image image, string fileName, bool saveToDisk = false)
         {
+            ClipButton b = newClipButton();
+            b.FullImage = image;
+
             MemoryStream ms = new MemoryStream();
             image.Save(ms, ImageFormat.Png);
             string base64 = Convert.ToBase64String(ms.ToArray());
             if (saveToDisk)
-                Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
+                b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
+            else
+                b.FileName = fileName;
+                        
+            b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
         }
 
         private void loadConfig()
@@ -202,7 +272,7 @@ namespace Clips
                     try
                     {
                         Bitmap img = new Bitmap(ms);
-                        addItem(img);
+                        addItem(img, file, false);
                         if (img != null) img = null;
                     }
                     finally
@@ -214,11 +284,34 @@ namespace Clips
                 {
                     var base64EncodedBytes = Convert.FromBase64String(data.InnerText);
                     string decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
-                    addItem(decodedString);
+                    addItem(decodedString, file, false);
                 }
                 doc = null;
             }
 
+        }
+
+        private ClipButton newClipButton()
+        {
+            ClipButton b = new ClipButton();
+            b.Parent = pClips;
+            b.Dock = DockStyle.Top;
+            b.Height = 20;
+            b.MouseUp += new MouseEventHandler(ClipsButtonClick);
+            b.MouseHover += new EventHandler(PreviewShow);
+            b.MouseLeave += new EventHandler(PreviewHide);
+
+            //b.BackColor = ControlPaint.Dark(_Config.BackColor, 75);
+            //b.BackColor = _Config.BackColor;
+            //b.ForeColor = _Config.FontColor;
+
+            b.FlatAppearance.BorderSize = 0;
+            b.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            b.TextAlign = ContentAlignment.TopLeft;
+            b.AutoEllipsis = false;
+            b.ContextMenuStrip = menuClips;
+            b.ImageAlign = ContentAlignment.MiddleLeft;
+            return b;
         }
 
         private void PreviewHide(object sender, EventArgs e)
@@ -252,17 +345,6 @@ namespace Clips
                 Visible = true;
                 Activate();
             }
-        }
-
-        private void formMain_Deactivate(object sender, EventArgs e)
-        {
-            if ((Visible == true) && (inPreview == false))
-                toggleShow();
-        }
-
-        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            inClose = true;
         }
     } // formMain
 

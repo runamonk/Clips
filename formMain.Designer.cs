@@ -44,10 +44,14 @@
             this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
             this.pMain = new System.Windows.Forms.Panel();
             this.pClips = new System.Windows.Forms.Panel();
+            this.menuClips = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.menuSave = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuDelete = new System.Windows.Forms.ToolStripMenuItem();
             this.menuNotify.SuspendLayout();
             this.pTop.SuspendLayout();
             this.toolStripMain.SuspendLayout();
             this.pMain.SuspendLayout();
+            this.menuClips.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyClips
@@ -181,6 +185,28 @@
             this.pClips.Size = new System.Drawing.Size(800, 422);
             this.pClips.TabIndex = 1;
             // 
+            // menuClips
+            // 
+            this.menuClips.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.menuSave,
+            this.menuDelete});
+            this.menuClips.Name = "menuClips";
+            this.menuClips.Size = new System.Drawing.Size(181, 70);
+            // 
+            // menuSave
+            // 
+            this.menuSave.Name = "menuSave";
+            this.menuSave.Size = new System.Drawing.Size(180, 22);
+            this.menuSave.Text = "Save";
+            this.menuSave.Click += new System.EventHandler(this.menuClips_Click);
+            // 
+            // menuDelete
+            // 
+            this.menuDelete.Name = "menuDelete";
+            this.menuDelete.Size = new System.Drawing.Size(180, 22);
+            this.menuDelete.Text = "Delete";
+            this.menuDelete.Click += new System.EventHandler(this.menuClips_Click);
+            // 
             // formMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -203,6 +229,7 @@
             this.toolStripMain.ResumeLayout(false);
             this.toolStripMain.PerformLayout();
             this.pMain.ResumeLayout(false);
+            this.menuClips.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -222,6 +249,9 @@
         private System.Windows.Forms.ToolStripMenuItem menuClose;
         private System.Windows.Forms.Panel pMain;
         private System.Windows.Forms.Panel pClips;
+        private System.Windows.Forms.ContextMenuStrip menuClips;
+        private System.Windows.Forms.ToolStripMenuItem menuSave;
+        private System.Windows.Forms.ToolStripMenuItem menuDelete;
     }
 }
 

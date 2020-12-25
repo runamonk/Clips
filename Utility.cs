@@ -49,13 +49,14 @@ namespace Utility
                 return sb.ToString();
         }
 
-        public static void SaveToCache(string fileContents)
+        public static string SaveToCache(string fileContents)
         {
-            string randFileName = RandomString(25, true) + ".xml";
+            string randFileName = AppPath() + "\\Cache\\" + RandomString(25, true) + ".xml";
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(fileContents);            
-            doc.Save(AppPath() + "\\Cache\\" + randFileName);
+            doc.Save(randFileName);
             doc = null;
+            return randFileName;
         }
     }
 }

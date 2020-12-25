@@ -28,11 +28,11 @@ namespace Clips
 
         public void ShowPreview(string Text, Image Img, int PopupDelay)
         {
-            if (((Text == "") && (Img == null)) || (PopupDelay == 0))
+            if ((string.IsNullOrEmpty(Text) && (Img == null)) || (PopupDelay == 0))
                 return;
 
-            if (Text != "")
-            {
+            if (!string.IsNullOrEmpty(Text))
+            { 
                 textPreview.BackColor = BackColor;
                 textPreview.ForeColor = ForeColor;
 
