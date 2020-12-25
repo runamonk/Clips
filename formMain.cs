@@ -49,6 +49,7 @@ namespace Clips
         private void ConfigChanged(object sender, EventArgs e)
         {
             loadConfig();
+            cleanupCache();
         }
 
         private void clipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
@@ -219,6 +220,7 @@ namespace Clips
         private void addItem(string text, string fileName, bool saveToDisk = false)
         {
             if (text == lastText) return;
+
             lastText = text;
             ClipButton b = newClipButton();
             b.FullText = text;
@@ -255,6 +257,27 @@ namespace Clips
                 b.FileName = fileName;
                         
             b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
+        }
+
+        private void cleanupCache()
+        {
+            if (pClips.Controls.Count >= _Config.MaxClips)
+            {
+                int clipsToDelete = (pClips.Controls.Count - _Config.MaxClips);
+                while (clipsToDelete > 0)
+                {
+                    deleteOldestClip();
+                    clipsToDelete--;
+                }
+            }
+        }
+
+        private void deleteOldestClip()
+        {
+            ClipButton cb = ((ClipButton)pClips.Controls[pClips.Controls.Count - 1]);
+            if (File.Exists(cb.FileName))
+                File.Delete(cb.FileName);
+            pClips.Controls.RemoveAt(pClips.Controls.Count - 1);
         }
 
         private void loadConfig()
@@ -302,7 +325,6 @@ namespace Clips
                 }
                 doc = null;
             }
-             
             ResumeLayout();
 
             //pClips.AutoScrollPosition = new Point(pClips.AutoScrollPosition.X, 0);
@@ -311,6 +333,9 @@ namespace Clips
 
         private ClipButton newClipButton()
         {
+            if (pClips.Controls.Count >= _Config.MaxClips)
+                deleteOldestClip();
+
             ClipButton b = new ClipButton();
             b.TabStop = false;
             b.Parent = pClips;
