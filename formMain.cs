@@ -42,6 +42,8 @@ namespace Clips
         private bool inPreview = false;
         private bool inClose = false;
         private bool inSettings = false;
+        Image lastImage = null;
+        string lastText = null;
         
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace Clips
         }
 
         private void clipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
-        {
+        {    
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
                 addItem(clipboard.ClipboardText, null, true);
@@ -216,6 +218,8 @@ namespace Clips
         // methods
         private void addItem(string text, string fileName, bool saveToDisk = false)
         {
+            if (text == lastText) return;
+            lastText = text;
             ClipButton b = newClipButton();
             b.FullText = text;
 
@@ -234,7 +238,10 @@ namespace Clips
         }
 
         private void addItem(Image image, string fileName, bool saveToDisk = false)
-        {
+        {           
+            if ((lastImage != null) && (image.Size == lastImage.Size)) return;
+            lastImage = image;
+
             ClipButton b = newClipButton();
             b.Height = 60;
             b.FullImage = image;
@@ -264,6 +271,7 @@ namespace Clips
 
         private void loadItems()
         {
+            SuspendLayout();
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
             {
@@ -294,12 +302,17 @@ namespace Clips
                 }
                 doc = null;
             }
+             
+            ResumeLayout();
 
+            //pClips.AutoScrollPosition = new Point(pClips.AutoScrollPosition.X, 0);
+            pClips.VerticalScroll.Value = 0;
         }
 
         private ClipButton newClipButton()
         {
             ClipButton b = new ClipButton();
+            b.TabStop = false;
             b.Parent = pClips;
             b.Dock = DockStyle.Top;
             b.Height = 20;
