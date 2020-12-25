@@ -21,6 +21,7 @@ namespace Clips
         public formMain()
         {
             InitializeComponent();
+            MouseWheel += frmMain_MouseWheel;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -116,6 +117,25 @@ namespace Clips
         {
             loadConfig();
             loadItems();
+        }
+
+        void frmMain_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta > 0)
+            {
+
+                if (pClips.VerticalScroll.Value - 2 >= pClips.VerticalScroll.Minimum)
+                    pClips.VerticalScroll.Value -= 2;
+                else
+                    pClips.VerticalScroll.Value = pClips.VerticalScroll.Minimum;
+            }
+            else
+            {
+                if (pClips.VerticalScroll.Value + 2 <= pClips.VerticalScroll.Minimum)
+                    pClips.VerticalScroll.Value += 2;
+                else
+                    pClips.VerticalScroll.Value = pClips.VerticalScroll.Maximum;
+            }
         }
 
         private void menuClips_Click(object sender, EventArgs e)
