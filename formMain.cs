@@ -41,6 +41,8 @@ namespace Clips
         formPreview formPreview = new formPreview();
         private bool inPreview = false;
         private bool inClose = false;
+        private bool inSettings = false;
+        
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
@@ -102,7 +104,7 @@ namespace Clips
 
         private void formMain_Deactivate(object sender, EventArgs e)
         {
-            if ((Visible == true) && (inPreview == false))
+            if ((Visible == true) && (inPreview == false) && (!inSettings))
                 toggleShow();
         }
 
@@ -161,7 +163,9 @@ namespace Clips
 
         private void menuSettings_Click(object sender, EventArgs e)
         {
+            inSettings = true;
             _Config.ShowConfigForm();
+            inSettings = false;
         }
 
         private void menuMonitorClipboard_Click(object sender, EventArgs e)
@@ -225,6 +229,7 @@ namespace Clips
             var result = text.TrimStart().Split(new string[] { "\\n" }, StringSplitOptions.None);
             // if (Uri.IsWellFormedUriString(Text, UriKind.Absolute))
             //   b.Font = new Font (b.Font, FontStyle.Underline);
+            // TODO set height based on number of lines to show.
             b.Text = result[0];
         }
 
