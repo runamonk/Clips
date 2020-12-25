@@ -42,6 +42,7 @@ namespace Clips
         private bool inPreview = false;
         private bool inClose = false;
         private bool inSettings = false;
+
         Image lastImage = null;
         string lastText = null;
         
@@ -199,8 +200,6 @@ namespace Clips
 
         protected override void OnLoad(EventArgs e)
         {
-            Visible = false;
-            Opacity = 0;
             base.OnLoad(e);
         }
 
@@ -379,12 +378,11 @@ namespace Clips
             if (inClose) return;
 
             // for some reason during form closing event the opacity is set to 1.
-            if ((Visible) && (Opacity == 100) || (Opacity == 1))
+            if ((Visible) && ((Opacity == 0) || (Opacity == 1)))
             {
                 Visible = false;
-                Opacity = 0;
-            }
-                
+                Opacity = 1;
+            }               
             else
             {
                 Opacity = 100;
@@ -399,7 +397,7 @@ namespace Clips
     {
         public ClipButton()
         {
-
+            
         }
 
         // Stops the black default border from being displayed on button when the preview form is shown.

@@ -191,19 +191,19 @@
             this.menuSave,
             this.menuDelete});
             this.menuClips.Name = "menuClips";
-            this.menuClips.Size = new System.Drawing.Size(181, 70);
+            this.menuClips.Size = new System.Drawing.Size(108, 48);
             // 
             // menuSave
             // 
             this.menuSave.Name = "menuSave";
-            this.menuSave.Size = new System.Drawing.Size(180, 22);
+            this.menuSave.Size = new System.Drawing.Size(107, 22);
             this.menuSave.Text = "Save";
             this.menuSave.Click += new System.EventHandler(this.menuClips_Click);
             // 
             // menuDelete
             // 
             this.menuDelete.Name = "menuDelete";
-            this.menuDelete.Size = new System.Drawing.Size(180, 22);
+            this.menuDelete.Size = new System.Drawing.Size(107, 22);
             this.menuDelete.Text = "Delete";
             this.menuDelete.Click += new System.EventHandler(this.menuClips_Click);
             // 
@@ -216,6 +216,7 @@
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.pTop);
             this.Name = "formMain";
+            this.Opacity = 0D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
