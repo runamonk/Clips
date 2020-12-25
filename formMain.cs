@@ -21,7 +21,6 @@ namespace Clips
         public formMain()
         {
             InitializeComponent();
-            MouseWheel += frmMain_MouseWheel;
         }
 
         public const int WM_NCLBUTTONDOWN = 0xA1;
@@ -42,7 +41,6 @@ namespace Clips
         formPreview formPreview = new formPreview();
         private bool inPreview = false;
         private bool inClose = false;
-
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
@@ -117,25 +115,6 @@ namespace Clips
         {
             loadConfig();
             loadItems();
-        }
-
-        void frmMain_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (e.Delta > 0)
-            {
-
-                if (pClips.VerticalScroll.Value - 2 >= pClips.VerticalScroll.Minimum)
-                    pClips.VerticalScroll.Value -= 2;
-                else
-                    pClips.VerticalScroll.Value = pClips.VerticalScroll.Minimum;
-            }
-            else
-            {
-                if (pClips.VerticalScroll.Value + 2 <= pClips.VerticalScroll.Minimum)
-                    pClips.VerticalScroll.Value += 2;
-                else
-                    pClips.VerticalScroll.Value = pClips.VerticalScroll.Maximum;
-            }
         }
 
         private void menuClips_Click(object sender, EventArgs e)
@@ -252,6 +231,7 @@ namespace Clips
         private void addItem(Image image, string fileName, bool saveToDisk = false)
         {
             ClipButton b = newClipButton();
+            b.Height = 60;
             b.FullImage = image;
 
             MemoryStream ms = new MemoryStream();
@@ -272,7 +252,8 @@ namespace Clips
                 _Config = new Config();
                 _Config.ConfigChanged += new EventHandler(ConfigChanged);
             }
-
+            pClips.AutoScroll = true;
+            pClips.VerticalScroll.Visible = true;
             RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
         }
 
@@ -343,6 +324,8 @@ namespace Clips
         private void PreviewShow(object sender, EventArgs e)
         {
             inPreview = true;
+            ((ClipButton)sender).Select();
+
             formPreview.BackColor = _Config.BackColor;
             formPreview.ForeColor = _Config.FontColor;
             formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay);
