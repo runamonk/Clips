@@ -335,8 +335,8 @@ namespace Clips
                 string s = FindKey("menu_selected_color");
                 if (s == "")
                 {
-                    SetKey("menu_selected_color", Color.FromName("Control").ToArgb().ToString());
-                    return Color.FromName("Control");
+                    SetKey("menu_selected_color", Color.FromName("MenuHighlight").ToArgb().ToString());
+                    return Color.FromName("MenuHighlight");
                 }
                 else
                     return Color.FromArgb(Convert.ToInt32(s));

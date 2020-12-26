@@ -80,6 +80,7 @@ namespace Clips
         {
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
                 return;
+            //TODO ClipsButtonClick.
 
             //DoSwapVisibility();
             //// Copy to clipboard
