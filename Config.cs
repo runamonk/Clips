@@ -50,8 +50,12 @@ namespace Clips
                     nudMaxClips.Value = _Config.ClipsMaxClips;
                     nudPreviewMaxLines.Value = _Config.PreviewMaxLines;
                     nudPreviewPopupDelay.Value = _Config.PreviewPopupDelay;
-                    pnlBackColor.BackColor = _Config.BackColor;
-                    pnlFontColor.BackColor = _Config.FontColor;
+                    pnlPreviewBackColor.BackColor = _Config.PreviewBackColor;
+                    pnlPreviewFontColor.BackColor = _Config.PreviewFontColor;
+                    pnlClipsBackColor.BackColor = _Config.ClipsBackColor;
+                    pnlClipsFontColor.BackColor = _Config.ClipsFontColor;
+                    pnlClipsRowColor.BackColor = _Config.ClipsRowBackColor;
+                    pnlHeaderColor.BackColor = _Config.ClipsHeaderColor;
                 }
             }
 
@@ -80,11 +84,15 @@ namespace Clips
                 _Config.PopupHotkeyModifier = i;
                 _Config.ClipsMaxClips = Convert.ToInt32(nudMaxClips.Value);
                 _Config.ClipsLinesPerRow = Convert.ToInt32(nudClipsLinesPerRow.Value);
+                _Config.ClipsRowBackColor = pnlClipsRowColor.BackColor;
+                _Config.ClipsFontColor = pnlClipsFontColor.BackColor;
+                _Config.ClipsBackColor = pnlClipsBackColor.BackColor;
+                _Config.ClipsHeaderColor = pnlHeaderColor.BackColor;
                 _Config.PreviewMaxLines = Convert.ToInt32(nudPreviewMaxLines.Value);
                 _Config.PreviewPopupDelay = Convert.ToInt32(nudPreviewPopupDelay.Value);
                 _Config.StartWithWindows = chkStartup.Checked;
-                _Config.BackColor = pnlBackColor.BackColor;
-                _Config.FontColor = pnlFontColor.BackColor;
+                _Config.PreviewBackColor = pnlPreviewBackColor.BackColor;
+                _Config.PreviewFontColor = pnlPreviewFontColor.BackColor;               
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
         }
@@ -177,36 +185,49 @@ namespace Clips
 
         // properties
 
-        public Color BackColor
+        public Color ClipsBackColor
         {
-            get
-            {
-                string s = FindKey("back_color");
+            get {
+                string s = FindKey("clips_back_color");
                 if (s == "")
                 {
-                    SetKey("back_color", Color.FromName("Control").ToArgb().ToString());
+                    SetKey("clips_back_color", Color.FromName("Control").ToArgb().ToString());
                     return Color.FromName("Control");
                 }
                 else
                     return Color.FromArgb(Convert.ToInt32(s));
             }
-            set { SetKey("back_color", value.ToArgb().ToString()); }
+            set { SetKey("clips_back_color", value.ToArgb().ToString()); }
         }
 
-        public Color FontColor
+        public Color ClipsFontColor
         {
-            get
-            {
-                string s = FindKey("font_color");
+            get {
+                string s = FindKey("clips_font_color");
                 if (s == "")
                 {
-                    SetKey("font_color", Color.FromName("ControlText").ToArgb().ToString());
+                    SetKey("clips_font_color", Color.FromName("ControlText").ToArgb().ToString());
                     return Color.FromName("ControlText");
                 }
                 else
                     return Color.FromArgb(Convert.ToInt32(s));
             }
-            set { SetKey("font_color", value.ToArgb().ToString()); }
+            set { SetKey("clips_font_color", value.ToArgb().ToString()); }
+        }
+
+        public Color ClipsHeaderColor
+        {
+            get {
+                string s = FindKey("clips_header_color");
+                if (s == "")
+                {
+                    SetKey("clips_header_color", Color.FromName("Control").ToArgb().ToString());
+                    return Color.FromName("Control");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("clips_header_color", value.ToArgb().ToString()); }
         }
 
         public int ClipsLinesPerRow
@@ -222,6 +243,21 @@ namespace Clips
                     return Convert.ToInt32(s);
             }
             set { SetKey("clips_lines_per_row", value.ToString()); }
+        }
+
+        public Color ClipsRowBackColor
+        {
+            get {
+                string s = FindKey("clips_row_back_color");
+                if (s == "")
+                {
+                    SetKey("clips_row_back_color", Color.FromName("Control").ToArgb().ToString());
+                    return Color.FromName("Control");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("clips_row_back_color", value.ToArgb().ToString()); }
         }
 
         public int ClipsMaxClips
@@ -278,6 +314,36 @@ namespace Clips
             set { SetKey("popup_hotkey_modifier", value.ToString()); }        
         }
 
+        public Color PreviewBackColor
+        {
+            get {
+                string s = FindKey("preview_back_color");
+                if (s == "")
+                {
+                    SetKey("preview_back_color", Color.FromName("Control").ToArgb().ToString());
+                    return Color.FromName("Control");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("preview_back_color", value.ToArgb().ToString()); }
+        }
+
+        public Color PreviewFontColor
+        {
+            get {
+                string s = FindKey("preview_font_color");
+                if (s == "")
+                {
+                    SetKey("preview_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                    return Color.FromName("ControlText");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("preview_font_color", value.ToArgb().ToString()); }
+        }
+
         public int PreviewPopupDelay
         {
             get
@@ -301,7 +367,7 @@ namespace Clips
                 if (s == "")
                 {
                     SetKey("preview_max_lines", "50");
-                    return 1;
+                    return 50;
                 }
                 else
                     return Convert.ToInt32(s);

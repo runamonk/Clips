@@ -41,30 +41,12 @@ namespace Clips
             e.Handled = true; // this will stop the key pressed from actually entering into the text box.
         }
 
-        private void pnlBackColor_MouseClick(object sender, MouseEventArgs e)
+        private void ColorControl_MouseClick(object sender, MouseEventArgs e)
         {
-            if (dlgColor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            if (dlgColor.ShowDialog() == DialogResult.OK)
             {
-                pnlBackColor.BackColor = dlgColor.Color;
+                ((Panel)sender).BackColor = dlgColor.Color;
             }
-        }
-
-        private void pnlFontColor_MouseClick(object sender, MouseEventArgs e)
-        {
-            if (dlgColor.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                pnlFontColor.BackColor = dlgColor.Color;
-            }
-        }
-
-        private void label4_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void numericUpDown1_ValueChanged(object sender, EventArgs e)
-        {
-
         }
     }
 }

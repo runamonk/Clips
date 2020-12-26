@@ -20,6 +20,7 @@ namespace Clips
         protected override CreateParams CreateParams
         {
             get {
+                //Add a DropShadow
                 CreateParams cp = base.CreateParams;
                 cp.ClassStyle |= 0x00020000;
                 return cp;
@@ -38,9 +39,13 @@ namespace Clips
                 textPreview.Clear();
 
                 string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
+                int i = 0;
                 if (s.Count() >= maxLines)
-                    for (int i = 0; i <= maxLines; i++)
+                    while (textPreview.Lines.Count() < maxLines)
+                    {
                         textPreview.AppendText(s[i]);
+                        i++;
+                    }
                 else
                     textPreview.Text = text;
 

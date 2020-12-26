@@ -42,6 +42,7 @@ namespace Clips
         private bool inPreview = false;
         private bool inClose = false;
         private bool inSettings = false;
+        ClipButton buttonMain;
 
         Image lastImage = null;
         string lastText = null;
@@ -124,6 +125,12 @@ namespace Clips
             loadItems();
         }
 
+        private void mainButton_Click(object sender, EventArgs e)
+        {
+            Button b = ((Button)sender);
+            menuNotify.Show(b.Left + b.Width + this.Left, b.Top + b.Height + this.Top);
+        }
+
         private void menuInsertTestClips_Click(object sender, EventArgs e)
         {
             int toInsert = (_Config.ClipsMaxClips - pClips.Controls.Count);
@@ -189,26 +196,12 @@ namespace Clips
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             clipboard.MonitorClipboard = item.Checked;
-
-            if (item != menuMonitorClipboard)
-                menuNotifyMonitorClipboard.Checked = item.Checked;
-            else
-                menuMonitorClipboard.Checked = item.Checked;
+            menuNotifyMonitorClipboard.Checked = item.Checked;
         }
 
         private void notifyClips_DoubleClick(object sender, EventArgs e)
         {
             toggleShow();
-        }
-
-        private void toolStripMain_MouseDown(object sender, MouseEventArgs e)
-        {
-            // drag form.
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
         }
 
         protected override void OnLoad(EventArgs e)
@@ -308,10 +301,21 @@ namespace Clips
             {
                 _Config = new Config();
                 _Config.ConfigChanged += new EventHandler(ConfigChanged);
+                buttonMain = new ClipButton();
+                buttonMain.Text = "...";
+                buttonMain.Width = 25;
+                buttonMain.Parent = pTop;
+                buttonMain.Dock = DockStyle.Left;
+                buttonMain.Click += mainButton_Click;
             }
             
             pClips.AutoScroll = true;
             pClips.VerticalScroll.Visible = true;
+            pClips.BackColor = _Config.ClipsBackColor;
+            pTop.BackColor = _Config.ClipsHeaderColor;
+            buttonMain.BackColor = _Config.ClipsHeaderColor;
+            this.BackColor = ControlPaint.Dark(_Config.ClipsBackColor, 75);
+
 
             // TODO UNRegister the old hotkey if it's changed.
             RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
@@ -372,15 +376,9 @@ namespace Clips
             b.MouseUp += new MouseEventHandler(ClipsButtonClick);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
-
-            //b.BackColor = ControlPaint.Dark(_Config.BackColor, 75);
-            //b.BackColor = _Config.BackColor;
-            //b.ForeColor = _Config.FontColor;
-
-            b.FlatAppearance.BorderSize = 0;
-            b.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            b.TextAlign = ContentAlignment.TopLeft;
-            b.AutoEllipsis = false;
+            b.BackColor = ControlPaint.Dark(_Config.ClipsRowBackColor, 75);
+            b.BackColor = _Config.ClipsRowBackColor;
+            b.ForeColor = _Config.ClipsFontColor;
             b.ContextMenuStrip = menuClips;
             b.ImageAlign = ContentAlignment.MiddleLeft;
             return b;
@@ -397,8 +395,8 @@ namespace Clips
             inPreview = true;
             ((ClipButton)sender).Select();
 
-            formPreview.BackColor = _Config.BackColor;
-            formPreview.ForeColor = _Config.FontColor;
+            formPreview.BackColor = _Config.PreviewBackColor;
+            formPreview.ForeColor = _Config.PreviewFontColor;
             formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay, _Config.PreviewMaxLines);
         }
 
@@ -420,6 +418,15 @@ namespace Clips
             }
         }
 
+        private void pTop_MouseDown(object sender, MouseEventArgs e)
+        {
+            // drag form.
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
     } // formMain
 
     // ClipButton
@@ -427,7 +434,10 @@ namespace Clips
     {
         public ClipButton()
         {
-            
+            FlatAppearance.BorderSize = 0;
+            FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            TextAlign = ContentAlignment.TopLeft;
+            AutoEllipsis = false;
         }
 
         // Stops the black default border from being displayed on button when the preview form is shown.
