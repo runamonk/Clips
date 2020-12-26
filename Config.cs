@@ -56,6 +56,10 @@ namespace Clips
                     pnlClipsFontColor.BackColor = _Config.ClipsFontColor;
                     pnlClipsRowColor.BackColor = _Config.ClipsRowBackColor;
                     pnlHeaderColor.BackColor = _Config.ClipsHeaderColor;
+                    pnlMenuBackColor.BackColor = _Config.MenuBackColor;
+                    pnlMenuBorderColor.BackColor = _Config.MenuBorderColor;
+                    pnlMenuFontColor.BackColor = _Config.MenuFontColor;
+                    pnlMenuSelectedColor.BackColor = _Config.MenuSelectedColor;
                 }
             }
 
@@ -92,7 +96,12 @@ namespace Clips
                 _Config.PreviewPopupDelay = Convert.ToInt32(nudPreviewPopupDelay.Value);
                 _Config.StartWithWindows = chkStartup.Checked;
                 _Config.PreviewBackColor = pnlPreviewBackColor.BackColor;
-                _Config.PreviewFontColor = pnlPreviewFontColor.BackColor;               
+                _Config.PreviewFontColor = pnlPreviewFontColor.BackColor;
+                _Config.MenuBackColor = pnlMenuBackColor.BackColor;
+                _Config.MenuBorderColor = pnlMenuBorderColor.BackColor;
+                _Config.MenuFontColor = pnlMenuFontColor.BackColor;
+                _Config.MenuSelectedColor = pnlMenuSelectedColor.BackColor;
+
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
         }
@@ -273,6 +282,66 @@ namespace Clips
                     return Convert.ToInt32(s);
             }
             set { SetKey("clips_max_clips", value.ToString()); }
+        }
+
+        public Color MenuBackColor
+        {
+            get {
+                string s = FindKey("menu_back_color");
+                if (s == "")
+                {
+                    SetKey("menu_back_color", Color.FromName("Control").ToArgb().ToString());
+                    return Color.FromName("Control");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("menu_back_color", value.ToArgb().ToString()); }
+        }
+
+        public Color MenuBorderColor
+        {
+            get {
+                string s = FindKey("menu_border_color");
+                if (s == "")
+                {
+                    SetKey("menu_border_color", Color.FromName("Control").ToArgb().ToString());
+                    return Color.FromName("Control");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("menu_border_color", value.ToArgb().ToString()); }
+        }
+
+        public Color MenuFontColor
+        {
+            get {
+                string s = FindKey("menu_font_color");
+                if (s == "")
+                {
+                    SetKey("menu_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                    return Color.FromName("ControlText");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("menu_font_color", value.ToArgb().ToString()); }
+        }
+
+        public Color MenuSelectedColor
+        {
+            get {
+                string s = FindKey("menu_selected_color");
+                if (s == "")
+                {
+                    SetKey("menu_selected_color", Color.FromName("Control").ToArgb().ToString());
+                    return Color.FromName("Control");
+                }
+                else
+                    return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("menu_selected_color", value.ToArgb().ToString()); }
         }
 
         public string PopupHotkey

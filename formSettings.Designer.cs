@@ -73,7 +73,7 @@
             this.label12 = new System.Windows.Forms.Label();
             this.pnlMenuBorderColor = new System.Windows.Forms.Panel();
             this.label13 = new System.Windows.Forms.Label();
-            this.pnlMenuSelected = new System.Windows.Forms.Panel();
+            this.pnlMenuSelectedColor = new System.Windows.Forms.Panel();
             this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.lblBackColor = new System.Windows.Forms.Label();
             this.lblFontColor = new System.Windows.Forms.Label();
@@ -412,7 +412,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.pnlMenuSelected);
+            this.groupBox3.Controls.Add(this.pnlMenuSelectedColor);
             this.groupBox3.Controls.Add(this.label12);
             this.groupBox3.Controls.Add(this.pnlMenuBorderColor);
             this.groupBox3.Controls.Add(this.label11);
@@ -589,14 +589,14 @@
             this.label13.Text = "Selected";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlMenuSelected
+            // pnlMenuSelectedColor
             // 
-            this.pnlMenuSelected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuSelected.Location = new System.Drawing.Point(6, 117);
-            this.pnlMenuSelected.Name = "pnlMenuSelected";
-            this.pnlMenuSelected.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuSelected.TabIndex = 3;
-            this.pnlMenuSelected.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            this.pnlMenuSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMenuSelectedColor.Location = new System.Drawing.Point(6, 117);
+            this.pnlMenuSelectedColor.Name = "pnlMenuSelectedColor";
+            this.pnlMenuSelectedColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlMenuSelectedColor.TabIndex = 3;
+            this.pnlMenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // groupBox5
             // 
@@ -734,7 +734,7 @@
         public System.Windows.Forms.Panel pnlClipsFontColor;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label13;
-        public System.Windows.Forms.Panel pnlMenuSelected;
+        public System.Windows.Forms.Panel pnlMenuSelectedColor;
         private System.Windows.Forms.Label label12;
         public System.Windows.Forms.Panel pnlMenuBorderColor;
         private System.Windows.Forms.Label label11;
