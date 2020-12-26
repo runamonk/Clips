@@ -40,8 +40,8 @@ namespace Clips
 
                 string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
                 int i = 0;
-                if (s.Count() >= maxLines)
-                    while (textPreview.Lines.Count() < maxLines)
+                if (s.Count() > maxLines)
+                    while (i <= maxLines)
                     {
                         textPreview.AppendText(s[i]);
                         i++;
@@ -99,7 +99,7 @@ namespace Clips
             this.Location = p;
         }
 
-        private void timerShowForm_Tick(object sender, EventArgs e)
+        private void TimerShowForm_Tick(object sender, EventArgs e)
         {
             timerShowForm.Enabled = false;
             DoMoveFormToCursor();

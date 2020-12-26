@@ -1,6 +1,6 @@
 ﻿namespace Clips
 {
-    partial class formSettings
+    partial class FormSettings
     {
         /// <summary>
         /// Required designer variable.
@@ -118,8 +118,8 @@
             this.textHotkey.Size = new System.Drawing.Size(80, 20);
             this.textHotkey.TabIndex = 0;
             this.toolTip1.SetToolTip(this.textHotkey, "Press key to define as a hotkey.");
-            this.textHotkey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textHotkey_KeyDown);
-            this.textHotkey.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textHotkey_KeyPress);
+            this.textHotkey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TextHotkey_KeyDown);
+            this.textHotkey.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TextHotkey_KeyPress);
             // 
             // chkWin
             // 
@@ -398,7 +398,7 @@
             this.btnCancel.TabIndex = 1;
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // btnOK
             // 
@@ -670,8 +670,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Clips Configuration";
             this.TopMost = true;
-            this.Load += new System.EventHandler(this.formSettings_Load);
-            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.formConfig_KeyDown);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormConfig_KeyDown);
             this.gbHotkey.ResumeLayout(false);
             this.gbHotkey.PerformLayout();
             this.gbSizes.ResumeLayout(false);

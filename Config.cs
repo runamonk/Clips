@@ -15,7 +15,7 @@ namespace Clips
     {
         public const string CONFIG_FILENAME = "Clips.cfg";
 
-        public partial class _formSettings : formSettings
+        public partial class _formSettings : FormSettings
         {
             public _formSettings()
             {

@@ -16,9 +16,9 @@ using System.Drawing.Imaging;
 
 namespace Clips
 {
-    public partial class formMain : Form
+    public partial class FormMain : Form
     {
-        public formMain()
+        public FormMain()
         {
             InitializeComponent();
         }
@@ -37,38 +37,41 @@ namespace Clips
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        Config _Config;
         formPreview formPreview = new formPreview();
+
         private bool inPreview = false;
         private bool inClose = false;
         private bool inSettings = false;
-        ClipButton buttonMain;
 
-        Image lastImage = null;
-        string lastText = null;
+        private ClipButton ButtonMain { get; set; }
+        private Config Config { get; set; }
+        private Image LastImage { get; set; }
+        private string LastText { get; set; }
+
+        // TODO Add ability to pin a clip.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
-            loadConfig();
-            cleanupCache();
-            loadItems();
+            LoadConfig();
+            CleanupCache();
+            LoadItems();
         }
 
-        private void clipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
+        private void ClipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {    
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
-                addItem(clipboard.ClipboardText, null, true);
+                AddItem(clipboard.ClipboardText, null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Image)
             {
-                addItem(clipboard.ClipboardImage, null, true);
+                AddItem(clipboard.ClipboardImage, null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Files)
             {
                 string s = string.Join(", ", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
-                addItem(s, null, true);
+                AddItem(s, null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Other)
             {
@@ -88,8 +91,8 @@ namespace Clips
             }
 
             SuspendLayout();
-            lastImage = null;
-            lastText = null;
+            LastImage = null;
+            LastText = null;
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
                 return;
             if (((ClipButton)sender).FullImage != null)
@@ -113,49 +116,50 @@ namespace Clips
             ResumeLayout();
         }
 
-        private void formMain_Deactivate(object sender, EventArgs e)
+        private void FormMain_Deactivate(object sender, EventArgs e)
         {
             if ((Visible == true) && (inPreview == false) && (!inSettings))
-                toggleShow();
+                ToggleShow();
         }
 
-        private void formMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
         {
             inClose = true;
         }
 
-        private void formMain_Load(object sender, EventArgs e)
+        private void FormMain_Load(object sender, EventArgs e)
         {
-            loadConfig();
-            loadItems();
+            LoadConfig();
+            LoadItems();
         }
 
-        private void mainButton_Click(object sender, EventArgs e)
+        private void MainButton_Click(object sender, EventArgs e)
         {
             Button b = ((Button)sender);
             menuNotify.Show(b.Left + b.Width + this.Left, b.Top + b.Height + this.Top);
         }
 
-        private void menuInsertTestClips_Click(object sender, EventArgs e)
+        private void MenuInsertTestClips_Click(object sender, EventArgs e)
         {
-            int toInsert = (_Config.ClipsMaxClips - pClips.Controls.Count);
+            int toInsert = (Config.ClipsMaxClips - pClips.Controls.Count);
             if (toInsert > 0)
                 while (toInsert > 0)
                 {
-                    addItem(toInsert.ToString(), null, true);
+                    AddItem(toInsert.ToString(), null, true);
                     toInsert--;
                 }
         }
 
-        private void menuClips_Click(object sender, EventArgs e)
+        private void MenuClips_Click(object sender, EventArgs e)
         {
             inPreview = true;
 
             if (sender == menuSave)
             {
-                SaveFileDialog dlg = new SaveFileDialog();
-
-                dlg.InitialDirectory = "c:\\";
+                SaveFileDialog dlg = new SaveFileDialog
+                {
+                    InitialDirectory = "c:\\"
+                };
 
                 if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text != "")
                 {
@@ -185,19 +189,19 @@ namespace Clips
             inPreview = false;
         }
 
-        private void menuClose_Click(object sender, EventArgs e)
+        private void MenuClose_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void menuSettings_Click(object sender, EventArgs e)
+        private void MenuSettings_Click(object sender, EventArgs e)
         {
             inSettings = true;
-            _Config.ShowConfigForm();
+            Config.ShowConfigForm();
             inSettings = false;
         }
 
-        private void menuMonitorClipboard_Click(object sender, EventArgs e)
+        private void MenuMonitorClipboard_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
             bool b = false;
@@ -209,12 +213,12 @@ namespace Clips
             clipboard.MonitorClipboard = b;
         }
 
-        private void notifyClips_DoubleClick(object sender, EventArgs e)
+        private void NotifyClips_DoubleClick(object sender, EventArgs e)
         {
-            toggleShow();
+            ToggleShow();
         }
 
-        private void pTop_MouseDown(object sender, MouseEventArgs e)
+        private void PTop_MouseDown(object sender, MouseEventArgs e)
         {
             // drag form.
             if (e.Button == MouseButtons.Left)
@@ -233,21 +237,21 @@ namespace Clips
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
             {
-                toggleShow();
+                ToggleShow();
             }
             base.WndProc(ref m);
         }
         #endregion
 
-        string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
 
         // methods
-        private void addItem(string text, string fileName, bool saveToDisk = false)
+        private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+        private void AddItem(string text, string fileName, bool saveToDisk = false)
         {
-            if (text == lastText) return;
+            if (text == LastText) return;
 
-            lastText = text;
-            ClipButton b = newClipButton();
+            LastText = text;
+            ClipButton b = NewClipButton();
             b.FullText = text;
 
             var plainTextBytes = Encoding.UTF8.GetBytes(text);
@@ -259,8 +263,8 @@ namespace Clips
 
             string[] s = text.TrimStart().Replace("\r","").Split(new string[] { "\n" }, StringSplitOptions.None);
 
-            if (s.Count() >= _Config.ClipsLinesPerRow)
-                for (int i = 0; i < _Config.ClipsLinesPerRow; i++)
+            if (s.Count() >= Config.ClipsLinesPerRow)
+                for (int i = 0; i < Config.ClipsLinesPerRow; i++)
                 {
                     if (string.IsNullOrEmpty(b.Text))
                         b.Text = s[i] + "\n";
@@ -271,15 +275,15 @@ namespace Clips
                 b.Text = text;
 
             b.Text = b.Text.Trim();
-            b.Height = (s.Count() > 0 && s.Count() >= _Config.ClipsLinesPerRow ? _Config.ClipsLinesPerRow * 20 : 22);
+            b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 20 : 22);
         }
 
-        private void addItem(Image image, string fileName, bool saveToDisk = false)
+        private void AddItem(Image image, string fileName, bool saveToDisk = false)
         {           
-            if ((lastImage != null) && (image.Size == lastImage.Size)) return;
-            lastImage = image;
+            if ((LastImage != null) && (image.Size == LastImage.Size)) return;
+            LastImage = image;
 
-            ClipButton b = newClipButton();
+            ClipButton b = NewClipButton();
             b.Height = 60;
             b.FullImage = image;
 
@@ -294,20 +298,20 @@ namespace Clips
             b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
         }
 
-        private void cleanupCache()
+        private void CleanupCache()
         {
-            if (pClips.Controls.Count >= _Config.ClipsMaxClips)
+            if (pClips.Controls.Count >= Config.ClipsMaxClips)
             {
-                int clipsToDelete = (pClips.Controls.Count-_Config.ClipsMaxClips);
+                int clipsToDelete = (pClips.Controls.Count-Config.ClipsMaxClips);
                 while (clipsToDelete > 0)
                 {
-                    deleteOldestClip();
+                    DeleteOldestClip();
                     clipsToDelete--;
                 }
             }
         }
 
-        private void deleteOldestClip()
+        private void DeleteOldestClip()
         {
             ClipButton cb = ((ClipButton)pClips.Controls[0]);
             if (File.Exists(cb.FileName))
@@ -315,48 +319,50 @@ namespace Clips
             pClips.Controls.RemoveAt(0);
         }
 
-        private void loadConfig()
+        private void LoadConfig()
         {
-            if (_Config == null)
+            if (Config == null)
             {
-                _Config = new Config();
-                _Config.ConfigChanged += new EventHandler(ConfigChanged);
-                buttonMain = new ClipButton();
-                buttonMain.Text = "...";
-                buttonMain.Width = 25;
-                buttonMain.Parent = pTop;
-                buttonMain.Dock = DockStyle.Left;
-                buttonMain.Click += mainButton_Click;
+                Config = new Config();
+                Config.ConfigChanged += new EventHandler(ConfigChanged);
+                ButtonMain = new ClipButton
+                {
+                    Text = "...",
+                    Width = 25,
+                    Parent = pTop,
+                    Dock = DockStyle.Left
+                };
+                ButtonMain.Click += MainButton_Click;
             }
             menuNotify.Renderer = null;
-            menuNotify.Renderer = new CustomToolstripRenderer(_Config);
-            menuNotify.BackColor = _Config.MenuBackColor;
-            menuNotify.ForeColor = _Config.MenuFontColor;
+            menuNotify.Renderer = new CustomToolstripRenderer(Config);
+            menuNotify.BackColor = Config.MenuBackColor;
+            menuNotify.ForeColor = Config.MenuFontColor;
 
             menuClips.Renderer = null;
-            menuClips.Renderer = new CustomToolstripRenderer(_Config);
-            menuClips.BackColor = _Config.MenuBackColor;
-            menuClips.ForeColor = _Config.MenuFontColor;
+            menuClips.Renderer = new CustomToolstripRenderer(Config);
+            menuClips.BackColor = Config.MenuBackColor;
+            menuClips.ForeColor = Config.MenuFontColor;
 
-            buttonMain.ForeColor = _Config.MenuFontColor;
-            buttonMain.BackColor = _Config.MenuBackColor;
-            pTop.BackColor = _Config.ClipsHeaderColor;
+            ButtonMain.ForeColor = Config.MenuFontColor;
+            ButtonMain.BackColor = Config.MenuBackColor;
+            pTop.BackColor = Config.ClipsHeaderColor;
             
             pClips.AutoScroll = true;
             pClips.VerticalScroll.Visible = true;
-            pClips.BackColor = _Config.ClipsBackColor;
-            this.BackColor = _Config.ClipsBackColor;
+            pClips.BackColor = Config.ClipsBackColor;
+            this.BackColor = Config.ClipsBackColor;
 
             // TODO UNRegister the old hotkey if it's changed.
-            RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
+            RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
-        private void loadItems()
+        private void LoadItems()
         {
             SuspendLayout();
             pClips.Controls.Clear();
-            lastImage = null;
-            lastText = "";
+            LastImage = null;
+            LastText = "";
 
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
@@ -372,7 +378,7 @@ namespace Clips
                     try
                     {
                         Bitmap img = new Bitmap(ms);
-                        addItem(img, file, false);
+                        AddItem(img, file, false);
                         if (img != null) img = null;
                     }
                     finally
@@ -384,7 +390,7 @@ namespace Clips
                 {
                     var base64EncodedBytes = Convert.FromBase64String(data.InnerText);
                     string decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
-                    addItem(decodedString, file, false);
+                    AddItem(decodedString, file, false);
                 }
                 doc = null;
             }
@@ -393,22 +399,24 @@ namespace Clips
             pClips.VerticalScroll.Value = 0;
         }
 
-        private ClipButton newClipButton()
+        private ClipButton NewClipButton()
         {
-            if (pClips.Controls.Count >= _Config.ClipsMaxClips)
-                deleteOldestClip();
+            if (pClips.Controls.Count >= Config.ClipsMaxClips)
+                DeleteOldestClip();
 
-            ClipButton b = new ClipButton();
-            b.TabStop = false;
-            b.Parent = pClips;
-            b.Dock = DockStyle.Top;
-            b.FlatAppearance.BorderColor = this.BackColor;
+            ClipButton b = new ClipButton
+            {
+                TabStop = false,
+                Parent = pClips,
+                Dock = DockStyle.Top
+            };
+            b.FlatAppearance.BorderColor = BackColor;
             b.MouseUp += new MouseEventHandler(ClipsButtonClick);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
-            b.BackColor = ControlPaint.Dark(_Config.ClipsRowBackColor, 75);
-            b.BackColor = _Config.ClipsRowBackColor;
-            b.ForeColor = _Config.ClipsFontColor;
+            b.BackColor = ControlPaint.Dark(Config.ClipsRowBackColor, 75);
+            b.BackColor = Config.ClipsRowBackColor;
+            b.ForeColor = Config.ClipsFontColor;
             b.ContextMenuStrip = menuClips;
             b.ImageAlign = ContentAlignment.MiddleLeft;
             return b;
@@ -425,12 +433,12 @@ namespace Clips
             inPreview = true;
             ((ClipButton)sender).Select();
 
-            formPreview.BackColor = _Config.PreviewBackColor;
-            formPreview.ForeColor = _Config.PreviewFontColor;
-            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay, _Config.PreviewMaxLines);
+            formPreview.BackColor = Config.PreviewBackColor;
+            formPreview.ForeColor = Config.PreviewFontColor;
+            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, Config.PreviewPopupDelay, Config.PreviewMaxLines);
         }
 
-        private void toggleShow()
+        private void ToggleShow()
         {
             if (inClose) return;
 
@@ -448,7 +456,7 @@ namespace Clips
             }
         }
     } // formMain
-
+    
     // ClipButton
     public partial class ClipButton : Button
     {

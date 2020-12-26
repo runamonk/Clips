@@ -1,6 +1,6 @@
 ﻿namespace Clips
 {
-    partial class formMain
+    partial class FormMain
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.notifyClips = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuNotify = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuNotifyMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
@@ -53,7 +53,7 @@
             this.notifyClips.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyClips.Icon")));
             this.notifyClips.Text = "Clips";
             this.notifyClips.Visible = true;
-            this.notifyClips.DoubleClick += new System.EventHandler(this.notifyClips_DoubleClick);
+            this.notifyClips.DoubleClick += new System.EventHandler(this.NotifyClips_DoubleClick);
             // 
             // menuNotify
             // 
@@ -72,21 +72,21 @@
             this.menuNotifyMonitorClipboard.Name = "menuNotifyMonitorClipboard";
             this.menuNotifyMonitorClipboard.Size = new System.Drawing.Size(170, 22);
             this.menuNotifyMonitorClipboard.Text = "Monitor clipboard";
-            this.menuNotifyMonitorClipboard.Click += new System.EventHandler(this.menuMonitorClipboard_Click);
+            this.menuNotifyMonitorClipboard.Click += new System.EventHandler(this.MenuMonitorClipboard_Click);
             // 
             // notifyMenuSettings
             // 
             this.notifyMenuSettings.Name = "notifyMenuSettings";
             this.notifyMenuSettings.Size = new System.Drawing.Size(170, 22);
             this.notifyMenuSettings.Text = "Settings";
-            this.notifyMenuSettings.Click += new System.EventHandler(this.menuSettings_Click);
+            this.notifyMenuSettings.Click += new System.EventHandler(this.MenuSettings_Click);
             // 
             // notifyMenuClose
             // 
             this.notifyMenuClose.Name = "notifyMenuClose";
             this.notifyMenuClose.Size = new System.Drawing.Size(170, 22);
             this.notifyMenuClose.Text = "Close";
-            this.notifyMenuClose.Click += new System.EventHandler(this.menuClose_Click);
+            this.notifyMenuClose.Click += new System.EventHandler(this.MenuClose_Click);
             // 
             // clipboard
             // 
@@ -98,7 +98,7 @@
             this.clipboard.ObservableFormats.Texts = true;
             this.clipboard.ObserveLastEntry = false;
             this.clipboard.Tag = null;
-            this.clipboard.ClipboardChanged += new System.EventHandler<WK.Libraries.SharpClipboardNS.SharpClipboard.ClipboardChangedEventArgs>(this.clipBoard_ClipboardChanged);
+            this.clipboard.ClipboardChanged += new System.EventHandler<WK.Libraries.SharpClipboardNS.SharpClipboard.ClipboardChangedEventArgs>(this.ClipBoard_ClipboardChanged);
             // 
             // pTop
             // 
@@ -109,7 +109,7 @@
             this.pTop.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
             this.pTop.Size = new System.Drawing.Size(800, 28);
             this.pTop.TabIndex = 3;
-            this.pTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pTop_MouseDown);
+            this.pTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTop_MouseDown);
             // 
             // pMain
             // 
@@ -141,14 +141,14 @@
             this.menuSave.Name = "menuSave";
             this.menuSave.Size = new System.Drawing.Size(107, 22);
             this.menuSave.Text = "Save";
-            this.menuSave.Click += new System.EventHandler(this.menuClips_Click);
+            this.menuSave.Click += new System.EventHandler(this.MenuClips_Click);
             // 
             // menuDelete
             // 
             this.menuDelete.Name = "menuDelete";
             this.menuDelete.Size = new System.Drawing.Size(107, 22);
             this.menuDelete.Text = "Delete";
-            this.menuDelete.Click += new System.EventHandler(this.menuClips_Click);
+            this.menuDelete.Click += new System.EventHandler(this.MenuClips_Click);
             // 
             // formMain
             // 
@@ -166,9 +166,9 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clips";
             this.TopMost = true;
-            this.Deactivate += new System.EventHandler(this.formMain_Deactivate);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
-            this.Load += new System.EventHandler(this.formMain_Load);
+            this.Deactivate += new System.EventHandler(this.FormMain_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
+            this.Load += new System.EventHandler(this.FormMain_Load);
             this.menuNotify.ResumeLayout(false);
             this.pMain.ResumeLayout(false);
             this.menuClips.ResumeLayout(false);

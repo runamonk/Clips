@@ -40,7 +40,7 @@
             // timerShowForm
             // 
             this.timerShowForm.Interval = 500;
-            this.timerShowForm.Tick += new System.EventHandler(this.timerShowForm_Tick);
+            this.timerShowForm.Tick += new System.EventHandler(this.TimerShowForm_Tick);
             // 
             // panel1
             // 

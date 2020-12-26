@@ -9,19 +9,19 @@ using System.Windows.Forms;
 
 namespace Clips
 {
-    public partial class formSettings : Form
+    public partial class FormSettings : Form
     {
-        public formSettings()
+        public FormSettings()
         {
             InitializeComponent();
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void BtnCancel_Click(object sender, EventArgs e)
         {
             DialogResult = System.Windows.Forms.DialogResult.Cancel;
         }
 
-        private void formConfig_KeyDown(object sender, KeyEventArgs e)
+        private void FormConfig_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 btnOK.PerformClick();
@@ -30,13 +30,13 @@ namespace Clips
                     btnCancel.PerformClick();
         }
 
-        private void textHotkey_KeyDown(object sender, KeyEventArgs e)
+        private void TextHotkey_KeyDown(object sender, KeyEventArgs e)
         {           
             Keys k = (Keys)e.KeyCode;
             textHotkey.Text = k.ToString();
          }
 
-        private void textHotkey_KeyPress(object sender, KeyPressEventArgs e)
+        private void TextHotkey_KeyPress(object sender, KeyPressEventArgs e)
         {
             e.Handled = true; // this will stop the key pressed from actually entering into the text box.
         }
@@ -47,11 +47,6 @@ namespace Clips
             {
                 ((Panel)sender).BackColor = dlgColor.Color;
             }
-        }
-
-        private void formSettings_Load(object sender, EventArgs e)
-        {
-
         }
     }
 }
