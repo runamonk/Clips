@@ -80,7 +80,7 @@ namespace Clips
             Hide();
         }
 
-        private void DoMoveFormToCursor()
+        private void MoveFormToCursor()
         {
             Point p = new Point(Cursor.Position.X + 10, Cursor.Position.Y - 10);
 
@@ -102,7 +102,7 @@ namespace Clips
         private void TimerShowForm_Tick(object sender, EventArgs e)
         {
             timerShowForm.Enabled = false;
-            DoMoveFormToCursor();
+            MoveFormToCursor();
             Show();
         }
     }
