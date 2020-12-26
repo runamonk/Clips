@@ -11,7 +11,7 @@ using Utility;
 
 namespace Clips
 {
-    class Config
+    public class Config
     {
         public const string CONFIG_FILENAME = "Clips.cfg";
 

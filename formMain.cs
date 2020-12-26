@@ -311,10 +311,11 @@ namespace Clips
                 buttonMain.Width = 25;
                 buttonMain.Parent = pTop;
                 buttonMain.Dock = DockStyle.Left;
-                buttonMain.Click += mainButton_Click;
-                menuNotify.Renderer = new CustomToolstripRenderer();
+                buttonMain.Click += mainButton_Click;    
             }
-            
+            menuNotify.Renderer = null;
+            menuNotify.Renderer = new CustomToolstripRenderer(_Config);
+
             pClips.AutoScroll = true;
             pClips.VerticalScroll.Visible = true;
             pClips.BackColor = _Config.ClipsBackColor;
@@ -484,14 +485,19 @@ namespace Clips
 
     public class CustomToolstripRenderer : ToolStripProfessionalRenderer
     {
-        public CustomToolstripRenderer() : base(new CustomColors()) { }
+       public CustomToolstripRenderer(Config MyConfig) : base(new CustomColors(MyConfig)) { }
     }
 
     public class CustomColors : ProfessionalColorTable
     {
+        Config config;
+        public CustomColors(Config MyConfig)
+        {
+            config = MyConfig;
+        }
         public override Color ButtonSelectedBorder
         {
-            get { return Color.White; }
+            get { return config.ClipsBackColor; }
         }
                 
         // Left side of menu.
