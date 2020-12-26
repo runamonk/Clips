@@ -50,6 +50,7 @@ namespace Clips
 
         // TODO Add ability to pin a clip.
         // TODO Save form size and placement.
+        // TODO Add support for actually clipping the files from a list of files.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
