@@ -58,7 +58,11 @@ namespace Clips
                 pbPreview.Image = image;
                 textPreview.Visible = false;
                 pbPreview.Visible = true;
-                Size = MaximumSize;
+
+                if (image.Height > MaximumSize.Height)
+                    Size = MaximumSize;
+                else
+                    Size = image.Size;
             }
             timerShowForm.Interval = popupDelay;
             timerShowForm.Enabled = true;
