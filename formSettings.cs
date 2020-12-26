@@ -48,5 +48,10 @@ namespace Clips
                 ((Panel)sender).BackColor = dlgColor.Color;
             }
         }
+
+        private void formSettings_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
