@@ -80,7 +80,7 @@ namespace Clips
         {
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
                 return;
-            //TODO ClipsButtonClick.
+            //TODO ClipsButtonClick, should this be single click or double click?
 
             //DoSwapVisibility();
             //// Copy to clipboard
