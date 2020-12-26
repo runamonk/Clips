@@ -63,28 +63,28 @@
             this.notifyMenuClose});
             this.menuNotify.Name = "menuNotify";
             this.menuNotify.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional;
-            this.menuNotify.Size = new System.Drawing.Size(181, 92);
+            this.menuNotify.Size = new System.Drawing.Size(171, 70);
             // 
             // menuNotifyMonitorClipboard
             // 
             this.menuNotifyMonitorClipboard.Checked = true;
             this.menuNotifyMonitorClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuNotifyMonitorClipboard.Name = "menuNotifyMonitorClipboard";
-            this.menuNotifyMonitorClipboard.Size = new System.Drawing.Size(180, 22);
+            this.menuNotifyMonitorClipboard.Size = new System.Drawing.Size(170, 22);
             this.menuNotifyMonitorClipboard.Text = "Monitor clipboard";
             this.menuNotifyMonitorClipboard.Click += new System.EventHandler(this.menuMonitorClipboard_Click);
             // 
             // notifyMenuSettings
             // 
             this.notifyMenuSettings.Name = "notifyMenuSettings";
-            this.notifyMenuSettings.Size = new System.Drawing.Size(180, 22);
+            this.notifyMenuSettings.Size = new System.Drawing.Size(170, 22);
             this.notifyMenuSettings.Text = "Settings";
             this.notifyMenuSettings.Click += new System.EventHandler(this.menuSettings_Click);
             // 
             // notifyMenuClose
             // 
             this.notifyMenuClose.Name = "notifyMenuClose";
-            this.notifyMenuClose.Size = new System.Drawing.Size(180, 22);
+            this.notifyMenuClose.Size = new System.Drawing.Size(170, 22);
             this.notifyMenuClose.Text = "Close";
             this.notifyMenuClose.Click += new System.EventHandler(this.menuClose_Click);
             // 
@@ -158,6 +158,7 @@
             this.ControlBox = false;
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.pTop);
+            this.MinimumSize = new System.Drawing.Size(400, 300);
             this.Name = "formMain";
             this.Opacity = 0D;
             this.ShowIcon = false;

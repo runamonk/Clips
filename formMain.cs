@@ -324,8 +324,8 @@ namespace Clips
             menuClips.ForeColor = _Config.MenuFontColor;
 
             buttonMain.ForeColor = _Config.MenuFontColor;
-            buttonMain.BackColor = _Config.ClipsHeaderColor;
-            pTop.BackColor = _Config.MenuBackColor;
+            buttonMain.BackColor = _Config.MenuBackColor;
+            pTop.BackColor = _Config.ClipsHeaderColor;
             
             pClips.AutoScroll = true;
             pClips.VerticalScroll.Visible = true;
@@ -502,10 +502,11 @@ namespace Clips
         {
             config = MyConfig;
         }
+
         public override Color ButtonSelectedBorder
         {
-            get { return config.MenuSelectedColor; }
-        }               
+            get { return Color.Transparent; } 
+        }
         public override Color ImageMarginGradientBegin
         {
             get { return config.MenuBackColor; }
@@ -532,7 +533,7 @@ namespace Clips
         }
         public override Color CheckSelectedBackground
         {
-            get { return config.MenuBackColor; }
+            get { return config.MenuSelectedColor; }
         }
         public override Color CheckBackground
         {
