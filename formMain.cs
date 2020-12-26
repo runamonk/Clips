@@ -498,113 +498,42 @@ namespace Clips
         public override Color ButtonSelectedBorder
         {
             get { return config.ClipsBackColor; }
-        }
-                
-        // Left side of menu.
+        }               
         public override Color ImageMarginGradientBegin
         {
             get { return Color.Black; }
         }
-
         public override Color ImageMarginGradientMiddle
         {
             get { return Color.Black; }
         }
-
         public override Color ImageMarginGradientEnd
         {
             get { return Color.Black; }
         }
-
-        public override Color CheckSelectedBackground
-        {
-            get { return ColorTranslator.FromHtml("#302E2D"); }
-        }
-
-        public override Color CheckBackground
-        {
-            get { return ColorTranslator.FromHtml("#302E2D"); }
-        }
-
-        public override Color CheckPressedBackground
-        {
-            get { return ColorTranslator.FromHtml("#302E2D"); }
-        }
-
         public override Color MenuItemSelected
         {
-            get { return ColorTranslator.FromHtml("#302E2D"); }
+            get { return Color.Red; }
         }
-
         public override Color MenuItemBorder
         {
-            get { return Color.Silver; }
+            get { return Color.Green; }
         }
-
-        //public override Color ButtonCheckedGradientBegin
-        //{
-        //    get { return ColorTranslator.FromHtml("#302E2D"); }
-        //}
-
-        //public override Color ButtonCheckedGradientEnd
-        //{
-        //    get { return ColorTranslator.FromHtml("#302E2D"); }
-        //}
-
-        //public override Color ToolStripDropDownBackground
-        //{
-        //    get { return ColorTranslator.FromHtml("#21201F"); }
-        //}
-
-        //public override Color ToolStripContentPanelGradientBegin
-        //{
-        //    get { return ColorTranslator.FromHtml("#21201F"); }
-        //}
-
-        //public override Color MenuBorder  
-        //{
-        //    get { return Color.Silver; }
-        //}
-
-        //public override Color MenuItemPressedGradientBegin
-        //{
-        //    get { return ColorTranslator.FromHtml("#4C4A48"); }
-        //}
-        //public override Color MenuItemPressedGradientEnd
-        //{
-        //    get { return ColorTranslator.FromHtml("#5F5D5B"); }
-        //}
-
-        //public override Color ToolStripBorder
-        //{
-        //    get { return ColorTranslator.FromHtml("#4C4A48"); }
-        //}
-
-        //public override Color MenuItemSelectedGradientBegin
-        //{
-        //    get { return ColorTranslator.FromHtml("#4C4A48"); }
-        //}
-
-        //public override Color MenuItemSelectedGradientEnd
-        //{
-        //    get { return ColorTranslator.FromHtml("#5F5D5B"); }
-        //}
-
-        //public override Color ToolStripGradientBegin
-        //{
-        //    get { return ColorTranslator.FromHtml("#404040"); }
-        //}
-
-        //public override Color ToolStripGradientEnd
-        //{
-        //    get { return ColorTranslator.FromHtml("#404040"); }
-        //}
-
-        //public override Color ToolStripGradientMiddle
-        //{
-        //    get { return ColorTranslator.FromHtml("#404040"); }
-        //}
-
+        public override Color MenuBorder
+        {
+            get { return Color.Blue; }
+        }
+        public override Color CheckSelectedBackground
+        {
+            get { return Color.BurlyWood; }
+        }
+        public override Color CheckBackground
+        {
+            get { return Color.Chocolate; }
+        }
+        public override Color CheckPressedBackground
+        {
+            get { return Color.Yellow; }
+        }
     }
-
 }
