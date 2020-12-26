@@ -209,6 +209,16 @@ namespace Clips
             toggleShow();
         }
 
+        private void pTop_MouseDown(object sender, MouseEventArgs e)
+        {
+            // drag form.
+            if (e.Button == MouseButtons.Left)
+            {
+                ReleaseCapture();
+                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
+            }
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             base.OnLoad(e);
@@ -275,7 +285,7 @@ namespace Clips
                 b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
             else
                 b.FileName = fileName;
-                        
+            // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
             b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
         }
 
@@ -432,18 +442,8 @@ namespace Clips
                 Activate();
             }
         }
-
-        private void pTop_MouseDown(object sender, MouseEventArgs e)
-        {
-            // drag form.
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
-        }
     } // formMain
-       
+
     // ClipButton
     public partial class ClipButton : Button
     {
