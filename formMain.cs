@@ -311,20 +311,27 @@ namespace Clips
                 buttonMain.Width = 25;
                 buttonMain.Parent = pTop;
                 buttonMain.Dock = DockStyle.Left;
-                buttonMain.Click += mainButton_Click;    
+                buttonMain.Click += mainButton_Click;
             }
             menuNotify.Renderer = null;
             menuNotify.Renderer = new CustomToolstripRenderer(_Config);
+            menuNotify.BackColor = _Config.MenuBackColor;
+            menuNotify.ForeColor = _Config.MenuFontColor;
 
+            menuClips.Renderer = null;
+            menuClips.Renderer = new CustomToolstripRenderer(_Config);
+            menuClips.BackColor = _Config.MenuBackColor;
+            menuClips.ForeColor = _Config.MenuFontColor;
+
+            buttonMain.ForeColor = _Config.MenuFontColor;
+            buttonMain.BackColor = _Config.ClipsHeaderColor;
+            pTop.BackColor = _Config.MenuBackColor;
+            
             pClips.AutoScroll = true;
             pClips.VerticalScroll.Visible = true;
             pClips.BackColor = _Config.ClipsBackColor;
-            pTop.BackColor = _Config.ClipsHeaderColor;
-            buttonMain.BackColor = _Config.ClipsHeaderColor;
-            this.BackColor = ControlPaint.Dark(_Config.ClipsBackColor, 75);
-            menuNotify.BackColor = _Config.ClipsHeaderColor;
-            menuNotify.ForeColor = ControlPaint.Dark(_Config.ClipsFontColor, 75);
-            
+            this.BackColor = _Config.ClipsBackColor;
+
             // TODO UNRegister the old hotkey if it's changed.
             RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
         }
@@ -497,43 +504,43 @@ namespace Clips
         }
         public override Color ButtonSelectedBorder
         {
-            get { return config.ClipsBackColor; }
+            get { return config.MenuSelectedColor; }
         }               
         public override Color ImageMarginGradientBegin
         {
-            get { return Color.Black; }
+            get { return config.MenuBackColor; }
         }
         public override Color ImageMarginGradientMiddle
         {
-            get { return Color.Black; }
+            get { return config.MenuBackColor; }
         }
         public override Color ImageMarginGradientEnd
         {
-            get { return Color.Black; }
+            get { return config.MenuBackColor; }
         }
         public override Color MenuItemSelected
         {
-            get { return Color.Red; }
+            get { return config.MenuSelectedColor; }
         }
         public override Color MenuItemBorder
         {
-            get { return Color.Green; }
+            get { return config.MenuSelectedColor; }
         }
         public override Color MenuBorder
         {
-            get { return Color.Blue; }
+            get { return config.MenuBorderColor; }
         }
         public override Color CheckSelectedBackground
         {
-            get { return Color.BurlyWood; }
+            get { return config.MenuBackColor; }
         }
         public override Color CheckBackground
         {
-            get { return Color.Chocolate; }
+            get { return config.MenuBackColor; }
         }
         public override Color CheckPressedBackground
         {
-            get { return Color.Yellow; }
+            get { return config.MenuBackColor; }
         }
     }
 }

@@ -12,4 +12,3 @@ D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.csproj.CoreCompileInputs.cache
 D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.csproj.CopyComplete
 D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.exe
 D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.pdb
-D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.csprojAssemblyReference.cache
