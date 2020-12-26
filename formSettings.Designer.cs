@@ -178,7 +178,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 6;
-            this.label1.Text = "Hotkey";
+            this.label1.Text = "Key";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // gbSizes
