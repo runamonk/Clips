@@ -244,27 +244,21 @@ namespace Clips
             else
                 b.FileName = fileName;
 
-            string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
+            string[] s = text.TrimStart().Replace("\r","").Split(new string[] { "\n" }, StringSplitOptions.None);
 
             if (s.Count() >= _Config.ClipsLinesPerRow)
                 for (int i = 0; i < _Config.ClipsLinesPerRow; i++)
                 {
                     if (string.IsNullOrEmpty(b.Text))
-                        b.Text = s[i] + "\r\n";
+                        b.Text = s[i] + "\n";
                     else
-                        b.Text = b.Text + s[i] + "\r\n";
+                        b.Text = b.Text + s[i] + "\n";
                 }
             else
                 b.Text = text;
 
-            if (Uri.IsWellFormedUriString(b.Text, UriKind.Absolute))
-                b.Font = new Font(b.Font, FontStyle.Underline);
-
-            SizeF ss = TextRenderer.MeasureText(b.Text, b.Font);
-            ss.Height = ss.Height;
-            ss.Width = ss.Width;
-            b.Size = ss.ToSize();
-
+            b.Text = b.Text.Trim();
+            b.Height = (s.Count() > 0 && s.Count() >= _Config.ClipsLinesPerRow ? _Config.ClipsLinesPerRow * 20 : 22);
         }
 
         private void addItem(Image image, string fileName, bool saveToDisk = false)
@@ -374,7 +368,7 @@ namespace Clips
             b.TabStop = false;
             b.Parent = pClips;
             b.Dock = DockStyle.Top;
-            b.Height = 20;
+            b.FlatAppearance.BorderColor = this.BackColor;
             b.MouseUp += new MouseEventHandler(ClipsButtonClick);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
@@ -440,6 +434,13 @@ namespace Clips
         public override void NotifyDefault(bool value)
         {
             base.NotifyDefault(false);
+        }
+
+        protected override bool ShowFocusCues
+        {
+            get {
+                return false;
+            }
         }
 
         private string fileName;
