@@ -101,7 +101,7 @@ namespace Clips
                 _Config.MenuBorderColor = pnlMenuBorderColor.BackColor;
                 _Config.MenuFontColor = pnlMenuFontColor.BackColor;
                 _Config.MenuSelectedColor = pnlMenuSelectedColor.BackColor;
-
+                
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
         }

@@ -164,6 +164,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.Text = "Clips";
             this.TopMost = true;
             this.Deactivate += new System.EventHandler(this.formMain_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.formMain_FormClosing);
