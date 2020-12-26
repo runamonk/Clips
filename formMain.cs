@@ -78,35 +78,39 @@ namespace Clips
 
         private void ClipsButtonClick(Object sender, MouseEventArgs e)
         {
+            
+            void deleteClip()
+            {
+                string fileName = ((ClipButton)sender).FileName;
+                if (File.Exists(fileName))
+                    File.Delete(fileName);
+                pClips.Controls.Remove((ClipButton)sender);
+            }
+
+            SuspendLayout();
+            lastImage = null;
+            lastText = null;
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
                 return;
-            //TODO ClipsButtonClick, should this be single click or double click?
+            if (((ClipButton)sender).FullImage != null)
+            {
+                Image i = ((ClipButton)sender).FullImage;
+                deleteClip();
+                Clipboard.SetImage(i);
+            }
+            else
+            if (((ClipButton)sender).Text != "")
+            {
+                string s = ((ClipButton)sender).FullText;
+                deleteClip();
+                Clipboard.SetText(s);
+                //if (((Form.ModifierKeys == Keys.Shift) || (e.Button == MouseButtons.Middle)) && (Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute) == true))
+                //{
+                //    System.Diagnostics.Process.Start(s);
+                //}
+            }
 
-            //DoSwapVisibility();
-            //// Copy to clipboard
-            //// Remove old clip (shift it to the top)
-
-            //if (((ClipsButton)sender).FullImage != null)
-            //{
-            //    Image i = ((ClipsButton)sender).FullImage;
-            //    panelClips.Controls.Remove((ClipsButton)sender);
-            //    Clipboard.SetImage(i);
-            //}
-            //else
-            //    if (((ClipsButton)sender).Text != "")
-            //{
-            //    string s = ((ClipsButton)sender).Text;
-            //    panelClips.Controls.Remove((ClipsButton)sender);
-            //    Clipboard.SetText(s);
-
-            //    if (((Form.ModifierKeys == Keys.Shift) || (e.Button == MouseButtons.Middle)) && (Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute) == true))
-            //    {
-            //        System.Diagnostics.Process.Start(s);
-            //    }
-            //}
-
-            //DoSetSize();
-            //DoSaveClips();
+            ResumeLayout();
         }
 
         private void formMain_Deactivate(object sender, EventArgs e)
