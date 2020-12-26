@@ -46,7 +46,7 @@ namespace Clips
 
         Image lastImage = null;
         string lastText = null;
-        
+
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
@@ -195,8 +195,13 @@ namespace Clips
         private void menuMonitorClipboard_Click(object sender, EventArgs e)
         {
             ToolStripMenuItem item = sender as ToolStripMenuItem;
-            clipboard.MonitorClipboard = item.Checked;
-            menuNotifyMonitorClipboard.Checked = item.Checked;
+            bool b = false;
+            if (item.Checked)
+                b = false;
+            else
+                b = true;
+            item.Checked = b;
+            clipboard.MonitorClipboard = b;
         }
 
         private void notifyClips_DoubleClick(object sender, EventArgs e)
@@ -307,6 +312,7 @@ namespace Clips
                 buttonMain.Parent = pTop;
                 buttonMain.Dock = DockStyle.Left;
                 buttonMain.Click += mainButton_Click;
+                menuNotify.Renderer = new CustomToolstripRenderer();
             }
             
             pClips.AutoScroll = true;
@@ -315,8 +321,9 @@ namespace Clips
             pTop.BackColor = _Config.ClipsHeaderColor;
             buttonMain.BackColor = _Config.ClipsHeaderColor;
             this.BackColor = ControlPaint.Dark(_Config.ClipsBackColor, 75);
-
-
+            menuNotify.BackColor = _Config.ClipsHeaderColor;
+            menuNotify.ForeColor = ControlPaint.Dark(_Config.ClipsFontColor, 75);
+            
             // TODO UNRegister the old hotkey if it's changed.
             RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
         }
@@ -428,7 +435,7 @@ namespace Clips
             }
         }
     } // formMain
-
+       
     // ClipButton
     public partial class ClipButton : Button
     {
@@ -474,4 +481,124 @@ namespace Clips
             set { fullText = value; }
         }
     } // ClipButton
+
+    public class CustomToolstripRenderer : ToolStripProfessionalRenderer
+    {
+        public CustomToolstripRenderer() : base(new CustomColors()) { }
+    }
+
+    public class CustomColors : ProfessionalColorTable
+    {
+        public override Color ButtonSelectedBorder
+        {
+            get { return Color.White; }
+        }
+                
+        // Left side of menu.
+        public override Color ImageMarginGradientBegin
+        {
+            get { return Color.Black; }
+        }
+
+        public override Color ImageMarginGradientMiddle
+        {
+            get { return Color.Black; }
+        }
+
+        public override Color ImageMarginGradientEnd
+        {
+            get { return Color.Black; }
+        }
+
+        public override Color CheckSelectedBackground
+        {
+            get { return ColorTranslator.FromHtml("#302E2D"); }
+        }
+
+        public override Color CheckBackground
+        {
+            get { return ColorTranslator.FromHtml("#302E2D"); }
+        }
+
+        public override Color CheckPressedBackground
+        {
+            get { return ColorTranslator.FromHtml("#302E2D"); }
+        }
+
+        public override Color MenuItemSelected
+        {
+            get { return ColorTranslator.FromHtml("#302E2D"); }
+        }
+
+        public override Color MenuItemBorder
+        {
+            get { return Color.Silver; }
+        }
+
+        //public override Color ButtonCheckedGradientBegin
+        //{
+        //    get { return ColorTranslator.FromHtml("#302E2D"); }
+        //}
+
+        //public override Color ButtonCheckedGradientEnd
+        //{
+        //    get { return ColorTranslator.FromHtml("#302E2D"); }
+        //}
+
+        //public override Color ToolStripDropDownBackground
+        //{
+        //    get { return ColorTranslator.FromHtml("#21201F"); }
+        //}
+
+        //public override Color ToolStripContentPanelGradientBegin
+        //{
+        //    get { return ColorTranslator.FromHtml("#21201F"); }
+        //}
+
+        //public override Color MenuBorder  
+        //{
+        //    get { return Color.Silver; }
+        //}
+
+        //public override Color MenuItemPressedGradientBegin
+        //{
+        //    get { return ColorTranslator.FromHtml("#4C4A48"); }
+        //}
+        //public override Color MenuItemPressedGradientEnd
+        //{
+        //    get { return ColorTranslator.FromHtml("#5F5D5B"); }
+        //}
+
+        //public override Color ToolStripBorder
+        //{
+        //    get { return ColorTranslator.FromHtml("#4C4A48"); }
+        //}
+
+        //public override Color MenuItemSelectedGradientBegin
+        //{
+        //    get { return ColorTranslator.FromHtml("#4C4A48"); }
+        //}
+
+        //public override Color MenuItemSelectedGradientEnd
+        //{
+        //    get { return ColorTranslator.FromHtml("#5F5D5B"); }
+        //}
+
+        //public override Color ToolStripGradientBegin
+        //{
+        //    get { return ColorTranslator.FromHtml("#404040"); }
+        //}
+
+        //public override Color ToolStripGradientEnd
+        //{
+        //    get { return ColorTranslator.FromHtml("#404040"); }
+        //}
+
+        //public override Color ToolStripGradientMiddle
+        //{
+        //    get { return ColorTranslator.FromHtml("#404040"); }
+        //}
+
+    }
+
 }
