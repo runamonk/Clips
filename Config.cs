@@ -46,8 +46,9 @@ namespace Clips
                     chkShift.Checked = (m == 4 || m == 5 || m == 6 || m == 12);
                     chkWin.Checked = (m == 8 || m == 9 || m == 10 || m == 12);
                     chkStartup.Checked = _Config.StartWithWindows;
-                    nudPreviewRows.Value = _Config.PreviewRows;
-                    nudMaxClips.Value = _Config.MaxClips;
+                    nudClipsLinesPerRow.Value = _Config.ClipsLinesPerRow;
+                    nudMaxClips.Value = _Config.ClipsMaxClips;
+                    nudPreviewMaxLines.Value = _Config.PreviewMaxLines;
                     nudPreviewPopupDelay.Value = _Config.PreviewPopupDelay;
                     pnlBackColor.BackColor = _Config.BackColor;
                     pnlFontColor.BackColor = _Config.FontColor;
@@ -77,8 +78,9 @@ namespace Clips
                 if (chkWin.Checked) i = (i + 8);
 
                 _Config.PopupHotkeyModifier = i;
-                _Config.MaxClips = Convert.ToInt32(nudMaxClips.Value);
-                _Config.PreviewRows = Convert.ToInt32(nudPreviewRows.Value);
+                _Config.ClipsMaxClips = Convert.ToInt32(nudMaxClips.Value);
+                _Config.ClipsLinesPerRow = Convert.ToInt32(nudClipsLinesPerRow.Value);
+                _Config.PreviewMaxLines = Convert.ToInt32(nudPreviewMaxLines.Value);
                 _Config.PreviewPopupDelay = Convert.ToInt32(nudPreviewPopupDelay.Value);
                 _Config.StartWithWindows = chkStartup.Checked;
                 _Config.BackColor = pnlBackColor.BackColor;
@@ -207,19 +209,34 @@ namespace Clips
             set { SetKey("font_color", value.ToArgb().ToString()); }
         }
 
-        public int MaxClips
+        public int ClipsLinesPerRow
         {
             get {
-                string s = FindKey("max_clips");
+                string s = FindKey("clips_lines_per_row");
                 if (s == "")
                 {
-                    SetKey("max_clips", "50");
+                    SetKey("clips_lines_per_row", "1");
+                    return 1;
+                }
+                else
+                    return Convert.ToInt32(s);
+            }
+            set { SetKey("clips_lines_per_row", value.ToString()); }
+        }
+
+        public int ClipsMaxClips
+        {
+            get {
+                string s = FindKey("clips_max_clips");
+                if (s == "")
+                {
+                    SetKey("clips_max_clips", "50");
                     return 50;
                 }
                 else
                     return Convert.ToInt32(s);
             }
-            set { SetKey("max_clips", value.ToString()); }
+            set { SetKey("clips_max_clips", value.ToString()); }
         }
 
         public string PopupHotkey
@@ -277,19 +294,19 @@ namespace Clips
             set { SetKey("preview_popup_delay", value.ToString()); }
         }
 
-        public int PreviewRows
+        public int PreviewMaxLines
         {
             get {
-                string s = FindKey("preview_rows");
+                string s = FindKey("preview_max_lines");
                 if (s == "")
                 {
-                    SetKey("preview_rows", "1");
+                    SetKey("preview_max_lines", "50");
                     return 1;
                 }
                 else
                     return Convert.ToInt32(s);
             }
-            set { SetKey("preview_rows", value.ToString()); }
+            set { SetKey("preview_max_lines", value.ToString()); }
         }
 
         public Boolean StartWithWindows

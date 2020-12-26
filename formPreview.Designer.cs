@@ -90,7 +90,7 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
-            this.MaximumSize = new System.Drawing.Size(600, 400);
+            this.MaximumSize = new System.Drawing.Size(800, 600);
             this.MinimizeBox = false;
             this.Name = "formPreview";
             this.ShowIcon = false;

@@ -26,18 +26,23 @@ namespace Clips
             }
         }
 
-        public void ShowPreview(string Text, Image Img, int PopupDelay)
+        public void ShowPreview(string text, Image image, int popupDelay, int maxLines)
         {
-            if ((string.IsNullOrEmpty(Text) && (Img == null)) || (PopupDelay == 0))
+            if ((string.IsNullOrEmpty(text) && (image == null)) || (popupDelay == 0))
                 return;
 
-            if (!string.IsNullOrEmpty(Text))
+            if (!string.IsNullOrEmpty(text))
             { 
                 textPreview.BackColor = BackColor;
                 textPreview.ForeColor = ForeColor;
+                textPreview.Clear();
 
-                // TODO Limit the text preview to like 30 lines.
-                textPreview.Text = Text;
+                string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
+                if (s.Count() >= maxLines)
+                    for (int i = 0; i <= maxLines; i++)
+                        textPreview.AppendText(s[i]);
+                else
+                    textPreview.Text = text;
 
                 SizeF ss = TextRenderer.MeasureText(textPreview.Text, textPreview.Font);
                 ss.Height = ss.Height + 6; 
@@ -48,14 +53,14 @@ namespace Clips
                 pbPreview.Visible = false;
             }
             else
-            if (Img != null)
+            if (image != null)
             {
-                pbPreview.Image = Img;
+                pbPreview.Image = image;
                 textPreview.Visible = false;
                 pbPreview.Visible = true;
                 Size = MaximumSize;
             }
-            timerShowForm.Interval = PopupDelay;
+            timerShowForm.Interval = popupDelay;
             timerShowForm.Enabled = true;
         }
 

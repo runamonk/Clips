@@ -51,6 +51,7 @@ namespace Clips
         {
             loadConfig();
             cleanupCache();
+            loadItems();
         }
 
         private void clipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
@@ -123,6 +124,17 @@ namespace Clips
             loadItems();
         }
 
+        private void menuInsertTestClips_Click(object sender, EventArgs e)
+        {
+            int toInsert = (_Config.ClipsMaxClips - pClips.Controls.Count);
+            if (toInsert > 0)
+                while (toInsert > 0)
+                {
+                    addItem(toInsert.ToString(), null, true);
+                    toInsert--;
+                }
+        }
+
         private void menuClips_Click(object sender, EventArgs e)
         {
             inPreview = true;
@@ -158,6 +170,7 @@ namespace Clips
                 pClips.Controls.Remove(b);
 
             }
+            inPreview = false;
         }
 
         private void menuClose_Click(object sender, EventArgs e)
@@ -231,11 +244,27 @@ namespace Clips
             else
                 b.FileName = fileName;
 
-            var result = text.TrimStart().Split(new string[] { "\\n" }, StringSplitOptions.None);
-            // if (Uri.IsWellFormedUriString(Text, UriKind.Absolute))
-            //   b.Font = new Font (b.Font, FontStyle.Underline);
-            // TODO set height based on number of lines to show.
-            b.Text = result[0];
+            string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
+
+            if (s.Count() >= _Config.ClipsLinesPerRow)
+                for (int i = 0; i < _Config.ClipsLinesPerRow; i++)
+                {
+                    if (string.IsNullOrEmpty(b.Text))
+                        b.Text = s[i] + "\r\n";
+                    else
+                        b.Text = b.Text + s[i] + "\r\n";
+                }
+            else
+                b.Text = text;
+
+            if (Uri.IsWellFormedUriString(b.Text, UriKind.Absolute))
+                b.Font = new Font(b.Font, FontStyle.Underline);
+
+            SizeF ss = TextRenderer.MeasureText(b.Text, b.Font);
+            ss.Height = ss.Height;
+            ss.Width = ss.Width;
+            b.Size = ss.ToSize();
+
         }
 
         private void addItem(Image image, string fileName, bool saveToDisk = false)
@@ -260,9 +289,9 @@ namespace Clips
 
         private void cleanupCache()
         {
-            if (pClips.Controls.Count >= _Config.MaxClips)
+            if (pClips.Controls.Count >= _Config.ClipsMaxClips)
             {
-                int clipsToDelete = (pClips.Controls.Count - _Config.MaxClips);
+                int clipsToDelete = (pClips.Controls.Count-_Config.ClipsMaxClips);
                 while (clipsToDelete > 0)
                 {
                     deleteOldestClip();
@@ -273,10 +302,10 @@ namespace Clips
 
         private void deleteOldestClip()
         {
-            ClipButton cb = ((ClipButton)pClips.Controls[pClips.Controls.Count - 1]);
+            ClipButton cb = ((ClipButton)pClips.Controls[0]);
             if (File.Exists(cb.FileName))
                 File.Delete(cb.FileName);
-            pClips.Controls.RemoveAt(pClips.Controls.Count - 1);
+            pClips.Controls.RemoveAt(0);
         }
 
         private void loadConfig()
@@ -286,14 +315,21 @@ namespace Clips
                 _Config = new Config();
                 _Config.ConfigChanged += new EventHandler(ConfigChanged);
             }
+            
             pClips.AutoScroll = true;
             pClips.VerticalScroll.Visible = true;
+
+            // TODO UNRegister the old hotkey if it's changed.
             RegisterHotKey(this.Handle, 1, _Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), _Config.PopupHotkey)).GetHashCode());
         }
 
         private void loadItems()
         {
             SuspendLayout();
+            pClips.Controls.Clear();
+            lastImage = null;
+            lastText = "";
+
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
             {
@@ -326,13 +362,12 @@ namespace Clips
             }
             ResumeLayout();
 
-            //pClips.AutoScrollPosition = new Point(pClips.AutoScrollPosition.X, 0);
             pClips.VerticalScroll.Value = 0;
         }
 
         private ClipButton newClipButton()
         {
-            if (pClips.Controls.Count >= _Config.MaxClips)
+            if (pClips.Controls.Count >= _Config.ClipsMaxClips)
                 deleteOldestClip();
 
             ClipButton b = new ClipButton();
@@ -370,7 +405,7 @@ namespace Clips
 
             formPreview.BackColor = _Config.BackColor;
             formPreview.ForeColor = _Config.FontColor;
-            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay);
+            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, _Config.PreviewPopupDelay, _Config.PreviewMaxLines);
         }
 
         private void toggleShow()
@@ -390,6 +425,7 @@ namespace Clips
                 Activate();
             }
         }
+
     } // formMain
 
     // ClipButton

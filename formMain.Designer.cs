@@ -42,6 +42,7 @@
             this.menuMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
             this.menuSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.menuClose = new System.Windows.Forms.ToolStripMenuItem();
+            this.menuInsertTestClips = new System.Windows.Forms.ToolStripMenuItem();
             this.pMain = new System.Windows.Forms.Panel();
             this.pClips = new System.Windows.Forms.Panel();
             this.menuClips = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -137,7 +138,8 @@
             this.toolStripDropDownButton1.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuMonitorClipboard,
             this.menuSettings,
-            this.menuClose});
+            this.menuClose,
+            this.menuInsertTestClips});
             this.toolStripDropDownButton1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButton1.Image")));
             this.toolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripDropDownButton1.Name = "toolStripDropDownButton1";
@@ -150,23 +152,31 @@
             this.menuMonitorClipboard.CheckOnClick = true;
             this.menuMonitorClipboard.CheckState = System.Windows.Forms.CheckState.Checked;
             this.menuMonitorClipboard.Name = "menuMonitorClipboard";
-            this.menuMonitorClipboard.Size = new System.Drawing.Size(170, 22);
+            this.menuMonitorClipboard.Size = new System.Drawing.Size(180, 22);
             this.menuMonitorClipboard.Text = "Monitor clipboard";
             this.menuMonitorClipboard.Click += new System.EventHandler(this.menuMonitorClipboard_Click);
             // 
             // menuSettings
             // 
             this.menuSettings.Name = "menuSettings";
-            this.menuSettings.Size = new System.Drawing.Size(170, 22);
+            this.menuSettings.Size = new System.Drawing.Size(180, 22);
             this.menuSettings.Text = "Settings";
             this.menuSettings.Click += new System.EventHandler(this.menuSettings_Click);
             // 
             // menuClose
             // 
             this.menuClose.Name = "menuClose";
-            this.menuClose.Size = new System.Drawing.Size(170, 22);
+            this.menuClose.Size = new System.Drawing.Size(180, 22);
             this.menuClose.Text = "Close";
             this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
+            // 
+            // menuInsertTestClips
+            // 
+            this.menuInsertTestClips.Name = "menuInsertTestClips";
+            this.menuInsertTestClips.Size = new System.Drawing.Size(180, 22);
+            this.menuInsertTestClips.Text = "Insert test clips";
+            this.menuInsertTestClips.Visible = false;
+            this.menuInsertTestClips.Click += new System.EventHandler(this.menuInsertTestClips_Click);
             // 
             // pMain
             // 
@@ -253,6 +263,7 @@
         private System.Windows.Forms.ContextMenuStrip menuClips;
         private System.Windows.Forms.ToolStripMenuItem menuSave;
         private System.Windows.Forms.ToolStripMenuItem menuDelete;
+        private System.Windows.Forms.ToolStripMenuItem menuInsertTestClips;
     }
 }
 
