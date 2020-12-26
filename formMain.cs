@@ -49,6 +49,7 @@ namespace Clips
         private string LastText { get; set; }
 
         // TODO Add ability to pin a clip.
+        // TODO Save form size and placement.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
