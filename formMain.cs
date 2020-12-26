@@ -257,7 +257,7 @@ namespace Clips
             ClipButton b = NewClipButton();
             b.FullText = text;
 
-            var plainTextBytes = Encoding.UTF8.GetBytes(text);
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
             string base64 = Convert.ToBase64String(plainTextBytes);
             if (saveToDisk)
                 b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
@@ -391,7 +391,7 @@ namespace Clips
                 }
                 else
                 {
-                    var base64EncodedBytes = Convert.FromBase64String(data.InnerText);
+                    byte[] base64EncodedBytes = Convert.FromBase64String(data.InnerText);
                     string decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
                     AddItem(decodedString, file, false);
                 }
