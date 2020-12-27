@@ -192,7 +192,7 @@
             this.gbSizes.Controls.Add(this.nudMaxClips);
             this.gbSizes.Location = new System.Drawing.Point(5, 97);
             this.gbSizes.Name = "gbSizes";
-            this.gbSizes.Size = new System.Drawing.Size(299, 277);
+            this.gbSizes.Size = new System.Drawing.Size(299, 267);
             this.gbSizes.TabIndex = 2;
             this.gbSizes.TabStop = false;
             this.gbSizes.Text = "Clips";
@@ -511,9 +511,9 @@
             this.groupPreview.Controls.Add(this.nudPreviewMaxLines);
             this.groupPreview.Controls.Add(this.label7);
             this.groupPreview.Controls.Add(this.nudPreviewPopupDelay);
-            this.groupPreview.Location = new System.Drawing.Point(310, 97);
+            this.groupPreview.Location = new System.Drawing.Point(310, 98);
             this.groupPreview.Name = "groupPreview";
-            this.groupPreview.Size = new System.Drawing.Size(183, 277);
+            this.groupPreview.Size = new System.Drawing.Size(183, 266);
             this.groupPreview.TabIndex = 3;
             this.groupPreview.TabStop = false;
             this.groupPreview.Text = "Preview";
@@ -639,7 +639,7 @@
             this.groupBox2.Controls.Add(this.btnCancel);
             this.groupBox2.Controls.Add(this.btnOK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 373);
+            this.groupBox2.Location = new System.Drawing.Point(5, 363);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(489, 54);
             this.groupBox2.TabIndex = 4;
@@ -679,7 +679,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 432);
+            this.ClientSize = new System.Drawing.Size(499, 422);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupOther);
             this.Controls.Add(this.groupPreview);
