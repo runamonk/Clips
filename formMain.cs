@@ -52,6 +52,7 @@ namespace Clips
         // TODO Save form size and placement.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add \n to each file in a list of files.
+        // TODO Add light/dark mode radio box to auto set of colors.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -110,6 +111,8 @@ namespace Clips
                 string s = ((ClipButton)sender).FullText;
                 deleteClip();
                 Clipboard.SetText(s);
+                
+                // TODO max url length is 2048, check for that?
                 //if (((Form.ModifierKeys == Keys.Shift) || (e.Button == MouseButtons.Middle)) && (Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute) == true))
                 //{
                 //    System.Diagnostics.Process.Start(s);
