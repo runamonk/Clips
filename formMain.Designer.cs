@@ -150,7 +150,7 @@
             this.menuDelete.Text = "Delete";
             this.menuDelete.Click += new System.EventHandler(this.MenuClips_Click);
             // 
-            // formMain
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -158,8 +158,8 @@
             this.ControlBox = false;
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.pTop);
-            this.MinimumSize = new System.Drawing.Size(400, 300);
-            this.Name = "formMain";
+            this.MinimumSize = new System.Drawing.Size(200, 100);
+            this.Name = "FormMain";
             this.Opacity = 0D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

@@ -241,6 +241,22 @@ namespace Clips
             base.OnLoad(e);
         }
 
+        private void PreviewHide(object sender, EventArgs e)
+        {
+            formPreview.HidePreview();
+            inPreview = false;
+        }
+
+        private void PreviewShow(object sender, EventArgs e)
+        {
+            inPreview = true;
+            ((ClipButton)sender).Select();
+
+            formPreview.BackColor = Config.PreviewBackColor;
+            formPreview.ForeColor = Config.PreviewFontColor;
+            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, Config.PreviewPopupDelay, Config.PreviewMaxLines);
+        }
+
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
@@ -429,27 +445,9 @@ namespace Clips
             return b;
         }
 
-        private void PreviewHide(object sender, EventArgs e)
-        {
-            formPreview.HidePreview();
-            inPreview = false;
-        }
-
-        private void PreviewShow(object sender, EventArgs e)
-        {
-            inPreview = true;
-            ((ClipButton)sender).Select();
-
-            formPreview.BackColor = Config.PreviewBackColor;
-            formPreview.ForeColor = Config.PreviewFontColor;
-            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, Config.PreviewPopupDelay, Config.PreviewMaxLines);
-        }
-
         private void ToggleShow()
         {
             if (inClose) return;
-
-            // for some reason during form closing event the opacity is set to 1.
             if ((Visible) && ((Opacity == 0) || (Opacity == 1)))
             {
                 Visible = false;
