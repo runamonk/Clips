@@ -626,7 +626,7 @@
             this.groupBox2.Controls.Add(this.btnCancel);
             this.groupBox2.Controls.Add(this.btnOK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 362);
+            this.groupBox2.Location = new System.Drawing.Point(5, 355);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(489, 54);
             this.groupBox2.TabIndex = 4;
@@ -666,7 +666,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 421);
+            this.ClientSize = new System.Drawing.Size(499, 414);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupOther);
             this.Controls.Add(this.groupPreview);
