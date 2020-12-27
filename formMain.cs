@@ -487,9 +487,9 @@ namespace Clips
             else
             {
                 firstLoad = false;
+                AutoSizeForm();
                 if (Config.OpenFormAtCursor)
                     Funcs.MoveFormToCursor(this, IgnoreBounds);
-                AutoSizeForm();
                 Opacity = 100;
                 Visible = true;
                 Activate();
