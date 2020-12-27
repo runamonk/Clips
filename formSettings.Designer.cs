@@ -64,6 +64,7 @@
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
             this.nudPreviewPopupDelay = new System.Windows.Forms.NumericUpDown();
             this.chkStartup = new System.Windows.Forms.CheckBox();
+            this.chkOpenAtCursor = new System.Windows.Forms.CheckBox();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupPreview = new System.Windows.Forms.GroupBox();
             this.gbColors = new System.Windows.Forms.GroupBox();
@@ -79,7 +80,7 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.chkOpenAtCursor = new System.Windows.Forms.CheckBox();
+            this.chkAutoSizeHeight = new System.Windows.Forms.CheckBox();
             this.gbHotkey.SuspendLayout();
             this.gbSizes.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -107,7 +108,7 @@
             this.gbHotkey.Controls.Add(this.label1);
             this.gbHotkey.Location = new System.Drawing.Point(5, 8);
             this.gbHotkey.Name = "gbHotkey";
-            this.gbHotkey.Size = new System.Drawing.Size(299, 77);
+            this.gbHotkey.Size = new System.Drawing.Size(299, 83);
             this.gbHotkey.TabIndex = 0;
             this.gbHotkey.TabStop = false;
             this.gbHotkey.Text = "Popup Hotkey";
@@ -189,9 +190,9 @@
             this.gbSizes.Controls.Add(this.lblTextRows);
             this.gbSizes.Controls.Add(this.nudClipsLinesPerRow);
             this.gbSizes.Controls.Add(this.nudMaxClips);
-            this.gbSizes.Location = new System.Drawing.Point(5, 91);
+            this.gbSizes.Location = new System.Drawing.Point(5, 97);
             this.gbSizes.Name = "gbSizes";
-            this.gbSizes.Size = new System.Drawing.Size(299, 265);
+            this.gbSizes.Size = new System.Drawing.Size(299, 277);
             this.gbSizes.TabIndex = 2;
             this.gbSizes.TabStop = false;
             this.gbSizes.Text = "Clips";
@@ -466,7 +467,7 @@
             // 
             // nudPreviewPopupDelay
             // 
-            this.nudPreviewPopupDelay.Location = new System.Drawing.Point(115, 52);
+            this.nudPreviewPopupDelay.Location = new System.Drawing.Point(115, 45);
             this.nudPreviewPopupDelay.Maximum = new decimal(new int[] {
             9000,
             0,
@@ -488,6 +489,17 @@
             this.toolTip1.SetToolTip(this.chkStartup, "Check to automatically start clips.");
             this.chkStartup.UseVisualStyleBackColor = true;
             // 
+            // chkOpenAtCursor
+            // 
+            this.chkOpenAtCursor.AutoSize = true;
+            this.chkOpenAtCursor.Location = new System.Drawing.Point(6, 39);
+            this.chkOpenAtCursor.Name = "chkOpenAtCursor";
+            this.chkOpenAtCursor.Size = new System.Drawing.Size(99, 17);
+            this.chkOpenAtCursor.TabIndex = 1;
+            this.chkOpenAtCursor.Text = "Open at Mouse";
+            this.toolTip1.SetToolTip(this.chkOpenAtCursor, "Check to automatically open Clips at mouse cursor.");
+            this.chkOpenAtCursor.UseVisualStyleBackColor = true;
+            // 
             // dlgColor
             // 
             this.dlgColor.AnyColor = true;
@@ -499,9 +511,9 @@
             this.groupPreview.Controls.Add(this.nudPreviewMaxLines);
             this.groupPreview.Controls.Add(this.label7);
             this.groupPreview.Controls.Add(this.nudPreviewPopupDelay);
-            this.groupPreview.Location = new System.Drawing.Point(310, 91);
+            this.groupPreview.Location = new System.Drawing.Point(310, 97);
             this.groupPreview.Name = "groupPreview";
-            this.groupPreview.Size = new System.Drawing.Size(183, 265);
+            this.groupPreview.Size = new System.Drawing.Size(183, 277);
             this.groupPreview.TabIndex = 3;
             this.groupPreview.TabStop = false;
             this.groupPreview.Text = "Preview";
@@ -570,7 +582,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 28);
+            this.label4.Location = new System.Drawing.Point(13, 22);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(77, 13);
@@ -580,7 +592,7 @@
             // 
             // nudPreviewMaxLines
             // 
-            this.nudPreviewMaxLines.Location = new System.Drawing.Point(115, 24);
+            this.nudPreviewMaxLines.Location = new System.Drawing.Point(115, 18);
             this.nudPreviewMaxLines.Maximum = new decimal(new int[] {
             50,
             0,
@@ -603,7 +615,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 54);
+            this.label7.Location = new System.Drawing.Point(13, 49);
             this.label7.Margin = new System.Windows.Forms.Padding(0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 13);
@@ -613,11 +625,12 @@
             // 
             // groupOther
             // 
+            this.groupOther.Controls.Add(this.chkAutoSizeHeight);
             this.groupOther.Controls.Add(this.chkOpenAtCursor);
             this.groupOther.Controls.Add(this.chkStartup);
             this.groupOther.Location = new System.Drawing.Point(310, 8);
             this.groupOther.Name = "groupOther";
-            this.groupOther.Size = new System.Drawing.Size(183, 77);
+            this.groupOther.Size = new System.Drawing.Size(183, 83);
             this.groupOther.TabIndex = 1;
             this.groupOther.TabStop = false;
             // 
@@ -626,7 +639,7 @@
             this.groupBox2.Controls.Add(this.btnCancel);
             this.groupBox2.Controls.Add(this.btnOK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 355);
+            this.groupBox2.Location = new System.Drawing.Point(5, 373);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(489, 54);
             this.groupBox2.TabIndex = 4;
@@ -651,22 +664,22 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
-            // chkOpenAtCursor
+            // chkAutoSizeHeight
             // 
-            this.chkOpenAtCursor.AutoSize = true;
-            this.chkOpenAtCursor.Location = new System.Drawing.Point(6, 41);
-            this.chkOpenAtCursor.Name = "chkOpenAtCursor";
-            this.chkOpenAtCursor.Size = new System.Drawing.Size(99, 17);
-            this.chkOpenAtCursor.TabIndex = 1;
-            this.chkOpenAtCursor.Text = "Open at Mouse";
-            this.toolTip1.SetToolTip(this.chkOpenAtCursor, "Check to automatically open Clips at mouse cursor.");
-            this.chkOpenAtCursor.UseVisualStyleBackColor = true;
+            this.chkAutoSizeHeight.AutoSize = true;
+            this.chkAutoSizeHeight.Location = new System.Drawing.Point(6, 60);
+            this.chkAutoSizeHeight.Name = "chkAutoSizeHeight";
+            this.chkAutoSizeHeight.Size = new System.Drawing.Size(105, 17);
+            this.chkAutoSizeHeight.TabIndex = 2;
+            this.chkAutoSizeHeight.Text = "Auto Size Height";
+            this.toolTip1.SetToolTip(this.chkAutoSizeHeight, "Check to automatically open Clips at mouse cursor.");
+            this.chkAutoSizeHeight.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 414);
+            this.ClientSize = new System.Drawing.Size(499, 432);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupOther);
             this.Controls.Add(this.groupPreview);
@@ -762,5 +775,6 @@
         public System.Windows.Forms.Button btnCancel;
         public System.Windows.Forms.Button btnOK;
         public System.Windows.Forms.CheckBox chkOpenAtCursor;
+        public System.Windows.Forms.CheckBox chkAutoSizeHeight;
     }
 }

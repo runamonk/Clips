@@ -62,6 +62,7 @@ namespace Clips
                     pnlMenuFontColor.BackColor = _Config.MenuFontColor;
                     pnlMenuSelectedColor.BackColor = _Config.MenuSelectedColor;
                     chkOpenAtCursor.Checked = _Config.OpenFormAtCursor;
+                    chkAutoSizeHeight.Checked = _Config.AutoSizeHeight;
                 }
             }
 
@@ -104,6 +105,7 @@ namespace Clips
                 _Config.MenuFontColor = pnlMenuFontColor.BackColor;
                 _Config.MenuSelectedColor = pnlMenuSelectedColor.BackColor;
                 _Config.OpenFormAtCursor = chkOpenAtCursor.Checked;
+                _Config.AutoSizeHeight = chkAutoSizeHeight.Checked;
 
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
@@ -199,6 +201,17 @@ namespace Clips
         }
 
         // properties
+
+        public Boolean AutoSizeHeight
+        {
+            get {
+                string s = FindKey("auto_size_height");
+                if (s == "")
+                    s = SetKey("auto_size_height", "false");
+                return bool.Parse(s);
+            }
+            set { SetKey("auto_size_height", value.ToString()); }
+        }
 
         public Color ClipsBackColor
         {

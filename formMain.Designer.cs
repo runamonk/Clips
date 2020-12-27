@@ -107,7 +107,7 @@
             this.pTop.Margin = new System.Windows.Forms.Padding(0);
             this.pTop.Name = "pTop";
             this.pTop.Padding = new System.Windows.Forms.Padding(5, 0, 5, 0);
-            this.pTop.Size = new System.Drawing.Size(800, 28);
+            this.pTop.Size = new System.Drawing.Size(184, 28);
             this.pTop.TabIndex = 3;
             this.pTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTop_MouseDown);
             // 
@@ -117,7 +117,7 @@
             this.pMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pMain.Location = new System.Drawing.Point(0, 28);
             this.pMain.Name = "pMain";
-            this.pMain.Size = new System.Drawing.Size(800, 422);
+            this.pMain.Size = new System.Drawing.Size(184, 33);
             this.pMain.TabIndex = 4;
             // 
             // pClips
@@ -125,7 +125,7 @@
             this.pClips.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pClips.Location = new System.Drawing.Point(0, 0);
             this.pClips.Name = "pClips";
-            this.pClips.Size = new System.Drawing.Size(800, 422);
+            this.pClips.Size = new System.Drawing.Size(184, 33);
             this.pClips.TabIndex = 1;
             // 
             // menuClips
@@ -154,10 +154,11 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(184, 61);
             this.ControlBox = false;
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.pTop);
+            this.MaximumSize = new System.Drawing.Size(800, 600);
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "FormMain";
             this.Opacity = 0D;

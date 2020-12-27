@@ -41,6 +41,7 @@ namespace Clips
 
         private bool inPreview = false;
         private bool inClose = false;
+        private bool inLoad = false;
         private bool inSettings = false;
 
         private ClipButton ButtonMain { get; set; }
@@ -55,7 +56,6 @@ namespace Clips
         // TODO Add edit/favorite text editor in config.
         // TODO Add option to auto-close on clip click.
         // TODO Add Check for app already running.
-        // TODO Add auto height size.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -63,6 +63,7 @@ namespace Clips
             LoadConfig();
             CleanupCache();
             LoadItems();
+            AutoSizeForm();
         }
 
         private void ClipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
@@ -322,6 +323,24 @@ namespace Clips
             b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
         }
 
+        private void AutoSizeForm()
+        {
+            if (inLoad) return;
+
+            if (Config.AutoSizeHeight)
+            {
+                int c = 68;
+                for (int i=0; i <= pClips.Controls.Count-1; i++)
+                {
+                    c = c + pClips.Controls[i].Height;
+                }
+                if (c < MaximumSize.Height)
+                    Height = c;
+                else
+                    Height = MaximumSize.Height;
+            }
+        }
+
         private void CleanupCache()
         {
             if (pClips.Controls.Count >= Config.ClipsMaxClips)
@@ -388,7 +407,7 @@ namespace Clips
             pClips.Controls.Clear();
             LastImage = null;
             LastText = "";
-
+            inLoad = true;
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
             {
@@ -419,8 +438,9 @@ namespace Clips
                 }
                 doc = null;
             }
+            inLoad = false;
+            
             ResumeLayout();
-
             pClips.VerticalScroll.Value = 0;
         }
 
@@ -466,7 +486,7 @@ namespace Clips
             {
                 if (Config.OpenFormAtCursor)
                     Funcs.MoveFormToCursor(this, true);
-
+                AutoSizeForm();
                 Opacity = 100;
                 Visible = true;
                 Activate();
