@@ -7,6 +7,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Drawing;
 using Microsoft.Win32;
+using System.Windows;
 using Utility;
 
 namespace Clips
@@ -148,13 +149,14 @@ namespace Clips
             return "";
         }
 
-        private void SetKey(string Key, string Value)
+        private string SetKey(string Key, string Value)
         {
             int i = GetKeyIndex(Key);
             if (i == -1)
                 _Config.Add(Key + "=" + Value);
             else
                 _Config[i] = Key + "=" + Value;
+            return Value;
         }
 
         public void LoadConfiguration()
@@ -201,11 +203,7 @@ namespace Clips
             get {
                 string s = FindKey("clips_back_color");
                 if (s == "")
-                {
-                    SetKey("clips_back_color", Color.FromName("Control").ToArgb().ToString());
-                    return Color.FromName("Control");
-                }
-                else
+                    s = SetKey("clips_back_color", Color.FromName("Control").ToArgb().ToString());
                     return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_back_color", value.ToArgb().ToString()); }
@@ -216,12 +214,8 @@ namespace Clips
             get {
                 string s = FindKey("clips_font_color");
                 if (s == "")
-                {
-                    SetKey("clips_font_color", Color.FromName("ControlText").ToArgb().ToString());
-                    return Color.FromName("ControlText");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("clips_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_font_color", value.ToArgb().ToString()); }
         }
@@ -231,12 +225,8 @@ namespace Clips
             get {
                 string s = FindKey("clips_header_color");
                 if (s == "")
-                {
-                    SetKey("clips_header_color", Color.FromName("Control").ToArgb().ToString());
-                    return Color.FromName("Control");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("clips_header_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_header_color", value.ToArgb().ToString()); }
         }
@@ -246,12 +236,8 @@ namespace Clips
             get {
                 string s = FindKey("clips_lines_per_row");
                 if (s == "")
-                {
-                    SetKey("clips_lines_per_row", "1");
-                    return 1;
-                }
-                else
-                    return Convert.ToInt32(s);
+                    s = SetKey("clips_lines_per_row", "1");
+                return Convert.ToInt32(s);
             }
             set { SetKey("clips_lines_per_row", value.ToString()); }
         }
@@ -261,12 +247,8 @@ namespace Clips
             get {
                 string s = FindKey("clips_row_back_color");
                 if (s == "")
-                {
-                    SetKey("clips_row_back_color", Color.FromName("Control").ToArgb().ToString());
-                    return Color.FromName("Control");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("clips_row_back_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_row_back_color", value.ToArgb().ToString()); }
         }
@@ -276,14 +258,55 @@ namespace Clips
             get {
                 string s = FindKey("clips_max_clips");
                 if (s == "")
-                {
-                    SetKey("clips_max_clips", "50");
-                    return 50;
-                }
-                else
-                    return Convert.ToInt32(s);
+                    s = SetKey("clips_max_clips", "50");
+                return Convert.ToInt32(s);
             }
             set { SetKey("clips_max_clips", value.ToString()); }
+        }
+
+        public int FormLeft
+        {
+            get {
+                string s = FindKey("form_left");
+                if (s == "")
+                    s = SetKey("form_left", "0");
+                return Convert.ToInt32(s);
+            }
+            set { SetKey("form_left", value.ToString()); }
+        }
+
+        public int FormTop
+        {
+            get {
+                string s = FindKey("form_top");
+                if (s == "")
+                    s = SetKey("form_top", "0");
+                return Convert.ToInt32(s);
+            }
+            set { SetKey("form_top", value.ToString()); }
+        }
+
+        public Size FormSize
+        {
+            get {
+                string s = FindKey("form_size");
+                Size sz = new Size(400, 300);
+                SizeConverter sc = new SizeConverter();
+
+                if (s == "")
+                {
+                    sz = new Size(400, 300);
+                    sc = new SizeConverter();
+                    s = SetKey("form_size", sc.ConvertToString(sz));
+                }
+                sc = new SizeConverter();
+                sz = (Size)sc.ConvertFromString(s);
+                return sz;
+            }
+            set {
+                SizeConverter sc = new SizeConverter();
+                SetKey("form_size", sc.ConvertToString(value));
+            }
         }
 
         public Color MenuBackColor
@@ -291,12 +314,8 @@ namespace Clips
             get {
                 string s = FindKey("menu_back_color");
                 if (s == "")
-                {
-                    SetKey("menu_back_color", Color.FromName("Control").ToArgb().ToString());
-                    return Color.FromName("Control");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("menu_back_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_back_color", value.ToArgb().ToString()); }
         }
@@ -306,12 +325,8 @@ namespace Clips
             get {
                 string s = FindKey("menu_border_color");
                 if (s == "")
-                {
-                    SetKey("menu_border_color", Color.FromName("Control").ToArgb().ToString());
-                    return Color.FromName("Control");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("menu_border_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_border_color", value.ToArgb().ToString()); }
         }
@@ -321,12 +336,8 @@ namespace Clips
             get {
                 string s = FindKey("menu_font_color");
                 if (s == "")
-                {
-                    SetKey("menu_font_color", Color.FromName("ControlText").ToArgb().ToString());
-                    return Color.FromName("ControlText");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("menu_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_font_color", value.ToArgb().ToString()); }
         }
@@ -336,12 +347,8 @@ namespace Clips
             get {
                 string s = FindKey("menu_selected_color");
                 if (s == "")
-                {
-                    SetKey("menu_selected_color", Color.FromName("MenuHighlight").ToArgb().ToString());
-                    return Color.FromName("MenuHighlight");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("menu_selected_color", Color.FromName("MenuHighlight").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_selected_color", value.ToArgb().ToString()); }
         }
@@ -352,12 +359,8 @@ namespace Clips
             {
                 string s = FindKey("open_form_at_cursor");
                 if (s == "")
-                {
-                    SetKey("open_form_at_cursor", "false");
-                    return false;
-                }
-                else
-                    return bool.Parse(s);
+                    s = SetKey("open_form_at_cursor", "false");
+                return bool.Parse(s);
             }
             set { SetKey("open_form_at_cursor", value.ToString()); }
         }
@@ -368,12 +371,8 @@ namespace Clips
             {
                 string s = FindKey("popup_hotkey");
                 if (s == "")
-                {
-                    SetKey("popup_hotkey", "None");
-                    return "None";
-                }
-                else
-                    return s;
+                    s = SetKey("popup_hotkey", "None");
+                return s;
             }
             set { SetKey("popup_hotkey", value.ToString()); }
         }
@@ -391,12 +390,8 @@ namespace Clips
             {
                 string s = FindKey("popup_hotkey_modifier");
                 if (s == "")
-                {
-                    SetKey("popup_hotkey_modifier", "0");
-                    return 0;
-                }
-                else
-                    return Convert.ToInt32(s);
+                    s = SetKey("popup_hotkey_modifier", "0");
+                return Convert.ToInt32(s);
             }
             set { SetKey("popup_hotkey_modifier", value.ToString()); }        
         }
@@ -406,12 +401,8 @@ namespace Clips
             get {
                 string s = FindKey("preview_back_color");
                 if (s == "")
-                {
-                    SetKey("preview_back_color", Color.FromName("Control").ToArgb().ToString());
-                    return Color.FromName("Control");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("preview_back_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("preview_back_color", value.ToArgb().ToString()); }
         }
@@ -421,12 +412,8 @@ namespace Clips
             get {
                 string s = FindKey("preview_font_color");
                 if (s == "")
-                {
-                    SetKey("preview_font_color", Color.FromName("ControlText").ToArgb().ToString());
-                    return Color.FromName("ControlText");
-                }
-                else
-                    return Color.FromArgb(Convert.ToInt32(s));
+                    s = SetKey("preview_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("preview_font_color", value.ToArgb().ToString()); }
         }
@@ -437,12 +424,8 @@ namespace Clips
             {
                 string s = FindKey("preview_popup_delay");
                 if (s == "")
-                {
-                    SetKey("preview_popup_delay", "500");
-                    return 500;
-                }
-                else
-                    return Convert.ToInt32(s);
+                    s = SetKey("preview_popup_delay", "500");
+                return Convert.ToInt32(s);
             }
             set { SetKey("preview_popup_delay", value.ToString()); }
         }
@@ -452,12 +435,8 @@ namespace Clips
             get {
                 string s = FindKey("preview_max_lines");
                 if (s == "")
-                {
-                    SetKey("preview_max_lines", "50");
-                    return 50;
-                }
-                else
-                    return Convert.ToInt32(s);
+                    s = SetKey("preview_max_lines", "50");
+                return Convert.ToInt32(s);
             }
             set { SetKey("preview_max_lines", value.ToString()); }
         }

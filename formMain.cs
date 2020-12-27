@@ -49,7 +49,6 @@ namespace Clips
         private string LastText { get; set; }
 
         // TODO Add ability to pin a clip.
-        // TODO Save form size and placement.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add \n to each file in a list of files.
         // TODO Add light/dark mode radio box to auto set of colors.
@@ -356,6 +355,7 @@ namespace Clips
                     Dock = DockStyle.Left
                 };
                 ButtonMain.Click += MainButton_Click;
+                SetFormPos();
             }
             menuNotify.Renderer = null;
             menuNotify.Renderer = new CustomToolstripRenderer(Config);
@@ -445,6 +445,12 @@ namespace Clips
             return b;
         }
 
+        private void SetFormPos()
+        {
+            Top = Config.FormTop;
+            Left = Config.FormLeft;
+        }
+
         private void ToggleShow()
         {
             if (inClose) return;
@@ -463,8 +469,15 @@ namespace Clips
                 Activate();
             }
         }
+
+        private void FormMain_ResizeEnd(object sender, EventArgs e)
+        {
+            Config.FormSize = Size;
+            Config.FormTop = Top;
+            Config.FormLeft = Left;
+        }
     } // formMain
-    
+
     // ClipButton
     public partial class ClipButton : Button
     {

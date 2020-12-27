@@ -169,6 +169,7 @@
             this.Deactivate += new System.EventHandler(this.FormMain_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
             this.Load += new System.EventHandler(this.FormMain_Load);
+            this.ResizeEnd += new System.EventHandler(this.FormMain_ResizeEnd);
             this.menuNotify.ResumeLayout(false);
             this.pMain.ResumeLayout(false);
             this.menuClips.ResumeLayout(false);
