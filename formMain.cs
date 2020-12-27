@@ -54,6 +54,8 @@ namespace Clips
         // TODO Add light/dark mode radio box to auto set of colors.
         // TODO Add edit/favorite text editor in config.
         // TODO Add option to auto-close on clip click.
+        // TODO Add Check for app already running.
+        // TODO Add auto height size.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -449,6 +451,7 @@ namespace Clips
         {
             Top = Config.FormTop;
             Left = Config.FormLeft;
+            Size = Config.FormSize;
         }
 
         private void ToggleShow()

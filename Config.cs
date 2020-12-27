@@ -149,13 +149,15 @@ namespace Clips
             return "";
         }
 
-        private string SetKey(string Key, string Value)
+        private string SetKey(string Key, string Value, bool SaveNow = false)
         {
             int i = GetKeyIndex(Key);
             if (i == -1)
                 _Config.Add(Key + "=" + Value);
             else
                 _Config[i] = Key + "=" + Value;
+
+            if (SaveNow) SaveConfiguration();
             return Value;
         }
 
@@ -269,10 +271,10 @@ namespace Clips
             get {
                 string s = FindKey("form_left");
                 if (s == "")
-                    s = SetKey("form_left", "0");
+                    s = SetKey("form_left", "0", true);
                 return Convert.ToInt32(s);
             }
-            set { SetKey("form_left", value.ToString()); }
+            set {SetKey("form_left", value.ToString(), true);}
         }
 
         public int FormTop
@@ -280,10 +282,10 @@ namespace Clips
             get {
                 string s = FindKey("form_top");
                 if (s == "")
-                    s = SetKey("form_top", "0");
+                    s = SetKey("form_top", "0", true);
                 return Convert.ToInt32(s);
             }
-            set { SetKey("form_top", value.ToString()); }
+            set {SetKey("form_top", value.ToString(), true);}
         }
 
         public Size FormSize
@@ -297,7 +299,7 @@ namespace Clips
                 {
                     sz = new Size(400, 300);
                     sc = new SizeConverter();
-                    s = SetKey("form_size", sc.ConvertToString(sz));
+                    s = SetKey("form_size", sc.ConvertToString(sz), true);
                 }
                 sc = new SizeConverter();
                 sz = (Size)sc.ConvertFromString(s);
@@ -305,7 +307,7 @@ namespace Clips
             }
             set {
                 SizeConverter sc = new SizeConverter();
-                SetKey("form_size", sc.ConvertToString(value));
+                SetKey("form_size", sc.ConvertToString(value), true);
             }
         }
 
