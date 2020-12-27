@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Utility;
 
 namespace Clips
 {
@@ -80,29 +81,10 @@ namespace Clips
             Hide();
         }
 
-        private void MoveFormToCursor()
-        {
-            Point p = new Point(Cursor.Position.X + 10, Cursor.Position.Y - 10);
-
-            //Height
-            if ((p.Y + this.Size.Width) > Screen.PrimaryScreen.WorkingArea.Height)
-            {
-                p.Y = (p.Y - this.Size.Height);
-            }
-
-            //Width
-            if ((p.X + this.Size.Width) > Screen.PrimaryScreen.WorkingArea.Width)
-            {
-                p.X = (p.X - this.Size.Width);
-            }
-
-            this.Location = p;
-        }
-
         private void TimerShowForm_Tick(object sender, EventArgs e)
         {
             timerShowForm.Enabled = false;
-            MoveFormToCursor();
+            Funcs.MoveFormToCursor(this);
             Show();
         }
     }

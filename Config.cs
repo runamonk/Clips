@@ -60,6 +60,7 @@ namespace Clips
                     pnlMenuBorderColor.BackColor = _Config.MenuBorderColor;
                     pnlMenuFontColor.BackColor = _Config.MenuFontColor;
                     pnlMenuSelectedColor.BackColor = _Config.MenuSelectedColor;
+                    chkOpenAtCursor.Checked = _Config.OpenFormAtCursor;
                 }
             }
 
@@ -101,7 +102,8 @@ namespace Clips
                 _Config.MenuBorderColor = pnlMenuBorderColor.BackColor;
                 _Config.MenuFontColor = pnlMenuFontColor.BackColor;
                 _Config.MenuSelectedColor = pnlMenuSelectedColor.BackColor;
-                
+                _Config.OpenFormAtCursor = chkOpenAtCursor.Checked;
+
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
         }
@@ -344,6 +346,22 @@ namespace Clips
             set { SetKey("menu_selected_color", value.ToArgb().ToString()); }
         }
 
+        public Boolean OpenFormAtCursor
+        {
+            get
+            {
+                string s = FindKey("open_form_at_cursor");
+                if (s == "")
+                {
+                    SetKey("open_form_at_cursor", "false");
+                    return false;
+                }
+                else
+                    return bool.Parse(s);
+            }
+            set { SetKey("open_form_at_cursor", value.ToString()); }
+        }
+
         public string PopupHotkey
         {
             get
@@ -476,8 +494,5 @@ namespace Clips
                 }
             }
         }
-
     }
-
-
 }

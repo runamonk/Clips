@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
@@ -32,7 +33,29 @@ namespace Utility
 
             return files;
         }
-        
+
+        public static void MoveFormToCursor(Form form, bool IgnoreBounds = false)
+        {
+            Point p = new Point(Cursor.Position.X + 10, Cursor.Position.Y - 10);
+            
+            if (!IgnoreBounds)
+            {
+                //Height
+                if ((p.Y + form.Size.Width) > Screen.PrimaryScreen.WorkingArea.Height)
+                {
+                    p.Y = (p.Y - form.Size.Height);
+                }
+
+                //Width
+                if ((p.X + form.Size.Width) > Screen.PrimaryScreen.WorkingArea.Width)
+                {
+                    p.X = (p.X - form.Size.Width);
+                }
+            }
+
+            form.Location = p;
+        }
+
         public static string RandomString(int size, bool lowerCase)
         {
             const string src = "abcdefghijklmnopqrstuvwxyz0123456789";

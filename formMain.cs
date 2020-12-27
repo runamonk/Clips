@@ -53,6 +53,7 @@ namespace Clips
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add \n to each file in a list of files.
         // TODO Add light/dark mode radio box to auto set of colors.
+        // TODO Add edit/favorite text editor in config.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -248,8 +249,7 @@ namespace Clips
             base.WndProc(ref m);
         }
         #endregion
-
-
+        
         // methods
         private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
         private void AddItem(string text, string fileName, bool saveToDisk = false)
@@ -456,6 +456,9 @@ namespace Clips
             }               
             else
             {
+                if (Config.OpenFormAtCursor)
+                    Funcs.MoveFormToCursor(this, true);
+
                 Opacity = 100;
                 Visible = true;
                 Activate();
