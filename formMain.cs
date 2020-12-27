@@ -227,7 +227,7 @@ namespace Clips
 
         private void NotifyClips_DoubleClick(object sender, EventArgs e)
         {
-            ToggleShow();
+            ToggleShow(false);
         }
 
         private void PTop_MouseDown(object sender, MouseEventArgs e)
@@ -476,7 +476,7 @@ namespace Clips
             Size = Config.FormSize;
         }
 
-        private void ToggleShow()
+        private void ToggleShow(bool IgnoreBounds = true)
         {
             if (inClose) return;
             if ((!firstLoad) && ((Visible) && ((Opacity == 0) || (Opacity == 1))))
@@ -488,7 +488,7 @@ namespace Clips
             {
                 firstLoad = false;
                 if (Config.OpenFormAtCursor)
-                    Funcs.MoveFormToCursor(this, true);
+                    Funcs.MoveFormToCursor(this, IgnoreBounds);
                 AutoSizeForm();
                 Opacity = 100;
                 Visible = true;
