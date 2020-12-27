@@ -43,6 +43,7 @@ namespace Clips
         private bool inClose = false;
         private bool inLoad = false;
         private bool inSettings = false;
+        private bool firstLoad = true;
 
         private ClipButton ButtonMain { get; set; }
         private Config Config { get; set; }
@@ -128,7 +129,7 @@ namespace Clips
 
         private void FormMain_Deactivate(object sender, EventArgs e)
         {
-            if ((Visible == true) && (inPreview == false) && (!inSettings))
+            if ((Visible == true) && (inPreview == false) && (!inSettings) && (!firstLoad))
                 ToggleShow();
         }
 
@@ -141,6 +142,7 @@ namespace Clips
         {
             LoadConfig();
             LoadItems();
+            firstLoad = true;
         }
 
         private void MainButton_Click(object sender, EventArgs e)
@@ -477,13 +479,14 @@ namespace Clips
         private void ToggleShow()
         {
             if (inClose) return;
-            if ((Visible) && ((Opacity == 0) || (Opacity == 1)))
+            if ((!firstLoad) && ((Visible) && ((Opacity == 0) || (Opacity == 1))))
             {
                 Visible = false;
                 Opacity = 1;
             }               
             else
             {
+                firstLoad = false;
                 if (Config.OpenFormAtCursor)
                     Funcs.MoveFormToCursor(this, true);
                 AutoSizeForm();
