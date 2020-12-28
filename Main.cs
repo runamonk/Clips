@@ -139,7 +139,7 @@ namespace Clips
             ResumeLayout();
 
             if (Config.AutoHide)
-                ToggleShow();
+                ToggleShow(true,true);
         }
 
         private void Main_Deactivate(object sender, EventArgs e)
@@ -256,7 +256,7 @@ namespace Clips
 
         private void NotifyClips_DoubleClick(object sender, EventArgs e)
         {
-            ToggleShow(false);
+            ToggleShow(false,false);
         }
 
         private void PTop_MouseDown(object sender, MouseEventArgs e)
@@ -523,9 +523,10 @@ namespace Clips
             Size = Config.FormSize;
         }
 
-        private void ToggleShow(bool IgnoreBounds = true)
+        private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((inClose) || (inAbout) || (inPreview) || (inSettings)) return;
+            if ((!Override) && ((inClose) || (inAbout) || (inPreview) || (inSettings))) return;
+
             if ((isVisible) || (firstLoad))
             {
                 Hide();
