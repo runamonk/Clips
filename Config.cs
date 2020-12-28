@@ -16,7 +16,7 @@ namespace Clips
     {
         public const string CONFIG_FILENAME = "Clips.cfg";
 
-        public partial class _formSettings : FormSettings
+        private partial class _formSettings : FormSettings
         {
             public _formSettings()
             {
@@ -163,7 +163,7 @@ namespace Clips
             return Value;
         }
 
-        public void LoadConfiguration()
+        private void LoadConfiguration()
         {
             try
             {
@@ -181,7 +181,7 @@ namespace Clips
             }
         }
 
-        public void SaveConfiguration()
+        private void SaveConfiguration()
         {
             if (File.Exists(Funcs.AppPath(CONFIG_FILENAME)))
                 File.Delete(Funcs.AppPath(CONFIG_FILENAME));
@@ -201,7 +201,6 @@ namespace Clips
         }
 
         // properties
-
         public Boolean AutoSizeHeight
         {
             get {

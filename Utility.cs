@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using System.IO;
+using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -32,6 +33,12 @@ namespace Utility
                 files = Directory.GetFiles(path);
 
             return files;
+        }
+
+        public static string GetMyGuid()
+        {
+            Assembly asm = Assembly.GetExecutingAssembly();
+            return asm.GetType().GUID.ToString();
         }
 
         public static void MoveFormToCursor(Form form, bool IgnoreBounds = false)

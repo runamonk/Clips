@@ -13,6 +13,8 @@ using System.IO;
 using System.Xml;
 using Utility;
 using System.Drawing.Imaging;
+using System.Diagnostics;
+using System.Reflection;
 
 namespace Clips
 {
@@ -37,7 +39,7 @@ namespace Clips
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        formPreview formPreview = new formPreview();
+        private formPreview formPreview = new formPreview();
 
         private bool inPreview = false;
         private bool inClose = false;
@@ -56,7 +58,6 @@ namespace Clips
         // TODO Add light/dark mode radio box to auto set of colors.
         // TODO Add edit/favorite text editor in config.
         // TODO Add option to auto-close on clip click.
-        // TODO Add Check for app already running.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -242,7 +243,13 @@ namespace Clips
 
         protected override void OnLoad(EventArgs e)
         {
-            base.OnLoad(e);
+            if (RunningInstance() != null)
+            {
+                MessageBox.Show("There is already a version of Clips running.");
+                Application.Exit();
+            }
+            else
+                base.OnLoad(e);
         }
 
         private void PreviewHide(object sender, EventArgs e)
@@ -467,6 +474,18 @@ namespace Clips
             b.ContextMenuStrip = menuClips;
             b.ImageAlign = ContentAlignment.MiddleLeft;
             return b;
+        }
+
+        private static Process RunningInstance()
+        {
+            Process current = Process.GetCurrentProcess();
+            Process[] processes = Process.GetProcessesByName(current.ProcessName);
+
+            foreach (Process process in processes)
+                if (process.Id != current.Id)
+                    if (Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == current.MainModule.FileName)
+                        return process;
+            return null;
         }
 
         private void SetFormPos()
