@@ -1,24 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Utility;
 
 namespace Clips
 {
-    public partial class formAbout : Form
+    public partial class About : Form
     {
-        public formAbout()
+        public About()
         {
             InitializeComponent();
         }
 
-        private void formAbout_Load(object sender, EventArgs e)
+        private void About_Load(object sender, EventArgs e)
         {
             lblName.Text = Funcs.GetName();
             lblVersion.Text = "Version: " + Funcs.GetVersion();
@@ -29,12 +23,12 @@ namespace Clips
                     Owner.Location.Y + Owner.Height / 2 - Height / 2);
         }
 
-        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             System.Diagnostics.Process.Start("mailto:" + linkEmail.Text);
         }
 
-        private void formAbout_Deactivate(object sender, EventArgs e)
+        private void About_Deactivate(object sender, EventArgs e)
         {
             Close();
         }

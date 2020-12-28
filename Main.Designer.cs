@@ -1,6 +1,6 @@
 ﻿namespace Clips
 {
-    partial class FormMain
+    partial class Main
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.notifyClips = new System.Windows.Forms.NotifyIcon(this.components);
             this.menuMain = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.menuNotifyMonitorClipboard = new System.Windows.Forms.ToolStripMenuItem();
@@ -158,14 +158,14 @@
             this.menuAbout.Name = "menuAbout";
             this.menuAbout.Size = new System.Drawing.Size(180, 22);
             this.menuAbout.Text = "&About";
-            this.menuAbout.Click += new System.EventHandler(this.menuAbout_Click);
+            this.menuAbout.Click += new System.EventHandler(this.MenuAbout_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(177, 6);
             // 
-            // FormMain
+            // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -175,17 +175,17 @@
             this.Controls.Add(this.pTop);
             this.MaximumSize = new System.Drawing.Size(800, 600);
             this.MinimumSize = new System.Drawing.Size(200, 100);
-            this.Name = "FormMain";
+            this.Name = "Main";
             this.Opacity = 0D;
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Clips";
             this.TopMost = true;
-            this.Deactivate += new System.EventHandler(this.FormMain_Deactivate);
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormMain_FormClosing);
-            this.Load += new System.EventHandler(this.FormMain_Load);
-            this.ResizeEnd += new System.EventHandler(this.FormMain_ResizeEnd);
+            this.Deactivate += new System.EventHandler(this.Main_Deactivate);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
+            this.Load += new System.EventHandler(this.Main_Load);
+            this.ResizeEnd += new System.EventHandler(this.Main_ResizeEnd);
             this.menuMain.ResumeLayout(false);
             this.pMain.ResumeLayout(false);
             this.menuClips.ResumeLayout(false);

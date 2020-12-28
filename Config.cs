@@ -14,14 +14,14 @@ namespace Clips
     {
         public const string CONFIG_FILENAME = "Clips.cfg";
 
-        private partial class _formSettings : FormSettings
+        private partial class _Settings : Settings
         {
-            public _formSettings()
+            public _Settings()
             {
 
             }
 
-            public _formSettings(Config Config)
+            public _Settings(Config Config)
             {
                 if (Config == null)
                     throw new Exception("Config cannot be null.");
@@ -188,9 +188,18 @@ namespace Clips
             File.WriteAllLines(Funcs.AppPath(CONFIG_FILENAME), _Config.ToArray());
         }
 
-        public void ShowConfigForm()
+        public void ShowConfigForm(bool ParentIsVisible)
         {
-            _formSettings f = new _formSettings(this);
+            _Settings f = new _Settings(this);
+            if (!ParentIsVisible)
+            {
+                f.StartPosition = FormStartPosition.Manual;
+                Funcs.MoveFormToCursor(f, false);
+            }
+            else
+            {
+                f.StartPosition = FormStartPosition.CenterParent;
+            }
 
             if (f.ShowDialog() == DialogResult.OK)
             {

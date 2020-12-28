@@ -1,0 +1,15 @@
+D:\Dropbox\code\C#\Projects\Clips\bin\Release\Clips.exe.config
+D:\Dropbox\code\C#\Projects\Clips\bin\Release\Clips.exe
+D:\Dropbox\code\C#\Projects\Clips\bin\Release\Clips.pdb
+D:\Dropbox\code\C#\Projects\Clips\bin\Release\SharpClipboard.dll
+D:\Dropbox\code\C#\Projects\Clips\bin\Release\SharpClipboard.xml
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.formPreview.resources
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.FormSettings.resources
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.FormMain.resources
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.Properties.Resources.resources
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.csproj.GenerateResource.cache
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.csproj.CoreCompileInputs.cache
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.csproj.CopyComplete
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.exe
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.pdb
+D:\Dropbox\code\C#\Projects\Clips\obj\Release\Clips.formAbout.resources

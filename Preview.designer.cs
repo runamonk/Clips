@@ -1,6 +1,6 @@
 ﻿namespace Clips
 {
-    partial class formPreview
+    partial class Preview
     {
         /// <summary>
         /// Required designer variable.

@@ -1,6 +1,6 @@
 ﻿namespace Clips
 {
-    partial class FormSettings
+    partial class Settings
     {
         /// <summary>
         /// Required designer variable.
@@ -739,7 +739,7 @@
             this.toolTip1.SetToolTip(this.pnlPreviewFontColor, "Click to set color.");
             this.pnlPreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
-            // FormSettings
+            // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -753,7 +753,7 @@
             this.KeyPreview = true;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "FormSettings";
+            this.Name = "Settings";
             this.Padding = new System.Windows.Forms.Padding(5);
             this.ShowIcon = false;
             this.ShowInTaskbar = false;

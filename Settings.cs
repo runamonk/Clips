@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace Clips
 {
-    public partial class FormSettings : Form
+    public partial class Settings : Form
     {
-        public FormSettings()
+        public Settings()
         {
             InitializeComponent();
         }

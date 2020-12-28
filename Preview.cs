@@ -10,9 +10,9 @@ using Utility;
 
 namespace Clips
 {
-    public partial class formPreview : Form
+    public partial class Preview : Form
     {
-        public formPreview()
+        public Preview()
         {
             InitializeComponent();
         }

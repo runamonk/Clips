@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using WK.Libraries.SharpClipboardNS;
 using System.Runtime.InteropServices;
@@ -18,9 +15,9 @@ using System.Reflection;
 
 namespace Clips
 {
-    public partial class FormMain : Form
+    public partial class Main : Form
     {
-        public FormMain()
+        public Main()
         {
             InitializeComponent();
         }
@@ -39,7 +36,7 @@ namespace Clips
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        private formPreview formPreview = new formPreview();
+        private Preview formPreview = new Preview();
 
         private bool inAbout = false;
         private bool inPreview = false;
@@ -47,6 +44,7 @@ namespace Clips
         private bool inLoad = false;
         private bool inSettings = false;
         private bool firstLoad = true;
+        private bool isVisible = false;
 
         private ClipButton ButtonMain { get; set; }
         private Config Config { get; set; }
@@ -144,35 +142,35 @@ namespace Clips
                 ToggleShow();
         }
 
-        private void FormMain_Deactivate(object sender, EventArgs e)
+        private void Main_Deactivate(object sender, EventArgs e)
         {
             if ((Visible == true) && (inPreview == false) && (!inSettings) && (!firstLoad))
                 ToggleShow();
         }
 
-        private void FormMain_FormClosing(object sender, FormClosingEventArgs e)
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             inClose = true;
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
+        private void Main_Load(object sender, EventArgs e)
         {
             LoadConfig();
             LoadItems();
             firstLoad = true;
         }
 
-        private void FormMain_ResizeEnd(object sender, EventArgs e)
+        private void Main_ResizeEnd(object sender, EventArgs e)
         {
             Config.FormSize = Size;
             Config.FormTop = Top;
             Config.FormLeft = Left;
         }
 
-        private void menuAbout_Click(object sender, EventArgs e)
+        private void MenuAbout_Click(object sender, EventArgs e)
         {
             inAbout = true;
-            formAbout f = new formAbout();
+            About f = new About();
             f.Show(this);
             inAbout = false;
         }
@@ -241,7 +239,7 @@ namespace Clips
         private void MenuSettings_Click(object sender, EventArgs e)
         {
             inSettings = true;
-            Config.ShowConfigForm();
+            Config.ShowConfigForm(isVisible);
             inSettings = false;
         }
 
@@ -529,23 +527,26 @@ namespace Clips
         private void ToggleShow(bool IgnoreBounds = true)
         {
             if ((inClose) || (inAbout)) return;
+
             if ((!firstLoad) && ((Visible) && ((Opacity == 0) || (Opacity == 1))))
             {
                 Visible = false;
+                isVisible = false;
                 Opacity = 1;
-            }               
+            }
             else
             {
-                firstLoad = false;
+                firstLoad = false;            
                 AutoSizeForm();
                 if (Config.OpenFormAtCursor)
                     Funcs.MoveFormToCursor(this, IgnoreBounds);
                 Opacity = 100;
+                isVisible = true;
                 Visible = true;
                 Activate();
             }
         }
-    } // formMain
+    } // Main
 
     // ClipButton
     public partial class ClipButton : Button

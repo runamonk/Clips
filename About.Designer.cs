@@ -1,6 +1,6 @@
 ﻿namespace Clips
 {
-    partial class formAbout
+    partial class About
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(formAbout));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(About));
             this.panel1 = new System.Windows.Forms.Panel();
             this.lblVersion = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
@@ -84,7 +84,7 @@
             this.linkEmail.TabStop = true;
             this.linkEmail.Text = "runamonk@onlyzuul.org";
             this.linkEmail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.linkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
+            this.linkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
             // 
             // lblDesc
             // 
@@ -98,7 +98,7 @@
             this.lblDesc.Text = resources.GetString("lblDesc.Text");
             this.lblDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // formAbout
+            // About
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -108,12 +108,12 @@
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "formAbout";
+            this.Name = "About";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "                                                         ";
             this.TopMost = true;
-            this.Deactivate += new System.EventHandler(this.formAbout_Deactivate);
-            this.Load += new System.EventHandler(this.formAbout_Load);
+            this.Deactivate += new System.EventHandler(this.About_Deactivate);
+            this.Load += new System.EventHandler(this.About_Load);
             this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
 
