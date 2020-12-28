@@ -35,6 +35,15 @@
   <PropertyGroup>
     <ApplicationIcon>Clips.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup>
+    <SignManifests>false</SignManifests>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>onlyzuul.pfx</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="SharpClipboard, Version=3.5.2.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\SharpClipboard.3.5.2\lib\net20\SharpClipboard.dll</HintPath>
@@ -103,6 +112,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="onlyzuul.pfx" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>

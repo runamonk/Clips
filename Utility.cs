@@ -19,7 +19,7 @@ namespace Utility
         {
             return Path.GetDirectoryName(Application.ExecutablePath);
         }
-               
+
         public static string [] GetFiles(string path, string searchPattern)
         {
             if (!Directory.Exists(path))
