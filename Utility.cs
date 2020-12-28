@@ -35,10 +35,14 @@ namespace Utility
             return files;
         }
 
-        public static string GetMyGuid()
+        public static string GetName()
         {
-            Assembly asm = Assembly.GetExecutingAssembly();
-            return asm.GetType().GUID.ToString();
+            return Assembly.GetExecutingAssembly().GetName().Name;
+        }
+
+        public static string GetVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
         public static void MoveFormToCursor(Form form, bool IgnoreBounds = false)

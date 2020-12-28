@@ -41,6 +41,7 @@ namespace Clips
 
         private formPreview formPreview = new formPreview();
 
+        private bool inAbout = false;
         private bool inPreview = false;
         private bool inClose = false;
         private bool inLoad = false;
@@ -146,10 +147,25 @@ namespace Clips
             firstLoad = true;
         }
 
+        private void FormMain_ResizeEnd(object sender, EventArgs e)
+        {
+            Config.FormSize = Size;
+            Config.FormTop = Top;
+            Config.FormLeft = Left;
+        }
+
+        private void menuAbout_Click(object sender, EventArgs e)
+        {
+            inAbout = true;
+            formAbout f = new formAbout();
+            f.Show(this);
+            inAbout = false;
+        }
+
         private void MainButton_Click(object sender, EventArgs e)
         {
             Button b = ((Button)sender);
-            menuNotify.Show(b.Left + b.Width + this.Left, b.Top + b.Height + this.Top);
+            menuMain.Show(b.Left + b.Width + this.Left, b.Top + b.Height + this.Top);
         }
 
         private void MenuInsertTestClips_Click(object sender, EventArgs e)
@@ -280,6 +296,7 @@ namespace Clips
         
         // methods
         private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+        
         private void AddItem(string text, string fileName, bool saveToDisk = false)
         {
             if (text == LastText) return;
@@ -387,10 +404,11 @@ namespace Clips
                 ButtonMain.Click += MainButton_Click;
                 SetFormPos();
             }
-            menuNotify.Renderer = null;
-            menuNotify.Renderer = new CustomToolstripRenderer(Config);
-            menuNotify.BackColor = Config.MenuBackColor;
-            menuNotify.ForeColor = Config.MenuFontColor;
+            Text = Funcs.GetName() + " v" + Funcs.GetVersion();
+            menuMain.Renderer = null;
+            menuMain.Renderer = new CustomToolstripRenderer(Config);
+            menuMain.BackColor = Config.MenuBackColor;
+            menuMain.ForeColor = Config.MenuFontColor;
 
             menuClips.Renderer = null;
             menuClips.Renderer = new CustomToolstripRenderer(Config);
@@ -497,7 +515,7 @@ namespace Clips
 
         private void ToggleShow(bool IgnoreBounds = true)
         {
-            if (inClose) return;
+            if ((inClose) || (inAbout)) return;
             if ((!firstLoad) && ((Visible) && ((Opacity == 0) || (Opacity == 1))))
             {
                 Visible = false;
@@ -513,13 +531,6 @@ namespace Clips
                 Visible = true;
                 Activate();
             }
-        }
-
-        private void FormMain_ResizeEnd(object sender, EventArgs e)
-        {
-            Config.FormSize = Size;
-            Config.FormTop = Top;
-            Config.FormLeft = Left;
         }
     } // formMain
 
