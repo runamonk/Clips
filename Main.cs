@@ -36,21 +36,19 @@ namespace Clips
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        private Preview formPreview = new Preview();
-
-        private bool firstLoad = true;
+        private ClipButton MenuButton { get; set; }
+        private Config Config { get; set; }
         private bool inAbout = false;
         private bool inClose = false;
         private bool inLoad = false;
         private bool inPreview = false;
         private bool inSettings = false;
         private bool isVisible = false;
-
-        private ClipButton MenuButton { get; set; }
-        private Config Config { get; set; }
         private Image LastImage { get; set; }
         private string LastText { get; set; }
+        private Preview PreviewForm = new Preview();
         private SharpClipboard clipboard;
+
 
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
@@ -157,7 +155,6 @@ namespace Clips
         {
             LoadConfig();
             LoadItems();
-            firstLoad = true;
         }
 
         private void Main_ResizeEnd(object sender, EventArgs e)
@@ -262,12 +259,8 @@ namespace Clips
 
         protected override void OnShown(EventArgs e)
         {
-            if (firstLoad)
-            {
-                firstLoad = false;
-                this.Hide();
-                Deactivate += Main_Deactivate;
-            }
+            Visible = false;
+            Deactivate += Main_Deactivate;
         }
 
         private void PTop_MouseDown(object sender, MouseEventArgs e)
@@ -293,7 +286,7 @@ namespace Clips
 
         private void PreviewHide(object sender, EventArgs e)
         {
-            formPreview.HidePreview();
+            PreviewForm.HidePreview();
             inPreview = false;
         }
 
@@ -302,9 +295,9 @@ namespace Clips
             inPreview = true;
             ((ClipButton)sender).Select();
 
-            formPreview.BackColor = Config.PreviewBackColor;
-            formPreview.ForeColor = Config.PreviewFontColor;
-            formPreview.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, Config.PreviewPopupDelay, Config.PreviewMaxLines);
+            PreviewForm.BackColor = Config.PreviewBackColor;
+            PreviewForm.ForeColor = Config.PreviewFontColor;
+            PreviewForm.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, Config.PreviewPopupDelay, Config.PreviewMaxLines);
         }
 
         protected override void WndProc(ref Message m)
@@ -552,20 +545,18 @@ namespace Clips
 
             if (isVisible)
             {
-                Hide();
+                Visible = false;
                 isVisible = false;
-                firstLoad = false;
                 Opacity = 1;
             }
             else
-            {
-                firstLoad = false;            
+            {          
                 AutoSizeForm();
                 if (Config.OpenFormAtCursor)
                     Funcs.MoveFormToCursor(this, IgnoreBounds);
                 Opacity = 100;
                 isVisible = true;
-                Show();
+                Visible = true;
                 Activate();
             }
         }
