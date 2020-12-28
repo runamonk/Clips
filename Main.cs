@@ -53,7 +53,6 @@ namespace Clips
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add \n to each file in a list of files.
-        // TODO Add light/dark mode radio box to auto set of colors.
         // TODO Add edit/favorite text editor in config.
 
         #region Events

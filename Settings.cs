@@ -52,11 +52,32 @@ namespace Clips
         private void rbDark_Click(object sender, EventArgs e)
         {
             rbLight.Checked = false;
+            pnlHeaderColor.BackColor = Color.FromArgb(56,56,56);
+            pnlClipsBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            pnlClipsFontColor.BackColor = Color.White;
+            pnlClipsRowColor.BackColor = Color.FromArgb(56, 56, 56);
+            pnlMenuBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            pnlMenuBorderColor.BackColor = Color.FromArgb(56, 56, 56);
+            pnlMenuSelectedColor.BackColor = Color.DarkGray;
+            pnlMenuFontColor.BackColor = Color.White;
+            pnlMenuSelectedColor.BackColor = Color.DarkGray;
+            pnlPreviewBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            pnlPreviewFontColor.BackColor = Color.White;
         }
 
         private void rbLight_Click(object sender, EventArgs e)
         {
             rbDark.Checked = false;
+            pnlHeaderColor.BackColor = Color.White;
+            pnlClipsBackColor.BackColor = Color.White;
+            pnlClipsFontColor.BackColor = Color.Black;
+            pnlClipsRowColor.BackColor = Color.White;
+            pnlMenuBackColor.BackColor = Color.White;
+            pnlMenuBorderColor.BackColor = Color.Gray;
+            pnlMenuFontColor.BackColor = Color.Black;
+            pnlMenuSelectedColor.BackColor = Color.Gray;
+            pnlPreviewBackColor.BackColor = Color.White;
+            pnlPreviewFontColor.BackColor = Color.Black;
         }
     }
 }

@@ -464,7 +464,7 @@
             this.panel4.Location = new System.Drawing.Point(3, 49);
             this.panel4.Name = "panel4";
             this.panel4.Size = new System.Drawing.Size(494, 160);
-            this.panel4.TabIndex = 2;
+            this.panel4.TabIndex = 1;
             // 
             // Preview
             // 
@@ -476,7 +476,7 @@
             this.Preview.Location = new System.Drawing.Point(334, 0);
             this.Preview.Name = "Preview";
             this.Preview.Size = new System.Drawing.Size(160, 160);
-            this.Preview.TabIndex = 15;
+            this.Preview.TabIndex = 2;
             this.Preview.TabStop = false;
             this.Preview.Text = "Preview";
             // 
@@ -535,7 +535,7 @@
             this.groupBox3.Location = new System.Drawing.Point(172, 0);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(162, 160);
-            this.groupBox3.TabIndex = 14;
+            this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Menu";
             // 
@@ -634,7 +634,7 @@
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(172, 160);
-            this.groupBox4.TabIndex = 13;
+            this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Clips";
             // 
@@ -729,7 +729,7 @@
             this.panel5.Location = new System.Drawing.Point(3, 16);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(494, 33);
-            this.panel5.TabIndex = 1;
+            this.panel5.TabIndex = 0;
             // 
             // rbLight
             // 
