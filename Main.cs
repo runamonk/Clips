@@ -46,7 +46,7 @@ namespace Clips
         private bool inSettings = false;
         private bool isVisible = false;
 
-        private ClipButton ButtonMain { get; set; }
+        private ClipButton MenuButton { get; set; }
         private Config Config { get; set; }
         private Image LastImage { get; set; }
         private string LastText { get; set; }
@@ -406,14 +406,14 @@ namespace Clips
             {
                 Config = new Config();
                 Config.ConfigChanged += new EventHandler(ConfigChanged);
-                ButtonMain = new ClipButton
+                MenuButton = new ClipButton
                 {
                     Text = "...",
                     Width = 25,
                     Parent = pTop,
                     Dock = DockStyle.Left
                 };
-                ButtonMain.Click += MainButton_Click;
+                MenuButton.Click += MainButton_Click;
                 SetFormPos();
             }
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
@@ -426,8 +426,8 @@ namespace Clips
             menuClips.BackColor = Config.MenuBackColor;
             menuClips.ForeColor = Config.MenuFontColor;
 
-            ButtonMain.ForeColor = Config.MenuFontColor;
-            ButtonMain.BackColor = Config.MenuBackColor;
+            MenuButton.ForeColor = Config.MenuFontColor;
+            MenuButton.BackColor = Config.MenuBackColor;
             pTop.BackColor = Config.ClipsHeaderColor;
             
             pClips.AutoScroll = true;
