@@ -58,7 +58,6 @@ namespace Clips
         // TODO Add \n to each file in a list of files.
         // TODO Add light/dark mode radio box to auto set of colors.
         // TODO Add edit/favorite text editor in config.
-        // TODO Add option to auto-close on clip click.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -140,6 +139,9 @@ namespace Clips
             }
 
             ResumeLayout();
+
+            if (Config.AutoHide)
+                ToggleShow();
         }
 
         private void FormMain_Deactivate(object sender, EventArgs e)

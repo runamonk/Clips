@@ -61,6 +61,7 @@ namespace Clips
                     pnlMenuSelectedColor.BackColor = _Config.MenuSelectedColor;
                     chkOpenAtCursor.Checked = _Config.OpenFormAtCursor;
                     chkAutoSizeHeight.Checked = _Config.AutoSizeHeight;
+                    chkAutoHide.Checked = _Config.AutoHide;
                 }
             }
 
@@ -104,6 +105,7 @@ namespace Clips
                 _Config.MenuSelectedColor = pnlMenuSelectedColor.BackColor;
                 _Config.OpenFormAtCursor = chkOpenAtCursor.Checked;
                 _Config.AutoSizeHeight = chkAutoSizeHeight.Checked;
+                _Config.AutoHide = chkAutoHide.Checked;
 
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
@@ -199,6 +201,17 @@ namespace Clips
         }
 
         // properties
+        public Boolean AutoHide
+        {
+            get {
+                string s = FindKey("auto_hide");
+                if (s == "")
+                    s = SetKey("auto_hide", "false");
+                return bool.Parse(s);
+            }
+            set { SetKey("auto_hide", value.ToString()); }
+        }
+
         public Boolean AutoSizeHeight
         {
             get {

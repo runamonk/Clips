@@ -39,24 +39,6 @@
             this.label1 = new System.Windows.Forms.Label();
             this.gbSizes = new System.Windows.Forms.GroupBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox4 = new System.Windows.Forms.GroupBox();
-            this.label9 = new System.Windows.Forms.Label();
-            this.pnlHeaderColor = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.pnlClipsRowColor = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.pnlClipsBackColor = new System.Windows.Forms.Panel();
-            this.pnlClipsFontColor = new System.Windows.Forms.Panel();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.pnlMenuSelectedColor = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.pnlMenuBorderColor = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.pnlMenuFontColor = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.pnlMenuBackColor = new System.Windows.Forms.Panel();
             this.label6 = new System.Windows.Forms.Label();
             this.lblTextRows = new System.Windows.Forms.Label();
             this.nudClipsLinesPerRow = new System.Windows.Forms.NumericUpDown();
@@ -69,11 +51,6 @@
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupPreview = new System.Windows.Forms.GroupBox();
             this.gbColors = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.lblBackColor = new System.Windows.Forms.Label();
-            this.lblFontColor = new System.Windows.Forms.Label();
-            this.pnlPreviewBackColor = new System.Windows.Forms.Panel();
-            this.pnlPreviewFontColor = new System.Windows.Forms.Panel();
             this.label4 = new System.Windows.Forms.Label();
             this.nudPreviewMaxLines = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
@@ -81,20 +58,50 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
+            this.chkAutoHide = new System.Windows.Forms.CheckBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.pnlHeaderColor = new System.Windows.Forms.Panel();
+            this.label8 = new System.Windows.Forms.Label();
+            this.pnlClipsRowColor = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.pnlClipsBackColor = new System.Windows.Forms.Panel();
+            this.pnlClipsFontColor = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.pnlMenuSelectedColor = new System.Windows.Forms.Panel();
+            this.label12 = new System.Windows.Forms.Label();
+            this.pnlMenuBorderColor = new System.Windows.Forms.Panel();
+            this.label11 = new System.Windows.Forms.Label();
+            this.pnlMenuFontColor = new System.Windows.Forms.Panel();
+            this.label10 = new System.Windows.Forms.Label();
+            this.pnlMenuBackColor = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.lblBackColor = new System.Windows.Forms.Label();
+            this.lblFontColor = new System.Windows.Forms.Label();
+            this.pnlPreviewBackColor = new System.Windows.Forms.Panel();
+            this.pnlPreviewFontColor = new System.Windows.Forms.Panel();
             this.gbHotkey.SuspendLayout();
             this.gbSizes.SuspendLayout();
             this.groupBox1.SuspendLayout();
-            this.groupBox4.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudClipsLinesPerRow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxClips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPreviewPopupDelay)).BeginInit();
             this.groupPreview.SuspendLayout();
             this.gbColors.SuspendLayout();
-            this.groupBox5.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPreviewMaxLines)).BeginInit();
             this.groupOther.SuspendLayout();
             this.groupBox2.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.groupBox4.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.groupBox3.SuspendLayout();
+            this.panel3.SuspendLayout();
+            this.groupBox5.SuspendLayout();
             this.SuspendLayout();
             // 
             // gbHotkey
@@ -192,218 +199,22 @@
             this.gbSizes.Controls.Add(this.nudMaxClips);
             this.gbSizes.Location = new System.Drawing.Point(5, 97);
             this.gbSizes.Name = "gbSizes";
-            this.gbSizes.Size = new System.Drawing.Size(299, 267);
+            this.gbSizes.Size = new System.Drawing.Size(299, 289);
             this.gbSizes.TabIndex = 2;
             this.gbSizes.TabStop = false;
             this.gbSizes.Text = "Clips";
             // 
             // groupBox1
             // 
-            this.groupBox1.Controls.Add(this.groupBox4);
-            this.groupBox1.Controls.Add(this.groupBox3);
-            this.groupBox1.Location = new System.Drawing.Point(6, 81);
+            this.groupBox1.Controls.Add(this.panel2);
+            this.groupBox1.Controls.Add(this.panel1);
+            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox1.Location = new System.Drawing.Point(3, 108);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(287, 178);
+            this.groupBox1.Size = new System.Drawing.Size(293, 178);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Colors";
-            // 
-            // groupBox4
-            // 
-            this.groupBox4.Controls.Add(this.label9);
-            this.groupBox4.Controls.Add(this.pnlHeaderColor);
-            this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Controls.Add(this.pnlClipsRowColor);
-            this.groupBox4.Controls.Add(this.label3);
-            this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Controls.Add(this.pnlClipsBackColor);
-            this.groupBox4.Controls.Add(this.pnlClipsFontColor);
-            this.groupBox4.Location = new System.Drawing.Point(10, 19);
-            this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(138, 153);
-            this.groupBox4.TabIndex = 0;
-            this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Form && List";
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label9.Location = new System.Drawing.Point(42, 25);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(42, 13);
-            this.label9.TabIndex = 15;
-            this.label9.Text = "Header";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlHeaderColor
-            // 
-            this.pnlHeaderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHeaderColor.Location = new System.Drawing.Point(10, 18);
-            this.pnlHeaderColor.Name = "pnlHeaderColor";
-            this.pnlHeaderColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlHeaderColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.pnlHeaderColor, "Click to set color.");
-            this.pnlHeaderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(42, 124);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Row";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlClipsRowColor
-            // 
-            this.pnlClipsRowColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlClipsRowColor.Location = new System.Drawing.Point(10, 117);
-            this.pnlClipsRowColor.Name = "pnlClipsRowColor";
-            this.pnlClipsRowColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlClipsRowColor.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.pnlClipsRowColor, "Click to set color.");
-            this.pnlClipsRowColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(42, 91);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Background";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label5.Location = new System.Drawing.Point(42, 58);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Font";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlClipsBackColor
-            // 
-            this.pnlClipsBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlClipsBackColor.Location = new System.Drawing.Point(10, 84);
-            this.pnlClipsBackColor.Name = "pnlClipsBackColor";
-            this.pnlClipsBackColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlClipsBackColor.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.pnlClipsBackColor, "Click to set color.");
-            this.pnlClipsBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // pnlClipsFontColor
-            // 
-            this.pnlClipsFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlClipsFontColor.Location = new System.Drawing.Point(10, 51);
-            this.pnlClipsFontColor.Name = "pnlClipsFontColor";
-            this.pnlClipsFontColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlClipsFontColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.pnlClipsFontColor, "Click to set color.");
-            this.pnlClipsFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.pnlMenuSelectedColor);
-            this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.pnlMenuBorderColor);
-            this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.pnlMenuFontColor);
-            this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.pnlMenuBackColor);
-            this.groupBox3.Location = new System.Drawing.Point(156, 19);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(123, 153);
-            this.groupBox3.TabIndex = 8;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Menu";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(38, 124);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(49, 13);
-            this.label13.TabIndex = 19;
-            this.label13.Text = "Selected";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlMenuSelectedColor
-            // 
-            this.pnlMenuSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuSelectedColor.Location = new System.Drawing.Point(6, 117);
-            this.pnlMenuSelectedColor.Name = "pnlMenuSelectedColor";
-            this.pnlMenuSelectedColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuSelectedColor.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.pnlMenuSelectedColor, "Click to set color.");
-            this.pnlMenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(38, 91);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(38, 13);
-            this.label12.TabIndex = 17;
-            this.label12.Text = "Border";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlMenuBorderColor
-            // 
-            this.pnlMenuBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuBorderColor.Location = new System.Drawing.Point(6, 84);
-            this.pnlMenuBorderColor.Name = "pnlMenuBorderColor";
-            this.pnlMenuBorderColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuBorderColor.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.pnlMenuBorderColor, "Click to set color.");
-            this.pnlMenuBorderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.label11.Location = new System.Drawing.Point(38, 25);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(28, 13);
-            this.label11.TabIndex = 15;
-            this.label11.Text = "Font";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlMenuFontColor
-            // 
-            this.pnlMenuFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuFontColor.Location = new System.Drawing.Point(6, 18);
-            this.pnlMenuFontColor.Name = "pnlMenuFontColor";
-            this.pnlMenuFontColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuFontColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.pnlMenuFontColor, "Click to set color.");
-            this.pnlMenuFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(38, 58);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 13);
-            this.label10.TabIndex = 13;
-            this.label10.Text = "Background";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlMenuBackColor
-            // 
-            this.pnlMenuBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuBackColor.Location = new System.Drawing.Point(6, 51);
-            this.pnlMenuBackColor.Name = "pnlMenuBackColor";
-            this.pnlMenuBackColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuBackColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.pnlMenuBackColor, "Click to set color.");
-            this.pnlMenuBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label6
             // 
@@ -530,75 +341,23 @@
             this.groupPreview.Controls.Add(this.nudPreviewMaxLines);
             this.groupPreview.Controls.Add(this.label7);
             this.groupPreview.Controls.Add(this.nudPreviewPopupDelay);
-            this.groupPreview.Location = new System.Drawing.Point(310, 98);
+            this.groupPreview.Location = new System.Drawing.Point(310, 123);
             this.groupPreview.Name = "groupPreview";
-            this.groupPreview.Size = new System.Drawing.Size(183, 266);
+            this.groupPreview.Size = new System.Drawing.Size(183, 263);
             this.groupPreview.TabIndex = 3;
             this.groupPreview.TabStop = false;
             this.groupPreview.Text = "Preview";
             // 
             // gbColors
             // 
-            this.gbColors.Controls.Add(this.groupBox5);
-            this.gbColors.Location = new System.Drawing.Point(6, 81);
+            this.gbColors.Controls.Add(this.panel3);
+            this.gbColors.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.gbColors.Location = new System.Drawing.Point(3, 82);
             this.gbColors.Name = "gbColors";
-            this.gbColors.Size = new System.Drawing.Size(171, 178);
+            this.gbColors.Size = new System.Drawing.Size(177, 178);
             this.gbColors.TabIndex = 2;
             this.gbColors.TabStop = false;
             this.gbColors.Text = "Colors";
-            // 
-            // groupBox5
-            // 
-            this.groupBox5.Controls.Add(this.lblBackColor);
-            this.groupBox5.Controls.Add(this.lblFontColor);
-            this.groupBox5.Controls.Add(this.pnlPreviewBackColor);
-            this.groupBox5.Controls.Add(this.pnlPreviewFontColor);
-            this.groupBox5.Location = new System.Drawing.Point(8, 19);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(157, 153);
-            this.groupBox5.TabIndex = 0;
-            this.groupBox5.TabStop = false;
-            // 
-            // lblBackColor
-            // 
-            this.lblBackColor.AutoSize = true;
-            this.lblBackColor.Location = new System.Drawing.Point(38, 58);
-            this.lblBackColor.Name = "lblBackColor";
-            this.lblBackColor.Size = new System.Drawing.Size(65, 13);
-            this.lblBackColor.TabIndex = 7;
-            this.lblBackColor.Text = "Background";
-            this.lblBackColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblFontColor
-            // 
-            this.lblFontColor.AutoSize = true;
-            this.lblFontColor.ForeColor = System.Drawing.SystemColors.ControlText;
-            this.lblFontColor.Location = new System.Drawing.Point(38, 25);
-            this.lblFontColor.Name = "lblFontColor";
-            this.lblFontColor.Size = new System.Drawing.Size(28, 13);
-            this.lblFontColor.TabIndex = 6;
-            this.lblFontColor.Text = "Font";
-            this.lblFontColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlPreviewBackColor
-            // 
-            this.pnlPreviewBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPreviewBackColor.Location = new System.Drawing.Point(6, 51);
-            this.pnlPreviewBackColor.Name = "pnlPreviewBackColor";
-            this.pnlPreviewBackColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlPreviewBackColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.pnlPreviewBackColor, "Click to set color.");
-            this.pnlPreviewBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // pnlPreviewFontColor
-            // 
-            this.pnlPreviewFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPreviewFontColor.Location = new System.Drawing.Point(6, 18);
-            this.pnlPreviewFontColor.Name = "pnlPreviewFontColor";
-            this.pnlPreviewFontColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlPreviewFontColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.pnlPreviewFontColor, "Click to set color.");
-            this.pnlPreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label4
             // 
@@ -647,12 +406,13 @@
             // 
             // groupOther
             // 
+            this.groupOther.Controls.Add(this.chkAutoHide);
             this.groupOther.Controls.Add(this.chkAutoSizeHeight);
             this.groupOther.Controls.Add(this.chkOpenAtCursor);
             this.groupOther.Controls.Add(this.chkStartup);
             this.groupOther.Location = new System.Drawing.Point(310, 8);
             this.groupOther.Name = "groupOther";
-            this.groupOther.Size = new System.Drawing.Size(183, 83);
+            this.groupOther.Size = new System.Drawing.Size(183, 109);
             this.groupOther.TabIndex = 1;
             this.groupOther.TabStop = false;
             // 
@@ -661,7 +421,7 @@
             this.groupBox2.Controls.Add(this.btnCancel);
             this.groupBox2.Controls.Add(this.btnOK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 363);
+            this.groupBox2.Location = new System.Drawing.Point(5, 392);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(489, 54);
             this.groupBox2.TabIndex = 4;
@@ -686,11 +446,304 @@
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
             // 
+            // chkAutoHide
+            // 
+            this.chkAutoHide.AutoSize = true;
+            this.chkAutoHide.Location = new System.Drawing.Point(6, 83);
+            this.chkAutoHide.Name = "chkAutoHide";
+            this.chkAutoHide.Size = new System.Drawing.Size(71, 17);
+            this.chkAutoHide.TabIndex = 20;
+            this.chkAutoHide.Text = "Auto hide";
+            this.toolTip1.SetToolTip(this.chkAutoHide, "Check to auto hide clips window after clicking a clip.");
+            this.chkAutoHide.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.groupBox4);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel1.Location = new System.Drawing.Point(3, 16);
+            this.panel1.Name = "panel1";
+            this.panel1.Padding = new System.Windows.Forms.Padding(0, 0, 5, 0);
+            this.panel1.Size = new System.Drawing.Size(146, 159);
+            this.panel1.TabIndex = 10;
+            // 
+            // groupBox4
+            // 
+            this.groupBox4.Controls.Add(this.label9);
+            this.groupBox4.Controls.Add(this.pnlHeaderColor);
+            this.groupBox4.Controls.Add(this.label8);
+            this.groupBox4.Controls.Add(this.pnlClipsRowColor);
+            this.groupBox4.Controls.Add(this.label3);
+            this.groupBox4.Controls.Add(this.label5);
+            this.groupBox4.Controls.Add(this.pnlClipsBackColor);
+            this.groupBox4.Controls.Add(this.pnlClipsFontColor);
+            this.groupBox4.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox4.Location = new System.Drawing.Point(0, 0);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(141, 159);
+            this.groupBox4.TabIndex = 11;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "Clips";
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label9.Location = new System.Drawing.Point(42, 25);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(42, 13);
+            this.label9.TabIndex = 15;
+            this.label9.Text = "Header";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlHeaderColor
+            // 
+            this.pnlHeaderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlHeaderColor.Location = new System.Drawing.Point(10, 18);
+            this.pnlHeaderColor.Name = "pnlHeaderColor";
+            this.pnlHeaderColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlHeaderColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.pnlHeaderColor, "Click to set color.");
+            this.pnlHeaderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(42, 124);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Row";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlClipsRowColor
+            // 
+            this.pnlClipsRowColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlClipsRowColor.Location = new System.Drawing.Point(10, 117);
+            this.pnlClipsRowColor.Name = "pnlClipsRowColor";
+            this.pnlClipsRowColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlClipsRowColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.pnlClipsRowColor, "Click to set color.");
+            this.pnlClipsRowColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(42, 91);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Background";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label5.Location = new System.Drawing.Point(42, 58);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(28, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Font";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlClipsBackColor
+            // 
+            this.pnlClipsBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlClipsBackColor.Location = new System.Drawing.Point(10, 84);
+            this.pnlClipsBackColor.Name = "pnlClipsBackColor";
+            this.pnlClipsBackColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlClipsBackColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.pnlClipsBackColor, "Click to set color.");
+            this.pnlClipsBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // pnlClipsFontColor
+            // 
+            this.pnlClipsFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlClipsFontColor.Location = new System.Drawing.Point(10, 51);
+            this.pnlClipsFontColor.Name = "pnlClipsFontColor";
+            this.pnlClipsFontColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlClipsFontColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pnlClipsFontColor, "Click to set color.");
+            this.pnlClipsFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // panel2
+            // 
+            this.panel2.Controls.Add(this.groupBox3);
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel2.Location = new System.Drawing.Point(149, 16);
+            this.panel2.Name = "panel2";
+            this.panel2.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.panel2.Size = new System.Drawing.Size(141, 159);
+            this.panel2.TabIndex = 11;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.label13);
+            this.groupBox3.Controls.Add(this.pnlMenuSelectedColor);
+            this.groupBox3.Controls.Add(this.label12);
+            this.groupBox3.Controls.Add(this.pnlMenuBorderColor);
+            this.groupBox3.Controls.Add(this.label11);
+            this.groupBox3.Controls.Add(this.pnlMenuFontColor);
+            this.groupBox3.Controls.Add(this.label10);
+            this.groupBox3.Controls.Add(this.pnlMenuBackColor);
+            this.groupBox3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox3.Location = new System.Drawing.Point(5, 0);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(136, 159);
+            this.groupBox3.TabIndex = 12;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "Menu";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(38, 124);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 13);
+            this.label13.TabIndex = 19;
+            this.label13.Text = "Selected";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlMenuSelectedColor
+            // 
+            this.pnlMenuSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMenuSelectedColor.Location = new System.Drawing.Point(6, 117);
+            this.pnlMenuSelectedColor.Name = "pnlMenuSelectedColor";
+            this.pnlMenuSelectedColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlMenuSelectedColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.pnlMenuSelectedColor, "Click to set color.");
+            this.pnlMenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(38, 91);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(38, 13);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "Border";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlMenuBorderColor
+            // 
+            this.pnlMenuBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMenuBorderColor.Location = new System.Drawing.Point(6, 84);
+            this.pnlMenuBorderColor.Name = "pnlMenuBorderColor";
+            this.pnlMenuBorderColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlMenuBorderColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.pnlMenuBorderColor, "Click to set color.");
+            this.pnlMenuBorderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.label11.Location = new System.Drawing.Point(38, 25);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(28, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Font";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlMenuFontColor
+            // 
+            this.pnlMenuFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMenuFontColor.Location = new System.Drawing.Point(6, 18);
+            this.pnlMenuFontColor.Name = "pnlMenuFontColor";
+            this.pnlMenuFontColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlMenuFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.pnlMenuFontColor, "Click to set color.");
+            this.pnlMenuFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(38, 58);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(65, 13);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "Background";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlMenuBackColor
+            // 
+            this.pnlMenuBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlMenuBackColor.Location = new System.Drawing.Point(6, 51);
+            this.pnlMenuBackColor.Name = "pnlMenuBackColor";
+            this.pnlMenuBackColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlMenuBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pnlMenuBackColor, "Click to set color.");
+            this.pnlMenuBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // panel3
+            // 
+            this.panel3.Controls.Add(this.groupBox5);
+            this.panel3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel3.Location = new System.Drawing.Point(3, 16);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(171, 159);
+            this.panel3.TabIndex = 0;
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Controls.Add(this.lblBackColor);
+            this.groupBox5.Controls.Add(this.lblFontColor);
+            this.groupBox5.Controls.Add(this.pnlPreviewBackColor);
+            this.groupBox5.Controls.Add(this.pnlPreviewFontColor);
+            this.groupBox5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.groupBox5.Location = new System.Drawing.Point(0, 0);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(171, 159);
+            this.groupBox5.TabIndex = 1;
+            this.groupBox5.TabStop = false;
+            // 
+            // lblBackColor
+            // 
+            this.lblBackColor.AutoSize = true;
+            this.lblBackColor.Location = new System.Drawing.Point(38, 58);
+            this.lblBackColor.Name = "lblBackColor";
+            this.lblBackColor.Size = new System.Drawing.Size(65, 13);
+            this.lblBackColor.TabIndex = 7;
+            this.lblBackColor.Text = "Background";
+            this.lblBackColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblFontColor
+            // 
+            this.lblFontColor.AutoSize = true;
+            this.lblFontColor.ForeColor = System.Drawing.SystemColors.ControlText;
+            this.lblFontColor.Location = new System.Drawing.Point(38, 25);
+            this.lblFontColor.Name = "lblFontColor";
+            this.lblFontColor.Size = new System.Drawing.Size(28, 13);
+            this.lblFontColor.TabIndex = 6;
+            this.lblFontColor.Text = "Font";
+            this.lblFontColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // pnlPreviewBackColor
+            // 
+            this.pnlPreviewBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlPreviewBackColor.Location = new System.Drawing.Point(6, 51);
+            this.pnlPreviewBackColor.Name = "pnlPreviewBackColor";
+            this.pnlPreviewBackColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlPreviewBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pnlPreviewBackColor, "Click to set color.");
+            this.pnlPreviewBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // pnlPreviewFontColor
+            // 
+            this.pnlPreviewFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.pnlPreviewFontColor.Location = new System.Drawing.Point(6, 18);
+            this.pnlPreviewFontColor.Name = "pnlPreviewFontColor";
+            this.pnlPreviewFontColor.Size = new System.Drawing.Size(26, 27);
+            this.pnlPreviewFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.pnlPreviewFontColor, "Click to set color.");
+            this.pnlPreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
             // FormSettings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(499, 422);
+            this.ClientSize = new System.Drawing.Size(499, 451);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupOther);
             this.Controls.Add(this.groupPreview);
@@ -713,22 +766,25 @@
             this.gbSizes.ResumeLayout(false);
             this.gbSizes.PerformLayout();
             this.groupBox1.ResumeLayout(false);
-            this.groupBox4.ResumeLayout(false);
-            this.groupBox4.PerformLayout();
-            this.groupBox3.ResumeLayout(false);
-            this.groupBox3.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudClipsLinesPerRow)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudMaxClips)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nudPreviewPopupDelay)).EndInit();
             this.groupPreview.ResumeLayout(false);
             this.groupPreview.PerformLayout();
             this.gbColors.ResumeLayout(false);
-            this.groupBox5.ResumeLayout(false);
-            this.groupBox5.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nudPreviewMaxLines)).EndInit();
             this.groupOther.ResumeLayout(false);
             this.groupOther.PerformLayout();
             this.groupBox2.ResumeLayout(false);
+            this.panel1.ResumeLayout(false);
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.groupBox3.ResumeLayout(false);
+            this.groupBox3.PerformLayout();
+            this.panel3.ResumeLayout(false);
+            this.groupBox5.ResumeLayout(false);
+            this.groupBox5.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -759,15 +815,12 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupOther;
         public System.Windows.Forms.CheckBox chkStartup;
-        private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Label label9;
-        public System.Windows.Forms.Panel pnlHeaderColor;
-        private System.Windows.Forms.Label label8;
-        public System.Windows.Forms.Panel pnlClipsRowColor;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.Panel pnlClipsBackColor;
-        public System.Windows.Forms.Panel pnlClipsFontColor;
+        private System.Windows.Forms.GroupBox groupBox2;
+        public System.Windows.Forms.Button btnCancel;
+        public System.Windows.Forms.Button btnOK;
+        public System.Windows.Forms.CheckBox chkOpenAtCursor;
+        public System.Windows.Forms.CheckBox chkAutoSizeHeight;
+        private System.Windows.Forms.Panel panel2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label13;
         public System.Windows.Forms.Panel pnlMenuSelectedColor;
@@ -777,15 +830,22 @@
         public System.Windows.Forms.Panel pnlMenuFontColor;
         private System.Windows.Forms.Label label10;
         public System.Windows.Forms.Panel pnlMenuBackColor;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Label label9;
+        public System.Windows.Forms.Panel pnlHeaderColor;
+        private System.Windows.Forms.Label label8;
+        public System.Windows.Forms.Panel pnlClipsRowColor;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label5;
+        public System.Windows.Forms.Panel pnlClipsBackColor;
+        public System.Windows.Forms.Panel pnlClipsFontColor;
+        private System.Windows.Forms.Panel panel3;
         private System.Windows.Forms.GroupBox groupBox5;
         private System.Windows.Forms.Label lblBackColor;
         private System.Windows.Forms.Label lblFontColor;
         public System.Windows.Forms.Panel pnlPreviewBackColor;
         public System.Windows.Forms.Panel pnlPreviewFontColor;
-        private System.Windows.Forms.GroupBox groupBox2;
-        public System.Windows.Forms.Button btnCancel;
-        public System.Windows.Forms.Button btnOK;
-        public System.Windows.Forms.CheckBox chkOpenAtCursor;
-        public System.Windows.Forms.CheckBox chkAutoSizeHeight;
+        public System.Windows.Forms.CheckBox chkAutoHide;
     }
 }
