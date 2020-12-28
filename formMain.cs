@@ -109,10 +109,9 @@ namespace Clips
 
             bool skipShiftToTop = false;
 
+            // Don't delete and readd the most recent clip, it ends up just looking like a flicker.
             if (((ClipButton)sender) == pClips.Controls[pClips.Controls.Count-1])
-            {
                 skipShiftToTop = true;
-            }
 
             if (((ClipButton)sender).FullImage != null)
             {
