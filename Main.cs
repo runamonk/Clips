@@ -50,6 +50,7 @@ namespace Clips
         private Config Config { get; set; }
         private Image LastImage { get; set; }
         private string LastText { get; set; }
+        private SharpClipboard clipboard;
 
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
@@ -259,6 +260,16 @@ namespace Clips
             ToggleShow(false,false);
         }
 
+        protected override void OnShown(EventArgs e)
+        {
+            if (firstLoad)
+            {
+                firstLoad = false;
+                this.Hide();
+                Deactivate += Main_Deactivate;
+            }
+        }
+
         private void PTop_MouseDown(object sender, MouseEventArgs e)
         {
             // drag form.
@@ -436,6 +447,17 @@ namespace Clips
             this.BackColor = Config.ClipsBackColor;
 
             RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
+
+            clipboard = new SharpClipboard();
+            clipboard.MonitorClipboard = true;
+            clipboard.ObservableFormats.All = true;
+            clipboard.ObservableFormats.Files = true;
+            clipboard.ObservableFormats.Images = true;
+            clipboard.ObservableFormats.Others = true;
+            clipboard.ObservableFormats.Texts = true;
+            clipboard.ObserveLastEntry = false;
+            clipboard.Tag = null;
+            clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipBoard_ClipboardChanged);
         }
 
         private void LoadItems()
@@ -525,9 +547,10 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && ((inClose) || (inAbout) || (inPreview) || (inSettings))) return;
+            if ((!Override) && ((inClose) || (inAbout) || (inPreview) || (inSettings)))
+                return;
 
-            if ((isVisible) || (firstLoad))
+            if (isVisible)
             {
                 Hide();
                 isVisible = false;

@@ -48,5 +48,15 @@ namespace Clips
                 ((Panel)sender).BackColor = dlgColor.Color;
             }
         }
+
+        private void rbDark_Click(object sender, EventArgs e)
+        {
+            rbLight.Checked = false;
+        }
+
+        private void rbLight_Click(object sender, EventArgs e)
+        {
+            rbDark.Checked = false;
+        }
     }
 }
