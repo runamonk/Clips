@@ -627,6 +627,7 @@
             this.nudPreviewMaxLines.Name = "nudPreviewMaxLines";
             this.nudPreviewMaxLines.Size = new System.Drawing.Size(62, 20);
             this.nudPreviewMaxLines.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.nudPreviewMaxLines, "Set the max number of lines to preview.");
             this.nudPreviewMaxLines.Value = new decimal(new int[] {
             1,
             0,
