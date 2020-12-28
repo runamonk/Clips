@@ -106,17 +106,31 @@ namespace Clips
             LastText = null;
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
                 return;
+
+            bool skipShiftToTop = false;
+
+            if (((ClipButton)sender) == pClips.Controls[pClips.Controls.Count-1])
+            {
+                skipShiftToTop = true;
+            }
+
             if (((ClipButton)sender).FullImage != null)
             {
                 Image i = ((ClipButton)sender).FullImage;
-                deleteClip();
+                if (skipShiftToTop)
+                    LastImage = i;
+                else
+                    deleteClip();
                 Clipboard.SetImage(i);
             }
             else
             if (((ClipButton)sender).Text != "")
             {
                 string s = ((ClipButton)sender).FullText;
-                deleteClip();
+                if (skipShiftToTop)
+                    LastText = s;
+                else
+                    deleteClip();
                 Clipboard.SetText(s);
                 
                 // TODO max url length is 2048, check for that?
@@ -409,7 +423,6 @@ namespace Clips
             menuMain.Renderer = new CustomToolstripRenderer(Config);
             menuMain.BackColor = Config.MenuBackColor;
             menuMain.ForeColor = Config.MenuFontColor;
-
             menuClips.Renderer = null;
             menuClips.Renderer = new CustomToolstripRenderer(Config);
             menuClips.BackColor = Config.MenuBackColor;
@@ -424,7 +437,6 @@ namespace Clips
             pClips.BackColor = Config.ClipsBackColor;
             this.BackColor = Config.ClipsBackColor;
 
-            // TODO UNRegister the old hotkey if it's changed.
             RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
