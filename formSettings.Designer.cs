@@ -65,6 +65,7 @@
             this.nudPreviewPopupDelay = new System.Windows.Forms.NumericUpDown();
             this.chkStartup = new System.Windows.Forms.CheckBox();
             this.chkOpenAtCursor = new System.Windows.Forms.CheckBox();
+            this.chkAutoSizeHeight = new System.Windows.Forms.CheckBox();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupPreview = new System.Windows.Forms.GroupBox();
             this.gbColors = new System.Windows.Forms.GroupBox();
@@ -80,7 +81,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.btnCancel = new System.Windows.Forms.Button();
             this.btnOK = new System.Windows.Forms.Button();
-            this.chkAutoSizeHeight = new System.Windows.Forms.CheckBox();
             this.gbHotkey.SuspendLayout();
             this.gbSizes.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -243,6 +243,7 @@
             this.pnlHeaderColor.Name = "pnlHeaderColor";
             this.pnlHeaderColor.Size = new System.Drawing.Size(26, 27);
             this.pnlHeaderColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.pnlHeaderColor, "Click to set color.");
             this.pnlHeaderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label8
@@ -262,6 +263,7 @@
             this.pnlClipsRowColor.Name = "pnlClipsRowColor";
             this.pnlClipsRowColor.Size = new System.Drawing.Size(26, 27);
             this.pnlClipsRowColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.pnlClipsRowColor, "Click to set color.");
             this.pnlClipsRowColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label3
@@ -292,6 +294,7 @@
             this.pnlClipsBackColor.Name = "pnlClipsBackColor";
             this.pnlClipsBackColor.Size = new System.Drawing.Size(26, 27);
             this.pnlClipsBackColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.pnlClipsBackColor, "Click to set color.");
             this.pnlClipsBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // pnlClipsFontColor
@@ -301,6 +304,7 @@
             this.pnlClipsFontColor.Name = "pnlClipsFontColor";
             this.pnlClipsFontColor.Size = new System.Drawing.Size(26, 27);
             this.pnlClipsFontColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pnlClipsFontColor, "Click to set color.");
             this.pnlClipsFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // groupBox3
@@ -337,6 +341,7 @@
             this.pnlMenuSelectedColor.Name = "pnlMenuSelectedColor";
             this.pnlMenuSelectedColor.Size = new System.Drawing.Size(26, 27);
             this.pnlMenuSelectedColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.pnlMenuSelectedColor, "Click to set color.");
             this.pnlMenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label12
@@ -356,6 +361,7 @@
             this.pnlMenuBorderColor.Name = "pnlMenuBorderColor";
             this.pnlMenuBorderColor.Size = new System.Drawing.Size(26, 27);
             this.pnlMenuBorderColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.pnlMenuBorderColor, "Click to set color.");
             this.pnlMenuBorderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label11
@@ -376,6 +382,7 @@
             this.pnlMenuFontColor.Name = "pnlMenuFontColor";
             this.pnlMenuFontColor.Size = new System.Drawing.Size(26, 27);
             this.pnlMenuFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.pnlMenuFontColor, "Click to set color.");
             this.pnlMenuFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label10
@@ -395,6 +402,7 @@
             this.pnlMenuBackColor.Name = "pnlMenuBackColor";
             this.pnlMenuBackColor.Size = new System.Drawing.Size(26, 27);
             this.pnlMenuBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pnlMenuBackColor, "Click to set color.");
             this.pnlMenuBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label6
@@ -403,9 +411,9 @@
             this.label6.Location = new System.Drawing.Point(13, 49);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(76, 13);
+            this.label6.Size = new System.Drawing.Size(73, 13);
             this.label6.TabIndex = 18;
-            this.label6.Text = "Maximum Clips";
+            this.label6.Text = "Max # of clips";
             this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // lblTextRows
@@ -414,9 +422,9 @@
             this.lblTextRows.Location = new System.Drawing.Point(13, 22);
             this.lblTextRows.Margin = new System.Windows.Forms.Padding(0);
             this.lblTextRows.Name = "lblTextRows";
-            this.lblTextRows.Size = new System.Drawing.Size(75, 13);
+            this.lblTextRows.Size = new System.Drawing.Size(70, 13);
             this.lblTextRows.TabIndex = 15;
-            this.lblTextRows.Text = "Lines per Row";
+            this.lblTextRows.Text = "Lines per row";
             this.lblTextRows.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // nudClipsLinesPerRow
@@ -435,7 +443,7 @@
             this.nudClipsLinesPerRow.Name = "nudClipsLinesPerRow";
             this.nudClipsLinesPerRow.Size = new System.Drawing.Size(62, 20);
             this.nudClipsLinesPerRow.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.nudClipsLinesPerRow, "The number of rows of text to display per clip in list.");
+            this.toolTip1.SetToolTip(this.nudClipsLinesPerRow, "Set the number of rows of text per clip to display in list.");
             this.nudClipsLinesPerRow.Value = new decimal(new int[] {
             1,
             0,
@@ -458,7 +466,7 @@
             this.nudMaxClips.Name = "nudMaxClips";
             this.nudMaxClips.Size = new System.Drawing.Size(62, 20);
             this.nudMaxClips.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.nudMaxClips, "Maximum number of clips to save.");
+            this.toolTip1.SetToolTip(this.nudMaxClips, "Set  the max number of clips to save.");
             this.nudMaxClips.Value = new decimal(new int[] {
             1,
             0,
@@ -483,9 +491,9 @@
             this.chkStartup.AutoSize = true;
             this.chkStartup.Location = new System.Drawing.Point(6, 18);
             this.chkStartup.Name = "chkStartup";
-            this.chkStartup.Size = new System.Drawing.Size(177, 17);
+            this.chkStartup.Size = new System.Drawing.Size(112, 17);
             this.chkStartup.TabIndex = 0;
-            this.chkStartup.Text = "Automatically start with windows";
+            this.chkStartup.Text = "Start automatically";
             this.toolTip1.SetToolTip(this.chkStartup, "Check to automatically start clips.");
             this.chkStartup.UseVisualStyleBackColor = true;
             // 
@@ -494,11 +502,22 @@
             this.chkOpenAtCursor.AutoSize = true;
             this.chkOpenAtCursor.Location = new System.Drawing.Point(6, 39);
             this.chkOpenAtCursor.Name = "chkOpenAtCursor";
-            this.chkOpenAtCursor.Size = new System.Drawing.Size(99, 17);
+            this.chkOpenAtCursor.Size = new System.Drawing.Size(98, 17);
             this.chkOpenAtCursor.TabIndex = 1;
-            this.chkOpenAtCursor.Text = "Open at Mouse";
-            this.toolTip1.SetToolTip(this.chkOpenAtCursor, "Check to automatically open Clips at mouse cursor.");
+            this.chkOpenAtCursor.Text = "Open at mouse";
+            this.toolTip1.SetToolTip(this.chkOpenAtCursor, "Check to automatically display clips at mouse.");
             this.chkOpenAtCursor.UseVisualStyleBackColor = true;
+            // 
+            // chkAutoSizeHeight
+            // 
+            this.chkAutoSizeHeight.AutoSize = true;
+            this.chkAutoSizeHeight.Location = new System.Drawing.Point(6, 60);
+            this.chkAutoSizeHeight.Name = "chkAutoSizeHeight";
+            this.chkAutoSizeHeight.Size = new System.Drawing.Size(101, 17);
+            this.chkAutoSizeHeight.TabIndex = 2;
+            this.chkAutoSizeHeight.Text = "Auto size height";
+            this.toolTip1.SetToolTip(this.chkAutoSizeHeight, "Check to automatically size clips height to the number of clips.");
+            this.chkAutoSizeHeight.UseVisualStyleBackColor = true;
             // 
             // dlgColor
             // 
@@ -568,6 +587,7 @@
             this.pnlPreviewBackColor.Name = "pnlPreviewBackColor";
             this.pnlPreviewBackColor.Size = new System.Drawing.Size(26, 27);
             this.pnlPreviewBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.pnlPreviewBackColor, "Click to set color.");
             this.pnlPreviewBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // pnlPreviewFontColor
@@ -577,6 +597,7 @@
             this.pnlPreviewFontColor.Name = "pnlPreviewFontColor";
             this.pnlPreviewFontColor.Size = new System.Drawing.Size(26, 27);
             this.pnlPreviewFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.pnlPreviewFontColor, "Click to set color.");
             this.pnlPreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label4
@@ -585,9 +606,9 @@
             this.label4.Location = new System.Drawing.Point(13, 22);
             this.label4.Margin = new System.Windows.Forms.Padding(0);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(77, 13);
+            this.label4.Size = new System.Drawing.Size(73, 13);
             this.label4.TabIndex = 24;
-            this.label4.Text = "Max # of Lines";
+            this.label4.Text = "Max # of lines";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // nudPreviewMaxLines
@@ -663,17 +684,6 @@
             this.btnOK.TabIndex = 0;
             this.btnOK.Text = "OK";
             this.btnOK.UseVisualStyleBackColor = true;
-            // 
-            // chkAutoSizeHeight
-            // 
-            this.chkAutoSizeHeight.AutoSize = true;
-            this.chkAutoSizeHeight.Location = new System.Drawing.Point(6, 60);
-            this.chkAutoSizeHeight.Name = "chkAutoSizeHeight";
-            this.chkAutoSizeHeight.Size = new System.Drawing.Size(105, 17);
-            this.chkAutoSizeHeight.TabIndex = 2;
-            this.chkAutoSizeHeight.Text = "Auto Size Height";
-            this.toolTip1.SetToolTip(this.chkAutoSizeHeight, "Check to automatically open Clips at mouse cursor.");
-            this.chkAutoSizeHeight.UseVisualStyleBackColor = true;
             // 
             // FormSettings
             // 
