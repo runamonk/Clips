@@ -38,12 +38,12 @@ namespace Clips
 
         private Preview formPreview = new Preview();
 
+        private bool firstLoad = true;
         private bool inAbout = false;
-        private bool inPreview = false;
         private bool inClose = false;
         private bool inLoad = false;
+        private bool inPreview = false;
         private bool inSettings = false;
-        private bool firstLoad = true;
         private bool isVisible = false;
 
         private ClipButton ButtonMain { get; set; }
@@ -144,8 +144,7 @@ namespace Clips
 
         private void Main_Deactivate(object sender, EventArgs e)
         {
-            if ((Visible == true) && (inPreview == false) && (!inSettings) && (!firstLoad))
-                ToggleShow();
+            ToggleShow();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -526,12 +525,12 @@ namespace Clips
 
         private void ToggleShow(bool IgnoreBounds = true)
         {
-            if ((inClose) || (inAbout)) return;
-
-            if ((!firstLoad) && ((Visible) && ((Opacity == 0) || (Opacity == 1))))
+            if ((inClose) || (inAbout) || (inPreview) || (inSettings)) return;
+            if ((isVisible) || (firstLoad))
             {
-                Visible = false;
+                Hide();
                 isVisible = false;
+                firstLoad = false;
                 Opacity = 1;
             }
             else
@@ -542,7 +541,7 @@ namespace Clips
                     Funcs.MoveFormToCursor(this, IgnoreBounds);
                 Opacity = 100;
                 isVisible = true;
-                Visible = true;
+                Show();
                 Activate();
             }
         }
