@@ -761,7 +761,7 @@
             // label14
             // 
             this.label14.AutoSize = true;
-            this.label14.Location = new System.Drawing.Point(10, 8);
+            this.label14.Location = new System.Drawing.Point(10, 9);
             this.label14.Name = "label14";
             this.label14.Size = new System.Drawing.Size(68, 13);
             this.label14.TabIndex = 2;
@@ -770,7 +770,7 @@
             // DarkTheme
             // 
             this.DarkTheme.AutoSize = true;
-            this.DarkTheme.Location = new System.Drawing.Point(152, 7);
+            this.DarkTheme.Location = new System.Drawing.Point(143, 7);
             this.DarkTheme.Name = "DarkTheme";
             this.DarkTheme.Size = new System.Drawing.Size(48, 17);
             this.DarkTheme.TabIndex = 1;
@@ -782,7 +782,7 @@
             // LightTheme
             // 
             this.LightTheme.AutoSize = true;
-            this.LightTheme.Location = new System.Drawing.Point(103, 7);
+            this.LightTheme.Location = new System.Drawing.Point(88, 7);
             this.LightTheme.Name = "LightTheme";
             this.LightTheme.Size = new System.Drawing.Size(48, 17);
             this.LightTheme.TabIndex = 0;

@@ -96,26 +96,24 @@ namespace Clips
                     File.Delete(fileName);
                 pClips.Controls.Remove((ClipButton)sender);
             }
-
-
+            
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
                 return;
 
             SuspendLayout();
-            LastImage = null;
-            LastText = null;
 
             if (Config.AutoHide)
                 ToggleShow(true, true);
 
             bool skipShiftToTop = false;
 
-            // Don't delete and readd the most recent clip, it ends up just looking like a flicker.
-            if (((ClipButton)sender) == pClips.Controls[pClips.Controls.Count-1])
+            // Don't delete and read the most recent clip, it ends up just looking like a flicker.
+            if (((ClipButton)sender) == pClips.Controls[pClips.Controls.Count - 1])
                 skipShiftToTop = true;
 
             if (((ClipButton)sender).FullImage != null)
             {
+                LastImage = null;
                 Image i = ((ClipButton)sender).FullImage;
                 if (skipShiftToTop)
                     LastImage = i;
@@ -133,6 +131,7 @@ namespace Clips
                 }
                 else
                 {
+                    LastText = null;
                     if (skipShiftToTop)
                         LastText = s;
                     else

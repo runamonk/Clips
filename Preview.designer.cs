@@ -29,29 +29,29 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.timerShowForm = new System.Windows.Forms.Timer(this.components);
-            this.panel1 = new System.Windows.Forms.Panel();
+            this.TimerShowForm = new System.Windows.Forms.Timer(this.components);
+            this.MainPanel = new System.Windows.Forms.Panel();
             this.PreviewImage = new System.Windows.Forms.PictureBox();
             this.PreviewText = new System.Windows.Forms.RichTextBox();
-            this.panel1.SuspendLayout();
+            this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).BeginInit();
             this.SuspendLayout();
             // 
-            // timerShowForm
+            // TimerShowForm
             // 
-            this.timerShowForm.Interval = 500;
-            this.timerShowForm.Tick += new System.EventHandler(this.TimerShowForm_Tick);
+            this.TimerShowForm.Interval = 500;
+            this.TimerShowForm.Tick += new System.EventHandler(this.TimerShowForm_Tick);
             // 
-            // panel1
+            // MainPanel
             // 
-            this.panel1.Controls.Add(this.PreviewImage);
-            this.panel1.Controls.Add(this.PreviewText);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel1.Location = new System.Drawing.Point(0, 0);
-            this.panel1.Name = "panel1";
-            this.panel1.Padding = new System.Windows.Forms.Padding(3);
-            this.panel1.Size = new System.Drawing.Size(600, 400);
-            this.panel1.TabIndex = 1;
+            this.MainPanel.Controls.Add(this.PreviewImage);
+            this.MainPanel.Controls.Add(this.PreviewText);
+            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.MainPanel.Location = new System.Drawing.Point(0, 0);
+            this.MainPanel.Name = "MainPanel";
+            this.MainPanel.Padding = new System.Windows.Forms.Padding(3);
+            this.MainPanel.Size = new System.Drawing.Size(600, 400);
+            this.MainPanel.TabIndex = 1;
             // 
             // PreviewImage
             // 
@@ -87,7 +87,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
             this.ClientSize = new System.Drawing.Size(600, 400);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.MainPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(800, 600);
@@ -98,15 +98,15 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             this.Text = "formPreview";
             this.TopMost = true;
-            this.panel1.ResumeLayout(false);
+            this.MainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-        private System.Windows.Forms.Timer timerShowForm;
-        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Timer TimerShowForm;
+        private System.Windows.Forms.Panel MainPanel;
         private System.Windows.Forms.RichTextBox PreviewText;
         private System.Windows.Forms.PictureBox PreviewImage;
     }

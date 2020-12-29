@@ -78,20 +78,20 @@ namespace Clips
                 else
                     Width = image.Width;
             }
-            timerShowForm.Interval = popupDelay;
-            timerShowForm.Enabled = true; 
+            TimerShowForm.Interval = popupDelay;
+            TimerShowForm.Enabled = true; 
         }
 
         public void HidePreview()
         {
-            timerShowForm.Enabled = false;
+            TimerShowForm.Enabled = false;
             PreviewImage.Image = null;
             Hide();
         }
 
         private void TimerShowForm_Tick(object sender, EventArgs e)
         {
-            timerShowForm.Enabled = false;
+            TimerShowForm.Enabled = false;
             Funcs.MoveFormToCursor(this);
             Show();
         }
