@@ -30,72 +30,74 @@
         {
             this.components = new System.ComponentModel.Container();
             this.toolTip1 = new System.Windows.Forms.ToolTip(this.components);
+            this.AutoHide = new System.Windows.Forms.CheckBox();
+            this.AutoSizeHeight = new System.Windows.Forms.CheckBox();
+            this.OpenAtMouse = new System.Windows.Forms.CheckBox();
+            this.Startup = new System.Windows.Forms.CheckBox();
+            this.PreviewMaxLines = new System.Windows.Forms.NumericUpDown();
+            this.PreviewPopupDelay = new System.Windows.Forms.NumericUpDown();
+            this.ClipsLinesPerRow = new System.Windows.Forms.NumericUpDown();
+            this.ClipsMaxClips = new System.Windows.Forms.NumericUpDown();
+            this.Key = new System.Windows.Forms.TextBox();
+            this.PreviewBackColor = new System.Windows.Forms.Panel();
+            this.PreviewFontColor = new System.Windows.Forms.Panel();
+            this.MenuSelectedColor = new System.Windows.Forms.Panel();
+            this.MenuBorderColor = new System.Windows.Forms.Panel();
+            this.MenuFontColor = new System.Windows.Forms.Panel();
+            this.MenuBackColor = new System.Windows.Forms.Panel();
+            this.ClipHeaderColor = new System.Windows.Forms.Panel();
+            this.ClipRowColor = new System.Windows.Forms.Panel();
+            this.ClipBackColor = new System.Windows.Forms.Panel();
+            this.ClipFontColor = new System.Windows.Forms.Panel();
+            this.MenuButtonColor = new System.Windows.Forms.Panel();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.btnOK = new System.Windows.Forms.Button();
+            this.Cancel = new System.Windows.Forms.Button();
+            this.OK = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
             this.groupOther = new System.Windows.Forms.GroupBox();
-            this.chkAutoHide = new System.Windows.Forms.CheckBox();
-            this.chkAutoSizeHeight = new System.Windows.Forms.CheckBox();
-            this.chkOpenAtCursor = new System.Windows.Forms.CheckBox();
-            this.chkStartup = new System.Windows.Forms.CheckBox();
             this.groupPreview = new System.Windows.Forms.GroupBox();
             this.label4 = new System.Windows.Forms.Label();
-            this.nudPreviewMaxLines = new System.Windows.Forms.NumericUpDown();
             this.label7 = new System.Windows.Forms.Label();
-            this.nudPreviewPopupDelay = new System.Windows.Forms.NumericUpDown();
             this.gbSizes = new System.Windows.Forms.GroupBox();
             this.label6 = new System.Windows.Forms.Label();
             this.lblTextRows = new System.Windows.Forms.Label();
-            this.nudClipsLinesPerRow = new System.Windows.Forms.NumericUpDown();
-            this.nudMaxClips = new System.Windows.Forms.NumericUpDown();
             this.gbHotkey = new System.Windows.Forms.GroupBox();
-            this.textHotkey = new System.Windows.Forms.TextBox();
-            this.chkWin = new System.Windows.Forms.CheckBox();
+            this.Windows = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.chkShift = new System.Windows.Forms.CheckBox();
-            this.chkAlt = new System.Windows.Forms.CheckBox();
-            this.chkControl = new System.Windows.Forms.CheckBox();
+            this.Shift = new System.Windows.Forms.CheckBox();
+            this.Alt = new System.Windows.Forms.CheckBox();
+            this.Control = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this.panel4 = new System.Windows.Forms.Panel();
             this.Preview = new System.Windows.Forms.GroupBox();
             this.lblBackColor = new System.Windows.Forms.Label();
             this.lblFontColor = new System.Windows.Forms.Label();
-            this.pnlPreviewBackColor = new System.Windows.Forms.Panel();
-            this.pnlPreviewFontColor = new System.Windows.Forms.Panel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.label15 = new System.Windows.Forms.Label();
             this.label13 = new System.Windows.Forms.Label();
-            this.pnlMenuSelectedColor = new System.Windows.Forms.Panel();
             this.label12 = new System.Windows.Forms.Label();
-            this.pnlMenuBorderColor = new System.Windows.Forms.Panel();
             this.label11 = new System.Windows.Forms.Label();
-            this.pnlMenuFontColor = new System.Windows.Forms.Panel();
             this.label10 = new System.Windows.Forms.Label();
-            this.pnlMenuBackColor = new System.Windows.Forms.Panel();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.label9 = new System.Windows.Forms.Label();
-            this.pnlHeaderColor = new System.Windows.Forms.Panel();
             this.label8 = new System.Windows.Forms.Label();
-            this.pnlClipsRowColor = new System.Windows.Forms.Panel();
             this.label3 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
-            this.pnlClipsBackColor = new System.Windows.Forms.Panel();
-            this.pnlClipsFontColor = new System.Windows.Forms.Panel();
             this.panel5 = new System.Windows.Forms.Panel();
-            this.rbLight = new System.Windows.Forms.RadioButton();
-            this.rbDark = new System.Windows.Forms.RadioButton();
             this.label14 = new System.Windows.Forms.Label();
+            this.DarkTheme = new System.Windows.Forms.RadioButton();
+            this.LightTheme = new System.Windows.Forms.RadioButton();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ClipsMaxClips)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupOther.SuspendLayout();
             this.groupPreview.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPreviewMaxLines)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPreviewPopupDelay)).BeginInit();
             this.gbSizes.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudClipsLinesPerRow)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxClips)).BeginInit();
             this.gbHotkey.SuspendLayout();
             this.groupBox6.SuspendLayout();
             this.panel4.SuspendLayout();
@@ -105,14 +107,258 @@
             this.panel5.SuspendLayout();
             this.SuspendLayout();
             // 
+            // AutoHide
+            // 
+            this.AutoHide.AutoSize = true;
+            this.AutoHide.Location = new System.Drawing.Point(6, 83);
+            this.AutoHide.Name = "AutoHide";
+            this.AutoHide.Size = new System.Drawing.Size(71, 17);
+            this.AutoHide.TabIndex = 20;
+            this.AutoHide.Text = "Auto hide";
+            this.toolTip1.SetToolTip(this.AutoHide, "Check to auto hide clips window after clicking a clip.");
+            this.AutoHide.UseVisualStyleBackColor = true;
+            // 
+            // AutoSizeHeight
+            // 
+            this.AutoSizeHeight.AutoSize = true;
+            this.AutoSizeHeight.Location = new System.Drawing.Point(6, 60);
+            this.AutoSizeHeight.Name = "AutoSizeHeight";
+            this.AutoSizeHeight.Size = new System.Drawing.Size(101, 17);
+            this.AutoSizeHeight.TabIndex = 2;
+            this.AutoSizeHeight.Text = "Auto size height";
+            this.toolTip1.SetToolTip(this.AutoSizeHeight, "Check to automatically size clips height to the number of clips.");
+            this.AutoSizeHeight.UseVisualStyleBackColor = true;
+            // 
+            // OpenAtMouse
+            // 
+            this.OpenAtMouse.AutoSize = true;
+            this.OpenAtMouse.Location = new System.Drawing.Point(6, 39);
+            this.OpenAtMouse.Name = "OpenAtMouse";
+            this.OpenAtMouse.Size = new System.Drawing.Size(98, 17);
+            this.OpenAtMouse.TabIndex = 1;
+            this.OpenAtMouse.Text = "Open at mouse";
+            this.toolTip1.SetToolTip(this.OpenAtMouse, "Check to automatically display clips at mouse.");
+            this.OpenAtMouse.UseVisualStyleBackColor = true;
+            // 
+            // Startup
+            // 
+            this.Startup.AutoSize = true;
+            this.Startup.Location = new System.Drawing.Point(6, 18);
+            this.Startup.Name = "Startup";
+            this.Startup.Size = new System.Drawing.Size(112, 17);
+            this.Startup.TabIndex = 0;
+            this.Startup.Text = "Start automatically";
+            this.toolTip1.SetToolTip(this.Startup, "Check to automatically start clips.");
+            this.Startup.UseVisualStyleBackColor = true;
+            // 
+            // PreviewMaxLines
+            // 
+            this.PreviewMaxLines.Location = new System.Drawing.Point(115, 18);
+            this.PreviewMaxLines.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.PreviewMaxLines.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.PreviewMaxLines.Name = "PreviewMaxLines";
+            this.PreviewMaxLines.Size = new System.Drawing.Size(62, 20);
+            this.PreviewMaxLines.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.PreviewMaxLines, "Set the max number of lines to preview.");
+            this.PreviewMaxLines.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // PreviewPopupDelay
+            // 
+            this.PreviewPopupDelay.Location = new System.Drawing.Point(115, 45);
+            this.PreviewPopupDelay.Maximum = new decimal(new int[] {
+            9000,
+            0,
+            0,
+            0});
+            this.PreviewPopupDelay.Name = "PreviewPopupDelay";
+            this.PreviewPopupDelay.Size = new System.Drawing.Size(62, 20);
+            this.PreviewPopupDelay.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.PreviewPopupDelay, "Delay in milliseconds before preview pops up.");
+            // 
+            // ClipsLinesPerRow
+            // 
+            this.ClipsLinesPerRow.Location = new System.Drawing.Point(115, 18);
+            this.ClipsLinesPerRow.Maximum = new decimal(new int[] {
+            10,
+            0,
+            0,
+            0});
+            this.ClipsLinesPerRow.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ClipsLinesPerRow.Name = "ClipsLinesPerRow";
+            this.ClipsLinesPerRow.Size = new System.Drawing.Size(62, 20);
+            this.ClipsLinesPerRow.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.ClipsLinesPerRow, "Set the number of rows of text per clip to display in list.");
+            this.ClipsLinesPerRow.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // ClipsMaxClips
+            // 
+            this.ClipsMaxClips.Location = new System.Drawing.Point(115, 45);
+            this.ClipsMaxClips.Maximum = new decimal(new int[] {
+            999,
+            0,
+            0,
+            0});
+            this.ClipsMaxClips.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ClipsMaxClips.Name = "ClipsMaxClips";
+            this.ClipsMaxClips.Size = new System.Drawing.Size(62, 20);
+            this.ClipsMaxClips.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.ClipsMaxClips, "Set  the max number of clips to save.");
+            this.ClipsMaxClips.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // Key
+            // 
+            this.Key.Location = new System.Drawing.Point(63, 19);
+            this.Key.Name = "Key";
+            this.Key.Size = new System.Drawing.Size(80, 20);
+            this.Key.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.Key, "Press key to define as a hotkey.");
+            // 
+            // PreviewBackColor
+            // 
+            this.PreviewBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PreviewBackColor.Location = new System.Drawing.Point(6, 51);
+            this.PreviewBackColor.Name = "PreviewBackColor";
+            this.PreviewBackColor.Size = new System.Drawing.Size(26, 27);
+            this.PreviewBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.PreviewBackColor, "Click to set color.");
+            this.PreviewBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // PreviewFontColor
+            // 
+            this.PreviewFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PreviewFontColor.Location = new System.Drawing.Point(6, 18);
+            this.PreviewFontColor.Name = "PreviewFontColor";
+            this.PreviewFontColor.Size = new System.Drawing.Size(26, 27);
+            this.PreviewFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.PreviewFontColor, "Click to set color.");
+            this.PreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuSelectedColor
+            // 
+            this.MenuSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuSelectedColor.Location = new System.Drawing.Point(6, 117);
+            this.MenuSelectedColor.Name = "MenuSelectedColor";
+            this.MenuSelectedColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuSelectedColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.MenuSelectedColor, "Click to set color.");
+            this.MenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuBorderColor
+            // 
+            this.MenuBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuBorderColor.Location = new System.Drawing.Point(6, 84);
+            this.MenuBorderColor.Name = "MenuBorderColor";
+            this.MenuBorderColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuBorderColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.MenuBorderColor, "Click to set color.");
+            this.MenuBorderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuFontColor
+            // 
+            this.MenuFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuFontColor.Location = new System.Drawing.Point(6, 18);
+            this.MenuFontColor.Name = "MenuFontColor";
+            this.MenuFontColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.MenuFontColor, "Click to set color.");
+            this.MenuFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuBackColor
+            // 
+            this.MenuBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuBackColor.Location = new System.Drawing.Point(6, 51);
+            this.MenuBackColor.Name = "MenuBackColor";
+            this.MenuBackColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.MenuBackColor, "Click to set color.");
+            this.MenuBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipHeaderColor
+            // 
+            this.ClipHeaderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipHeaderColor.Location = new System.Drawing.Point(10, 18);
+            this.ClipHeaderColor.Name = "ClipHeaderColor";
+            this.ClipHeaderColor.Size = new System.Drawing.Size(26, 27);
+            this.ClipHeaderColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.ClipHeaderColor, "Click to set color.");
+            this.ClipHeaderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipRowColor
+            // 
+            this.ClipRowColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipRowColor.Location = new System.Drawing.Point(10, 117);
+            this.ClipRowColor.Name = "ClipRowColor";
+            this.ClipRowColor.Size = new System.Drawing.Size(26, 27);
+            this.ClipRowColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.ClipRowColor, "Click to set color.");
+            this.ClipRowColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipBackColor
+            // 
+            this.ClipBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipBackColor.Location = new System.Drawing.Point(10, 84);
+            this.ClipBackColor.Name = "ClipBackColor";
+            this.ClipBackColor.Size = new System.Drawing.Size(26, 27);
+            this.ClipBackColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.ClipBackColor, "Click to set color.");
+            this.ClipBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipFontColor
+            // 
+            this.ClipFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipFontColor.Location = new System.Drawing.Point(10, 51);
+            this.ClipFontColor.Name = "ClipFontColor";
+            this.ClipFontColor.Size = new System.Drawing.Size(26, 27);
+            this.ClipFontColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.ClipFontColor, "Click to set color.");
+            this.ClipFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuButtonColor
+            // 
+            this.MenuButtonColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuButtonColor.Location = new System.Drawing.Point(119, 18);
+            this.MenuButtonColor.Name = "MenuButtonColor";
+            this.MenuButtonColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuButtonColor.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.MenuButtonColor, "Click to set color.");
+            this.MenuButtonColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
             // dlgColor
             // 
             this.dlgColor.AnyColor = true;
             // 
             // groupBox2
             // 
-            this.groupBox2.Controls.Add(this.btnCancel);
-            this.groupBox2.Controls.Add(this.btnOK);
+            this.groupBox2.Controls.Add(this.Cancel);
+            this.groupBox2.Controls.Add(this.OK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.groupBox2.Location = new System.Drawing.Point(5, 414);
             this.groupBox2.Name = "groupBox2";
@@ -120,24 +366,24 @@
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             // 
-            // btnCancel
+            // Cancel
             // 
-            this.btnCancel.Location = new System.Drawing.Point(253, 14);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 34);
-            this.btnCancel.TabIndex = 1;
-            this.btnCancel.Text = "Cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            this.Cancel.Location = new System.Drawing.Point(253, 14);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(75, 34);
+            this.Cancel.TabIndex = 1;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = true;
+            this.Cancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
-            // btnOK
+            // OK
             // 
-            this.btnOK.Location = new System.Drawing.Point(172, 14);
-            this.btnOK.Name = "btnOK";
-            this.btnOK.Size = new System.Drawing.Size(75, 34);
-            this.btnOK.TabIndex = 0;
-            this.btnOK.Text = "OK";
-            this.btnOK.UseVisualStyleBackColor = true;
+            this.OK.Location = new System.Drawing.Point(172, 14);
+            this.OK.Name = "OK";
+            this.OK.Size = new System.Drawing.Size(75, 34);
+            this.OK.TabIndex = 0;
+            this.OK.Text = "OK";
+            this.OK.UseVisualStyleBackColor = true;
             // 
             // panel1
             // 
@@ -153,66 +399,22 @@
             // 
             // groupOther
             // 
-            this.groupOther.Controls.Add(this.chkAutoHide);
-            this.groupOther.Controls.Add(this.chkAutoSizeHeight);
-            this.groupOther.Controls.Add(this.chkOpenAtCursor);
-            this.groupOther.Controls.Add(this.chkStartup);
+            this.groupOther.Controls.Add(this.AutoHide);
+            this.groupOther.Controls.Add(this.AutoSizeHeight);
+            this.groupOther.Controls.Add(this.OpenAtMouse);
+            this.groupOther.Controls.Add(this.Startup);
             this.groupOther.Location = new System.Drawing.Point(311, 3);
             this.groupOther.Name = "groupOther";
             this.groupOther.Size = new System.Drawing.Size(183, 109);
             this.groupOther.TabIndex = 5;
             this.groupOther.TabStop = false;
             // 
-            // chkAutoHide
-            // 
-            this.chkAutoHide.AutoSize = true;
-            this.chkAutoHide.Location = new System.Drawing.Point(6, 83);
-            this.chkAutoHide.Name = "chkAutoHide";
-            this.chkAutoHide.Size = new System.Drawing.Size(71, 17);
-            this.chkAutoHide.TabIndex = 20;
-            this.chkAutoHide.Text = "Auto hide";
-            this.toolTip1.SetToolTip(this.chkAutoHide, "Check to auto hide clips window after clicking a clip.");
-            this.chkAutoHide.UseVisualStyleBackColor = true;
-            // 
-            // chkAutoSizeHeight
-            // 
-            this.chkAutoSizeHeight.AutoSize = true;
-            this.chkAutoSizeHeight.Location = new System.Drawing.Point(6, 60);
-            this.chkAutoSizeHeight.Name = "chkAutoSizeHeight";
-            this.chkAutoSizeHeight.Size = new System.Drawing.Size(101, 17);
-            this.chkAutoSizeHeight.TabIndex = 2;
-            this.chkAutoSizeHeight.Text = "Auto size height";
-            this.toolTip1.SetToolTip(this.chkAutoSizeHeight, "Check to automatically size clips height to the number of clips.");
-            this.chkAutoSizeHeight.UseVisualStyleBackColor = true;
-            // 
-            // chkOpenAtCursor
-            // 
-            this.chkOpenAtCursor.AutoSize = true;
-            this.chkOpenAtCursor.Location = new System.Drawing.Point(6, 39);
-            this.chkOpenAtCursor.Name = "chkOpenAtCursor";
-            this.chkOpenAtCursor.Size = new System.Drawing.Size(98, 17);
-            this.chkOpenAtCursor.TabIndex = 1;
-            this.chkOpenAtCursor.Text = "Open at mouse";
-            this.toolTip1.SetToolTip(this.chkOpenAtCursor, "Check to automatically display clips at mouse.");
-            this.chkOpenAtCursor.UseVisualStyleBackColor = true;
-            // 
-            // chkStartup
-            // 
-            this.chkStartup.AutoSize = true;
-            this.chkStartup.Location = new System.Drawing.Point(6, 18);
-            this.chkStartup.Name = "chkStartup";
-            this.chkStartup.Size = new System.Drawing.Size(112, 17);
-            this.chkStartup.TabIndex = 0;
-            this.chkStartup.Text = "Start automatically";
-            this.toolTip1.SetToolTip(this.chkStartup, "Check to automatically start clips.");
-            this.chkStartup.UseVisualStyleBackColor = true;
-            // 
             // groupPreview
             // 
             this.groupPreview.Controls.Add(this.label4);
-            this.groupPreview.Controls.Add(this.nudPreviewMaxLines);
+            this.groupPreview.Controls.Add(this.PreviewMaxLines);
             this.groupPreview.Controls.Add(this.label7);
-            this.groupPreview.Controls.Add(this.nudPreviewPopupDelay);
+            this.groupPreview.Controls.Add(this.PreviewPopupDelay);
             this.groupPreview.Location = new System.Drawing.Point(311, 118);
             this.groupPreview.Name = "groupPreview";
             this.groupPreview.Size = new System.Drawing.Size(183, 73);
@@ -231,29 +433,6 @@
             this.label4.Text = "Max # of lines";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // nudPreviewMaxLines
-            // 
-            this.nudPreviewMaxLines.Location = new System.Drawing.Point(115, 18);
-            this.nudPreviewMaxLines.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.nudPreviewMaxLines.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudPreviewMaxLines.Name = "nudPreviewMaxLines";
-            this.nudPreviewMaxLines.Size = new System.Drawing.Size(62, 20);
-            this.nudPreviewMaxLines.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.nudPreviewMaxLines, "Set the max number of lines to preview.");
-            this.nudPreviewMaxLines.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // label7
             // 
             this.label7.AutoSize = true;
@@ -265,25 +444,12 @@
             this.label7.Text = "Delay (ms)";
             this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // nudPreviewPopupDelay
-            // 
-            this.nudPreviewPopupDelay.Location = new System.Drawing.Point(115, 45);
-            this.nudPreviewPopupDelay.Maximum = new decimal(new int[] {
-            9000,
-            0,
-            0,
-            0});
-            this.nudPreviewPopupDelay.Name = "nudPreviewPopupDelay";
-            this.nudPreviewPopupDelay.Size = new System.Drawing.Size(62, 20);
-            this.nudPreviewPopupDelay.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.nudPreviewPopupDelay, "Delay in milliseconds before preview pops up.");
-            // 
             // gbSizes
             // 
             this.gbSizes.Controls.Add(this.label6);
             this.gbSizes.Controls.Add(this.lblTextRows);
-            this.gbSizes.Controls.Add(this.nudClipsLinesPerRow);
-            this.gbSizes.Controls.Add(this.nudMaxClips);
+            this.gbSizes.Controls.Add(this.ClipsLinesPerRow);
+            this.gbSizes.Controls.Add(this.ClipsMaxClips);
             this.gbSizes.Location = new System.Drawing.Point(6, 92);
             this.gbSizes.Name = "gbSizes";
             this.gbSizes.Size = new System.Drawing.Size(299, 99);
@@ -313,60 +479,14 @@
             this.lblTextRows.Text = "Lines per row";
             this.lblTextRows.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
-            // nudClipsLinesPerRow
-            // 
-            this.nudClipsLinesPerRow.Location = new System.Drawing.Point(115, 18);
-            this.nudClipsLinesPerRow.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.nudClipsLinesPerRow.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudClipsLinesPerRow.Name = "nudClipsLinesPerRow";
-            this.nudClipsLinesPerRow.Size = new System.Drawing.Size(62, 20);
-            this.nudClipsLinesPerRow.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.nudClipsLinesPerRow, "Set the number of rows of text per clip to display in list.");
-            this.nudClipsLinesPerRow.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
-            // nudMaxClips
-            // 
-            this.nudMaxClips.Location = new System.Drawing.Point(115, 45);
-            this.nudMaxClips.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.nudMaxClips.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.nudMaxClips.Name = "nudMaxClips";
-            this.nudMaxClips.Size = new System.Drawing.Size(62, 20);
-            this.nudMaxClips.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.nudMaxClips, "Set  the max number of clips to save.");
-            this.nudMaxClips.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            // 
             // gbHotkey
             // 
-            this.gbHotkey.Controls.Add(this.textHotkey);
-            this.gbHotkey.Controls.Add(this.chkWin);
+            this.gbHotkey.Controls.Add(this.Key);
+            this.gbHotkey.Controls.Add(this.Windows);
             this.gbHotkey.Controls.Add(this.label2);
-            this.gbHotkey.Controls.Add(this.chkShift);
-            this.gbHotkey.Controls.Add(this.chkAlt);
-            this.gbHotkey.Controls.Add(this.chkControl);
+            this.gbHotkey.Controls.Add(this.Shift);
+            this.gbHotkey.Controls.Add(this.Alt);
+            this.gbHotkey.Controls.Add(this.Control);
             this.gbHotkey.Controls.Add(this.label1);
             this.gbHotkey.Location = new System.Drawing.Point(6, 3);
             this.gbHotkey.Name = "gbHotkey";
@@ -375,23 +495,15 @@
             this.gbHotkey.TabStop = false;
             this.gbHotkey.Text = "Popup Hotkey";
             // 
-            // textHotkey
+            // Windows
             // 
-            this.textHotkey.Location = new System.Drawing.Point(63, 19);
-            this.textHotkey.Name = "textHotkey";
-            this.textHotkey.Size = new System.Drawing.Size(80, 20);
-            this.textHotkey.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.textHotkey, "Press key to define as a hotkey.");
-            // 
-            // chkWin
-            // 
-            this.chkWin.AutoSize = true;
-            this.chkWin.Location = new System.Drawing.Point(209, 45);
-            this.chkWin.Name = "chkWin";
-            this.chkWin.Size = new System.Drawing.Size(70, 17);
-            this.chkWin.TabIndex = 4;
-            this.chkWin.Text = "Windows";
-            this.chkWin.UseVisualStyleBackColor = true;
+            this.Windows.AutoSize = true;
+            this.Windows.Location = new System.Drawing.Point(209, 45);
+            this.Windows.Name = "Windows";
+            this.Windows.Size = new System.Drawing.Size(70, 17);
+            this.Windows.TabIndex = 4;
+            this.Windows.Text = "Windows";
+            this.Windows.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -403,35 +515,35 @@
             this.label2.Text = "Modifier";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // chkShift
+            // Shift
             // 
-            this.chkShift.AutoSize = true;
-            this.chkShift.Location = new System.Drawing.Point(162, 45);
-            this.chkShift.Name = "chkShift";
-            this.chkShift.Size = new System.Drawing.Size(47, 17);
-            this.chkShift.TabIndex = 3;
-            this.chkShift.Text = "Shift";
-            this.chkShift.UseVisualStyleBackColor = true;
+            this.Shift.AutoSize = true;
+            this.Shift.Location = new System.Drawing.Point(162, 45);
+            this.Shift.Name = "Shift";
+            this.Shift.Size = new System.Drawing.Size(47, 17);
+            this.Shift.TabIndex = 3;
+            this.Shift.Text = "Shift";
+            this.Shift.UseVisualStyleBackColor = true;
             // 
-            // chkAlt
+            // Alt
             // 
-            this.chkAlt.AutoSize = true;
-            this.chkAlt.Location = new System.Drawing.Point(123, 45);
-            this.chkAlt.Name = "chkAlt";
-            this.chkAlt.Size = new System.Drawing.Size(38, 17);
-            this.chkAlt.TabIndex = 2;
-            this.chkAlt.Text = "Alt";
-            this.chkAlt.UseVisualStyleBackColor = true;
+            this.Alt.AutoSize = true;
+            this.Alt.Location = new System.Drawing.Point(123, 45);
+            this.Alt.Name = "Alt";
+            this.Alt.Size = new System.Drawing.Size(38, 17);
+            this.Alt.TabIndex = 2;
+            this.Alt.Text = "Alt";
+            this.Alt.UseVisualStyleBackColor = true;
             // 
-            // chkControl
+            // Control
             // 
-            this.chkControl.AutoSize = true;
-            this.chkControl.Location = new System.Drawing.Point(63, 45);
-            this.chkControl.Name = "chkControl";
-            this.chkControl.Size = new System.Drawing.Size(59, 17);
-            this.chkControl.TabIndex = 1;
-            this.chkControl.Text = "Control";
-            this.chkControl.UseVisualStyleBackColor = true;
+            this.Control.AutoSize = true;
+            this.Control.Location = new System.Drawing.Point(63, 45);
+            this.Control.Name = "Control";
+            this.Control.Size = new System.Drawing.Size(59, 17);
+            this.Control.TabIndex = 1;
+            this.Control.Text = "Control";
+            this.Control.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -470,12 +582,12 @@
             // 
             this.Preview.Controls.Add(this.lblBackColor);
             this.Preview.Controls.Add(this.lblFontColor);
-            this.Preview.Controls.Add(this.pnlPreviewBackColor);
-            this.Preview.Controls.Add(this.pnlPreviewFontColor);
+            this.Preview.Controls.Add(this.PreviewBackColor);
+            this.Preview.Controls.Add(this.PreviewFontColor);
             this.Preview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Preview.Location = new System.Drawing.Point(334, 0);
+            this.Preview.Location = new System.Drawing.Point(348, 0);
             this.Preview.Name = "Preview";
-            this.Preview.Size = new System.Drawing.Size(160, 160);
+            this.Preview.Size = new System.Drawing.Size(146, 160);
             this.Preview.TabIndex = 2;
             this.Preview.TabStop = false;
             this.Preview.Text = "Preview";
@@ -501,43 +613,35 @@
             this.lblFontColor.Text = "Font";
             this.lblFontColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlPreviewBackColor
-            // 
-            this.pnlPreviewBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPreviewBackColor.Location = new System.Drawing.Point(6, 51);
-            this.pnlPreviewBackColor.Name = "pnlPreviewBackColor";
-            this.pnlPreviewBackColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlPreviewBackColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.pnlPreviewBackColor, "Click to set color.");
-            this.pnlPreviewBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // pnlPreviewFontColor
-            // 
-            this.pnlPreviewFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlPreviewFontColor.Location = new System.Drawing.Point(6, 18);
-            this.pnlPreviewFontColor.Name = "pnlPreviewFontColor";
-            this.pnlPreviewFontColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlPreviewFontColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.pnlPreviewFontColor, "Click to set color.");
-            this.pnlPreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.label15);
+            this.groupBox3.Controls.Add(this.MenuButtonColor);
             this.groupBox3.Controls.Add(this.label13);
-            this.groupBox3.Controls.Add(this.pnlMenuSelectedColor);
+            this.groupBox3.Controls.Add(this.MenuSelectedColor);
             this.groupBox3.Controls.Add(this.label12);
-            this.groupBox3.Controls.Add(this.pnlMenuBorderColor);
+            this.groupBox3.Controls.Add(this.MenuBorderColor);
             this.groupBox3.Controls.Add(this.label11);
-            this.groupBox3.Controls.Add(this.pnlMenuFontColor);
+            this.groupBox3.Controls.Add(this.MenuFontColor);
             this.groupBox3.Controls.Add(this.label10);
-            this.groupBox3.Controls.Add(this.pnlMenuBackColor);
+            this.groupBox3.Controls.Add(this.MenuBackColor);
             this.groupBox3.Dock = System.Windows.Forms.DockStyle.Left;
-            this.groupBox3.Location = new System.Drawing.Point(172, 0);
+            this.groupBox3.Location = new System.Drawing.Point(151, 0);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(162, 160);
+            this.groupBox3.Size = new System.Drawing.Size(197, 160);
             this.groupBox3.TabIndex = 1;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Menu";
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(151, 25);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(38, 13);
+            this.label15.TabIndex = 21;
+            this.label15.Text = "Button";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // label13
             // 
@@ -549,16 +653,6 @@
             this.label13.Text = "Selected";
             this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlMenuSelectedColor
-            // 
-            this.pnlMenuSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuSelectedColor.Location = new System.Drawing.Point(6, 117);
-            this.pnlMenuSelectedColor.Name = "pnlMenuSelectedColor";
-            this.pnlMenuSelectedColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuSelectedColor.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.pnlMenuSelectedColor, "Click to set color.");
-            this.pnlMenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
             // label12
             // 
             this.label12.AutoSize = true;
@@ -568,16 +662,6 @@
             this.label12.TabIndex = 17;
             this.label12.Text = "Border";
             this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlMenuBorderColor
-            // 
-            this.pnlMenuBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuBorderColor.Location = new System.Drawing.Point(6, 84);
-            this.pnlMenuBorderColor.Name = "pnlMenuBorderColor";
-            this.pnlMenuBorderColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuBorderColor.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.pnlMenuBorderColor, "Click to set color.");
-            this.pnlMenuBorderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label11
             // 
@@ -590,16 +674,6 @@
             this.label11.Text = "Font";
             this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlMenuFontColor
-            // 
-            this.pnlMenuFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuFontColor.Location = new System.Drawing.Point(6, 18);
-            this.pnlMenuFontColor.Name = "pnlMenuFontColor";
-            this.pnlMenuFontColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuFontColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.pnlMenuFontColor, "Click to set color.");
-            this.pnlMenuFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
             // label10
             // 
             this.label10.AutoSize = true;
@@ -610,30 +684,20 @@
             this.label10.Text = "Background";
             this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlMenuBackColor
-            // 
-            this.pnlMenuBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlMenuBackColor.Location = new System.Drawing.Point(6, 51);
-            this.pnlMenuBackColor.Name = "pnlMenuBackColor";
-            this.pnlMenuBackColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlMenuBackColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.pnlMenuBackColor, "Click to set color.");
-            this.pnlMenuBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.label9);
-            this.groupBox4.Controls.Add(this.pnlHeaderColor);
+            this.groupBox4.Controls.Add(this.ClipHeaderColor);
             this.groupBox4.Controls.Add(this.label8);
-            this.groupBox4.Controls.Add(this.pnlClipsRowColor);
+            this.groupBox4.Controls.Add(this.ClipRowColor);
             this.groupBox4.Controls.Add(this.label3);
             this.groupBox4.Controls.Add(this.label5);
-            this.groupBox4.Controls.Add(this.pnlClipsBackColor);
-            this.groupBox4.Controls.Add(this.pnlClipsFontColor);
+            this.groupBox4.Controls.Add(this.ClipBackColor);
+            this.groupBox4.Controls.Add(this.ClipFontColor);
             this.groupBox4.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBox4.Location = new System.Drawing.Point(0, 0);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(172, 160);
+            this.groupBox4.Size = new System.Drawing.Size(151, 160);
             this.groupBox4.TabIndex = 0;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Clips";
@@ -649,16 +713,6 @@
             this.label9.Text = "Header";
             this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlHeaderColor
-            // 
-            this.pnlHeaderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlHeaderColor.Location = new System.Drawing.Point(10, 18);
-            this.pnlHeaderColor.Name = "pnlHeaderColor";
-            this.pnlHeaderColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlHeaderColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.pnlHeaderColor, "Click to set color.");
-            this.pnlHeaderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
             // label8
             // 
             this.label8.AutoSize = true;
@@ -668,16 +722,6 @@
             this.label8.TabIndex = 13;
             this.label8.Text = "Row";
             this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // pnlClipsRowColor
-            // 
-            this.pnlClipsRowColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlClipsRowColor.Location = new System.Drawing.Point(10, 117);
-            this.pnlClipsRowColor.Name = "pnlClipsRowColor";
-            this.pnlClipsRowColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlClipsRowColor.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.pnlClipsRowColor, "Click to set color.");
-            this.pnlClipsRowColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // label3
             // 
@@ -700,60 +744,16 @@
             this.label5.Text = "Font";
             this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // pnlClipsBackColor
-            // 
-            this.pnlClipsBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlClipsBackColor.Location = new System.Drawing.Point(10, 84);
-            this.pnlClipsBackColor.Name = "pnlClipsBackColor";
-            this.pnlClipsBackColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlClipsBackColor.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.pnlClipsBackColor, "Click to set color.");
-            this.pnlClipsBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // pnlClipsFontColor
-            // 
-            this.pnlClipsFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.pnlClipsFontColor.Location = new System.Drawing.Point(10, 51);
-            this.pnlClipsFontColor.Name = "pnlClipsFontColor";
-            this.pnlClipsFontColor.Size = new System.Drawing.Size(26, 27);
-            this.pnlClipsFontColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.pnlClipsFontColor, "Click to set color.");
-            this.pnlClipsFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
             // panel5
             // 
             this.panel5.Controls.Add(this.label14);
-            this.panel5.Controls.Add(this.rbDark);
-            this.panel5.Controls.Add(this.rbLight);
+            this.panel5.Controls.Add(this.DarkTheme);
+            this.panel5.Controls.Add(this.LightTheme);
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 16);
             this.panel5.Name = "panel5";
             this.panel5.Size = new System.Drawing.Size(494, 33);
             this.panel5.TabIndex = 0;
-            // 
-            // rbLight
-            // 
-            this.rbLight.AutoSize = true;
-            this.rbLight.Location = new System.Drawing.Point(103, 7);
-            this.rbLight.Name = "rbLight";
-            this.rbLight.Size = new System.Drawing.Size(48, 17);
-            this.rbLight.TabIndex = 0;
-            this.rbLight.TabStop = true;
-            this.rbLight.Text = "Light";
-            this.rbLight.UseVisualStyleBackColor = true;
-            this.rbLight.Click += new System.EventHandler(this.rbLight_Click);
-            // 
-            // rbDark
-            // 
-            this.rbDark.AutoSize = true;
-            this.rbDark.Location = new System.Drawing.Point(152, 7);
-            this.rbDark.Name = "rbDark";
-            this.rbDark.Size = new System.Drawing.Size(48, 17);
-            this.rbDark.TabIndex = 1;
-            this.rbDark.TabStop = true;
-            this.rbDark.Text = "Dark";
-            this.rbDark.UseVisualStyleBackColor = true;
-            this.rbDark.Click += new System.EventHandler(this.rbDark_Click);
             // 
             // label14
             // 
@@ -763,6 +763,30 @@
             this.label14.Size = new System.Drawing.Size(68, 13);
             this.label14.TabIndex = 2;
             this.label14.Text = "Preset colors";
+            // 
+            // DarkTheme
+            // 
+            this.DarkTheme.AutoSize = true;
+            this.DarkTheme.Location = new System.Drawing.Point(152, 7);
+            this.DarkTheme.Name = "DarkTheme";
+            this.DarkTheme.Size = new System.Drawing.Size(48, 17);
+            this.DarkTheme.TabIndex = 1;
+            this.DarkTheme.TabStop = true;
+            this.DarkTheme.Text = "Dark";
+            this.DarkTheme.UseVisualStyleBackColor = true;
+            this.DarkTheme.Click += new System.EventHandler(this.DarkTheme_Click);
+            // 
+            // LightTheme
+            // 
+            this.LightTheme.AutoSize = true;
+            this.LightTheme.Location = new System.Drawing.Point(103, 7);
+            this.LightTheme.Name = "LightTheme";
+            this.LightTheme.Size = new System.Drawing.Size(48, 17);
+            this.LightTheme.TabIndex = 0;
+            this.LightTheme.TabStop = true;
+            this.LightTheme.Text = "Light";
+            this.LightTheme.UseVisualStyleBackColor = true;
+            this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
             // 
             // Settings
             // 
@@ -784,18 +808,18 @@
             this.Text = "Clips Configuration";
             this.TopMost = true;
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.FormConfig_KeyDown);
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ClipsMaxClips)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.groupOther.ResumeLayout(false);
             this.groupOther.PerformLayout();
             this.groupPreview.ResumeLayout(false);
             this.groupPreview.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPreviewMaxLines)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudPreviewPopupDelay)).EndInit();
             this.gbSizes.ResumeLayout(false);
             this.gbSizes.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.nudClipsLinesPerRow)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.nudMaxClips)).EndInit();
             this.gbHotkey.ResumeLayout(false);
             this.gbHotkey.PerformLayout();
             this.groupBox6.ResumeLayout(false);
@@ -816,60 +840,62 @@
         private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.ColorDialog dlgColor;
         private System.Windows.Forms.GroupBox groupBox2;
-        public System.Windows.Forms.Button btnCancel;
-        public System.Windows.Forms.Button btnOK;
+        public System.Windows.Forms.Button Cancel;
+        public System.Windows.Forms.Button OK;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.GroupBox groupOther;
-        public System.Windows.Forms.CheckBox chkAutoHide;
-        public System.Windows.Forms.CheckBox chkAutoSizeHeight;
-        public System.Windows.Forms.CheckBox chkOpenAtCursor;
-        public System.Windows.Forms.CheckBox chkStartup;
+        public System.Windows.Forms.CheckBox AutoHide;
+        public System.Windows.Forms.CheckBox AutoSizeHeight;
+        public System.Windows.Forms.CheckBox OpenAtMouse;
+        public System.Windows.Forms.CheckBox Startup;
         private System.Windows.Forms.GroupBox groupPreview;
         private System.Windows.Forms.Label label4;
-        public System.Windows.Forms.NumericUpDown nudPreviewMaxLines;
+        public System.Windows.Forms.NumericUpDown PreviewMaxLines;
         private System.Windows.Forms.Label label7;
-        public System.Windows.Forms.NumericUpDown nudPreviewPopupDelay;
+        public System.Windows.Forms.NumericUpDown PreviewPopupDelay;
         private System.Windows.Forms.GroupBox gbSizes;
         private System.Windows.Forms.Label label6;
         private System.Windows.Forms.Label lblTextRows;
-        public System.Windows.Forms.NumericUpDown nudClipsLinesPerRow;
-        public System.Windows.Forms.NumericUpDown nudMaxClips;
+        public System.Windows.Forms.NumericUpDown ClipsLinesPerRow;
+        public System.Windows.Forms.NumericUpDown ClipsMaxClips;
         private System.Windows.Forms.GroupBox gbHotkey;
-        public System.Windows.Forms.TextBox textHotkey;
-        public System.Windows.Forms.CheckBox chkWin;
+        public System.Windows.Forms.TextBox Key;
+        public System.Windows.Forms.CheckBox Windows;
         private System.Windows.Forms.Label label2;
-        public System.Windows.Forms.CheckBox chkShift;
-        public System.Windows.Forms.CheckBox chkAlt;
-        public System.Windows.Forms.CheckBox chkControl;
+        public System.Windows.Forms.CheckBox Shift;
+        public System.Windows.Forms.CheckBox Alt;
+        public System.Windows.Forms.CheckBox Control;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBox6;
         private System.Windows.Forms.Panel panel4;
         private System.Windows.Forms.GroupBox Preview;
         private System.Windows.Forms.Label lblBackColor;
         private System.Windows.Forms.Label lblFontColor;
-        public System.Windows.Forms.Panel pnlPreviewBackColor;
-        public System.Windows.Forms.Panel pnlPreviewFontColor;
+        public System.Windows.Forms.Panel PreviewBackColor;
+        public System.Windows.Forms.Panel PreviewFontColor;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.Label label13;
-        public System.Windows.Forms.Panel pnlMenuSelectedColor;
+        public System.Windows.Forms.Panel MenuSelectedColor;
         private System.Windows.Forms.Label label12;
-        public System.Windows.Forms.Panel pnlMenuBorderColor;
+        public System.Windows.Forms.Panel MenuBorderColor;
         private System.Windows.Forms.Label label11;
-        public System.Windows.Forms.Panel pnlMenuFontColor;
+        public System.Windows.Forms.Panel MenuFontColor;
         private System.Windows.Forms.Label label10;
-        public System.Windows.Forms.Panel pnlMenuBackColor;
+        public System.Windows.Forms.Panel MenuBackColor;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label label9;
-        public System.Windows.Forms.Panel pnlHeaderColor;
+        public System.Windows.Forms.Panel ClipHeaderColor;
         private System.Windows.Forms.Label label8;
-        public System.Windows.Forms.Panel pnlClipsRowColor;
+        public System.Windows.Forms.Panel ClipRowColor;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label5;
-        public System.Windows.Forms.Panel pnlClipsBackColor;
-        public System.Windows.Forms.Panel pnlClipsFontColor;
+        public System.Windows.Forms.Panel ClipBackColor;
+        public System.Windows.Forms.Panel ClipFontColor;
         private System.Windows.Forms.Panel panel5;
         private System.Windows.Forms.Label label14;
-        private System.Windows.Forms.RadioButton rbDark;
-        private System.Windows.Forms.RadioButton rbLight;
+        private System.Windows.Forms.RadioButton DarkTheme;
+        private System.Windows.Forms.RadioButton LightTheme;
+        private System.Windows.Forms.Label label15;
+        public System.Windows.Forms.Panel MenuButtonColor;
     }
 }

@@ -28,8 +28,8 @@ namespace Clips
                 else
                 {
                     _Config = Config;
-                    btnOK.Click += new EventHandler(ButtonClick);
-                    textHotkey.Text = _Config.PopupHotkey;
+                    OK.Click += new EventHandler(ButtonClick);
+                    Key.Text = _Config.PopupHotkey;
 
                     // fill out the hotkey modifiers
                     /* Modifier
@@ -40,28 +40,29 @@ namespace Clips
                        WinKey = 8*/
 
                     int m = _Config.PopupHotkeyModifier;
-                    chkAlt.Checked = (m == 1 || m == 3 || m == 5 || m == 9);
-                    chkControl.Checked = (m == 2 || m == 3 || m == 6 || m == 10);
-                    chkShift.Checked = (m == 4 || m == 5 || m == 6 || m == 12);
-                    chkWin.Checked = (m == 8 || m == 9 || m == 10 || m == 12);
-                    chkStartup.Checked = _Config.StartWithWindows;
-                    nudClipsLinesPerRow.Value = _Config.ClipsLinesPerRow;
-                    nudMaxClips.Value = _Config.ClipsMaxClips;
-                    nudPreviewMaxLines.Value = _Config.PreviewMaxLines;
-                    nudPreviewPopupDelay.Value = _Config.PreviewPopupDelay;
-                    pnlPreviewBackColor.BackColor = _Config.PreviewBackColor;
-                    pnlPreviewFontColor.BackColor = _Config.PreviewFontColor;
-                    pnlClipsBackColor.BackColor = _Config.ClipsBackColor;
-                    pnlClipsFontColor.BackColor = _Config.ClipsFontColor;
-                    pnlClipsRowColor.BackColor = _Config.ClipsRowBackColor;
-                    pnlHeaderColor.BackColor = _Config.ClipsHeaderColor;
-                    pnlMenuBackColor.BackColor = _Config.MenuBackColor;
-                    pnlMenuBorderColor.BackColor = _Config.MenuBorderColor;
-                    pnlMenuFontColor.BackColor = _Config.MenuFontColor;
-                    pnlMenuSelectedColor.BackColor = _Config.MenuSelectedColor;
-                    chkOpenAtCursor.Checked = _Config.OpenFormAtCursor;
-                    chkAutoSizeHeight.Checked = _Config.AutoSizeHeight;
-                    chkAutoHide.Checked = _Config.AutoHide;
+                    Alt.Checked = (m == 1 || m == 3 || m == 5 || m == 9);
+                    Control.Checked = (m == 2 || m == 3 || m == 6 || m == 10);
+                    Shift.Checked = (m == 4 || m == 5 || m == 6 || m == 12);
+                    Windows.Checked = (m == 8 || m == 9 || m == 10 || m == 12);
+                    Startup.Checked = _Config.StartWithWindows;
+                    AutoHide.Checked = _Config.AutoHide;
+                    AutoSizeHeight.Checked = _Config.AutoSizeHeight;
+                    ClipBackColor.BackColor = _Config.ClipsBackColor;
+                    ClipFontColor.BackColor = _Config.ClipsFontColor;
+                    ClipHeaderColor.BackColor = _Config.ClipsHeaderColor;
+                    ClipRowColor.BackColor = _Config.ClipsRowBackColor;
+                    ClipsLinesPerRow.Value = _Config.ClipsLinesPerRow;
+                    ClipsMaxClips.Value = _Config.ClipsMaxClips;
+                    MenuBackColor.BackColor = _Config.MenuBackColor;
+                    MenuBorderColor.BackColor = _Config.MenuBorderColor;
+                    MenuButtonColor.BackColor = _Config.MenuButtonColor;
+                    MenuFontColor.BackColor = _Config.MenuFontColor;
+                    MenuSelectedColor.BackColor = _Config.MenuSelectedColor;
+                    OpenAtMouse.Checked = _Config.OpenFormAtCursor;
+                    PreviewBackColor.BackColor = _Config.PreviewBackColor;
+                    PreviewFontColor.BackColor = _Config.PreviewFontColor;
+                    PreviewMaxLines.Value = _Config.PreviewMaxLines;
+                    PreviewPopupDelay.Value = _Config.PreviewPopupDelay;
                 }
             }
 
@@ -74,7 +75,7 @@ namespace Clips
 
             private void ButtonClick(object sender, EventArgs e)
             {
-                _Config.PopupHotkey = textHotkey.Text;
+                _Config.PopupHotkey = Key.Text;
                 /* Modifier
                    None = 0,
                    Alt = 1,
@@ -82,30 +83,30 @@ namespace Clips
                    Shift = 4,
                    WinKey = 8*/
                 int i = 0;
-                if (chkAlt.Checked) i = (i + 1);
-                if (chkControl.Checked) i = (i + 2);
-                if (chkShift.Checked) i = (i + 4);
-                if (chkWin.Checked) i = (i + 8);
-
+                if (Alt.Checked) i = (i + 1);
+                if (Control.Checked) i = (i + 2);
+                if (Shift.Checked) i = (i + 4);
+                if (Windows.Checked) i = (i + 8);
+                _Config.AutoHide = AutoHide.Checked;
+                _Config.AutoSizeHeight = AutoSizeHeight.Checked;
+                _Config.ClipsBackColor = ClipBackColor.BackColor;
+                _Config.ClipsFontColor = ClipFontColor.BackColor;
+                _Config.ClipsHeaderColor = ClipHeaderColor.BackColor;
+                _Config.ClipsLinesPerRow = Convert.ToInt32(ClipsLinesPerRow.Value);
+                _Config.ClipsMaxClips = Convert.ToInt32(ClipsMaxClips.Value);
+                _Config.ClipsRowBackColor = ClipRowColor.BackColor;
+                _Config.MenuBackColor = MenuBackColor.BackColor;
+                _Config.MenuBorderColor = MenuBorderColor.BackColor;
+                _Config.MenuButtonColor = MenuButtonColor.BackColor;
+                _Config.MenuFontColor = MenuFontColor.BackColor;
+                _Config.MenuSelectedColor = MenuSelectedColor.BackColor;
+                _Config.OpenFormAtCursor = OpenAtMouse.Checked;
                 _Config.PopupHotkeyModifier = i;
-                _Config.ClipsMaxClips = Convert.ToInt32(nudMaxClips.Value);
-                _Config.ClipsLinesPerRow = Convert.ToInt32(nudClipsLinesPerRow.Value);
-                _Config.ClipsRowBackColor = pnlClipsRowColor.BackColor;
-                _Config.ClipsFontColor = pnlClipsFontColor.BackColor;
-                _Config.ClipsBackColor = pnlClipsBackColor.BackColor;
-                _Config.ClipsHeaderColor = pnlHeaderColor.BackColor;
-                _Config.PreviewMaxLines = Convert.ToInt32(nudPreviewMaxLines.Value);
-                _Config.PreviewPopupDelay = Convert.ToInt32(nudPreviewPopupDelay.Value);
-                _Config.StartWithWindows = chkStartup.Checked;
-                _Config.PreviewBackColor = pnlPreviewBackColor.BackColor;
-                _Config.PreviewFontColor = pnlPreviewFontColor.BackColor;
-                _Config.MenuBackColor = pnlMenuBackColor.BackColor;
-                _Config.MenuBorderColor = pnlMenuBorderColor.BackColor;
-                _Config.MenuFontColor = pnlMenuFontColor.BackColor;
-                _Config.MenuSelectedColor = pnlMenuSelectedColor.BackColor;
-                _Config.OpenFormAtCursor = chkOpenAtCursor.Checked;
-                _Config.AutoSizeHeight = chkAutoSizeHeight.Checked;
-                _Config.AutoHide = chkAutoHide.Checked;
+                _Config.PreviewBackColor = PreviewBackColor.BackColor;
+                _Config.PreviewFontColor = PreviewFontColor.BackColor;
+                _Config.PreviewMaxLines = Convert.ToInt32(PreviewMaxLines.Value);
+                _Config.PreviewPopupDelay = Convert.ToInt32(PreviewPopupDelay.Value);
+                _Config.StartWithWindows = Startup.Checked;
 
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
@@ -363,6 +364,17 @@ namespace Clips
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_border_color", value.ToArgb().ToString()); }
+        }
+
+        public Color MenuButtonColor
+        {
+            get {
+                string s = FindKey("menu_button_color");
+                if (s == "")
+                    s = SetKey("menu_button_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("menu_button_color", value.ToArgb().ToString()); }
         }
 
         public Color MenuFontColor

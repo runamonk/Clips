@@ -24,16 +24,16 @@ namespace Clips
         private void FormConfig_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
-                btnOK.PerformClick();
+                OK.PerformClick();
             else
                 if (e.KeyCode == Keys.Escape)
-                    btnCancel.PerformClick();
+                    Cancel.PerformClick();
         }
 
         private void TextHotkey_KeyDown(object sender, KeyEventArgs e)
         {           
             Keys k = (Keys)e.KeyCode;
-            textHotkey.Text = k.ToString();
+            Key.Text = k.ToString();
          }
 
         private void TextHotkey_KeyPress(object sender, KeyPressEventArgs e)
@@ -49,35 +49,35 @@ namespace Clips
             }
         }
 
-        private void rbDark_Click(object sender, EventArgs e)
+        private void LightTheme_Click(object sender, EventArgs e)
         {
-            rbLight.Checked = false;
-            pnlHeaderColor.BackColor = Color.FromArgb(56,56,56);
-            pnlClipsBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            pnlClipsFontColor.BackColor = Color.White;
-            pnlClipsRowColor.BackColor = Color.FromArgb(56, 56, 56);
-            pnlMenuBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            pnlMenuBorderColor.BackColor = Color.FromArgb(56, 56, 56);
-            pnlMenuSelectedColor.BackColor = Color.DarkGray;
-            pnlMenuFontColor.BackColor = Color.White;
-            pnlMenuSelectedColor.BackColor = Color.DarkGray;
-            pnlPreviewBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            pnlPreviewFontColor.BackColor = Color.White;
+            DarkTheme.Checked = false;
+            ClipHeaderColor.BackColor = Color.White;
+            ClipBackColor.BackColor = Color.White;
+            ClipFontColor.BackColor = Color.Black;
+            ClipRowColor.BackColor = Color.White;
+            MenuBackColor.BackColor = Color.White;
+            MenuBorderColor.BackColor = Color.Gray;
+            MenuFontColor.BackColor = Color.Black;
+            MenuSelectedColor.BackColor = Color.Gray;
+            PreviewBackColor.BackColor = Color.White;
+            PreviewFontColor.BackColor = Color.Black;
         }
 
-        private void rbLight_Click(object sender, EventArgs e)
+        private void DarkTheme_Click(object sender, EventArgs e)
         {
-            rbDark.Checked = false;
-            pnlHeaderColor.BackColor = Color.White;
-            pnlClipsBackColor.BackColor = Color.White;
-            pnlClipsFontColor.BackColor = Color.Black;
-            pnlClipsRowColor.BackColor = Color.White;
-            pnlMenuBackColor.BackColor = Color.White;
-            pnlMenuBorderColor.BackColor = Color.Gray;
-            pnlMenuFontColor.BackColor = Color.Black;
-            pnlMenuSelectedColor.BackColor = Color.Gray;
-            pnlPreviewBackColor.BackColor = Color.White;
-            pnlPreviewFontColor.BackColor = Color.Black;
+            LightTheme.Checked = false;
+            ClipHeaderColor.BackColor = Color.FromArgb(56, 56, 56);
+            ClipBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            ClipFontColor.BackColor = Color.White;
+            ClipRowColor.BackColor = Color.FromArgb(56, 56, 56);
+            MenuBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            MenuBorderColor.BackColor = Color.FromArgb(56, 56, 56);
+            MenuSelectedColor.BackColor = Color.DarkGray;
+            MenuFontColor.BackColor = Color.White;
+            MenuSelectedColor.BackColor = Color.DarkGray;
+            PreviewBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            PreviewFontColor.BackColor = Color.White;
         }
     }
 }
