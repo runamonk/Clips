@@ -47,7 +47,7 @@ namespace Utility
 
         public static Boolean IsUrl(string s)
         {
-            return (s.Length <= 2048) && (Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute) == true);
+            return (s.Length <= 2048) && s.ToLower().StartsWith("www") || s.ToLower().StartsWith("http") && Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute);
         }
 
         public static void MoveFormToCursor(Form form, bool IgnoreBounds = false)

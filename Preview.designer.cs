@@ -50,7 +50,7 @@
             this.MainPanel.Location = new System.Drawing.Point(0, 0);
             this.MainPanel.Name = "MainPanel";
             this.MainPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.MainPanel.Size = new System.Drawing.Size(600, 400);
+            this.MainPanel.Size = new System.Drawing.Size(50, 25);
             this.MainPanel.TabIndex = 1;
             // 
             // PreviewImage
@@ -59,7 +59,7 @@
             this.PreviewImage.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PreviewImage.Location = new System.Drawing.Point(3, 3);
             this.PreviewImage.Name = "PreviewImage";
-            this.PreviewImage.Size = new System.Drawing.Size(594, 394);
+            this.PreviewImage.Size = new System.Drawing.Size(44, 19);
             this.PreviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PreviewImage.TabIndex = 4;
             this.PreviewImage.TabStop = false;
@@ -74,7 +74,7 @@
             this.PreviewText.Name = "PreviewText";
             this.PreviewText.ReadOnly = true;
             this.PreviewText.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.PreviewText.Size = new System.Drawing.Size(594, 394);
+            this.PreviewText.Size = new System.Drawing.Size(44, 19);
             this.PreviewText.TabIndex = 3;
             this.PreviewText.TabStop = false;
             this.PreviewText.Text = "";
@@ -85,8 +85,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.ClientSize = new System.Drawing.Size(600, 400);
+            this.ClientSize = new System.Drawing.Size(50, 25);
             this.Controls.Add(this.MainPanel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
@@ -96,8 +97,8 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.Text = "formPreview";
             this.TopMost = true;
+            this.VisibleChanged += new System.EventHandler(this.Preview_VisibleChanged);
             this.MainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).EndInit();
             this.ResumeLayout(false);

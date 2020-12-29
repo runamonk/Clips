@@ -17,6 +17,9 @@ namespace Clips
             InitializeComponent();
         }
 
+        private int FHeight = 0;
+        private int FWidth = 0;
+
 
         protected override CreateParams CreateParams
         {
@@ -34,10 +37,13 @@ namespace Clips
                 return;
 
             if (!string.IsNullOrEmpty(text))
-            { 
+            {
                 PreviewText.BackColor = BackColor;
                 PreviewText.ForeColor = ForeColor;
                 PreviewText.Clear();
+
+                PreviewText.Visible = true;
+                PreviewImage.Visible = false;
 
                 string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
                 int i = 0;
@@ -51,15 +57,11 @@ namespace Clips
                     PreviewText.Text = text;
 
                 if (Funcs.IsUrl(PreviewText.Text))
-                    PreviewText.Text = PreviewText.Text + "\n" + "Control + click to open.";
+                    PreviewText.AppendText("\n Control + click to open.");
 
                 SizeF ss = TextRenderer.MeasureText(PreviewText.Text, PreviewText.Font);
-                ss.Height = ss.Height + 6; 
-                ss.Width = ss.Width + 6;
-                Size = ss.ToSize();
-
-                PreviewText.Visible = true;
-                PreviewImage.Visible = false;
+                FHeight = Convert.ToInt32(ss.Height) + 6;
+                FWidth = Convert.ToInt32(ss.Width) + 6;
             }
             else
             if (image != null)
@@ -69,14 +71,14 @@ namespace Clips
                 PreviewImage.Visible = true;
 
                 if (image.Height > MaximumSize.Height)
-                    Height = MaximumSize.Height;
+                    FHeight = MaximumSize.Height;
                 else
-                    Height = image.Height;
+                    FHeight = image.Height;
 
                 if (image.Width > MaximumSize.Width)
-                    Width = MaximumSize.Width;
+                    FWidth = MaximumSize.Width;
                 else
-                    Width = image.Width;
+                    FWidth = image.Width;
             }
             TimerShowForm.Interval = popupDelay;
             TimerShowForm.Enabled = true; 
@@ -85,7 +87,6 @@ namespace Clips
         public void HidePreview()
         {
             TimerShowForm.Enabled = false;
-            PreviewImage.Image = null;
             Hide();
         }
 
@@ -94,6 +95,16 @@ namespace Clips
             TimerShowForm.Enabled = false;
             Funcs.MoveFormToCursor(this);
             Show();
+        }
+
+        private void Preview_VisibleChanged(object sender, EventArgs e)
+        {
+            // for some reason I couldn't just set the new form size in the ShowPreview(), it was not accurate the first time.
+            if (!TimerShowForm.Enabled)
+            {
+                Height = FHeight;
+                Width = FWidth;
+            }
         }
     }
 }
