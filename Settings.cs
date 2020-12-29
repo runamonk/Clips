@@ -37,9 +37,9 @@ namespace Clips
             ClipRowColor.BackColor = Color.White;
             MenuBackColor.BackColor = Color.White;
             MenuBorderColor.BackColor = Color.Gray;
+            MenuButtonColor.BackColor = Color.White;
             MenuFontColor.BackColor = Color.Black;
             MenuSelectedColor.BackColor = Color.Gray;
-            MenuButtonColor.BackColor = Color.White;
             PreviewBackColor.BackColor = Color.White;
             PreviewFontColor.BackColor = Color.Black;
         }
@@ -52,8 +52,8 @@ namespace Clips
             ClipFontColor.BackColor = Color.White;
             ClipRowColor.BackColor = Color.FromArgb(56, 56, 56);
             MenuBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            MenuButtonColor.BackColor = Color.FromArgb(56, 56, 56);
             MenuBorderColor.BackColor = Color.FromArgb(56, 56, 56);
+            MenuButtonColor.BackColor = Color.FromArgb(56, 56, 56);
             MenuSelectedColor.BackColor = Color.DarkGray;
             MenuFontColor.BackColor = Color.White;
             MenuSelectedColor.BackColor = Color.DarkGray;

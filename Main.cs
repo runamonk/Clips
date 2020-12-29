@@ -41,6 +41,7 @@ namespace Clips
         private Config Config { get; set; }
         private bool inAbout = false;
         private bool inClose = false;
+        private bool inMenu = false;
         private bool inLoad = false;
         private bool inPreview = false;
         private bool inSettings = false;
@@ -96,11 +97,17 @@ namespace Clips
                 pClips.Controls.Remove((ClipButton)sender);
             }
 
-            SuspendLayout();
-            LastImage = null;
-            LastText = null;
+
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
                 return;
+
+            SuspendLayout();
+
+            LastImage = null;
+            LastText = null;
+
+            if (Config.AutoHide)
+                ToggleShow(true, true);
 
             bool skipShiftToTop = false;
 
@@ -134,10 +141,7 @@ namespace Clips
                 //}
             }
 
-            ResumeLayout();
-
-            if (Config.AutoHide)
-                ToggleShow(true,true);
+            ResumeLayout();           
         }
 
         private void Main_Deactivate(object sender, EventArgs e)
@@ -254,6 +258,16 @@ namespace Clips
         private void NotifyClips_DoubleClick(object sender, EventArgs e)
         {
             ToggleShow(false,false);
+        }
+
+        private void menuClips_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        {
+            inMenu = false;
+        }
+
+        private void menuClips_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            inMenu = true;
         }
 
         protected override void OnShown(EventArgs e)
@@ -540,26 +554,30 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && (inClose || (inAbout) || (inPreview) || (inSettings)))
+            if ((!Override) && (inClose || inAbout || inPreview || inMenu || inSettings))
                 return;
-
-            if (isVisible)
-            {
-                Visible = false;
-                isVisible = false;
-                Opacity = 1;
-            }
             else
-            {          
-                AutoSizeForm();
-                if (Config.OpenFormAtCursor)
-                    Funcs.MoveFormToCursor(this, IgnoreBounds);
-                Opacity = 100;
-                isVisible = true;
-                Visible = true;
-                Activate();
+            {
+                if (isVisible)
+                {
+                    Visible = false;
+                    isVisible = false;
+                    Opacity = 1;
+                }
+                else
+                {
+                    AutoSizeForm();
+                    if (Config.OpenFormAtCursor)
+                        Funcs.MoveFormToCursor(this, IgnoreBounds);
+                    Opacity = 100;
+                    isVisible = true;
+                    Visible = true;
+                    Activate();
+                }
             }
         }
+
+
     } // Main
 
     public class CustomToolstripRenderer : ToolStripProfessionalRenderer

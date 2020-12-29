@@ -136,19 +136,21 @@
             this.menuSave,
             this.menuDelete});
             this.menuClips.Name = "menuClips";
-            this.menuClips.Size = new System.Drawing.Size(108, 48);
+            this.menuClips.Size = new System.Drawing.Size(181, 70);
+            this.menuClips.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.menuClips_Closed);
+            this.menuClips.Opening += new System.ComponentModel.CancelEventHandler(this.menuClips_Opening);
             // 
             // menuSave
             // 
             this.menuSave.Name = "menuSave";
-            this.menuSave.Size = new System.Drawing.Size(107, 22);
+            this.menuSave.Size = new System.Drawing.Size(180, 22);
             this.menuSave.Text = "Save";
             this.menuSave.Click += new System.EventHandler(this.MenuClips_Click);
             // 
             // menuDelete
             // 
             this.menuDelete.Name = "menuDelete";
-            this.menuDelete.Size = new System.Drawing.Size(107, 22);
+            this.menuDelete.Size = new System.Drawing.Size(180, 22);
             this.menuDelete.Text = "Delete";
             this.menuDelete.Click += new System.EventHandler(this.MenuClips_Click);
             // 
