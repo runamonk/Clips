@@ -221,6 +221,7 @@ namespace Clips
                 if (File.Exists(b.FileName))
                     File.Delete(b.FileName);
                 pClips.Controls.Remove(b);
+                AutoSizeForm();
 
             }
             inPreview = false;
@@ -342,6 +343,7 @@ namespace Clips
                 b.Text = text;
 
             b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 20 : 22);
+            AutoSizeForm();
         }
 
         private void AddItem(Image image, string fileName, bool saveToDisk = false)
@@ -362,6 +364,7 @@ namespace Clips
                 b.FileName = fileName;
             // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
             b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
+            AutoSizeForm();
         }
 
         private void AutoSizeForm()
