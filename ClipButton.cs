@@ -12,7 +12,9 @@ namespace Clips
             FlatAppearance.BorderSize = 0;
             FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             TextAlign = ContentAlignment.TopLeft;
+            UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
+            UseMnemonic = false;
         }
 
         // Stops the black default border from being displayed on button when the preview form is shown.
