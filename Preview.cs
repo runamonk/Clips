@@ -93,7 +93,6 @@ namespace Clips
         private void TimerShowForm_Tick(object sender, EventArgs e)
         {
             TimerShowForm.Enabled = false;
-            Funcs.MoveFormToCursor(this);
             Show();
         }
 
@@ -104,6 +103,7 @@ namespace Clips
             {
                 Height = FHeight;
                 Width = FWidth;
+                Funcs.MoveFormToCursor(this);
             }
         }
     }

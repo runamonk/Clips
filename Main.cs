@@ -94,7 +94,16 @@ namespace Clips
                 string fileName = ((ClipButton)sender).FileName;
                 if (File.Exists(fileName))
                     File.Delete(fileName);
-                pClips.Controls.Remove((ClipButton)sender);
+                ClipButton b = (ClipButton)sender;
+
+                pClips.Controls.Remove(b);
+
+                if (b.FullImage == LastImage)
+                    LastImage = null;
+                else
+                if (b.FullText == LastText)
+                    LastText = null;
+                GC.Collect();
             }
             
             if ((e.Button == MouseButtons.Right) || ((e.Button == MouseButtons.Middle) && (((ClipButton)sender).FullImage != null)))
@@ -223,7 +232,15 @@ namespace Clips
                 ClipButton b = ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
                 if (File.Exists(b.FileName))
                     File.Delete(b.FileName);
+                
+                if (b.FullImage == LastImage)
+                    LastImage = null;
+                else
+                if (b.FullText == LastText)
+                    LastText = null;
+
                 pClips.Controls.Remove(b);
+                GC.Collect();
                 AutoSizeForm();
 
             }
