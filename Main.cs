@@ -36,6 +36,7 @@ namespace Clips
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
+        private About AboutForm = new About();
         private ClipButton MenuButton { get; set; }
         private Config Config { get; set; }
         private bool inAbout = false;
@@ -165,8 +166,7 @@ namespace Clips
         private void MenuAbout_Click(object sender, EventArgs e)
         {
             inAbout = true;
-            About f = new About();
-            f.Show(this);
+            AboutForm.Show(this);
             inAbout = false;
         }
 
@@ -290,6 +290,8 @@ namespace Clips
 
         private void PreviewShow(object sender, EventArgs e)
         {
+            if (inAbout) return;
+
             inPreview = true;
             ((ClipButton)sender).Select();
 
@@ -427,7 +429,7 @@ namespace Clips
             menuClips.BackColor = Config.MenuBackColor;
             menuClips.ForeColor = Config.MenuFontColor;
             MenuButton.ForeColor = Config.MenuFontColor;
-            MenuButton.BackColor = Config.MenuBackColor;
+            MenuButton.BackColor = Config.MenuButtonColor;
             pTop.BackColor = Config.ClipsHeaderColor;
             
             pClips.AutoScroll = true;
@@ -535,7 +537,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && ((inClose) || (inAbout) || (inPreview) || (inSettings)))
+            if ((!Override) && (inClose || (inAbout) || (inPreview) || (inSettings)))
                 return;
 
             if (isVisible)

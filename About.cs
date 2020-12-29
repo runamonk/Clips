@@ -30,7 +30,7 @@ namespace Clips
 
         private void About_Deactivate(object sender, EventArgs e)
         {
-            Close();
+            Hide();
         }
     }
 }
