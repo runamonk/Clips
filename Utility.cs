@@ -45,6 +45,11 @@ namespace Utility
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
+        public static Boolean IsUrl(string s)
+        {
+            return (s.Length <= 2048) && (Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute) == true);
+        }
+
         public static void MoveFormToCursor(Form form, bool IgnoreBounds = false)
         {
             Point p = new Point(Cursor.Position.X + 10, Cursor.Position.Y - 10);

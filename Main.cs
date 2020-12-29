@@ -102,7 +102,6 @@ namespace Clips
                 return;
 
             SuspendLayout();
-
             LastImage = null;
             LastText = null;
 
@@ -128,17 +127,18 @@ namespace Clips
             if (((ClipButton)sender).Text != "")
             {
                 string s = ((ClipButton)sender).FullText;
-                if (skipShiftToTop)
-                    LastText = s;
+                if ((Form.ModifierKeys == Keys.Control) && (e.Button == MouseButtons.Left) && Funcs.IsUrl(s))
+                {
+                    System.Diagnostics.Process.Start(s);
+                }
                 else
-                    deleteClip();
-                Clipboard.SetText(s);
-                
-                // TODO max url length is 2048, check for that?
-                //if (((Form.ModifierKeys == Keys.Shift) || (e.Button == MouseButtons.Middle)) && (Uri.IsWellFormedUriString(s, UriKind.RelativeOrAbsolute) == true))
-                //{
-                //    System.Diagnostics.Process.Start(s);
-                //}
+                {
+                    if (skipShiftToTop)
+                        LastText = s;
+                    else
+                        deleteClip();
+                    Clipboard.SetText(s);
+                }
             }
 
             ResumeLayout();           

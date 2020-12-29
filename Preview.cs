@@ -35,35 +35,38 @@ namespace Clips
 
             if (!string.IsNullOrEmpty(text))
             { 
-                textPreview.BackColor = BackColor;
-                textPreview.ForeColor = ForeColor;
-                textPreview.Clear();
+                PreviewText.BackColor = BackColor;
+                PreviewText.ForeColor = ForeColor;
+                PreviewText.Clear();
 
                 string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
                 int i = 0;
                 if (s.Count() > maxLines)
                     while (i <= maxLines)
                     {
-                        textPreview.AppendText(s[i]);
+                        PreviewText.AppendText(s[i]);
                         i++;
                     }
                 else
-                    textPreview.Text = text;
+                    PreviewText.Text = text;
 
-                SizeF ss = TextRenderer.MeasureText(textPreview.Text, textPreview.Font);
+                if (Funcs.IsUrl(PreviewText.Text))
+                    PreviewText.Text = PreviewText.Text + "\n" + "Control + click to open.";
+
+                SizeF ss = TextRenderer.MeasureText(PreviewText.Text, PreviewText.Font);
                 ss.Height = ss.Height + 6; 
                 ss.Width = ss.Width + 6;
                 Size = ss.ToSize();
 
-                textPreview.Visible = true;
-                pbPreview.Visible = false;
+                PreviewText.Visible = true;
+                PreviewImage.Visible = false;
             }
             else
             if (image != null)
             {
-                pbPreview.Image = image;
-                textPreview.Visible = false;
-                pbPreview.Visible = true;
+                PreviewImage.Image = image;
+                PreviewText.Visible = false;
+                PreviewImage.Visible = true;
 
                 if (image.Height > MaximumSize.Height)
                     Height = MaximumSize.Height;
@@ -76,13 +79,13 @@ namespace Clips
                     Width = image.Width;
             }
             timerShowForm.Interval = popupDelay;
-            timerShowForm.Enabled = true;
+            timerShowForm.Enabled = true; 
         }
 
         public void HidePreview()
         {
             timerShowForm.Enabled = false;
-            pbPreview.Image = null;
+            PreviewImage.Image = null;
             Hide();
         }
 
