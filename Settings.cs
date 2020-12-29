@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 
 namespace Clips
@@ -16,29 +11,13 @@ namespace Clips
             InitializeComponent();
         }
 
-        private void BtnCancel_Click(object sender, EventArgs e)
-        {
-            DialogResult = System.Windows.Forms.DialogResult.Cancel;
-        }
-
         private void FormConfig_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 OK.PerformClick();
             else
                 if (e.KeyCode == Keys.Escape)
-                    Cancel.PerformClick();
-        }
-
-        private void TextHotkey_KeyDown(object sender, KeyEventArgs e)
-        {           
-            Keys k = (Keys)e.KeyCode;
-            Key.Text = k.ToString();
-         }
-
-        private void TextHotkey_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true; // this will stop the key pressed from actually entering into the text box.
+                Cancel.PerformClick();
         }
 
         private void ColorControl_MouseClick(object sender, MouseEventArgs e)
@@ -78,6 +57,17 @@ namespace Clips
             MenuSelectedColor.BackColor = Color.DarkGray;
             PreviewBackColor.BackColor = Color.FromArgb(56, 56, 56);
             PreviewFontColor.BackColor = Color.White;
+        }
+
+        private void Key_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keys k = (Keys)e.KeyCode;
+            Key.Text = k.ToString();
+        }
+
+        private void Key_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true; // this will stop the key pressed from actually entering into the text box.
         }
     }
 }

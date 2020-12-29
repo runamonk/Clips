@@ -240,6 +240,8 @@
             this.Key.Size = new System.Drawing.Size(80, 20);
             this.Key.TabIndex = 0;
             this.toolTip1.SetToolTip(this.Key, "Press key to define as a hotkey.");
+            this.Key.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Key_KeyDown);
+            this.Key.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Key_KeyPress);
             // 
             // PreviewBackColor
             // 
@@ -368,16 +370,17 @@
             // 
             // Cancel
             // 
+            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel.Location = new System.Drawing.Point(253, 14);
             this.Cancel.Name = "Cancel";
             this.Cancel.Size = new System.Drawing.Size(75, 34);
             this.Cancel.TabIndex = 1;
             this.Cancel.Text = "Cancel";
             this.Cancel.UseVisualStyleBackColor = true;
-            this.Cancel.Click += new System.EventHandler(this.BtnCancel_Click);
             // 
             // OK
             // 
+            this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OK.Location = new System.Drawing.Point(172, 14);
             this.OK.Name = "OK";
             this.OK.Size = new System.Drawing.Size(75, 34);
