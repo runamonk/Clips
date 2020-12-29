@@ -67,7 +67,7 @@ namespace Clips
         {    
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
             {
-                AddItem(clipboard.ClipboardText, null, true);
+                AddItem(clipboard.ClipboardText.Trim(), null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Image)
             {
@@ -332,14 +332,13 @@ namespace Clips
                 for (int i = 0; i < Config.ClipsLinesPerRow; i++)
                 {
                     if (string.IsNullOrEmpty(b.Text))
-                        b.Text = s[i].Trim() + "\n";
+                        b.Text = s[i] + "\n";
                     else
-                        b.Text = b.Text + s[i].Trim() + "\n";
+                        b.Text = b.Text + s[i] + "\n";
                 }
             else
                 b.Text = text;
 
-            b.Text = b.Text.Trim();
             b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 20 : 22);
         }
 
@@ -557,52 +556,6 @@ namespace Clips
             }
         }
     } // Main
-
-    // ClipButton
-    public partial class ClipButton : Button
-    {
-        public ClipButton()
-        {
-            FlatAppearance.BorderSize = 0;
-            FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            TextAlign = ContentAlignment.TopLeft;
-            AutoEllipsis = false;
-        }
-
-        // Stops the black default border from being displayed on button when the preview form is shown.
-        public override void NotifyDefault(bool value)
-        {
-            base.NotifyDefault(false);
-        }
-
-        protected override bool ShowFocusCues
-        {
-            get {
-                return false;
-            }
-        }
-
-        private string fileName;
-        public string FileName
-        {
-            get { return fileName; }
-            set { fileName = value; }
-        }
-
-        private Image fullImage;
-        public Image FullImage
-        {
-            get { return fullImage; }
-            set { fullImage = value; }
-        }
-
-        private string fullText;
-        public string FullText
-        {
-            get { return fullText; }
-            set { fullText = value; }
-        }
-    } // ClipButton
 
     public class CustomToolstripRenderer : ToolStripProfessionalRenderer
     {
