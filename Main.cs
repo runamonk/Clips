@@ -52,7 +52,6 @@ namespace Clips
 
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
-        // TODO Add \n to each file in a list of files.
         // TODO Add edit/favorite text editor in config.
 
         #region Events
@@ -76,7 +75,7 @@ namespace Clips
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Files)
             {
-                string s = string.Join(", ", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
+                string s = string.Join("\n", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
                 AddItem(s, null, true);
             }
             else if (e.ContentType == SharpClipboard.ContentTypes.Other)
@@ -333,9 +332,9 @@ namespace Clips
                 for (int i = 0; i < Config.ClipsLinesPerRow; i++)
                 {
                     if (string.IsNullOrEmpty(b.Text))
-                        b.Text = s[i] + "\n";
+                        b.Text = s[i].Trim() + "\n";
                     else
-                        b.Text = b.Text + s[i] + "\n";
+                        b.Text = b.Text + s[i].Trim() + "\n";
                 }
             else
                 b.Text = text;
@@ -428,7 +427,6 @@ namespace Clips
             menuClips.Renderer = new CustomToolstripRenderer(Config);
             menuClips.BackColor = Config.MenuBackColor;
             menuClips.ForeColor = Config.MenuFontColor;
-
             MenuButton.ForeColor = Config.MenuFontColor;
             MenuButton.BackColor = Config.MenuBackColor;
             pTop.BackColor = Config.ClipsHeaderColor;
@@ -437,8 +435,6 @@ namespace Clips
             pClips.VerticalScroll.Visible = true;
             pClips.BackColor = Config.ClipsBackColor;
             this.BackColor = Config.ClipsBackColor;
-
-            RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
 
             clipboard = new SharpClipboard();
             clipboard.MonitorClipboard = true;
@@ -450,6 +446,7 @@ namespace Clips
             clipboard.ObserveLastEntry = false;
             clipboard.Tag = null;
             clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipBoard_ClipboardChanged);
+            RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
         private void LoadItems()
