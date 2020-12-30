@@ -350,6 +350,9 @@ namespace Clips
 
             LastText = text;
             ClipButton b = NewClipButton();
+            
+            b.AutoSize = false;
+            b.AutoEllipsis = false;
             b.FullText = text;
 
             byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
@@ -358,21 +361,22 @@ namespace Clips
                 b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
             else
                 b.FileName = fileName;
+            
+            //TODO Come up with a better way to handle displaying multiple lines per ClipButton
+            //string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+            //if (s.Count() >= Config.ClipsLinesPerRow)
+            //    for (int i = 0; i < Config.ClipsLinesPerRow; i++)
+            //    {
+            //        if (string.IsNullOrEmpty(b.Text))
+            //            b.Text = s[i] + "\n";
+            //        else
+            //            b.Text = b.Text + s[i] + "\n";
+            //    }
+            //else
+            //    b.Text = text;
+            // b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 19 : 19);
 
-            string[] s = text.TrimStart().Replace("\r","").Split(new string[] { "\n" }, StringSplitOptions.None);
-
-            if (s.Count() >= Config.ClipsLinesPerRow)
-                for (int i = 0; i < Config.ClipsLinesPerRow; i++)
-                {
-                    if (string.IsNullOrEmpty(b.Text))
-                        b.Text = s[i] + "\n";
-                    else
-                        b.Text = b.Text + s[i] + "\n";
-                }
-            else
-                b.Text = text;
-
-            b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 20 : 22);
+            b.Text = text;
             AutoSizeForm();
         }
 

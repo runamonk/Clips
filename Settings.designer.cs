@@ -189,7 +189,7 @@
             // 
             // ClipsLinesPerRow
             // 
-            this.ClipsLinesPerRow.Location = new System.Drawing.Point(115, 18);
+            this.ClipsLinesPerRow.Location = new System.Drawing.Point(115, 48);
             this.ClipsLinesPerRow.Maximum = new decimal(new int[] {
             10,
             0,
@@ -202,17 +202,18 @@
             0});
             this.ClipsLinesPerRow.Name = "ClipsLinesPerRow";
             this.ClipsLinesPerRow.Size = new System.Drawing.Size(62, 20);
-            this.ClipsLinesPerRow.TabIndex = 0;
+            this.ClipsLinesPerRow.TabIndex = 1;
             this.toolTip1.SetToolTip(this.ClipsLinesPerRow, "Set the number of rows of text per clip to display in list.");
             this.ClipsLinesPerRow.Value = new decimal(new int[] {
             1,
             0,
             0,
             0});
+            this.ClipsLinesPerRow.Visible = false;
             // 
             // ClipsMaxClips
             // 
-            this.ClipsMaxClips.Location = new System.Drawing.Point(115, 45);
+            this.ClipsMaxClips.Location = new System.Drawing.Point(115, 19);
             this.ClipsMaxClips.Maximum = new decimal(new int[] {
             999,
             0,
@@ -225,7 +226,7 @@
             0});
             this.ClipsMaxClips.Name = "ClipsMaxClips";
             this.ClipsMaxClips.Size = new System.Drawing.Size(62, 20);
-            this.ClipsMaxClips.TabIndex = 1;
+            this.ClipsMaxClips.TabIndex = 0;
             this.toolTip1.SetToolTip(this.ClipsMaxClips, "Set  the max number of clips to save.");
             this.ClipsMaxClips.Value = new decimal(new int[] {
             1,
@@ -463,7 +464,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(13, 49);
+            this.label6.Location = new System.Drawing.Point(13, 23);
             this.label6.Margin = new System.Windows.Forms.Padding(0);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(73, 13);
@@ -474,13 +475,14 @@
             // lblTextRows
             // 
             this.lblTextRows.AutoSize = true;
-            this.lblTextRows.Location = new System.Drawing.Point(13, 22);
+            this.lblTextRows.Location = new System.Drawing.Point(13, 52);
             this.lblTextRows.Margin = new System.Windows.Forms.Padding(0);
             this.lblTextRows.Name = "lblTextRows";
             this.lblTextRows.Size = new System.Drawing.Size(70, 13);
             this.lblTextRows.TabIndex = 15;
             this.lblTextRows.Text = "Lines per row";
             this.lblTextRows.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.lblTextRows.Visible = false;
             // 
             // gbHotkey
             // 
