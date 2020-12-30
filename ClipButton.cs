@@ -15,6 +15,7 @@ namespace Clips
             UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
             UseMnemonic = false;
+            AutoSize = false;
         }
 
         // Stops the black default border from being displayed on button when the preview form is shown.

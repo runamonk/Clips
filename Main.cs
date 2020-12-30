@@ -450,6 +450,8 @@ namespace Clips
                     Dock = DockStyle.Left
                 };
                 MenuButton.Click += MainButton_Click;
+                MenuButton.Padding = new Padding(0,0,0,3);
+                MenuButton.TextAlign = ContentAlignment.MiddleCenter;
                 SetFormPos();
             }
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
@@ -541,12 +543,12 @@ namespace Clips
             b.MouseUp += new MouseEventHandler(ClipsButtonClick);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
-            b.BackColor = ControlPaint.Dark(Config.ClipsRowBackColor, 75);
             b.BackColor = Config.ClipsRowBackColor;
             b.ForeColor = Config.ClipsFontColor;
             b.ContextMenuStrip = menuClips;
             b.ImageAlign = ContentAlignment.MiddleLeft;
-            return b;
+            
+            return b; 
         }
 
         private static Process RunningInstance()
