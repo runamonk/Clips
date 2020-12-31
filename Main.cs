@@ -55,6 +55,7 @@ namespace Clips
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add edit/favorite text editor in config.
+        // TODO Add Search.
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -361,22 +362,20 @@ namespace Clips
                 b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
             else
                 b.FileName = fileName;
-            
-            //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-            //string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
-            //if (s.Count() >= Config.ClipsLinesPerRow)
-            //    for (int i = 0; i < Config.ClipsLinesPerRow; i++)
-            //    {
-            //        if (string.IsNullOrEmpty(b.Text))
-            //            b.Text = s[i] + "\n";
-            //        else
-            //            b.Text = b.Text + s[i] + "\n";
-            //    }
-            //else
-            //    b.Text = text;
-            // b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 19 : 19);
 
-            b.Text = text;
+            //TODO Come up with a better way to handle displaying multiple lines per ClipButton
+            string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+            if (s.Count() >= Config.ClipsLinesPerRow)
+                for (int i = 0; i < Config.ClipsLinesPerRow; i++)
+                {
+                    if (string.IsNullOrEmpty(b.Text))
+                        b.Text = s[i] + "\n";
+                    else
+                        b.Text = b.Text + s[i] + "\n";
+                }
+            else
+                b.Text = text;
+            b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 19 : 19);
             AutoSizeForm();
         }
 
