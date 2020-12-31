@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Reflection;
 using System.Text;
@@ -20,7 +21,7 @@ namespace Utility
             return Path.GetDirectoryName(Application.ExecutablePath);
         }
 
-        public static string [] GetFiles(string path, string searchPattern)
+        public static string[] GetFiles(string path, string searchPattern)
         {
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
@@ -43,6 +44,22 @@ namespace Utility
         public static string GetVersion()
         {
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
+
+        public static Boolean IsSame(Image img1, Image img2)
+        {
+            string s1, s2;
+
+            MemoryStream ms = new MemoryStream();
+            img1.Save(ms, ImageFormat.Png);
+            s1 = Convert.ToBase64String(ms.ToArray());
+            ms = null;
+            MemoryStream ms2 = new MemoryStream();
+            img2.Save(ms2, ImageFormat.Png);
+            s2 = Convert.ToBase64String(ms2.ToArray());
+            ms2 = null;
+
+            return (s1 == s2);
         }
 
         public static Boolean IsUrl(string s)

@@ -99,7 +99,7 @@ namespace Clips
 
                 pClips.Controls.Remove(b);
 
-                if (b.FullImage == LastImage)
+                if (Funcs.IsSame(b.FullImage, LastImage))
                     LastImage = null;
                 else
                 if (b.FullText == LastText)
@@ -234,7 +234,7 @@ namespace Clips
                 if (File.Exists(b.FileName))
                     File.Delete(b.FileName);
                 
-                if (b.FullImage == LastImage)
+                if (Funcs.IsSame(b.FullImage, LastImage))
                     LastImage = null;
                 else
                 if (b.FullText == LastText)
@@ -381,7 +381,8 @@ namespace Clips
 
         private void AddItem(Image image, string fileName, bool saveToDisk = false)
         {           
-            if ((LastImage != null) && (image.Size == LastImage.Size)) return;
+            if ((LastImage != null) && Funcs.IsSame(image, LastImage)) return;
+            
             LastImage = image;
 
             ClipButton b = NewClipButton();
