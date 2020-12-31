@@ -48,6 +48,9 @@ namespace Utility
 
         public static Boolean IsSame(Image img1, Image img2)
         {
+            if ((img1 == null) || (img2 == null))
+                return false;
+
             string s1, s2;
 
             MemoryStream ms = new MemoryStream();
