@@ -110,7 +110,7 @@ namespace Utility
 
         public static string SaveToCache(string fileContents)
         {
-            string randFileName = AppPath() + "\\Cache\\" + DateTime.Now.ToString("ddMMyyHHmmss_fff")  + RandomString(10, true) + ".xml";
+            string randFileName = AppPath() + "\\Cache\\" + DateTime.Now.ToString("yyyymmddhhmmssfff")  + RandomString(10, true) + ".xml";
             XmlDocument doc = new XmlDocument();
             doc.LoadXml(fileContents);            
             doc.Save(randFileName);
