@@ -56,7 +56,7 @@ namespace Clips
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add edit/favorite text editor in config.
         // TODO Add Search.
-
+        // TODO Add button pad amount that way users can decide how much to pad the ClipButton, rather than just using an arbritrary 8px.
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
@@ -84,6 +84,8 @@ namespace Clips
             else if (e.ContentType == SharpClipboard.ContentTypes.Other)
             {
                 // Do something with 'clipboard.ClipboardObject' or 'e.Content' here...
+               
+                AddItem(clipboard.ClipboardObject.ToString(), null, true);
             }
         }
 
@@ -375,7 +377,11 @@ namespace Clips
                 }
             else
                 b.Text = text;
-            b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * 19 : 19);
+
+            SizeF ss = TextRenderer.MeasureText("X", b.Font);
+            int FHeight = Convert.ToInt32(ss.Height);
+
+            b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
             AutoSizeForm();
         }
 

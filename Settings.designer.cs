@@ -209,7 +209,6 @@
             0,
             0,
             0});
-            this.ClipsLinesPerRow.Visible = false;
             // 
             // ClipsMaxClips
             // 
@@ -482,7 +481,6 @@
             this.lblTextRows.TabIndex = 15;
             this.lblTextRows.Text = "Lines per row";
             this.lblTextRows.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.lblTextRows.Visible = false;
             // 
             // gbHotkey
             // 
