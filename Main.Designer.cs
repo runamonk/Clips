@@ -33,8 +33,6 @@
             this.notifyClips = new System.Windows.Forms.NotifyIcon(this.components);
             this.pTop = new System.Windows.Forms.Panel();
             this.pMain = new System.Windows.Forms.Panel();
-            this.pClips = new System.Windows.Forms.Panel();
-            this.pMain.SuspendLayout();
             this.SuspendLayout();
             // 
             // notifyClips
@@ -56,20 +54,11 @@
             // 
             // pMain
             // 
-            this.pMain.Controls.Add(this.pClips);
             this.pMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pMain.Location = new System.Drawing.Point(0, 28);
             this.pMain.Name = "pMain";
             this.pMain.Size = new System.Drawing.Size(184, 56);
             this.pMain.TabIndex = 4;
-            // 
-            // pClips
-            // 
-            this.pClips.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pClips.Location = new System.Drawing.Point(0, 0);
-            this.pClips.Name = "pClips";
-            this.pClips.Size = new System.Drawing.Size(184, 56);
-            this.pClips.TabIndex = 1;
             // 
             // Main
             // 
@@ -93,7 +82,6 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
             this.Load += new System.EventHandler(this.Main_Load);
             this.ResizeEnd += new System.EventHandler(this.Main_ResizeEnd);
-            this.pMain.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -102,7 +90,6 @@
         private System.Windows.Forms.NotifyIcon notifyClips;
         private System.Windows.Forms.Panel pTop;
         private System.Windows.Forms.Panel pMain;
-        private System.Windows.Forms.Panel pClips;
     }
 }
 
