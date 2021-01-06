@@ -12,6 +12,7 @@ using Utility;
 using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Reflection;
+using Clips.Controls;
 
 namespace Clips
 {
@@ -38,6 +39,8 @@ namespace Clips
 
         private About AboutForm = new About();
         private ClipButton MenuButton { get; set; }
+        private ClipMenu MenuMain { get; set; }
+        private ClipMenu MenuRC { get; set; }
         private Config Config { get; set; }
         private bool inAbout = false;
         private bool inClose = false;
@@ -45,25 +48,26 @@ namespace Clips
         private bool inLoad = false;
         private bool inPreview = false;
         private bool inSettings = false;
-        private bool isVisible = false;
         private Image LastImage { get; set; }
         private string LastText { get; set; }
         private Preview PreviewForm = new Preview();
         private SharpClipboard clipboard;
-
-
+        
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add edit/favorite text editor in config.
         // TODO Add Search.
         // TODO Add button pad amount that way users can decide how much to pad the ClipButton, rather than just using an arbritrary 8px.
+        // TODO Add max form height (to work with auto-size).
+        // TODO Change scrollbar colors to match themes.
+
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
         {
             LoadConfig();
             CleanupCache();
             LoadItems();
-            AutoSizeForm();
+            AutoSizeForm(true);
         }
 
         private void ClipBoard_ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
@@ -157,7 +161,8 @@ namespace Clips
 
         private void Main_Deactivate(object sender, EventArgs e)
         {
-            ToggleShow();
+            if (Opacity > 0)
+                ToggleShow();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
@@ -188,78 +193,42 @@ namespace Clips
         private void MainButton_Click(object sender, EventArgs e)
         {
             Button b = ((Button)sender);
-            menuMain.Show(b.Left + b.Width + this.Left, b.Top + b.Height + this.Top);
+            MenuMain.Show(b.Left + b.Width + Left, b.Top + b.Height + Top);
         }
 
-        private void MenuInsertTestClips_Click(object sender, EventArgs e)
-        {
-            int toInsert = (Config.ClipsMaxClips - pClips.Controls.Count);
-            if (toInsert > 0)
-                while (toInsert > 0)
-                {
-                    AddItem(toInsert.ToString(), null, true);
-                    toInsert--;
-                }
-        }
-
-        private void MenuClips_Click(object sender, EventArgs e)
-        {
-            inPreview = true;
-
-            if (sender == menuSave)
-            {
-                SaveFileDialog dlg = new SaveFileDialog
-                {
-                    InitialDirectory = "c:\\"
-                };
-
-                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text != "")
-                {
-                    dlg.Filter = "Text (*.txt)|Any (*.*)";
-                    dlg.FilterIndex = 1;
-                    if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
-                }
-                else
-                    if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage != null)
-                {
-                    dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
-                    dlg.FilterIndex = 1;
-                    if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                        ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage.Save(dlg.FileName);
-                }
-            }
-            else
-            if (sender == menuDelete)
-            {
-                ClipButton b = ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
-                if (File.Exists(b.FileName))
-                    File.Delete(b.FileName);
-                
-                if (Funcs.IsSame(b.FullImage, LastImage))
-                    LastImage = null;
-                else
-                if (b.FullText == LastText)
-                    LastText = null;
-
-                pClips.Controls.Remove(b);
-                GC.Collect();
-                AutoSizeForm();
-
-            }
-            inPreview = false;
-        }
+        //private void MenuInsertTestClips_Click(object sender, EventArgs e)
+        //{
+        //    int toInsert = (Config.ClipsMaxClips - pClips.Controls.Count);
+        //    if (toInsert > 0)
+        //        while (toInsert > 0)
+        //        {
+        //            AddItem(toInsert.ToString(), null, true);
+        //            toInsert--;
+        //        }
+        //}
 
         private void MenuClose_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void MenuSettings_Click(object sender, EventArgs e)
+        private void MenuDelete_Click(object sender, EventArgs e)
         {
-            inSettings = true;
-            Config.ShowConfigForm(isVisible);
-            inSettings = false;
+            inMenu = true;
+            ClipButton b = ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
+            if (File.Exists(b.FileName))
+                File.Delete(b.FileName);
+
+            if (Funcs.IsSame(b.FullImage, LastImage))
+                LastImage = null;
+            else
+            if (b.FullText == LastText)
+                LastText = null;
+
+            pClips.Controls.Remove(b);
+            GC.Collect();
+            AutoSizeForm(false);
+            inMenu = false;
         }
 
         private void MenuMonitorClipboard_Click(object sender, EventArgs e)
@@ -274,25 +243,52 @@ namespace Clips
             clipboard.MonitorClipboard = b;
         }
 
+        private void MenuSave_Click(object sender, EventArgs e)
+        {
+            inMenu = true;
+            SaveFileDialog dlg = new SaveFileDialog
+            {
+                InitialDirectory = "c:\\"
+            };
+
+            if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text != "")
+            {
+                dlg.Filter = "Text (*.txt)|Any (*.*)";
+                dlg.FilterIndex = 1;
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
+            }
+            else
+                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage != null)
+            {
+                dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
+                dlg.FilterIndex = 1;
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage.Save(dlg.FileName);
+            }
+            inMenu = false;
+        }
+
+        private void MenuSettings_Click(object sender, EventArgs e)
+        {
+            inSettings = true;
+            Config.ShowConfigForm((Opacity > 1));
+            inSettings = false;
+        }
+
         private void NotifyClips_DoubleClick(object sender, EventArgs e)
         {
             ToggleShow(false,false);
         }
 
-        private void menuClips_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+        private void MenuClips_Closed(object sender, ToolStripDropDownClosedEventArgs e)
         {
             inMenu = false;
         }
 
-        private void menuClips_Opening(object sender, System.ComponentModel.CancelEventArgs e)
+        private void MenuClips_Opening(object sender, System.ComponentModel.CancelEventArgs e)
         {
             inMenu = true;
-        }
-
-        protected override void OnShown(EventArgs e)
-        {
-            Visible = false;
-            Deactivate += Main_Deactivate;
         }
 
         private void PTop_MouseDown(object sender, MouseEventArgs e)
@@ -382,7 +378,7 @@ namespace Clips
             int FHeight = Convert.ToInt32(ss.Height);
 
             b.Height = (s.Count() > 0 && s.Count() >= Config.ClipsLinesPerRow ? Config.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
-            AutoSizeForm();
+            AutoSizeForm(true);
         }
 
         private void AddItem(Image image, string fileName, bool saveToDisk = false)
@@ -404,25 +400,30 @@ namespace Clips
                 b.FileName = fileName;
             // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
             b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
-            AutoSizeForm();
+            AutoSizeForm(true);
         }
 
-        private void AutoSizeForm()
+        private void AutoSizeForm(bool ScrollToTop)
         {
             if (inLoad) return;
 
             if (Config.AutoSizeHeight)
             {
                 int c = 68;
-                for (int i=0; i <= pClips.Controls.Count-1; i++)
+                for (int i = 0; i <= pClips.Controls.Count - 1; i++)
                 {
                     c = c + pClips.Controls[i].Height;
                 }
+
                 if (c < MaximumSize.Height)
                     Height = c;
                 else
                     Height = MaximumSize.Height;
             }
+
+            // select the first control.
+            if (pClips.Controls.Count > 0)
+                pClips.Controls[pClips.Controls.Count-1].Select();
         }
 
         private void CleanupCache()
@@ -452,6 +453,34 @@ namespace Clips
             {
                 Config = new Config();
                 Config.ConfigChanged += new EventHandler(ConfigChanged);
+                MenuMain = new ClipMenu(Config);
+                MenuMain.Opening += new System.ComponentModel.CancelEventHandler(MenuClips_Opening);
+                MenuMain.Closed += new ToolStripDropDownClosedEventHandler(MenuClips_Closed);
+                ToolStripMenuItem t;
+
+                t = new ToolStripMenuItem("&Monitor Clipboard");
+                t.Checked = true;
+                t.CheckState = CheckState.Checked;
+                t.Click += new EventHandler(MenuMonitorClipboard_Click);
+                MenuMain.Items.Add(t);
+
+                t = new ToolStripMenuItem("&Settings");
+                t.Click += new EventHandler(MenuSettings_Click);
+                MenuMain.Items.Add(t);
+
+                t = new ToolStripMenuItem("&Close");
+                t.Click += new EventHandler(MenuClose_Click);
+                MenuMain.Items.Add(t);
+
+                MenuRC = new ClipMenu(Config);
+                t = new ToolStripMenuItem("&Save");
+                t.Click += new EventHandler(MenuSave_Click);
+                MenuRC.Items.Add(t);
+
+                t = new ToolStripMenuItem("&Delete");
+                t.Click += new EventHandler(MenuDelete_Click);
+                MenuRC.Items.Add(t);
+                
                 MenuButton = new ClipButton
                 {
                     Text = "...",
@@ -465,39 +494,30 @@ namespace Clips
                 SetFormPos();
             }
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
-            menuMain.Renderer = null;
-            menuMain.Renderer = new CustomToolstripRenderer(Config);
-            menuMain.BackColor = Config.MenuBackColor;
-            menuMain.ForeColor = Config.MenuFontColor;
-            menuClips.Renderer = null;
-            menuClips.Renderer = new CustomToolstripRenderer(Config);
-            menuClips.BackColor = Config.MenuBackColor;
-            menuClips.ForeColor = Config.MenuFontColor;
-            MenuButton.ForeColor = Config.MenuFontColor;
-            MenuButton.BackColor = Config.MenuButtonColor;
-            pTop.BackColor = Config.ClipsHeaderColor;
-            
-            pClips.AutoScroll = true;
-            pClips.VerticalScroll.Visible = true;
-            pClips.BackColor = Config.ClipsBackColor;
-            this.BackColor = Config.ClipsBackColor;
 
-            clipboard = new SharpClipboard();
-            clipboard.MonitorClipboard = true;
-            clipboard.ObservableFormats.All = true;
-            clipboard.ObservableFormats.Files = true;
-            clipboard.ObservableFormats.Images = true;
-            clipboard.ObservableFormats.Others = true;
-            clipboard.ObservableFormats.Texts = true;
-            clipboard.ObserveLastEntry = false;
-            clipboard.Tag = null;
-            clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipBoard_ClipboardChanged);
+            pTop.BackColor = Config.ClipsHeaderColor;
+            pClips.AutoScroll = true;
+            pClips.BackColor = Config.ClipsBackColor;
+            BackColor = Config.ClipsBackColor;
+
+            if (clipboard == null)
+            {
+                clipboard = new SharpClipboard();
+                clipboard.MonitorClipboard = true;
+                clipboard.ObservableFormats.All = true;
+                clipboard.ObservableFormats.Files = true;
+                clipboard.ObservableFormats.Images = true;
+                clipboard.ObservableFormats.Others = true;
+                clipboard.ObservableFormats.Texts = true;
+                clipboard.ObserveLastEntry = false;
+                clipboard.Tag = null;
+                clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipBoard_ClipboardChanged);
+            }
             RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
         private void LoadItems()
         {
-            SuspendLayout();
             pClips.Controls.Clear();
             LastImage = null;
             LastText = "";
@@ -533,9 +553,6 @@ namespace Clips
                 doc = null;
             }
             inLoad = false;
-            
-            ResumeLayout();
-            pClips.VerticalScroll.Value = 0;
         }
 
         private ClipButton NewClipButton()
@@ -546,17 +563,19 @@ namespace Clips
             ClipButton b = new ClipButton
             {
                 TabStop = false,
-                Parent = pClips,
-                Dock = DockStyle.Top
+                Dock = DockStyle.Top,
+                BackColor = Config.ClipsRowBackColor,
+                ForeColor = Config.ClipsFontColor,
+                FlatStyle = FlatStyle.Flat             
             };
+
             b.FlatAppearance.BorderColor = BackColor;
             b.MouseUp += new MouseEventHandler(ClipsButtonClick);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
-            b.BackColor = Config.ClipsRowBackColor;
-            b.ForeColor = Config.ClipsFontColor;
-            b.ContextMenuStrip = menuClips;
+            b.ContextMenuStrip = MenuRC;
             b.ImageAlign = ContentAlignment.MiddleLeft;
+            b.Parent = pClips;
             
             return b; 
         }
@@ -586,20 +605,16 @@ namespace Clips
                 return;
             else
             {
-                if (isVisible)
+                if (Opacity > 0)
                 {
-                    Visible = false;
-                    isVisible = false;
-                    Opacity = 1;
+                    Opacity = 0;
                 }
                 else
                 {
-                    AutoSizeForm();
+                    AutoSizeForm(true);
                     if (Config.OpenFormAtCursor)
                         Funcs.MoveFormToCursor(this, IgnoreBounds);
                     Opacity = 100;
-                    isVisible = true;
-                    Visible = true;
                     Activate();
                 }
             }
@@ -607,59 +622,4 @@ namespace Clips
 
 
     } // Main
-
-    public class CustomToolstripRenderer : ToolStripProfessionalRenderer
-    {
-       public CustomToolstripRenderer(Config MyConfig) : base(new CustomColors(MyConfig)) { }
-    }
-
-    public class CustomColors : ProfessionalColorTable
-    {
-        Config config;
-        public CustomColors(Config MyConfig)
-        {
-            config = MyConfig;
-        }
-
-        public override Color ButtonSelectedBorder
-        {
-            get { return Color.Transparent; } 
-        }
-        public override Color ImageMarginGradientBegin
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color ImageMarginGradientMiddle
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color ImageMarginGradientEnd
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color MenuItemSelected
-        {
-            get { return config.MenuSelectedColor; }
-        }
-        public override Color MenuItemBorder
-        {
-            get { return config.MenuSelectedColor; }
-        }
-        public override Color MenuBorder
-        {
-            get { return config.MenuBorderColor; }
-        }
-        public override Color CheckSelectedBackground
-        {
-            get { return config.MenuSelectedColor; }
-        }
-        public override Color CheckBackground
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color CheckPressedBackground
-        {
-            get { return config.MenuBackColor; }
-        }
-    }
 }

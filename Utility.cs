@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Windows.Forms;
@@ -29,9 +30,9 @@ namespace Utility
             string[] files;
 
             if (searchPattern != "")
-                files = Directory.GetFiles(path, searchPattern);
+                files = Directory.GetFiles(path, searchPattern).OrderBy(f => new FileInfo(f).CreationTime).ToArray();
             else
-                files = Directory.GetFiles(path);
+                files = Directory.GetFiles(path).OrderBy(f => new FileInfo(f).CreationTime).ToArray();
 
             return files;
         }
