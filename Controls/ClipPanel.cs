@@ -289,7 +289,7 @@ namespace Clips.Controls
                     MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
                     try
                     {
-                        Bitmap img = new Bitmap(ms);
+                        Image img = Image.FromStream(ms);
                         AddItem(img, file, false);
                     }
                     finally
