@@ -57,9 +57,6 @@ namespace Clips
         private void ConfigChanged(object sender, EventArgs e)
         {
             LoadConfig();
-            Clips.CleanupCache();
-            Clips.LoadItems();
-            AutoSizeForm(true);
         }
 
         private void ClipAdded(ClipButton Clip, bool ClipSavedToDisk)
@@ -79,6 +76,11 @@ namespace Clips
             AutoSizeForm(false);
         }
 
+        private void ClipsLoaded()
+        {
+            AutoSizeForm(true);
+        }
+
         private void Main_Deactivate(object sender, EventArgs e)
         {
             if (Opacity > 0)
@@ -93,7 +95,6 @@ namespace Clips
         private void Main_Load(object sender, EventArgs e)
         {
             LoadConfig();
-            Clips.LoadItems();
         }
 
         private void Main_ResizeEnd(object sender, EventArgs e)
@@ -251,6 +252,7 @@ namespace Clips
                 Clips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
                 Clips.OnClipAdded += new ClipPanel.ClipAddedHandler(ClipAdded);
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
+                Clips.OnClipsLoaded += new ClipPanel.ClipsLoadedHandler(ClipsLoaded);
                 Clips.Parent = pMain;
                 Clips.Dock = DockStyle.Fill;
                 SetFormPos();

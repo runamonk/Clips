@@ -42,20 +42,16 @@ namespace Clips.Controls
             IsHeader = isHeader;
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
-
             ToolStripMenuItem t;
-
             MenuRC = new ClipMenu(myConfig);
             t = new ToolStripMenuItem("&Save");
             t.Click += new EventHandler(MenuSave_Click);
             MenuRC.Items.Add(t);
-
             t = new ToolStripMenuItem("&Delete");
             t.Click += new EventHandler(MenuDelete_Click);
             MenuRC.Items.Add(t);
-
             SetColors();
-
+            LoadItems();
             if (clipboard == null)
             {
                 clipboard = new SharpClipboard();
@@ -261,6 +257,8 @@ namespace Clips.Controls
         private void ConfigChanged(object sender, EventArgs e)
         {
             SetColors();
+            CleanupCache();
+            LoadItems();         
         }
 
         public void DeleteOldestClip()
@@ -293,12 +291,10 @@ namespace Clips.Controls
                     {
                         Bitmap img = new Bitmap(ms);
                         AddItem(img, file, false);
-                        //img.Dispose();
                     }
                     finally
                     {
                         ms.Close();
-                        //ms.Dispose();
                     }
                 }
                 else
