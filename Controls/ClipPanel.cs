@@ -14,8 +14,8 @@ namespace Clips.Controls
     {
         private Config ClipsConfig { get; set; }
         private bool IsHeader = false;
-        public Image LastImage { get; set; }
-        public string LastText { get; set; }
+        private Image LastImage { get; set; }
+        private string LastText { get; set; }
         public bool inLoad { get; set; }
         public bool inMenu { get; set; }
         private ClipMenu MenuRC; 
@@ -128,9 +128,7 @@ namespace Clips.Controls
             b.Height = 60;
             b.FullImage = image;
 
-            MemoryStream ms = new MemoryStream();
-            image.Save(ms, ImageFormat.Png);
-            string base64 = Convert.ToBase64String(ms.ToArray());
+            string base64 = Convert.ToBase64String(Funcs.ConvertImageToByteArray(b.FullImage));
             if (saveToDisk)
                 b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
             else
@@ -144,18 +142,19 @@ namespace Clips.Controls
 
         private void ButtonClicked(ClipButton Clip)
         {
-            void deleteClip()
+            void DeleteClip()
             {
                 if (File.Exists(Clip.FileName))
                     File.Delete(Clip.FileName);
-
-                Controls.Remove(Clip);
 
                 if (Funcs.IsSame(Clip.FullImage, LastImage))
                     LastImage = null;
                 else
                 if (Clip.FullText == LastText)
                     LastText = null;
+
+                Controls.Remove(Clip);
+
                 GC.Collect();
             }
 
@@ -164,21 +163,11 @@ namespace Clips.Controls
             if (OnClipClicked != null)
                 OnClipClicked(Clip);
 
-            bool skipShiftToTop = false;
-
-            // Don't delete and read the most recent clip, it ends up just looking like a flicker.
-            if (Clip == Controls[Controls.Count - 1])
-                skipShiftToTop = true;
-
             if (Clip.FullImage != null)
             {
-                LastImage = null;
-
-                if (skipShiftToTop)
-                    LastImage = Clip.FullImage;
-                else
-                    deleteClip();
-                Clipboard.SetImage(Clip.FullImage);
+                Image ClipToCopy = Clip.FullImage;
+                DeleteClip();
+                Clipboard.SetImage(ClipToCopy);
             }
             else
             if (Clip.Text != "")
@@ -189,12 +178,9 @@ namespace Clips.Controls
                 }
                 else
                 {
-                    LastText = null;
-                    if (skipShiftToTop)
-                        LastText = Clip.FullText;
-                    else
-                        deleteClip();
-                    Clipboard.SetText(Clip.FullText);
+                   string TextToCopy = Clip.FullText;
+                   DeleteClip();
+                   Clipboard.SetText(TextToCopy);
                 }
             }
 
@@ -243,11 +229,12 @@ namespace Clips.Controls
                     {
                         Bitmap img = new Bitmap(ms);
                         AddItem(img, file, false);
-                        if (img != null) img = null;
+                        //img.Dispose();
                     }
                     finally
                     {
-                        ms.Dispose();
+                        ms.Close();
+                        //ms.Dispose();
                     }
                 }
                 else

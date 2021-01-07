@@ -16,17 +16,6 @@ namespace Clips
         public delegate void ClipButtonClickedHandler(ClipButton Button);
         public event ClipButtonClickedHandler OnClipButtonClicked;
 
-        private ClipPanel ClipPanelParent
-        {
-            get 
-            {
-                if (Parent != null)
-                    return ((ClipPanel)Parent);
-                else
-                    return null;
-            }
-        }
-
         public ClipButton(Config myConfig, bool isMenuButton = false)
         {
             FlatAppearance.BorderSize = 0;
@@ -48,6 +37,7 @@ namespace Clips
             base.OnMouseClick(e);
             if (e.Button != MouseButtons.Left)
                 return;
+
             if (OnClipButtonClicked != null)
                 OnClipButtonClicked(this);
         }

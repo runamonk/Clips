@@ -47,23 +47,25 @@ namespace Utility
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
+        public static byte[] ConvertImageToByteArray(Image imageToConvert)
+        {
+            using (var ms = new MemoryStream())
+            {
+                imageToConvert.Save(ms, ImageFormat.Png);
+                return ms.ToArray();
+            }
+        }
+
         public static Boolean IsSame(Image img1, Image img2)
         {
             if ((img1 == null) || (img2 == null))
                 return false;
 
-            string s1, s2;
+            byte[] b1, b2;
 
-            MemoryStream ms = new MemoryStream();
-            img1.Save(ms, ImageFormat.Png);
-            s1 = Convert.ToBase64String(ms.ToArray());
-            ms = null;
-            MemoryStream ms2 = new MemoryStream();
-            img2.Save(ms2, ImageFormat.Png);
-            s2 = Convert.ToBase64String(ms2.ToArray());
-            ms2 = null;
-
-            return (s1 == s2);
+            b1 = ConvertImageToByteArray(img1);
+            b2 = ConvertImageToByteArray(img2);
+            return b1.SequenceEqual(b2);
         }
 
         public static Boolean IsUrl(string s)

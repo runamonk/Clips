@@ -2,14 +2,10 @@
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
 using WK.Libraries.SharpClipboardNS;
 using System.Runtime.InteropServices;
-using System.IO;
-using System.Xml;
 using Utility;
-using System.Drawing.Imaging;
 using System.Diagnostics;
 using System.Reflection;
 using Clips.Controls;
@@ -300,10 +296,8 @@ namespace Clips
                 Clips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
                 Clips.OnClipAdded += new ClipPanel.ClipAddedHandler(ClipAdded);
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
-
                 Clips.Parent = pMain;
                 Clips.Dock = DockStyle.Fill;
-
                 SetFormPos();
             }
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
