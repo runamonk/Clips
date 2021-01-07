@@ -3,7 +3,6 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using WK.Libraries.SharpClipboardNS;
 using System.Runtime.InteropServices;
 using Utility;
 using System.Diagnostics;
@@ -42,10 +41,9 @@ namespace Clips
         private bool inAbout = false;
         private bool inClose = false;
         private bool inMenu = false;
-
         private bool inSettings = false;
         
-        private SharpClipboard clipboard;
+        
 
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
@@ -62,29 +60,6 @@ namespace Clips
             Clips.CleanupCache();
             Clips.LoadItems();
             AutoSizeForm(true);
-        }
-
-        private void ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
-        {
-            if (e.ContentType == SharpClipboard.ContentTypes.Text)
-            {
-                Clips.AddItem(clipboard.ClipboardText.Trim(), null, true);
-            }
-            else if (e.ContentType == SharpClipboard.ContentTypes.Image)
-            {
-                Clips.AddItem(clipboard.ClipboardImage, null, true);
-            }
-            else if (e.ContentType == SharpClipboard.ContentTypes.Files)
-            {
-                string s = string.Join("\n", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
-                Clips.AddItem(s, null, true);
-            }
-            else if (e.ContentType == SharpClipboard.ContentTypes.Other)
-            {
-                // Do something with 'clipboard.ClipboardObject' or 'e.Content' here...
-
-                Clips.AddItem(clipboard.ClipboardObject.ToString(), null, true);
-            }
         }
 
         private void ClipAdded(ClipButton Clip, bool ClipSavedToDisk)
@@ -152,14 +127,13 @@ namespace Clips
 
         private void MenuMonitorClipboard_Click(object sender, EventArgs e)
         {
-            ToolStripMenuItem item = sender as ToolStripMenuItem;
             bool b = false;
-            if (item.Checked)
+            if (((ToolStripMenuItem)sender).Checked)
                 b = false;
             else
                 b = true;
-            item.Checked = b;
-            clipboard.MonitorClipboard = b;
+            ((ToolStripMenuItem)sender).Checked = b;
+            Clips.MonitorClipboard = b;
         }
 
         private void MenuSettings_Click(object sender, EventArgs e)
@@ -215,7 +189,7 @@ namespace Clips
         
         private void AutoSizeForm(bool ScrollToTop)
         {
-            if (Clips.inLoad) return;
+            if (Clips.InLoad) return;
 
             if (Config.AutoSizeHeight)
             {
@@ -246,25 +220,21 @@ namespace Clips
                 MenuMain.Opening += new System.ComponentModel.CancelEventHandler(MenuClips_Opening);
                 MenuMain.Closed += new ToolStripDropDownClosedEventHandler(MenuClips_Closed);
                 ToolStripMenuItem t;
-
                 t = new ToolStripMenuItem("&About");
                 t.Click += new EventHandler(MenuAbout_Click);
                 MenuMain.Items.Add(t);
-
+                MenuMain.Items.Add(new ToolStripSeparator());
                 t = new ToolStripMenuItem("&Monitor Clipboard");
                 t.Checked = true;
                 t.CheckState = CheckState.Checked;
                 t.Click += new EventHandler(MenuMonitorClipboard_Click);
                 MenuMain.Items.Add(t);
-
                 t = new ToolStripMenuItem("&Settings");
                 t.Click += new EventHandler(MenuSettings_Click);
                 MenuMain.Items.Add(t);
-
                 t = new ToolStripMenuItem("&Close");
                 t.Click += new EventHandler(MenuClose_Click);
                 MenuMain.Items.Add(t);
-
                 MenuMainButton = new ClipButton(Config, true)
                 {
                     Text = "...",
@@ -286,24 +256,8 @@ namespace Clips
                 SetFormPos();
             }
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
-
             pTop.BackColor = Config.ClipsHeaderColor;
-
             BackColor = Config.ClipsBackColor;
-
-            if (clipboard == null)
-            {
-                clipboard = new SharpClipboard();
-                clipboard.MonitorClipboard = true;
-                clipboard.ObservableFormats.All = true;
-                clipboard.ObservableFormats.Files = true;
-                clipboard.ObservableFormats.Images = true;
-                clipboard.ObservableFormats.Others = true;
-                clipboard.ObservableFormats.Texts = true;
-                clipboard.ObserveLastEntry = false;
-                clipboard.Tag = null;
-                clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipboardChanged);
-            }
             RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
@@ -328,7 +282,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && (inClose || inAbout || Clips.inPreview || Clips.inMenu || inMenu || inSettings))
+            if ((!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
                 return;
             else
             {

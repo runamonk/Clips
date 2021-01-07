@@ -35,7 +35,7 @@
             this.linkEmail = new System.Windows.Forms.LinkLabel();
             this.lblVersion = new System.Windows.Forms.Label();
             this.lblName = new System.Windows.Forms.Label();
-            this.Close = new System.Windows.Forms.Button();
+            this.HideForm = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -43,7 +43,7 @@
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
             this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.panel1.Controls.Add(this.Close);
+            this.panel1.Controls.Add(this.HideForm);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.lblDesc);
             this.panel1.Controls.Add(this.linkEmail);
@@ -111,16 +111,17 @@
             this.lblName.Text = "[NAME]";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // Close
+            // HideForm
             // 
-            this.Close.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Close.Location = new System.Drawing.Point(244, 152);
-            this.Close.Name = "Close";
-            this.Close.Size = new System.Drawing.Size(23, 21);
-            this.Close.TabIndex = 6;
-            this.Close.Text = "X";
-            this.Close.UseVisualStyleBackColor = true;
-            this.Close.Click += new System.EventHandler(this.Close_Click);
+            this.HideForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HideForm.ForeColor = System.Drawing.Color.Black;
+            this.HideForm.Location = new System.Drawing.Point(244, 152);
+            this.HideForm.Name = "HideForm";
+            this.HideForm.Size = new System.Drawing.Size(23, 21);
+            this.HideForm.TabIndex = 6;
+            this.HideForm.Text = "X";
+            this.HideForm.UseVisualStyleBackColor = true;
+            this.HideForm.Click += new System.EventHandler(this.Close_Click);
             // 
             // About
             // 
@@ -152,6 +153,6 @@
         private System.Windows.Forms.LinkLabel linkEmail;
         private System.Windows.Forms.Label lblDesc;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Button Close;
+        private System.Windows.Forms.Button HideForm;
     }
 }

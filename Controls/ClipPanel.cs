@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Utility;
+using WK.Libraries.SharpClipboardNS;
 
 namespace Clips.Controls
 {
@@ -16,12 +16,24 @@ namespace Clips.Controls
         private bool IsHeader = false;
         private Image LastImage { get; set; }
         private string LastText { get; set; }
-        public bool inMenu { get; set; }
-        public bool inLoad { get; set; }
-        public bool inPreview { get; set; }
+        public bool InMenu { get; set; }
+        public bool InLoad { get; set; }
+        public bool InPreview { get; set; }
+        public bool MonitorClipboard
+        {
+            get 
+            {
+                return clipboard.MonitorClipboard;
+            }
+            set 
+            {
+                clipboard.MonitorClipboard = value;
+            }
+        }
  
         private ClipMenu MenuRC;
         private Preview PreviewForm = new Preview();
+        private SharpClipboard clipboard;
 
         private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
 
@@ -43,6 +55,20 @@ namespace Clips.Controls
             MenuRC.Items.Add(t);
 
             SetColors();
+
+            if (clipboard == null)
+            {
+                clipboard = new SharpClipboard();
+                clipboard.MonitorClipboard = true;
+                clipboard.ObservableFormats.All = true;
+                clipboard.ObservableFormats.Files = true;
+                clipboard.ObservableFormats.Images = true;
+                clipboard.ObservableFormats.Others = true;
+                clipboard.ObservableFormats.Texts = true;
+                clipboard.ObserveLastEntry = false;
+                clipboard.Tag = null;
+                clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipboardChanged);
+            }
         }
         
         #region EventHandlers
@@ -85,6 +111,8 @@ namespace Clips.Controls
         {
             if (text == LastText) return;
 
+            SuspendLayout();
+
             LastText = text;
             ClipButton b = AddClipButton();
 
@@ -119,12 +147,15 @@ namespace Clips.Controls
 
             if (OnClipAdded != null)
                 OnClipAdded(b, saveToDisk);
+
+            ResumeLayout();
         }
 
         public void AddItem(Image image, string fileName, bool saveToDisk = false)
         {
             if ((LastImage != null) && Funcs.IsSame(image, LastImage)) return;
 
+            SuspendLayout();
             LastImage = image;
 
             ClipButton b = AddClipButton();
@@ -141,6 +172,7 @@ namespace Clips.Controls
 
             if (OnClipAdded != null)
                 OnClipAdded(b, saveToDisk);
+            ResumeLayout();
         }
 
         private void ButtonClicked(ClipButton Clip)
@@ -203,6 +235,34 @@ namespace Clips.Controls
             }
         }
 
+        private void ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
+        {
+            if (e.ContentType == SharpClipboard.ContentTypes.Text)
+            {
+                AddItem(clipboard.ClipboardText.Trim(), null, true);
+            }
+            else if (e.ContentType == SharpClipboard.ContentTypes.Image)
+            {
+                AddItem(clipboard.ClipboardImage, null, true);
+            }
+            else if (e.ContentType == SharpClipboard.ContentTypes.Files)
+            {
+                string s = string.Join("\n", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
+                AddItem(s, null, true);
+            }
+            else if (e.ContentType == SharpClipboard.ContentTypes.Other)
+            {
+                // Do something with 'clipboard.ClipboardObject' or 'e.Content' here...
+
+                AddItem(clipboard.ClipboardObject.ToString(), null, true);
+            }
+        }
+
+        private void ConfigChanged(object sender, EventArgs e)
+        {
+            SetColors();
+        }
+
         public void DeleteOldestClip()
         {
             ClipButton cb = ((ClipButton)Controls[0]);
@@ -213,10 +273,11 @@ namespace Clips.Controls
 
         public void LoadItems()
         {
+            SuspendLayout();
             Controls.Clear();
             LastImage = null;
             LastText = "";
-            inLoad = true;
+            InLoad = true;
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
             {
@@ -248,14 +309,15 @@ namespace Clips.Controls
                 }
                 doc = null;
             }
-            inLoad = false;
+            InLoad = false;
             if (OnClipsLoaded != null)
                 OnClipsLoaded();
+            ResumeLayout();
         }
 
         private void MenuDelete_Click(object sender, EventArgs e)
         {
-            inMenu = true;
+            InMenu = true;
             ClipButton b = ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
             if (File.Exists(b.FileName))
                 File.Delete(b.FileName);
@@ -271,12 +333,12 @@ namespace Clips.Controls
 
             if (OnClipDeleted != null)
                 OnClipDeleted();
-            inMenu = false;
+            InMenu = false;
         }
 
         private void MenuSave_Click(object sender, EventArgs e)
         {
-            inMenu = true;
+            InMenu = true;
             SaveFileDialog dlg = new SaveFileDialog
             {
                 InitialDirectory = "c:\\"
@@ -297,18 +359,18 @@ namespace Clips.Controls
                 if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage.Save(dlg.FileName);
             }
-            inMenu = false;
+            InMenu = false;
         }
 
         private void PreviewHide(object sender, EventArgs e)
         {
             PreviewForm.HidePreview();
-            inPreview = false;
+            InPreview = false;
         }
 
         private void PreviewShow(object sender, EventArgs e)
         {
-            inPreview = true;
+            InPreview = true;
             ((ClipButton)sender).Select();
 
             PreviewForm.BackColor = ClipsConfig.PreviewBackColor;
@@ -324,9 +386,5 @@ namespace Clips.Controls
                 BackColor = ClipsConfig.ClipsBackColor;
         }
 
-        private void ConfigChanged(object sender, EventArgs e)
-        {
-            SetColors();
-        }
     }
 }
