@@ -32,5 +32,10 @@ namespace Clips
         {
             Hide();
         }
+
+        private void Close_Click(object sender, EventArgs e)
+        {
+            Hide();
+        }
     }
 }

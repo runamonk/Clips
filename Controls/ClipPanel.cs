@@ -16,9 +16,12 @@ namespace Clips.Controls
         private bool IsHeader = false;
         private Image LastImage { get; set; }
         private string LastText { get; set; }
-        public bool inLoad { get; set; }
         public bool inMenu { get; set; }
-        private ClipMenu MenuRC; 
+        public bool inLoad { get; set; }
+        public bool inPreview { get; set; }
+ 
+        private ClipMenu MenuRC;
+        private Preview PreviewForm = new Preview();
 
         private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
 
@@ -70,8 +73,8 @@ namespace Clips.Controls
 
             b.OnClipButtonClicked += new  ClipButton.ClipButtonClickedHandler(ButtonClicked);
 
-            //b.MouseHover += new EventHandler(PreviewShow);
-            //b.MouseLeave += new EventHandler(PreviewHide);
+            b.MouseHover += new EventHandler(PreviewShow);
+            b.MouseLeave += new EventHandler(PreviewHide);
             b.ContextMenuStrip = MenuRC;
             b.ImageAlign = ContentAlignment.MiddleLeft;
             b.Parent = this;
@@ -295,6 +298,22 @@ namespace Clips.Controls
                     ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage.Save(dlg.FileName);
             }
             inMenu = false;
+        }
+
+        private void PreviewHide(object sender, EventArgs e)
+        {
+            PreviewForm.HidePreview();
+            inPreview = false;
+        }
+
+        private void PreviewShow(object sender, EventArgs e)
+        {
+            inPreview = true;
+            ((ClipButton)sender).Select();
+
+            PreviewForm.BackColor = ClipsConfig.PreviewBackColor;
+            PreviewForm.ForeColor = ClipsConfig.PreviewFontColor;
+            PreviewForm.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, ClipsConfig.PreviewPopupDelay, ClipsConfig.PreviewMaxLines);
         }
 
         private void SetColors()

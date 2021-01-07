@@ -42,10 +42,9 @@ namespace Clips
         private bool inAbout = false;
         private bool inClose = false;
         private bool inMenu = false;
-        private bool inPreview = false;
-        private bool inSettings = false;
 
-        private Preview PreviewForm = new Preview();
+        private bool inSettings = false;
+        
         private SharpClipboard clipboard;
 
         // TODO Add ability to pin a clip.
@@ -202,24 +201,6 @@ namespace Clips
                 base.OnLoad(e);
         }
 
-        private void PreviewHide(object sender, EventArgs e)
-        {
-            PreviewForm.HidePreview();
-            inPreview = false;
-        }
-
-        private void PreviewShow(object sender, EventArgs e)
-        {
-            if (inAbout) return;
-
-            inPreview = true;
-            ((ClipButton)sender).Select();
-
-            PreviewForm.BackColor = Config.PreviewBackColor;
-            PreviewForm.ForeColor = Config.PreviewFontColor;
-            PreviewForm.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, Config.PreviewPopupDelay, Config.PreviewMaxLines);
-        }
-
         protected override void WndProc(ref Message m)
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
@@ -265,6 +246,10 @@ namespace Clips
                 MenuMain.Opening += new System.ComponentModel.CancelEventHandler(MenuClips_Opening);
                 MenuMain.Closed += new ToolStripDropDownClosedEventHandler(MenuClips_Closed);
                 ToolStripMenuItem t;
+
+                t = new ToolStripMenuItem("&About");
+                t.Click += new EventHandler(MenuAbout_Click);
+                MenuMain.Items.Add(t);
 
                 t = new ToolStripMenuItem("&Monitor Clipboard");
                 t.Checked = true;
@@ -343,7 +328,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && (inClose || inAbout || inPreview || inMenu || inSettings))
+            if ((!Override) && (inClose || inAbout || Clips.inPreview || Clips.inMenu || inMenu || inSettings))
                 return;
             else
             {
