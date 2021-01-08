@@ -42,16 +42,16 @@ namespace Clips
         private bool inClose = false;
         private bool inMenu = false;
         private bool inSettings = false;
-        
-        
 
+        #region Todo
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add edit/favorite text editor in config.
         // TODO Add Search.
         // TODO Add button pad amount that way users can decide how much to pad the ClipButton, rather than just using an arbritrary 8px.
         // TODO Add max form height (to work with auto-size).
-        // TODO Change scrollbar colors to match themes.
+        // TODO Change scrollbar colors to match themes. Make my own control for scrolling?
+        #endregion
 
         #region Events
         private void ConfigChanged(object sender, EventArgs e)
@@ -246,6 +246,7 @@ namespace Clips
                 MenuMainButton.Click += MainButton_Click;
                 MenuMainButton.Padding = new Padding(0,0,0,3);
                 MenuMainButton.TextAlign = ContentAlignment.MiddleCenter;
+                notifyClips.ContextMenuStrip = MenuMain;
 
                 Clips = new ClipPanel(Config);
                 Clips.AutoScroll = true;
@@ -263,7 +264,7 @@ namespace Clips
             RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
-        private static Process RunningInstance()
+        private Process RunningInstance()
         {
             Process current = Process.GetCurrentProcess();
             Process[] processes = Process.GetProcessesByName(current.ProcessName);

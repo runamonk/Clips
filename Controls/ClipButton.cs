@@ -45,11 +45,9 @@ namespace Clips
             base.NotifyDefault(false);
         }
 
-        protected override void OnMouseClick(MouseEventArgs e)
+        protected override void OnClick(EventArgs e)
         {
-            base.OnMouseClick(e);
-            if (e.Button != MouseButtons.Left)
-                return;
+            base.OnClick(e);
 
             if (OnClipButtonClicked != null)
                 OnClipButtonClicked(this);

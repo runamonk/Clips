@@ -10,7 +10,7 @@ using WK.Libraries.SharpClipboardNS;
 
 namespace Clips.Controls
 {
-    public partial class ClipPanel : System.Windows.Forms.Panel
+    public partial class ClipPanel : Panel
     {
         private Config ClipsConfig { get; set; }
         private bool IsHeader = false;
@@ -109,42 +109,56 @@ namespace Clips.Controls
 
             SuspendLayout();
 
-            LastText = text;
-            ClipButton b = AddClipButton();
+            ClipButton DupeClip = ClipExists(text);
 
-            b.AutoSize = false;
-            b.AutoEllipsis = false;
-            b.FullText = text;
-
-            byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
-            string base64 = Convert.ToBase64String(plainTextBytes);
-            if (saveToDisk)
-                b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
+            if (DupeClip != null && saveToDisk)
+            {
+                DupeClip.PerformClick();
+            }
             else
-                b.FileName = fileName;
-
-            //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-            string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
-            if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
-                for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
+            {
+                if (DupeClip != null && File.Exists(fileName))
+                    File.Delete(fileName);
+                else
                 {
-                    if (string.IsNullOrEmpty(b.Text))
-                        b.Text = s[i] + "\n";
+                    LastText = text;
+                    ClipButton b = AddClipButton();
+
+                    b.AutoSize = false;
+                    b.AutoEllipsis = false;
+                    b.FullText = text;
+
+                    byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
+                    string base64 = Convert.ToBase64String(plainTextBytes);
+                    if (saveToDisk)
+                        b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
                     else
-                        b.Text = b.Text + s[i] + "\n";
+                        b.FileName = fileName;
+
+                    //TODO Come up with a better way to handle displaying multiple lines per ClipButton
+                    string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+                    if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
+                        for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
+                        {
+                            if (string.IsNullOrEmpty(b.Text))
+                                b.Text = s[i] + "\n";
+                            else
+                                b.Text = b.Text + s[i] + "\n";
+                        }
+                    else
+                        b.Text = text;
+
+                    SizeF ss = TextRenderer.MeasureText("X", b.Font);
+                    int FHeight = Convert.ToInt32(ss.Height);
+
+                    b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
+
+                    if (OnClipAdded != null)
+                        OnClipAdded(b, saveToDisk);
+
                 }
-            else
-                b.Text = text;
-
-            SizeF ss = TextRenderer.MeasureText("X", b.Font);
-            int FHeight = Convert.ToInt32(ss.Height);
-
-            b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
-
-            if (OnClipAdded != null)
-                OnClipAdded(b, saveToDisk);
-
-            ResumeLayout();
+            }
+             ResumeLayout();
         }
 
         public void AddItem(Image image, string fileName, bool saveToDisk = false)
@@ -153,12 +167,10 @@ namespace Clips.Controls
 
             SuspendLayout();
             LastImage = image;
-
             ClipButton b = AddClipButton();
             b.Height = 60;
             b.FullImage = image;
-
-            string base64 = Convert.ToBase64String(Funcs.ConvertImageToByteArray(b.FullImage));
+            string base64 = Convert.ToBase64String(Funcs.ImageToByteArray(b.FullImage));
             if (saveToDisk)
                 b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
             else
@@ -230,7 +242,7 @@ namespace Clips.Controls
                 }
             }
         }
-
+               
         private void ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
@@ -249,9 +261,21 @@ namespace Clips.Controls
             else if (e.ContentType == SharpClipboard.ContentTypes.Other)
             {
                 // Do something with 'clipboard.ClipboardObject' or 'e.Content' here...
-
                 AddItem(clipboard.ClipboardObject.ToString(), null, true);
             }
+        }
+
+        private ClipButton ClipExists(string text)
+        {
+            foreach (ClipButton b in Controls)
+            {
+                if (b.FullText != "" && b.FullText == text)
+                {
+                    return b;
+                }
+            }
+
+            return null;
         }
 
         private void ConfigChanged(object sender, EventArgs e)

@@ -47,13 +47,11 @@ namespace Utility
             return Assembly.GetExecutingAssembly().GetName().Version.ToString();
         }
 
-        public static byte[] ConvertImageToByteArray(Image imageToConvert)
+        public static byte[] ImageToByteArray(Image image)
         {
-            using (var ms = new MemoryStream())
-            {
-                imageToConvert.Save(ms, ImageFormat.Png);
-                return ms.ToArray();
-            }
+            MemoryStream ms = new MemoryStream();
+            image.Save(ms, ImageFormat.Png);
+            return ms.ToArray();
         }
 
         public static Boolean IsSame(Image img1, Image img2)
@@ -62,9 +60,8 @@ namespace Utility
                 return false;
 
             byte[] b1, b2;
-
-            b1 = ConvertImageToByteArray(img1);
-            b2 = ConvertImageToByteArray(img2);
+            b1 = ImageToByteArray(img1);
+            b2 = ImageToByteArray(img2);
             return b1.SequenceEqual(b2);
         }
 
