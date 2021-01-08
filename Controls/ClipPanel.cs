@@ -113,7 +113,9 @@ namespace Clips.Controls
 
             if (DupeClip != null && saveToDisk)
             {
-                DupeClip.PerformClick();
+                //TODO What do I want to do here?
+                //DupeClip.PerformClick();
+                //Move up?
             }
             else
             {
