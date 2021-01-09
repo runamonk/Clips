@@ -113,53 +113,52 @@ namespace Clips.Controls
 
             if (DupeClip != null && saveToDisk)
             {
-                //TODO What do I want to do here?
-                //DupeClip.PerformClick();
-                //Move up?
+                if (File.Exists(DupeClip.FileName))
+                    File.Delete(DupeClip.FileName);
+                Controls.Remove(DupeClip);
+                DupeClip = null;
             }
+
+            if (DupeClip != null && File.Exists(fileName))
+                File.Delete(fileName);
             else
             {
-                if (DupeClip != null && File.Exists(fileName))
-                    File.Delete(fileName);
+                LastText = text;
+                ClipButton b = AddClipButton();
+
+                b.AutoSize = false;
+                b.AutoEllipsis = false;
+                b.FullText = text;
+
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
+                string base64 = Convert.ToBase64String(plainTextBytes);
+                if (saveToDisk)
+                    b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
                 else
-                {
-                    LastText = text;
-                    ClipButton b = AddClipButton();
+                    b.FileName = fileName;
 
-                    b.AutoSize = false;
-                    b.AutoEllipsis = false;
-                    b.FullText = text;
+                //TODO Come up with a better way to handle displaying multiple lines per ClipButton
+                string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+                if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
+                    for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
+                    {
+                        if (string.IsNullOrEmpty(b.Text))
+                            b.Text = s[i] + "\n";
+                        else
+                            b.Text = b.Text + s[i] + "\n";
+                    }
+                else
+                    b.Text = text;
 
-                    byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
-                    string base64 = Convert.ToBase64String(plainTextBytes);
-                    if (saveToDisk)
-                        b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
-                    else
-                        b.FileName = fileName;
+                SizeF ss = TextRenderer.MeasureText("X", b.Font);
+                int FHeight = Convert.ToInt32(ss.Height);
 
-                    //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-                    string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
-                    if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
-                        for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
-                        {
-                            if (string.IsNullOrEmpty(b.Text))
-                                b.Text = s[i] + "\n";
-                            else
-                                b.Text = b.Text + s[i] + "\n";
-                        }
-                    else
-                        b.Text = text;
+                b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
 
-                    SizeF ss = TextRenderer.MeasureText("X", b.Font);
-                    int FHeight = Convert.ToInt32(ss.Height);
-
-                    b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
-
-                    if (OnClipAdded != null)
-                        OnClipAdded(b, saveToDisk);
-
-                }
+                if (OnClipAdded != null)
+                    OnClipAdded(b, saveToDisk);
             }
+
              ResumeLayout();
         }
 
