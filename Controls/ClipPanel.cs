@@ -105,66 +105,52 @@ namespace Clips.Controls
 
         public void AddItem(string text, string fileName, bool saveToDisk = false)
         {
-            if (text == LastText) return;
+            if ((text == LastText) || ClipExists(text)) return;
 
             SuspendLayout();
 
-            ClipButton DupeClip = ClipExists(text);
+            LastText = text;
+            ClipButton b = AddClipButton();
 
-            if (DupeClip != null && saveToDisk)
-            {
-                if (File.Exists(DupeClip.FileName))
-                    File.Delete(DupeClip.FileName);
-                Controls.Remove(DupeClip);
-                DupeClip = null;
-            }
+            b.AutoSize = false;
+            b.AutoEllipsis = false;
+            b.FullText = text;
 
-            if (DupeClip != null && File.Exists(fileName))
-                File.Delete(fileName);
+            byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
+            string base64 = Convert.ToBase64String(plainTextBytes);
+            if (saveToDisk)
+                b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
             else
-            {
-                LastText = text;
-                ClipButton b = AddClipButton();
+                b.FileName = fileName;
 
-                b.AutoSize = false;
-                b.AutoEllipsis = false;
-                b.FullText = text;
+            //TODO Come up with a better way to handle displaying multiple lines per ClipButton
+            string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+            if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
+                for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
+                {
+                    if (string.IsNullOrEmpty(b.Text))
+                        b.Text = s[i] + "\n";
+                    else
+                        b.Text = b.Text + s[i] + "\n";
+                }
+            else
+                b.Text = text;
 
-                byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
-                string base64 = Convert.ToBase64String(plainTextBytes);
-                if (saveToDisk)
-                    b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
-                else
-                    b.FileName = fileName;
+            SizeF ss = TextRenderer.MeasureText("X", b.Font);
+            int FHeight = Convert.ToInt32(ss.Height);
 
-                //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-                string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
-                if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
-                    for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
-                    {
-                        if (string.IsNullOrEmpty(b.Text))
-                            b.Text = s[i] + "\n";
-                        else
-                            b.Text = b.Text + s[i] + "\n";
-                    }
-                else
-                    b.Text = text;
+            b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
 
-                SizeF ss = TextRenderer.MeasureText("X", b.Font);
-                int FHeight = Convert.ToInt32(ss.Height);
-
-                b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
-
-                if (OnClipAdded != null)
-                    OnClipAdded(b, saveToDisk);
-            }
+            if (OnClipAdded != null)
+                OnClipAdded(b, saveToDisk);
 
              ResumeLayout();
         }
 
         public void AddItem(Image image, string fileName, bool saveToDisk = false)
         {
-            if ((LastImage != null) && Funcs.IsSame(image, LastImage)) return;
+            //if ((LastImage != null) && Funcs.IsSame(image, LastImage)) return;
+            if ((LastImage != null) && ClipExists(image)) return;
 
             SuspendLayout();
             LastImage = image;
@@ -266,17 +252,30 @@ namespace Clips.Controls
             }
         }
 
-        private ClipButton ClipExists(string text)
+        private bool ClipExists(string text)
         {
             foreach (ClipButton b in Controls)
             {
                 if (b.FullText != "" && b.FullText == text)
                 {
-                    return b;
+                    return true;
                 }
             }
 
-            return null;
+            return false;
+        }
+
+        private bool ClipExists(Image image)
+        {
+            foreach (ClipButton b in Controls)
+            {
+                if (b.FullImage != null && Funcs.IsSame(b.FullImage, image))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         private void ConfigChanged(object sender, EventArgs e)
