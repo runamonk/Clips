@@ -71,5 +71,10 @@ namespace Clips
         {
             e.Handled = true; // this will stop the key pressed from actually entering into the text box.
         }
+
+        private void Clear_Click(object sender, EventArgs e)
+        {
+            Key.Clear();
+        }
     }
 }

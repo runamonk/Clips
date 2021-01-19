@@ -89,6 +89,7 @@
             this.label14 = new System.Windows.Forms.Label();
             this.DarkTheme = new System.Windows.Forms.RadioButton();
             this.LightTheme = new System.Windows.Forms.RadioButton();
+            this.Clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).BeginInit();
@@ -484,6 +485,7 @@
             // 
             // gbHotkey
             // 
+            this.gbHotkey.Controls.Add(this.Clear);
             this.gbHotkey.Controls.Add(this.Key);
             this.gbHotkey.Controls.Add(this.Windows);
             this.gbHotkey.Controls.Add(this.label2);
@@ -791,6 +793,16 @@
             this.LightTheme.UseVisualStyleBackColor = true;
             this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
             // 
+            // Clear
+            // 
+            this.Clear.Location = new System.Drawing.Point(153, 19);
+            this.Clear.Name = "Clear";
+            this.Clear.Size = new System.Drawing.Size(56, 20);
+            this.Clear.TabIndex = 7;
+            this.Clear.Text = "Clear";
+            this.Clear.UseVisualStyleBackColor = true;
+            this.Clear.Click += new System.EventHandler(this.Clear_Click);
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -900,5 +912,6 @@
         private System.Windows.Forms.RadioButton LightTheme;
         private System.Windows.Forms.Label label15;
         public System.Windows.Forms.Panel MenuButtonColor;
+        private System.Windows.Forms.Button Clear;
     }
 }
