@@ -248,6 +248,8 @@ namespace Clips
                 MenuMainButton.TextAlign = ContentAlignment.MiddleCenter;
                 notifyClips.ContextMenuStrip = MenuMain;
 
+
+
                 Clips = new ClipPanel(Config);
                 Clips.AutoScroll = true;
                 Clips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
