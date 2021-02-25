@@ -70,6 +70,8 @@ namespace Clips
                 PreviewText.Visible = false;
                 PreviewImage.Visible = true;
 
+                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width*.50), (int)(Screen.PrimaryScreen.WorkingArea.Height*.50));
+                
                 if (image.Height > MaximumSize.Height)
                     FHeight = MaximumSize.Height;
                 else

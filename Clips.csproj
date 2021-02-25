@@ -84,6 +84,9 @@
     <Compile Include="Controls\ClipPanel.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Controls\ClipSearch.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Controls\Config.cs" />
     <Compile Include="Forms\About.cs">
       <SubType>Form</SubType>

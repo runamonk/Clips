@@ -37,6 +37,7 @@ namespace Clips
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
         private ClipPanel Clips { get; set; }
+        private ClipSearch SearchClips { get; set; }
 
         private bool inAbout = false;
         private bool inClose = false;
@@ -246,10 +247,17 @@ namespace Clips
                 MenuMainButton.Click += MainButton_Click;
                 MenuMainButton.Padding = new Padding(0,0,0,3);
                 MenuMainButton.TextAlign = ContentAlignment.MiddleCenter;
+                
+                SearchClips = new ClipSearch();
+                SearchClips.Parent = pTop;
+                SearchClips.Dock = DockStyle.Fill;
+                SearchClips.Margin = new Padding(0, 0, 0, 0);
+                SearchClips.Padding = new Padding(0, 0, 0, 0);
+                SearchClips.TextAlign = ContentAlignment.MiddleCenter;
+
+                pTop.Controls.SetChildIndex(SearchClips, 0);
                 notifyClips.ContextMenuStrip = MenuMain;
-
-
-
+                               
                 Clips = new ClipPanel(Config);
                 Clips.AutoScroll = true;
                 Clips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
@@ -263,6 +271,10 @@ namespace Clips
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
             pTop.BackColor = Config.ClipsHeaderColor;
             BackColor = Config.ClipsBackColor;
+
+            SearchClips.BackColor = Config.MenuButtonColor;
+            SearchClips.ForeColor = Config.MenuFontColor;
+            
             RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
@@ -294,19 +306,43 @@ namespace Clips
                 if (Opacity > 0)
                 {
                     Opacity = 0;
+                    KeyPreview = false;
                 }
                 else
                 {
                     AutoSizeForm(true);
                     if (Config.OpenFormAtCursor)
                         Funcs.MoveFormToCursor(this, IgnoreBounds);
+                    
                     Opacity = 100;
                     Activate();
+                    KeyPreview = true;
                 }
             }
         }
 
         #endregion
 
+        private void Main_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.ToString().Any(x => char.IsLetterOrDigit(x)))
+            {
+                SearchClips.Text += e.KeyChar.ToString();
+            }
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Delete) || (e.KeyCode == Keys.Back))
+            {
+                if (SearchClips.Text.Length > 0)
+                    SearchClips.Text = SearchClips.Text.Substring(0, (SearchClips.Text.Length - 1));
+            }
+            else
+            if (e.KeyCode == Keys.Escape)
+            {
+                SearchClips.Text = "";
+            }
+        }
     } // Main
 }
