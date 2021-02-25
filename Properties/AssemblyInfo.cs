@@ -8,7 +8,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Clips")]
 [assembly: AssemblyDescription("Clips, Clipboard History")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("runamonk")]
+[assembly: AssemblyCompany("onlyzuul.org")]
 [assembly: AssemblyProduct("Clips")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]

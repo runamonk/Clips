@@ -213,7 +213,7 @@ namespace Clips
                         if ((b.FullText == null) && (!includeImages))
                             b.Visible = false;
                         else
-                        if (b.FullText.Contains(SearchClips.Text.Trim()))
+                        if (b.FullText.ToLower().Contains(SearchClips.Text.ToLower().Trim()))
                             b.Visible = true;
                         else
                             b.Visible = false;
@@ -372,7 +372,7 @@ namespace Clips
                 {
                     AutoSizeForm(true);
                     if (Config.OpenFormAtCursor)
-                        Funcs.MoveFormToCursor(this, IgnoreBounds);
+                        Funcs.MoveFormToCursor(this, false);
                     
                     Opacity = 100;
                     Activate();

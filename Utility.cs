@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -22,6 +23,23 @@ namespace Utility
             return Path.GetDirectoryName(Application.ExecutablePath);
         }
 
+        public static string BrowseForFile()
+        {
+            OpenFileDialog fd = new OpenFileDialog();
+            fd.Multiselect = false;
+            fd.Filter = "All files (*.*)|*.*";
+            fd.FilterIndex = 1;
+            fd.CheckFileExists = true;
+            fd.CheckPathExists = true;
+
+            DialogResult dr = fd.ShowDialog();
+
+            if (dr == DialogResult.OK)
+                return fd.FileName;
+            else
+                return "";
+        }
+
         public static string[] GetFiles(string path, string searchPattern)
         {
             if (!Directory.Exists(path))
@@ -35,6 +53,28 @@ namespace Utility
                 files = Directory.GetFiles(path).OrderBy(f => new FileInfo(f).CreationTime).ToArray();
 
             return files;
+        }
+
+        public static Image GetIcon(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                string[] ImageTypes = { ".png", ".tif", ".jpg", ".gif", ".bmp", ".ico" };
+
+                if (ImageTypes.Contains(Path.GetExtension(fileName)))
+                {
+                    return (Image)(Image)(new Bitmap(new Bitmap(fileName, false)));
+                }
+
+                else
+                    return (Image)(new Bitmap(Icon.ExtractAssociatedIcon(fileName).ToBitmap()));
+            }
+            else
+                return null;
+        }
+        public static FileVersionInfo GetFileInfo(string fileName)
+        {
+            return FileVersionInfo.GetVersionInfo(fileName);
         }
 
         public static string GetName()
@@ -77,15 +117,16 @@ namespace Utility
             if (!IgnoreBounds)
             {
                 //Height
-                if ((p.Y + form.Size.Width) > Screen.PrimaryScreen.WorkingArea.Height)
+                if ((p.Y + form.Size.Height) > Screen.PrimaryScreen.WorkingArea.Height)
                 {
-                    p.Y = (p.Y - form.Size.Height);
+                    //p.Y = (p.Y - form.Size.Height);
+                    p.Y = (p.Y - ((p.Y + form.Size.Height) - Screen.PrimaryScreen.WorkingArea.Height));
                 }
 
                 //Width
                 if ((p.X + form.Size.Width) > Screen.PrimaryScreen.WorkingArea.Width)
                 {
-                    p.X = (p.X - form.Size.Width);
+                    p.X = (p.X-((p.X + form.Size.Width)-Screen.PrimaryScreen.WorkingArea.Width));
                 }
             }
 
