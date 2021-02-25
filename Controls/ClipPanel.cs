@@ -44,6 +44,10 @@ namespace Clips.Controls
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             ToolStripMenuItem t;
             MenuRC = new ClipMenu(myConfig);
+
+            t = new ToolStripMenuItem("&Preview");
+            t.Click += new EventHandler(MenuPreview_Click);
+            MenuRC.Items.Add(t);
             t = new ToolStripMenuItem("&Save");
             t.Click += new EventHandler(MenuSave_Click);
             MenuRC.Items.Add(t);
@@ -356,6 +360,13 @@ namespace Clips.Controls
             InMenu = false;
         }
 
+        private void MenuPreview_Click(object sender, EventArgs e)
+        {
+            InMenu = true;
+            PreviewShow(((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl), null);
+            InMenu = false;
+        }
+
         private void MenuSave_Click(object sender, EventArgs e)
         {
             InMenu = true;
@@ -390,6 +401,9 @@ namespace Clips.Controls
 
         private void PreviewShow(object sender, EventArgs e)
         {
+            if ((e != null) && (!ModifierKeys.HasFlag(Keys.Control)))
+                return;
+
             InPreview = true;
             ((ClipButton)sender).Select();
 
