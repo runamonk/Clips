@@ -63,6 +63,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.lblTextRows = new System.Windows.Forms.Label();
             this.gbHotkey = new System.Windows.Forms.GroupBox();
+            this.Clear = new System.Windows.Forms.Button();
             this.Windows = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
             this.Shift = new System.Windows.Forms.CheckBox();
@@ -89,7 +90,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.DarkTheme = new System.Windows.Forms.RadioButton();
             this.LightTheme = new System.Windows.Forms.RadioButton();
-            this.Clear = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).BeginInit();
@@ -156,12 +156,7 @@
             // 
             this.PreviewMaxLines.Location = new System.Drawing.Point(115, 18);
             this.PreviewMaxLines.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.PreviewMaxLines.Minimum = new decimal(new int[] {
-            1,
+            9999,
             0,
             0,
             0});
@@ -169,11 +164,6 @@
             this.PreviewMaxLines.Size = new System.Drawing.Size(62, 20);
             this.PreviewMaxLines.TabIndex = 0;
             this.toolTip1.SetToolTip(this.PreviewMaxLines, "Set the max number of lines to preview.");
-            this.PreviewMaxLines.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // PreviewPopupDelay
             // 
@@ -500,6 +490,16 @@
             this.gbHotkey.TabStop = false;
             this.gbHotkey.Text = "Popup Hotkey";
             // 
+            // Clear
+            // 
+            this.Clear.Location = new System.Drawing.Point(153, 19);
+            this.Clear.Name = "Clear";
+            this.Clear.Size = new System.Drawing.Size(56, 20);
+            this.Clear.TabIndex = 7;
+            this.Clear.Text = "Clear";
+            this.Clear.UseVisualStyleBackColor = true;
+            this.Clear.Click += new System.EventHandler(this.Clear_Click);
+            // 
             // Windows
             // 
             this.Windows.AutoSize = true;
@@ -792,16 +792,6 @@
             this.LightTheme.Text = "Light";
             this.LightTheme.UseVisualStyleBackColor = true;
             this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
-            // 
-            // Clear
-            // 
-            this.Clear.Location = new System.Drawing.Point(153, 19);
-            this.Clear.Name = "Clear";
-            this.Clear.Size = new System.Drawing.Size(56, 20);
-            this.Clear.TabIndex = 7;
-            this.Clear.Text = "Clear";
-            this.Clear.UseVisualStyleBackColor = true;
-            this.Clear.Click += new System.EventHandler(this.Clear_Click);
             // 
             // Settings
             // 

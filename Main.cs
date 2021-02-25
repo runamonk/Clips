@@ -48,7 +48,6 @@ namespace Clips
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add edit/favorite text editor in config.
-        // TODO Add Search.
         // TODO Add button pad amount that way users can decide how much to pad the ClipButton, rather than just using an arbritrary 8px.
         // TODO Add max form height (to work with auto-size).
         // TODO Change scrollbar colors to match themes. Make my own control for scrolling?
@@ -91,6 +90,28 @@ namespace Clips
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
             inClose = true;
+        }
+
+        private void Main_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((e.KeyCode == Keys.Delete) || (e.KeyCode == Keys.Back))
+            {
+                if (SearchClips.Text.Length > 0)
+                    SearchClips.Text = SearchClips.Text.Substring(0, (SearchClips.Text.Length - 1));
+            }
+            else
+            if (e.KeyCode == Keys.Escape)
+            {
+                SearchClips.Text = "";
+            }
+        }
+
+        private void Main_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar.ToString().Any(x => char.IsLetterOrDigit(x) || char.IsPunctuation(x) || char.IsSeparator(x) || char.IsSymbol(x)))
+            {
+                SearchClips.Text += e.KeyChar.ToString();
+            }
         }
 
         private void Main_Load(object sender, EventArgs e)
@@ -166,6 +187,43 @@ namespace Clips
             }
         }
 
+        private void SearchTextChanged(object sender, EventArgs e)
+        {
+            SuspendLayout();
+            bool includeImages = (SearchClips.Text.Trim() == ":image");
+
+            if (SearchClips.Text.Trim() == "")
+            {
+                foreach (ClipButton b in Clips.Controls)
+                {
+                    if (!b.Visible)
+                        b.Visible = true;
+                }
+            }
+            else
+            {
+                foreach (ClipButton b in Clips.Controls)
+                {
+                    if ((includeImages) && (b.FullImage != null))
+                    {
+                        b.Visible = true;
+                    }
+                    else
+                    {
+                        if ((b.FullText == null) && (!includeImages))
+                            b.Visible = false;
+                        else
+                        if (b.FullText.Contains(SearchClips.Text.Trim()))
+                            b.Visible = true;
+                        else
+                            b.Visible = false;
+                    }
+                }
+            }
+            ResumeLayout();
+            AutoSizeForm(false);
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             if (RunningInstance() != null)
@@ -198,7 +256,8 @@ namespace Clips
                 int c = 68;
                 for (int i = 0; i <= Clips.Controls.Count - 1; i++)
                 {
-                    c = c + Clips.Controls[i].Height;
+                    if (Clips.Controls[i].Visible)
+                        c = c + Clips.Controls[i].Height;
                 }
 
                 if (c < MaximumSize.Height)
@@ -254,6 +313,7 @@ namespace Clips
                 SearchClips.Margin = new Padding(0, 0, 0, 0);
                 SearchClips.Padding = new Padding(0, 0, 0, 0);
                 SearchClips.TextAlign = ContentAlignment.MiddleCenter;
+                SearchClips.TextChanged += new EventHandler(SearchTextChanged);
 
                 pTop.Controls.SetChildIndex(SearchClips, 0);
                 notifyClips.ContextMenuStrip = MenuMain;
@@ -323,26 +383,5 @@ namespace Clips
 
         #endregion
 
-        private void Main_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar.ToString().Any(x => char.IsLetterOrDigit(x)))
-            {
-                SearchClips.Text += e.KeyChar.ToString();
-            }
-        }
-
-        private void Main_KeyDown(object sender, KeyEventArgs e)
-        {
-            if ((e.KeyCode == Keys.Delete) || (e.KeyCode == Keys.Back))
-            {
-                if (SearchClips.Text.Length > 0)
-                    SearchClips.Text = SearchClips.Text.Substring(0, (SearchClips.Text.Length - 1));
-            }
-            else
-            if (e.KeyCode == Keys.Escape)
-            {
-                SearchClips.Text = "";
-            }
-        }
     } // Main
 }
