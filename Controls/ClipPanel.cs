@@ -44,7 +44,7 @@ namespace Clips.Controls
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             ToolStripMenuItem t;
             MenuRC = new ClipMenu(myConfig);
-
+            this.AdjustFormScrollbars(true).BackColor = Color.Purple;
             t = new ToolStripMenuItem("&Preview");
             t.Click += new EventHandler(MenuPreview_Click);
             MenuRC.Items.Add(t);

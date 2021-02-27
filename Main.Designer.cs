@@ -69,7 +69,7 @@
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.pTop);
             this.DoubleBuffered = true;
-            this.MaximumSize = new System.Drawing.Size(800, 600);
+            this.MaximumSize = new System.Drawing.Size(9999, 9999);
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "Main";
             this.Opacity = 0D;

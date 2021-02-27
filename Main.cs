@@ -251,6 +251,8 @@ namespace Clips
         {
             if (Clips.InLoad) return;
 
+            int MaxHeight = (int)(Screen.PrimaryScreen.WorkingArea.Height * .50);
+
             if (Config.AutoSizeHeight)
             {
                 int c = 68;
@@ -260,10 +262,10 @@ namespace Clips
                         c = c + Clips.Controls[i].Height;
                 }
 
-                if (c < MaximumSize.Height)
+                if (c < MaxHeight)
                     Height = c;
                 else
-                    Height = MaximumSize.Height;
+                    Height = MaxHeight;
             }
 
             // select the first control.
@@ -328,10 +330,11 @@ namespace Clips
                 Clips.Dock = DockStyle.Fill;
                 SetFormPos();
             }
+
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
             pTop.BackColor = Config.ClipsHeaderColor;
             BackColor = Config.ClipsBackColor;
-
+            SearchClips.Text = "";
             SearchClips.BackColor = Config.MenuButtonColor;
             SearchClips.ForeColor = Config.MenuFontColor;
             
