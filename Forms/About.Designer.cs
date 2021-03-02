@@ -57,11 +57,14 @@
             // HideForm
             // 
             this.HideForm.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.HideForm.Font = new System.Drawing.Font("Segoe UI Symbol", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.HideForm.Location = new System.Drawing.Point(244, 152);
+            this.HideForm.Margin = new System.Windows.Forms.Padding(0);
             this.HideForm.Name = "HideForm";
             this.HideForm.Size = new System.Drawing.Size(23, 21);
             this.HideForm.TabIndex = 6;
-            this.HideForm.Text = "X";
+            this.HideForm.Text = "✖";
+            this.HideForm.UseCompatibleTextRendering = true;
             this.HideForm.UseVisualStyleBackColor = true;
             this.HideForm.Click += new System.EventHandler(this.Close_Click);
             // 
@@ -142,9 +145,9 @@
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Label lblVersion;
         private System.Windows.Forms.Label lblName;
-        private System.Windows.Forms.LinkLabel linkEmail;
         private System.Windows.Forms.Label lblDesc;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button HideForm;
+        public System.Windows.Forms.LinkLabel linkEmail;
     }
 }

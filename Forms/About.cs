@@ -12,6 +12,9 @@ namespace Clips
             InitializeComponent();
             BackColor = myConfig.ClipsBackColor;
             ForeColor = myConfig.ClipsFontColor;
+            linkEmail.BackColor = BackColor;
+            linkEmail.ForeColor = ForeColor;
+            linkEmail.LinkColor = ForeColor;
         }
 
         private void About_Load(object sender, EventArgs e)
