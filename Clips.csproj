@@ -75,6 +75,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared\Utility.cs">
+      <Link>Utility.cs</Link>
+    </Compile>
     <Compile Include="Controls\ClipButton.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -126,7 +129,6 @@
     <Compile Include="SharpClipboard\SharpClipboard.designer.cs">
       <DependentUpon>SharpClipboard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Utility.cs" />
     <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>
