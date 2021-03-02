@@ -42,19 +42,13 @@ namespace Clips.Controls
             IsHeader = isHeader;
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
-            ToolStripMenuItem t;
+
             MenuRC = new ClipMenu(myConfig);
-           
-            t = new ToolStripMenuItem("&Preview");
-            t.Click += new EventHandler(MenuPreview_Click);
-            MenuRC.Items.Add(t);
-            t = new ToolStripMenuItem("&Save");
-            t.Click += new EventHandler(MenuSave_Click);
-            MenuRC.Items.Add(t);
-            t = new ToolStripMenuItem("&Delete");
-            t.Click += new EventHandler(MenuDelete_Click);
-            MenuRC.Items.Add(t);
-            SetColors();
+            MenuRC.ShowCheckMargin = false;
+            MenuRC.ShowImageMargin = false;
+            Funcs.AddMenuItem(MenuRC, "Preview", MenuPreview_Click);
+            Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
+            Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
             LoadItems();
             if (clipboard == null)
             {

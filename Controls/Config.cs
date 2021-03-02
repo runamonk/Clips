@@ -63,6 +63,27 @@ namespace Clips
                     PreviewFontColor.BackColor = _Config.PreviewFontColor;
                     PreviewMaxLines.Value = _Config.PreviewMaxLines;
                     PreviewPopupDelay.Value = _Config.PreviewPopupDelay;
+
+                    BackColor = _Config.ClipsBackColor;
+                    ForeColor = _Config.ClipsFontColor;
+                    GroupClips.ForeColor = _Config.ClipsFontColor;
+                    GroupColorClips.ForeColor = _Config.ClipsFontColor;
+                    GroupColorMenu.ForeColor = _Config.ClipsFontColor;
+                    GroupColorPreview.ForeColor = _Config.ClipsFontColor;
+                    GroupColors.ForeColor = _Config.ClipsFontColor;
+                    GroupHotkey.ForeColor = _Config.ClipsFontColor;
+                    GroupPreview.ForeColor = _Config.ClipsFontColor;
+                    Key.BackColor = _Config.ClipsBackColor;
+                    ClipsMaxClips.BackColor = _Config.ClipsBackColor;
+                    ClipsLinesPerRow.BackColor = _Config.ClipsBackColor;
+                    PreviewMaxLines.BackColor = _Config.ClipsBackColor;
+                    PreviewPopupDelay.BackColor = _Config.ClipsBackColor;
+                    Key.ForeColor = _Config.ClipsFontColor;
+                    ClipsMaxClips.ForeColor = _Config.ClipsFontColor;
+                    ClipsLinesPerRow.ForeColor = _Config.ClipsFontColor;
+                    PreviewMaxLines.ForeColor = _Config.ClipsFontColor;
+                    PreviewPopupDelay.ForeColor = _Config.ClipsFontColor;
+
                 }
             }
 

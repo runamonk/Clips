@@ -7,9 +7,11 @@ namespace Clips
 {
     public partial class About : Form
     {
-        public About()
+        public About(Config myConfig)
         {
             InitializeComponent();
+            BackColor = myConfig.ClipsBackColor;
+            ForeColor = myConfig.ClipsFontColor;
         }
 
         private void About_Load(object sender, EventArgs e)

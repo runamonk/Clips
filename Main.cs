@@ -32,7 +32,7 @@ namespace Clips
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        private About AboutForm = new About();
+        
         private ClipButton MenuMainButton { get; set; }
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
@@ -129,6 +129,7 @@ namespace Clips
         private void MenuAbout_Click(object sender, EventArgs e)
         {
             inAbout = true;
+            About AboutForm = new About(Config);
             AboutForm.Show(this);
             inAbout = false;
         }
