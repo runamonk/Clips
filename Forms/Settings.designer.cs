@@ -369,7 +369,7 @@
             this.groupBox2.Controls.Add(this.Cancel);
             this.groupBox2.Controls.Add(this.OK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 397);
+            this.groupBox2.Location = new System.Drawing.Point(5, 393);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(500, 54);
             this.groupBox2.TabIndex = 4;
@@ -625,7 +625,7 @@
             this.PanelColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelColors.Location = new System.Drawing.Point(3, 49);
             this.PanelColors.Name = "PanelColors";
-            this.PanelColors.Size = new System.Drawing.Size(494, 159);
+            this.PanelColors.Size = new System.Drawing.Size(494, 155);
             this.PanelColors.TabIndex = 1;
             // 
             // GroupColorPreview
@@ -637,7 +637,7 @@
             this.GroupColorPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupColorPreview.Location = new System.Drawing.Point(343, 0);
             this.GroupColorPreview.Name = "GroupColorPreview";
-            this.GroupColorPreview.Size = new System.Drawing.Size(151, 159);
+            this.GroupColorPreview.Size = new System.Drawing.Size(151, 155);
             this.GroupColorPreview.TabIndex = 8;
             this.GroupColorPreview.TabStop = false;
             this.GroupColorPreview.Text = "Preview";
@@ -667,7 +667,7 @@
             this.PanelColorSep2.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep2.Location = new System.Drawing.Point(338, 0);
             this.PanelColorSep2.Name = "PanelColorSep2";
-            this.PanelColorSep2.Size = new System.Drawing.Size(5, 159);
+            this.PanelColorSep2.Size = new System.Drawing.Size(5, 155);
             this.PanelColorSep2.TabIndex = 7;
             // 
             // GroupColorMenu
@@ -685,7 +685,7 @@
             this.GroupColorMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorMenu.Location = new System.Drawing.Point(145, 0);
             this.GroupColorMenu.Name = "GroupColorMenu";
-            this.GroupColorMenu.Size = new System.Drawing.Size(193, 159);
+            this.GroupColorMenu.Size = new System.Drawing.Size(193, 155);
             this.GroupColorMenu.TabIndex = 6;
             this.GroupColorMenu.TabStop = false;
             this.GroupColorMenu.Text = "Menu";
@@ -745,7 +745,7 @@
             this.PanelColorSep1.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep1.Location = new System.Drawing.Point(140, 0);
             this.PanelColorSep1.Name = "PanelColorSep1";
-            this.PanelColorSep1.Size = new System.Drawing.Size(5, 159);
+            this.PanelColorSep1.Size = new System.Drawing.Size(5, 155);
             this.PanelColorSep1.TabIndex = 5;
             // 
             // GroupColorClips
@@ -761,7 +761,7 @@
             this.GroupColorClips.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorClips.Location = new System.Drawing.Point(0, 0);
             this.GroupColorClips.Name = "GroupColorClips";
-            this.GroupColorClips.Size = new System.Drawing.Size(140, 159);
+            this.GroupColorClips.Size = new System.Drawing.Size(140, 155);
             this.GroupColorClips.TabIndex = 0;
             this.GroupColorClips.TabStop = false;
             this.GroupColorClips.Text = "Clips";
@@ -813,7 +813,7 @@
             this.GroupColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupColors.Location = new System.Drawing.Point(5, 186);
             this.GroupColors.Name = "GroupColors";
-            this.GroupColors.Size = new System.Drawing.Size(500, 211);
+            this.GroupColors.Size = new System.Drawing.Size(500, 207);
             this.GroupColors.TabIndex = 7;
             this.GroupColors.TabStop = false;
             this.GroupColors.Text = "Colors";
@@ -866,7 +866,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(510, 456);
+            this.ClientSize = new System.Drawing.Size(510, 452);
             this.Controls.Add(this.GroupColors);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
