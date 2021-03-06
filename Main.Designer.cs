@@ -69,6 +69,7 @@
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.pTop);
             this.DoubleBuffered = true;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.MaximumSize = new System.Drawing.Size(9999, 9999);
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "Main";
