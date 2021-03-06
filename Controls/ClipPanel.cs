@@ -395,8 +395,8 @@ namespace Clips.Controls
 
         private void PreviewShow(object sender, EventArgs e)
         {
-            if ((e != null) && (!ModifierKeys.HasFlag(Keys.Control)))
-                return;
+            //if ((e != null) && (!ModifierKeys.HasFlag(Keys.Control)))
+            //    return;
 
             InPreview = true;
             ((ClipButton)sender).Select();

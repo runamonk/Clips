@@ -228,7 +228,7 @@
             // ClipsLinesPerRow
             // 
             this.ClipsLinesPerRow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClipsLinesPerRow.Location = new System.Drawing.Point(115, 48);
+            this.ClipsLinesPerRow.Location = new System.Drawing.Point(93, 44);
             this.ClipsLinesPerRow.Maximum = new decimal(new int[] {
             10,
             0,
@@ -252,7 +252,7 @@
             // ClipsMaxClips
             // 
             this.ClipsMaxClips.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClipsMaxClips.Location = new System.Drawing.Point(115, 19);
+            this.ClipsMaxClips.Location = new System.Drawing.Point(93, 19);
             this.ClipsMaxClips.Maximum = new decimal(new int[] {
             999,
             0,
@@ -276,7 +276,7 @@
             // Key
             // 
             this.Key.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.Key.Location = new System.Drawing.Point(63, 19);
+            this.Key.Location = new System.Drawing.Point(59, 19);
             this.Key.Name = "Key";
             this.Key.Size = new System.Drawing.Size(80, 20);
             this.Key.TabIndex = 0;
@@ -287,7 +287,7 @@
             // PreviewMaxLines
             // 
             this.PreviewMaxLines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PreviewMaxLines.Location = new System.Drawing.Point(115, 18);
+            this.PreviewMaxLines.Location = new System.Drawing.Point(94, 18);
             this.PreviewMaxLines.Maximum = new decimal(new int[] {
             9999,
             0,
@@ -301,7 +301,7 @@
             // PreviewPopupDelay
             // 
             this.PreviewPopupDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PreviewPopupDelay.Location = new System.Drawing.Point(115, 45);
+            this.PreviewPopupDelay.Location = new System.Drawing.Point(94, 43);
             this.PreviewPopupDelay.Maximum = new decimal(new int[] {
             9000,
             0,
@@ -316,7 +316,7 @@
             // 
             this.AutoHide.AutoSize = true;
             this.AutoHide.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AutoHide.Location = new System.Drawing.Point(6, 80);
+            this.AutoHide.Location = new System.Drawing.Point(6, 63);
             this.AutoHide.Name = "AutoHide";
             this.AutoHide.Size = new System.Drawing.Size(68, 17);
             this.AutoHide.TabIndex = 20;
@@ -328,7 +328,7 @@
             // 
             this.AutoSizeHeight.AutoSize = true;
             this.AutoSizeHeight.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.AutoSizeHeight.Location = new System.Drawing.Point(6, 57);
+            this.AutoSizeHeight.Location = new System.Drawing.Point(6, 46);
             this.AutoSizeHeight.Name = "AutoSizeHeight";
             this.AutoSizeHeight.Size = new System.Drawing.Size(98, 17);
             this.AutoSizeHeight.TabIndex = 2;
@@ -340,7 +340,7 @@
             // 
             this.OpenAtMouse.AutoSize = true;
             this.OpenAtMouse.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OpenAtMouse.Location = new System.Drawing.Point(6, 36);
+            this.OpenAtMouse.Location = new System.Drawing.Point(6, 29);
             this.OpenAtMouse.Name = "OpenAtMouse";
             this.OpenAtMouse.Size = new System.Drawing.Size(95, 17);
             this.OpenAtMouse.TabIndex = 1;
@@ -352,7 +352,7 @@
             // 
             this.Startup.AutoSize = true;
             this.Startup.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Startup.Location = new System.Drawing.Point(6, 15);
+            this.Startup.Location = new System.Drawing.Point(6, 12);
             this.Startup.Name = "Startup";
             this.Startup.Size = new System.Drawing.Size(109, 17);
             this.Startup.TabIndex = 0;
@@ -369,9 +369,9 @@
             this.groupBox2.Controls.Add(this.Cancel);
             this.groupBox2.Controls.Add(this.OK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 393);
+            this.groupBox2.Location = new System.Drawing.Point(5, 369);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(500, 54);
+            this.groupBox2.Size = new System.Drawing.Size(462, 54);
             this.groupBox2.TabIndex = 4;
             this.groupBox2.TabStop = false;
             // 
@@ -379,9 +379,9 @@
             // 
             this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Cancel.Location = new System.Drawing.Point(253, 14);
+            this.Cancel.Location = new System.Drawing.Point(234, 18);
             this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(75, 34);
+            this.Cancel.Size = new System.Drawing.Size(75, 25);
             this.Cancel.TabIndex = 1;
             this.Cancel.Text = "Cancel";
             this.Cancel.UseVisualStyleBackColor = true;
@@ -390,9 +390,9 @@
             // 
             this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OK.Location = new System.Drawing.Point(172, 14);
+            this.OK.Location = new System.Drawing.Point(153, 18);
             this.OK.Name = "OK";
-            this.OK.Size = new System.Drawing.Size(75, 34);
+            this.OK.Size = new System.Drawing.Size(75, 25);
             this.OK.TabIndex = 0;
             this.OK.Text = "OK";
             this.OK.UseVisualStyleBackColor = true;
@@ -405,7 +405,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(5, 5);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(500, 181);
+            this.panel1.Size = new System.Drawing.Size(462, 159);
             this.panel1.TabIndex = 6;
             // 
             // PanelTopRight
@@ -413,9 +413,9 @@
             this.PanelTopRight.Controls.Add(this.GroupPreview);
             this.PanelTopRight.Controls.Add(this.GroupOther);
             this.PanelTopRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelTopRight.Location = new System.Drawing.Point(310, 0);
+            this.PanelTopRight.Location = new System.Drawing.Point(286, 0);
             this.PanelTopRight.Name = "PanelTopRight";
-            this.PanelTopRight.Size = new System.Drawing.Size(190, 181);
+            this.PanelTopRight.Size = new System.Drawing.Size(176, 159);
             this.PanelTopRight.TabIndex = 10;
             // 
             // GroupPreview
@@ -425,9 +425,9 @@
             this.GroupPreview.Controls.Add(this.label7);
             this.GroupPreview.Controls.Add(this.PreviewPopupDelay);
             this.GroupPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupPreview.Location = new System.Drawing.Point(0, 104);
+            this.GroupPreview.Location = new System.Drawing.Point(0, 86);
             this.GroupPreview.Name = "GroupPreview";
-            this.GroupPreview.Size = new System.Drawing.Size(190, 77);
+            this.GroupPreview.Size = new System.Drawing.Size(176, 73);
             this.GroupPreview.TabIndex = 10;
             this.GroupPreview.TabStop = false;
             this.GroupPreview.Text = "Preview";
@@ -446,7 +446,7 @@
             // label7
             // 
             this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(13, 49);
+            this.label7.Location = new System.Drawing.Point(30, 45);
             this.label7.Margin = new System.Windows.Forms.Padding(0);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(56, 13);
@@ -463,16 +463,16 @@
             this.GroupOther.Dock = System.Windows.Forms.DockStyle.Top;
             this.GroupOther.Location = new System.Drawing.Point(0, 0);
             this.GroupOther.Name = "GroupOther";
-            this.GroupOther.Size = new System.Drawing.Size(190, 104);
+            this.GroupOther.Size = new System.Drawing.Size(176, 86);
             this.GroupOther.TabIndex = 8;
             this.GroupOther.TabStop = false;
             // 
             // PanelTopSep1
             // 
             this.PanelTopSep1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelTopSep1.Location = new System.Drawing.Point(305, 0);
+            this.PanelTopSep1.Location = new System.Drawing.Point(281, 0);
             this.PanelTopSep1.Name = "PanelTopSep1";
-            this.PanelTopSep1.Size = new System.Drawing.Size(5, 181);
+            this.PanelTopSep1.Size = new System.Drawing.Size(5, 159);
             this.PanelTopSep1.TabIndex = 9;
             // 
             // PanelTopLeft
@@ -482,7 +482,7 @@
             this.PanelTopLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelTopLeft.Location = new System.Drawing.Point(0, 0);
             this.PanelTopLeft.Name = "PanelTopLeft";
-            this.PanelTopLeft.Size = new System.Drawing.Size(305, 181);
+            this.PanelTopLeft.Size = new System.Drawing.Size(281, 159);
             this.PanelTopLeft.TabIndex = 8;
             // 
             // GroupClips
@@ -492,9 +492,9 @@
             this.GroupClips.Controls.Add(this.ClipsLinesPerRow);
             this.GroupClips.Controls.Add(this.ClipsMaxClips);
             this.GroupClips.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupClips.Location = new System.Drawing.Point(0, 83);
+            this.GroupClips.Location = new System.Drawing.Point(0, 67);
             this.GroupClips.Name = "GroupClips";
-            this.GroupClips.Size = new System.Drawing.Size(305, 98);
+            this.GroupClips.Size = new System.Drawing.Size(281, 92);
             this.GroupClips.TabIndex = 8;
             this.GroupClips.TabStop = false;
             this.GroupClips.Text = "Clips";
@@ -513,7 +513,7 @@
             // lblTextRows
             // 
             this.lblTextRows.AutoSize = true;
-            this.lblTextRows.Location = new System.Drawing.Point(13, 52);
+            this.lblTextRows.Location = new System.Drawing.Point(16, 48);
             this.lblTextRows.Margin = new System.Windows.Forms.Padding(0);
             this.lblTextRows.Name = "lblTextRows";
             this.lblTextRows.Size = new System.Drawing.Size(70, 13);
@@ -534,7 +534,7 @@
             this.GroupHotkey.Dock = System.Windows.Forms.DockStyle.Top;
             this.GroupHotkey.Location = new System.Drawing.Point(0, 0);
             this.GroupHotkey.Name = "GroupHotkey";
-            this.GroupHotkey.Size = new System.Drawing.Size(305, 83);
+            this.GroupHotkey.Size = new System.Drawing.Size(281, 67);
             this.GroupHotkey.TabIndex = 7;
             this.GroupHotkey.TabStop = false;
             this.GroupHotkey.Text = "Popup Hotkey";
@@ -542,7 +542,7 @@
             // Clear
             // 
             this.Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Clear.Location = new System.Drawing.Point(153, 19);
+            this.Clear.Location = new System.Drawing.Point(148, 19);
             this.Clear.Name = "Clear";
             this.Clear.Size = new System.Drawing.Size(56, 20);
             this.Clear.TabIndex = 7;
@@ -570,7 +570,7 @@
             this.label2.Size = new System.Drawing.Size(47, 13);
             this.label2.TabIndex = 1;
             this.label2.Text = "Modifier";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Shift
             // 
@@ -598,7 +598,7 @@
             // 
             this.Control.AutoSize = true;
             this.Control.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Control.Location = new System.Drawing.Point(63, 45);
+            this.Control.Location = new System.Drawing.Point(59, 45);
             this.Control.Name = "Control";
             this.Control.Size = new System.Drawing.Size(56, 17);
             this.Control.TabIndex = 1;
@@ -613,7 +613,7 @@
             this.label1.Size = new System.Drawing.Size(47, 13);
             this.label1.TabIndex = 6;
             this.label1.Text = "Key";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // PanelColors
             // 
@@ -625,7 +625,7 @@
             this.PanelColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelColors.Location = new System.Drawing.Point(3, 49);
             this.PanelColors.Name = "PanelColors";
-            this.PanelColors.Size = new System.Drawing.Size(494, 155);
+            this.PanelColors.Size = new System.Drawing.Size(456, 153);
             this.PanelColors.TabIndex = 1;
             // 
             // GroupColorPreview
@@ -637,7 +637,7 @@
             this.GroupColorPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupColorPreview.Location = new System.Drawing.Point(343, 0);
             this.GroupColorPreview.Name = "GroupColorPreview";
-            this.GroupColorPreview.Size = new System.Drawing.Size(151, 155);
+            this.GroupColorPreview.Size = new System.Drawing.Size(113, 153);
             this.GroupColorPreview.TabIndex = 8;
             this.GroupColorPreview.TabStop = false;
             this.GroupColorPreview.Text = "Preview";
@@ -667,7 +667,7 @@
             this.PanelColorSep2.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep2.Location = new System.Drawing.Point(338, 0);
             this.PanelColorSep2.Name = "PanelColorSep2";
-            this.PanelColorSep2.Size = new System.Drawing.Size(5, 155);
+            this.PanelColorSep2.Size = new System.Drawing.Size(5, 153);
             this.PanelColorSep2.TabIndex = 7;
             // 
             // GroupColorMenu
@@ -685,7 +685,7 @@
             this.GroupColorMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorMenu.Location = new System.Drawing.Point(145, 0);
             this.GroupColorMenu.Name = "GroupColorMenu";
-            this.GroupColorMenu.Size = new System.Drawing.Size(193, 155);
+            this.GroupColorMenu.Size = new System.Drawing.Size(193, 153);
             this.GroupColorMenu.TabIndex = 6;
             this.GroupColorMenu.TabStop = false;
             this.GroupColorMenu.Text = "Menu";
@@ -745,7 +745,7 @@
             this.PanelColorSep1.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep1.Location = new System.Drawing.Point(140, 0);
             this.PanelColorSep1.Name = "PanelColorSep1";
-            this.PanelColorSep1.Size = new System.Drawing.Size(5, 155);
+            this.PanelColorSep1.Size = new System.Drawing.Size(5, 153);
             this.PanelColorSep1.TabIndex = 5;
             // 
             // GroupColorClips
@@ -761,7 +761,7 @@
             this.GroupColorClips.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorClips.Location = new System.Drawing.Point(0, 0);
             this.GroupColorClips.Name = "GroupColorClips";
-            this.GroupColorClips.Size = new System.Drawing.Size(140, 155);
+            this.GroupColorClips.Size = new System.Drawing.Size(140, 153);
             this.GroupColorClips.TabIndex = 0;
             this.GroupColorClips.TabStop = false;
             this.GroupColorClips.Text = "Clips";
@@ -811,9 +811,9 @@
             this.GroupColors.Controls.Add(this.PanelColors);
             this.GroupColors.Controls.Add(this.panel5);
             this.GroupColors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupColors.Location = new System.Drawing.Point(5, 186);
+            this.GroupColors.Location = new System.Drawing.Point(5, 164);
             this.GroupColors.Name = "GroupColors";
-            this.GroupColors.Size = new System.Drawing.Size(500, 207);
+            this.GroupColors.Size = new System.Drawing.Size(462, 205);
             this.GroupColors.TabIndex = 7;
             this.GroupColors.TabStop = false;
             this.GroupColors.Text = "Colors";
@@ -826,7 +826,7 @@
             this.panel5.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel5.Location = new System.Drawing.Point(3, 16);
             this.panel5.Name = "panel5";
-            this.panel5.Size = new System.Drawing.Size(494, 33);
+            this.panel5.Size = new System.Drawing.Size(456, 33);
             this.panel5.TabIndex = 0;
             // 
             // label14
@@ -866,7 +866,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(510, 452);
+            this.ClientSize = new System.Drawing.Size(472, 428);
             this.Controls.Add(this.GroupColors);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);

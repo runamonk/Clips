@@ -344,6 +344,7 @@ namespace Clips
 
         private Process RunningInstance()
         {
+#if !DEBUG            
             Process current = Process.GetCurrentProcess();
             Process[] processes = Process.GetProcessesByName(current.ProcessName);
 
@@ -351,6 +352,8 @@ namespace Clips
                 if (process.Id != current.Id)
                     if (Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == current.MainModule.FileName)
                         return process;
+            
+#endif
             return null;
         }
 
