@@ -20,30 +20,6 @@ namespace Clips
 
         private int FHeight = 0;
         private int FWidth = 0;
-        private const int SW_SHOWNOACTIVATE = 4;
-        private const int HWND_TOPMOST = -1;
-        private const uint SWP_NOACTIVATE = 0x0010;
-
-        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
-        static extern bool SetWindowPos(
-             int hWnd,             // Window handle
-             int hWndInsertAfter,  // Placement-order handle
-             int X,                // Horizontal position
-             int Y,                // Vertical position
-             int cx,               // Width
-             int cy,               // Height
-             uint uFlags);         // Window positioning flags
-
-        [DllImport("user32.dll")]
-        static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        static void ShowInactiveTopmost(Form frm)
-        {
-            ShowWindow(frm.Handle, SW_SHOWNOACTIVATE);
-            SetWindowPos(frm.Handle.ToInt32(), HWND_TOPMOST,
-            frm.Left, frm.Top, frm.Width, frm.Height,
-            SWP_NOACTIVATE);
-        }
 
         protected override CreateParams CreateParams
         {
@@ -81,7 +57,7 @@ namespace Clips
                     PreviewText.Text = text;
 
                 if (Funcs.IsUrl(PreviewText.Text))
-                    PreviewText.AppendText("\n Control + click to open.");
+                    PreviewText.AppendText("\n [Control + click to open.]");
 
                 SizeF ss = TextRenderer.MeasureText(PreviewText.Text, PreviewText.Font);
                 FHeight = Convert.ToInt32(ss.Height) + 6;
@@ -119,7 +95,7 @@ namespace Clips
         private void TimerShowForm_Tick(object sender, EventArgs e)
         {
             TimerShowForm.Enabled = false;
-            ShowInactiveTopmost(this);
+            Funcs.ShowInactiveTopmost(this);
         }
 
         private void Preview_VisibleChanged(object sender, EventArgs e)
