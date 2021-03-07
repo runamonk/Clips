@@ -12,9 +12,6 @@ D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.csproj.CoreCompileInputs.cache
 D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.exe
 D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.pdb
 D:\Dropbox\code\C#\Projects\Clips\obj\Debug\Clips.csprojAssemblyReference.cache
-D:\Dropbox\code\C#\Clips\bin\Debug\Clips.exe.config
-D:\Dropbox\code\C#\Clips\bin\Debug\Clips.exe
-D:\Dropbox\code\C#\Clips\bin\Debug\Clips.pdb
 D:\Dropbox\code\C#\Clips\obj\Debug\Clips.About.resources
 D:\Dropbox\code\C#\Clips\obj\Debug\Clips.Preview.resources
 D:\Dropbox\code\C#\Clips\obj\Debug\Clips.Settings.resources
@@ -23,7 +20,10 @@ D:\Dropbox\code\C#\Clips\obj\Debug\Clips.Properties.Resources.resources
 D:\Dropbox\code\C#\Clips\obj\Debug\WK.Libraries.SharpClipboardNS.Views.ClipboardHandle.resources
 D:\Dropbox\code\C#\Clips\obj\Debug\Clips.csproj.GenerateResource.cache
 D:\Dropbox\code\C#\Clips\obj\Debug\Clips.csproj.CoreCompileInputs.cache
-D:\Dropbox\code\C#\Clips\obj\Debug\Clips.exe
-D:\Dropbox\code\C#\Clips\obj\Debug\Clips.pdb
 D:\Dropbox\code\C#\Clips\obj\Debug\Interop.IWshRuntimeLibrary.dll
 D:\Dropbox\code\C#\Clips\obj\Debug\Clips.csproj.ResolveComReference.cache
+D:\Dropbox\code\C#\Clips\bin\Debug\zuulClips.exe.config
+D:\Dropbox\code\C#\Clips\bin\Debug\zuulClips.exe
+D:\Dropbox\code\C#\Clips\bin\Debug\zuulClips.pdb
+D:\Dropbox\code\C#\Clips\obj\Debug\zuulClips.exe
+D:\Dropbox\code\C#\Clips\obj\Debug\zuulClips.pdb
