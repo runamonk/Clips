@@ -97,7 +97,6 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.TopMost = true;
             this.VisibleChanged += new System.EventHandler(this.Preview_VisibleChanged);
             this.MainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).EndInit();
