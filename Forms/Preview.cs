@@ -56,12 +56,22 @@ namespace Clips
                 else
                     PreviewText.Text = text;
 
+                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .50), (int)(Screen.PrimaryScreen.WorkingArea.Height * .50));
+
                 if (Funcs.IsUrl(PreviewText.Text))
                     PreviewText.AppendText("\n [Control + click to open.]");
 
                 SizeF ss = TextRenderer.MeasureText(PreviewText.Text, PreviewText.Font);
-                FHeight = Convert.ToInt32(ss.Height) + 6;
-                FWidth = Convert.ToInt32(ss.Width) + 6;
+
+                if (ss.Height+6 > MaximumSize.Height)
+                    FHeight = MaximumSize.Height;
+                else
+                    FHeight = Convert.ToInt32(ss.Height) + 6;
+
+                if (ss.Width + 6 > MaximumSize.Width)
+                    FWidth = MaximumSize.Height;
+                else
+                    FWidth = Convert.ToInt32(ss.Width) + 6;
             }
             else
             if (image != null)
