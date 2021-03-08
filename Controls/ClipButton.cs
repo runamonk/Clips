@@ -72,15 +72,15 @@ namespace Clips
         {
             base.OnPaint(pea);
 
-            if (!IsMenuButton)
-            {
-                // Defines pen 
-                Pen pen = new Pen(ControlPaint.Dark(ClipsConfig.ClipsRowBackColor, 25));
+            //if (!IsMenuButton)
+            //{
+            //    // Defines pen 
+            //    Pen pen = new Pen(ControlPaint.Dark(ClipsConfig.ClipsRowBackColor, 25));
                                
-                PointF pt1 = new PointF(0F, Height-1);
-                PointF pt2 = new PointF(0F, Height);
-                pea.Graphics.DrawLine(pen, pt1, pt2);
-            }
+            //    PointF pt1 = new PointF(0F, Height-1);
+            //    PointF pt2 = new PointF(0F, Height);
+            //    pea.Graphics.DrawLine(pen, pt1, pt2);
+            //}
         }
 
         protected override bool ShowFocusCues
