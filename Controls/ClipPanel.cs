@@ -18,7 +18,6 @@ namespace Clips.Controls
         private string LastText { get; set; }
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
-        public bool InPreview { get; set; }
         public bool MonitorClipboard
         {
             get 
@@ -389,12 +388,10 @@ namespace Clips.Controls
         private void PreviewHide(object sender, EventArgs e)
         {
             PreviewForm.HidePreview();
-            InPreview = false;
         }
 
         private void PreviewShow(object sender, EventArgs e)
         {
-            InPreview = true;
             PreviewForm.ShowPreview(((ClipButton)sender));
         }
 

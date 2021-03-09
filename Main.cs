@@ -135,7 +135,7 @@ namespace Clips
         {
             inAbout = true;
             About AboutForm = new About(Config);
-            AboutForm.Show(this);
+            AboutForm.ShowDialog(this);
             inAbout = false;
         }
 
@@ -245,7 +245,7 @@ namespace Clips
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
             {
-                ToggleShow(true);
+                ToggleShow(false);
             }
             base.WndProc(ref m);
         }
@@ -371,7 +371,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
+            if ((!Override) && (inClose || inAbout || Clips.InMenu || inMenu || inSettings))
                 return;
             else
             {
