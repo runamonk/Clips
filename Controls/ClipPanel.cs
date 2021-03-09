@@ -18,6 +18,7 @@ namespace Clips.Controls
         private string LastText { get; set; }
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
+        public bool InPreview { get; set; }
         public bool MonitorClipboard
         {
             get 
@@ -37,9 +38,8 @@ namespace Clips.Controls
         private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
 
         public ClipPanel(Config myConfig, bool isHeader = false)
-        {            
+        {
             IsHeader = isHeader;
-            ParentChanged += new EventHandler(OnParentChanged);
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);
@@ -379,19 +379,15 @@ namespace Clips.Controls
             InMenu = false;
         }
 
-        private void OnParentChanged(object sender, EventArgs e)
-        {
-            if (!IsHeader)
-                Parent.VisibleChanged += new EventHandler(OnVisibleChanged);
-        }
-
         private void PreviewHide(object sender, EventArgs e)
         {
             PreviewForm.HidePreview();
+            InPreview = false;
         }
 
         private void PreviewShow(object sender, EventArgs e)
         {
+            InPreview = true;
             PreviewForm.ShowPreview(((ClipButton)sender));
         }
 
@@ -403,9 +399,5 @@ namespace Clips.Controls
                 BackColor = ClipsConfig.ClipsBackColor;
         }
 
-        private void OnVisibleChanged(object sender, EventArgs e)
-        {
-            PreviewHide(null, null);
-        }
     }
 }
