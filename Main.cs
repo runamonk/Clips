@@ -135,7 +135,7 @@ namespace Clips
         {
             inAbout = true;
             About AboutForm = new About(Config);
-            AboutForm.Show(this);
+            AboutForm.ShowDialog(this);
             inAbout = false;
         }
 
@@ -205,6 +205,7 @@ namespace Clips
                     if (!b.Visible)
                         b.Visible = true;
                 }
+                Clips.Controls[Clips.Controls.Count-1].Select();
             }
             else
             {
@@ -245,7 +246,7 @@ namespace Clips
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
             {
-                ToggleShow();
+                ToggleShow(false);
             }
             base.WndProc(ref m);
         }
@@ -371,7 +372,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
+            if ((!Override) && (inClose || inAbout || Clips.InMenu || inMenu || inSettings))
                 return;
             else
             {
@@ -379,6 +380,7 @@ namespace Clips
                 {
                     Opacity = 0;
                     KeyPreview = false;
+                    base.OnVisibleChanged(null);
                 }
                 else
                 {
@@ -387,12 +389,11 @@ namespace Clips
                         Funcs.MoveFormToCursor(this, false);
                     
                     Opacity = 100;
-                    //Activate();
+                    Activate(); //Force the form to take focus.
                     KeyPreview = true;
                 }
             }
         }
-
         #endregion
 
     } // Main
