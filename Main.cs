@@ -270,7 +270,7 @@ namespace Clips
             }
 
             // select the first control.
-            if (Clips.Controls.Count > 0)
+            if ((ScrollToTop) && (Clips.Controls.Count > 0))
                 Clips.Controls[Clips.Controls.Count-1].Select();
         }
 
