@@ -245,7 +245,7 @@ namespace Clips
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
             {
-                ToggleShow();
+                ToggleShow(true);
             }
             base.WndProc(ref m);
         }
@@ -387,12 +387,11 @@ namespace Clips
                         Funcs.MoveFormToCursor(this, false);
                     
                     Opacity = 100;
-                    //Activate(); Do we want the form to take focus?
+                    Activate(); //Force the form to take focus.
                     KeyPreview = true;
                 }
             }
         }
-
         #endregion
 
     } // Main
