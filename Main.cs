@@ -94,15 +94,20 @@ namespace Clips
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((e.KeyCode == Keys.Delete) || (e.KeyCode == Keys.Back))
+            if ((SearchClips.Text == "") && (e.KeyCode == Keys.Escape))
             {
-                if (SearchClips.Text.Length > 0)
-                    SearchClips.Text = SearchClips.Text.Substring(0, (SearchClips.Text.Length - 1));
+                    ToggleShow(true);
             }
             else
             if (e.KeyCode == Keys.Escape)
             {
                 SearchClips.Text = "";
+            }
+            else
+            if ((e.KeyCode == Keys.Delete) || (e.KeyCode == Keys.Back))
+            {
+                if (SearchClips.Text.Length > 0)
+                    SearchClips.Text = SearchClips.Text.Substring(0, (SearchClips.Text.Length - 1));
             }
         }
 
@@ -382,7 +387,7 @@ namespace Clips
                         Funcs.MoveFormToCursor(this, false);
                     
                     Opacity = 100;
-                    Activate();
+                    //Activate();
                     KeyPreview = true;
                 }
             }

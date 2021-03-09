@@ -38,9 +38,10 @@ namespace Clips
             Hide();
         }
 
-        private void Close_Click(object sender, EventArgs e)
+        private void About_KeyDown(object sender, KeyEventArgs e)
         {
-            Hide();
+            if (e.KeyCode == Keys.Escape)
+                Hide();
         }
     }
 }

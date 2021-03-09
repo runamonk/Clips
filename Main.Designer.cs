@@ -57,19 +57,20 @@
             this.pMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pMain.Location = new System.Drawing.Point(0, 28);
             this.pMain.Name = "pMain";
-            this.pMain.Size = new System.Drawing.Size(184, 33);
+            this.pMain.Size = new System.Drawing.Size(184, 56);
             this.pMain.TabIndex = 4;
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(184, 61);
+            this.ClientSize = new System.Drawing.Size(184, 84);
             this.ControlBox = false;
             this.Controls.Add(this.pMain);
             this.Controls.Add(this.pTop);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.KeyPreview = true;
             this.MaximumSize = new System.Drawing.Size(9999, 9999);
             this.MinimumSize = new System.Drawing.Size(200, 100);
             this.Name = "Main";
