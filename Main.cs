@@ -205,6 +205,7 @@ namespace Clips
                     if (!b.Visible)
                         b.Visible = true;
                 }
+                Clips.Controls[Clips.Controls.Count-1].Select();
             }
             else
             {
