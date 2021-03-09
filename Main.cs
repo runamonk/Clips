@@ -387,7 +387,7 @@ namespace Clips
                         Funcs.MoveFormToCursor(this, false);
                     
                     Opacity = 100;
-                    //Activate();
+                    //Activate(); Do we want the form to take focus?
                     KeyPreview = true;
                 }
             }
