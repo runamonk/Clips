@@ -13,11 +13,12 @@ namespace Clips
 {
     public partial class Preview : Form
     {
-        public Preview()
+        public Preview(Config myConfig)
         {
             InitializeComponent();
+            ClipsConfig = myConfig;
         }
-
+        private Config ClipsConfig;
         private int FHeight = 0;
         private int FWidth = 0;
 
@@ -38,6 +39,9 @@ namespace Clips
 
             if (!string.IsNullOrEmpty(text))
             {
+                BackColor = ClipsConfig.PreviewBackColor;
+                ForeColor = ClipsConfig.PreviewFontColor;
+
                 PreviewText.BackColor = BackColor;
                 PreviewText.ForeColor = ForeColor;
                 PreviewText.Clear();

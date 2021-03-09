@@ -32,7 +32,7 @@ namespace Clips.Controls
         }
  
         private ClipMenu MenuRC;
-        private Preview PreviewForm = new Preview();
+        private Preview PreviewForm;
         private SharpClipboard clipboard;
 
         private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
@@ -42,7 +42,7 @@ namespace Clips.Controls
             IsHeader = isHeader;
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
-
+            PreviewForm = new Preview(ClipsConfig);
             MenuRC = new ClipMenu(myConfig);
             MenuRC.ShowCheckMargin = false;
             MenuRC.ShowImageMargin = false;
@@ -400,9 +400,6 @@ namespace Clips.Controls
 
             InPreview = true;
             ((ClipButton)sender).Select();
-
-            PreviewForm.BackColor = ClipsConfig.PreviewBackColor;
-            PreviewForm.ForeColor = ClipsConfig.PreviewFontColor;
             PreviewForm.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, ClipsConfig.PreviewPopupDelay, ClipsConfig.PreviewMaxLines);
         }
 
