@@ -379,6 +379,7 @@ namespace Clips
                 {
                     Opacity = 0;
                     KeyPreview = false;
+                    base.OnVisibleChanged(null);
                 }
                 else
                 {

@@ -408,7 +408,7 @@ namespace Clips.Controls
 
         private void OnVisibleChanged(object sender, EventArgs e)
         {
-            PreviewHide(sender, e);
+            PreviewHide(null, null);
         }
     }
 }
