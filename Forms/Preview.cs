@@ -32,33 +32,31 @@ namespace Clips
             }
         }
 
-        public void ShowPreview(string text, Image image, int popupDelay, int maxLines)
+        public void ShowPreview(ClipButton clipButton)
         {
-            if ((string.IsNullOrEmpty(text) && (image == null)) || (popupDelay == 0))
+            if ((string.IsNullOrEmpty(clipButton.FullText) && (clipButton.FullImage == null)) || (ClipsConfig.PreviewPopupDelay == 0))
                 return;
 
-            if (!string.IsNullOrEmpty(text))
+            if (!string.IsNullOrEmpty(clipButton.FullText))
             {
                 BackColor = ClipsConfig.PreviewBackColor;
                 ForeColor = ClipsConfig.PreviewFontColor;
-
                 PreviewText.BackColor = BackColor;
                 PreviewText.ForeColor = ForeColor;
                 PreviewText.Clear();
-
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
 
-                string[] s = text.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
+                string[] s = clipButton.FullText.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
                 int i = 0;
-                if (s.Count() > maxLines)
-                    while (i <= maxLines)
+                if (s.Count() > ClipsConfig.PreviewMaxLines)
+                    while (i <= ClipsConfig.PreviewMaxLines)
                     {
                         PreviewText.AppendText(s[i]);
                         i++;
                     }
                 else
-                    PreviewText.Text = text;
+                    PreviewText.Text = clipButton.FullText;
 
                 MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .50), (int)(Screen.PrimaryScreen.WorkingArea.Height * .50));
 
@@ -78,25 +76,25 @@ namespace Clips
                     FWidth = Convert.ToInt32(ss.Width) + 6;
             }
             else
-            if (image != null)
+            if (clipButton.FullImage != null)
             {
-                PreviewImage.Image = image;
+                PreviewImage.Image = clipButton.FullImage;
                 PreviewText.Visible = false;
                 PreviewImage.Visible = true;
 
                 MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width*.50), (int)(Screen.PrimaryScreen.WorkingArea.Height*.50));
                 
-                if (image.Height > MaximumSize.Height)
+                if (clipButton.FullImage.Height > MaximumSize.Height)
                     FHeight = MaximumSize.Height;
                 else
-                    FHeight = image.Height;
+                    FHeight = clipButton.FullImage.Height;
 
-                if (image.Width > MaximumSize.Width)
+                if (clipButton.FullImage.Width > MaximumSize.Width)
                     FWidth = MaximumSize.Width;
                 else
-                    FWidth = image.Width;
+                    FWidth = clipButton.FullImage.Width;
             }
-            TimerShowForm.Interval = popupDelay;
+            TimerShowForm.Interval = ClipsConfig.PreviewPopupDelay;
             TimerShowForm.Enabled = true; 
         }
 

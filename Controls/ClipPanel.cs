@@ -46,7 +46,6 @@ namespace Clips.Controls
             MenuRC = new ClipMenu(myConfig);
             MenuRC.ShowCheckMargin = false;
             MenuRC.ShowImageMargin = false;
-            Funcs.AddMenuItem(MenuRC, "Preview", MenuPreview_Click);
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
             LoadItems();
@@ -181,9 +180,8 @@ namespace Clips.Controls
                 if (Clip.FullText == LastText)
                     LastText = null;
 
-                Controls.Remove(Clip);
-
-                GC.Collect();
+                Controls[Controls.IndexOf(Clip)].Dispose();
+                //Controls.Remove(Clip);
             }
 
             SuspendLayout();
@@ -288,7 +286,8 @@ namespace Clips.Controls
             ClipButton cb = ((ClipButton)Controls[0]);
             if (File.Exists(cb.FileName))
                 File.Delete(cb.FileName);
-            Controls.RemoveAt(0);
+            Controls[0].Dispose();
+            //Controls.RemoveAt(0);
         }
 
         public void LoadItems()
@@ -346,18 +345,11 @@ namespace Clips.Controls
             if (b.FullText == LastText)
                 LastText = null;
 
-            Controls.Remove(b);
-            GC.Collect();
+            Controls[Controls.IndexOf(b)].Dispose();
+            //Controls.Remove(b);
 
             if (OnClipDeleted != null)
                 OnClipDeleted();
-            InMenu = false;
-        }
-
-        private void MenuPreview_Click(object sender, EventArgs e)
-        {
-            InMenu = true;
-            PreviewShow(((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl), null);
             InMenu = false;
         }
 
@@ -395,12 +387,8 @@ namespace Clips.Controls
 
         private void PreviewShow(object sender, EventArgs e)
         {
-            //if ((e != null) && (!ModifierKeys.HasFlag(Keys.Control)))
-            //    return;
-
             InPreview = true;
-            ((ClipButton)sender).Select();
-            PreviewForm.ShowPreview(((ClipButton)sender).FullText, ((ClipButton)sender).FullImage, ClipsConfig.PreviewPopupDelay, ClipsConfig.PreviewMaxLines);
+            PreviewForm.ShowPreview(((ClipButton)sender));
         }
 
         private void SetColors()
