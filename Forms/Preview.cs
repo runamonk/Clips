@@ -17,9 +17,12 @@ namespace Clips
         {
             InitializeComponent();
             ClipsConfig = myConfig;
+            AutoSize = false;
+            SizeF ss = TextRenderer.MeasureText("X", PreviewText.Font);
+            FTextHeight = Convert.ToInt32(ss.Height) + 3;
         }
         private Config ClipsConfig;
-
+        private int FTextHeight = 0;
         protected override CreateParams CreateParams
         {
             get {
@@ -44,46 +47,29 @@ namespace Clips
             ForeColor = ClipsConfig.PreviewFontColor;
             PreviewText.BackColor = ClipsConfig.PreviewBackColor;
             PreviewText.ForeColor = ClipsConfig.PreviewFontColor;
+            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+            PreviewText.Dock = DockStyle.Fill;
+            PreviewImage.Dock = DockStyle.Fill;
 
             if (!string.IsNullOrEmpty(clipButton.FullText))
             {
-                PreviewText.Clear();
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
+                PreviewText.Text = clipButton.FullText;
+                Height = PreviewText.PreferredSize.Height + 6;
+                Width = PreviewText.PreferredSize.Width + 6;
+                int rows = 1;
 
-                string[] s = clipButton.FullText.TrimStart().Split(new string[] { "\n" }, StringSplitOptions.None);
-                int i = 0;
-                if (s.Count() > ClipsConfig.PreviewMaxLines)
-                    while (i <= ClipsConfig.PreviewMaxLines)
-                    {
-                        PreviewText.AppendText(s[i]);
-                        i++;
-                    }
-                else
-                    PreviewText.Text = clipButton.FullText;
-
-                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
-
-                if (Funcs.IsUrl(PreviewText.Text))
-                    PreviewText.AppendText("\n [Control + click to open.]");
-
-                SizeF ss = TextRenderer.MeasureText(PreviewText.Text, PreviewText.Font);
-
-                if (ss.Height+6 > MaximumSize.Height)
-                    Height = MaximumSize.Height;
-                else
-                    Height = Convert.ToInt32(ss.Height) + 6;
-
-                if (ss.Width + 6 > MaximumSize.Width)
-                    Width = MaximumSize.Height;
-                else
-                    Width = Convert.ToInt32(ss.Width) + 6;
+                // handle long lines that are wrapped, expand height so we can see the text.
+                if (PreviewText.PreferredSize.Width > MaximumSize.Width)
+                {
+                    rows = (PreviewText.PreferredSize.Width / MaximumSize.Width);
+                    Height = FTextHeight * rows;
+                }
             }
             else
             if (clipButton.FullImage != null)
             {
-
-                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
                 PreviewImage.Image = Funcs.ScaleImage(clipButton.FullImage, MaximumSize.Width, MaximumSize.Height);
                 PreviewText.Visible = false;
                 PreviewImage.Visible = true;
@@ -97,7 +83,7 @@ namespace Clips
             int MFTop = (MainForm.Top);
 
             this.Top = MFTop;
-            if ((MFRight+this.Width) < Screen.PrimaryScreen.WorkingArea.Width)
+            if ((MFRight + this.Width) < Screen.PrimaryScreen.WorkingArea.Width)
                 this.Left = MFRight;
             else
                 this.Left = MFLeft;
@@ -109,6 +95,8 @@ namespace Clips
         public void HidePreview()
         {
             TimerShowForm.Enabled = false;
+            PreviewText.Text = "";
+            PreviewImage.Image = null;
             Hide();
         }
 
@@ -116,11 +104,6 @@ namespace Clips
         {
             TimerShowForm.Enabled = false;
             Funcs.ShowInactiveTopmost(this);
-        }
-
-        private void Preview_VisibleChanged(object sender, EventArgs e)
-        {
-            
         }
     }
 }
