@@ -30,10 +30,8 @@
         {
             this.components = new System.ComponentModel.Container();
             this.TimerShowForm = new System.Windows.Forms.Timer(this.components);
-            this.MainPanel = new System.Windows.Forms.Panel();
             this.PreviewImage = new System.Windows.Forms.PictureBox();
             this.PreviewText = new System.Windows.Forms.RichTextBox();
-            this.MainPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -42,63 +40,49 @@
             this.TimerShowForm.Interval = 500;
             this.TimerShowForm.Tick += new System.EventHandler(this.TimerShowForm_Tick);
             // 
-            // MainPanel
-            // 
-            this.MainPanel.Controls.Add(this.PreviewImage);
-            this.MainPanel.Controls.Add(this.PreviewText);
-            this.MainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.MainPanel.Location = new System.Drawing.Point(0, 0);
-            this.MainPanel.Name = "MainPanel";
-            this.MainPanel.Padding = new System.Windows.Forms.Padding(3);
-            this.MainPanel.Size = new System.Drawing.Size(50, 25);
-            this.MainPanel.TabIndex = 1;
-            // 
             // PreviewImage
             // 
-            this.PreviewImage.BackColor = System.Drawing.SystemColors.Control;
-            this.PreviewImage.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PreviewImage.Location = new System.Drawing.Point(3, 3);
+            this.PreviewImage.BackColor = System.Drawing.Color.Red;
+            this.PreviewImage.Location = new System.Drawing.Point(0, 0);
+            this.PreviewImage.Margin = new System.Windows.Forms.Padding(0);
             this.PreviewImage.Name = "PreviewImage";
-            this.PreviewImage.Size = new System.Drawing.Size(44, 19);
+            this.PreviewImage.Size = new System.Drawing.Size(10, 10);
             this.PreviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
-            this.PreviewImage.TabIndex = 4;
+            this.PreviewImage.TabIndex = 7;
             this.PreviewImage.TabStop = false;
             this.PreviewImage.Visible = false;
             // 
             // PreviewText
             // 
+            this.PreviewText.BackColor = System.Drawing.Color.Blue;
             this.PreviewText.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.PreviewText.DetectUrls = false;
-            this.PreviewText.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PreviewText.Location = new System.Drawing.Point(3, 3);
+            this.PreviewText.Location = new System.Drawing.Point(20, 0);
+            this.PreviewText.Margin = new System.Windows.Forms.Padding(0);
             this.PreviewText.Name = "PreviewText";
             this.PreviewText.ReadOnly = true;
             this.PreviewText.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.PreviewText.Size = new System.Drawing.Size(44, 19);
-            this.PreviewText.TabIndex = 3;
-            this.PreviewText.TabStop = false;
+            this.PreviewText.Size = new System.Drawing.Size(10, 10);
+            this.PreviewText.TabIndex = 8;
             this.PreviewText.Text = "";
-            this.PreviewText.Visible = false;
-            this.PreviewText.WordWrap = false;
             // 
             // Preview
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
             this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AutoValidate = System.Windows.Forms.AutoValidate.Disable;
-            this.ClientSize = new System.Drawing.Size(50, 25);
-            this.Controls.Add(this.MainPanel);
+            this.ClientSize = new System.Drawing.Size(100, 100);
+            this.ControlBox = false;
+            this.Controls.Add(this.PreviewText);
+            this.Controls.Add(this.PreviewImage);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.MaximizeBox = false;
             this.MaximumSize = new System.Drawing.Size(100, 100);
             this.MinimizeBox = false;
             this.Name = "Preview";
+            this.Padding = new System.Windows.Forms.Padding(3);
             this.ShowIcon = false;
-            this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-            this.VisibleChanged += new System.EventHandler(this.Preview_VisibleChanged);
-            this.MainPanel.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).EndInit();
             this.ResumeLayout(false);
 
@@ -106,8 +90,7 @@
 
         #endregion
         private System.Windows.Forms.Timer TimerShowForm;
-        private System.Windows.Forms.Panel MainPanel;
-        private System.Windows.Forms.RichTextBox PreviewText;
         private System.Windows.Forms.PictureBox PreviewImage;
+        private System.Windows.Forms.RichTextBox PreviewText;
     }
 }
