@@ -246,7 +246,7 @@ namespace Clips
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
             {
-                ToggleShow(false);
+                ToggleShow(true);
             }
             base.WndProc(ref m);
         }
