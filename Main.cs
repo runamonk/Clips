@@ -372,7 +372,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && (inClose || inAbout || Clips.InMenu || inMenu || inSettings))
+            if ((!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
                 return;
             else
             {
@@ -380,7 +380,6 @@ namespace Clips
                 {
                     Opacity = 0;
                     KeyPreview = false;
-                    base.OnVisibleChanged(null);
                 }
                 else
                 {
@@ -389,12 +388,18 @@ namespace Clips
                         Funcs.MoveFormToCursor(this, false);
                     
                     Opacity = 100;
-                    Activate(); //Force the form to take focus.
+                    Activate();
                     KeyPreview = true;
                 }
             }
         }
+
         #endregion
 
+        private void Main_VisibleChanged(object sender, EventArgs e)
+        {
+            if (Visible)
+                BringToFront();
+        }
     } // Main
 }
