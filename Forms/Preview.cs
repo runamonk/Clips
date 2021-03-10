@@ -63,7 +63,8 @@ namespace Clips
                 // handle long lines that are wrapped, expand height so we can see the text.
                 if (PreviewText.PreferredSize.Width > MaximumSize.Width)
                 {
-                    rows = Convert.ToInt32(Math.Round((Double)PreviewText.PreferredSize.Width / (Double)MaximumSize.Width));
+                    //rows = Convert.ToInt32(Math.Round((Double)PreviewText.PreferredSize.Width / (Double)MaximumSize.Width), (decimal));
+                    rows = (Convert.ToInt32(Math.Ceiling((Double)PreviewText.PreferredSize.Width / (Double)MaximumSize.Width) * 100) / 100); // Force a round up regardless of .5 or .1
                     Height = FTextHeight * rows  + PreviewText.PreferredSize.Height;
                 }
             }
