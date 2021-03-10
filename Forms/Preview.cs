@@ -64,7 +64,7 @@ namespace Clips
                 if (PreviewText.PreferredSize.Width > MaximumSize.Width)
                 {
                     rows = (PreviewText.PreferredSize.Width / MaximumSize.Width);
-                    Height = FTextHeight * rows;
+                    Height = FTextHeight * rows + PreviewText.PreferredSize.Height;
                 }
             }
             else
