@@ -19,8 +19,6 @@ namespace Clips
             ClipsConfig = myConfig;
         }
         private Config ClipsConfig;
-        private int FHeight = 0;
-        private int FWidth = 0;
 
         protected override CreateParams CreateParams
         {
@@ -32,17 +30,23 @@ namespace Clips
             }
         }
 
+        protected override bool ShowWithoutActivation
+        {
+            get { return true; }
+        }
+
         public void ShowPreview(ClipButton clipButton)
         {
             if ((string.IsNullOrEmpty(clipButton.FullText) && (clipButton.FullImage == null)) || (ClipsConfig.PreviewPopupDelay == 0))
                 return;
 
+            BackColor = ClipsConfig.PreviewBackColor;
+            ForeColor = ClipsConfig.PreviewFontColor;
+            PreviewText.BackColor = ClipsConfig.PreviewBackColor;
+            PreviewText.ForeColor = ClipsConfig.PreviewFontColor;
+
             if (!string.IsNullOrEmpty(clipButton.FullText))
             {
-                BackColor = ClipsConfig.PreviewBackColor;
-                ForeColor = ClipsConfig.PreviewFontColor;
-                PreviewText.BackColor = BackColor;
-                PreviewText.ForeColor = ForeColor;
                 PreviewText.Clear();
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
@@ -58,7 +62,7 @@ namespace Clips
                 else
                     PreviewText.Text = clipButton.FullText;
 
-                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .50), (int)(Screen.PrimaryScreen.WorkingArea.Height * .50));
+                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
 
                 if (Funcs.IsUrl(PreviewText.Text))
                     PreviewText.AppendText("\n [Control + click to open.]");
@@ -66,34 +70,38 @@ namespace Clips
                 SizeF ss = TextRenderer.MeasureText(PreviewText.Text, PreviewText.Font);
 
                 if (ss.Height+6 > MaximumSize.Height)
-                    FHeight = MaximumSize.Height;
+                    Height = MaximumSize.Height;
                 else
-                    FHeight = Convert.ToInt32(ss.Height) + 6;
+                    Height = Convert.ToInt32(ss.Height) + 6;
 
                 if (ss.Width + 6 > MaximumSize.Width)
-                    FWidth = MaximumSize.Height;
+                    Width = MaximumSize.Height;
                 else
-                    FWidth = Convert.ToInt32(ss.Width) + 6;
+                    Width = Convert.ToInt32(ss.Width) + 6;
             }
             else
             if (clipButton.FullImage != null)
             {
-                PreviewImage.Image = clipButton.FullImage;
+
+                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+                PreviewImage.Image = Funcs.ScaleImage(clipButton.FullImage, MaximumSize.Width, MaximumSize.Height);
                 PreviewText.Visible = false;
                 PreviewImage.Visible = true;
-
-                MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width*.50), (int)(Screen.PrimaryScreen.WorkingArea.Height*.50));
-                
-                if (clipButton.FullImage.Height > MaximumSize.Height)
-                    FHeight = MaximumSize.Height;
-                else
-                    FHeight = clipButton.FullImage.Height;
-
-                if (clipButton.FullImage.Width > MaximumSize.Width)
-                    FWidth = MaximumSize.Width;
-                else
-                    FWidth = clipButton.FullImage.Width;
+                Height = PreviewImage.Image.Height;
+                Width = PreviewImage.Image.Width;
             }
+
+            Form MainForm = (Form)clipButton.Parent.Parent.Parent;
+            int MFRight = (MainForm.Left + MainForm.Width);
+            int MFLeft = (MainForm.Left - this.Width);
+            int MFTop = (MainForm.Top);
+
+            this.Top = MFTop;
+            if ((MFRight+this.Width) < Screen.PrimaryScreen.WorkingArea.Width)
+                this.Left = MFRight;
+            else
+                this.Left = MFLeft;
+
             TimerShowForm.Interval = ClipsConfig.PreviewPopupDelay;
             TimerShowForm.Enabled = true; 
         }
@@ -112,13 +120,7 @@ namespace Clips
 
         private void Preview_VisibleChanged(object sender, EventArgs e)
         {
-            // for some reason I couldn't just set the new form size in the ShowPreview(), it was not accurate the first time.
-            if (!TimerShowForm.Enabled)
-            {
-                Height = FHeight;
-                Width = FWidth;
-                Funcs.MoveFormToCursor(this);
-            }
+            
         }
     }
 }
