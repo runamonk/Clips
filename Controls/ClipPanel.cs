@@ -18,6 +18,9 @@ namespace Clips.Controls
         private string LastText { get; set; }
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
+
+        public bool InPreview { get; set; }
+
         public bool MonitorClipboard
         {
             get 
@@ -39,10 +42,10 @@ namespace Clips.Controls
         public ClipPanel(Config myConfig, bool isHeader = false)
         {            
             IsHeader = isHeader;
-            ParentChanged += new EventHandler(OnParentChanged);
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);
+            
             MenuRC = new ClipMenu(myConfig);
             MenuRC.ShowCheckMargin = false;
             MenuRC.ShowImageMargin = false;
@@ -138,10 +141,9 @@ namespace Clips.Controls
 
             b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
 
-            if (OnClipAdded != null)
-                OnClipAdded(b, saveToDisk);
+            OnClipAdded?.Invoke(b, saveToDisk);
 
-             ResumeLayout();
+            ResumeLayout();
         }
 
         public void AddItem(Image image, string fileName, bool saveToDisk = false)
@@ -162,8 +164,7 @@ namespace Clips.Controls
             // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
             b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
 
-            if (OnClipAdded != null)
-                OnClipAdded(b, saveToDisk);
+            OnClipAdded?.Invoke(b, saveToDisk);
             ResumeLayout();
         }
 
@@ -181,14 +182,12 @@ namespace Clips.Controls
                     LastText = null;
 
                 Controls[Controls.IndexOf(Clip)].Dispose();
-                //Controls.Remove(Clip);
             }
 
             SuspendLayout();
-
-            if (OnClipClicked != null)
-                OnClipClicked(Clip);
-
+            PreviewHide(null, null);
+            OnClipClicked?.Invoke(Clip);
+            
             if (Clip.FullImage != null)
             {
                 Image ClipToCopy = Clip.FullImage;
@@ -327,8 +326,7 @@ namespace Clips.Controls
                 doc = null;
             }
             InLoad = false;
-            if (OnClipsLoaded != null)
-                OnClipsLoaded();
+            OnClipsLoaded?.Invoke();
             ResumeLayout();
         }
 
@@ -348,8 +346,7 @@ namespace Clips.Controls
             Controls[Controls.IndexOf(b)].Dispose();
             //Controls.Remove(b);
 
-            if (OnClipDeleted != null)
-                OnClipDeleted();
+            OnClipDeleted?.Invoke();
             InMenu = false;
         }
 
@@ -378,20 +375,16 @@ namespace Clips.Controls
             }
             InMenu = false;
         }
-
-        private void OnParentChanged(object sender, EventArgs e)
-        {
-            if (!IsHeader)
-                Parent.VisibleChanged += new EventHandler(OnVisibleChanged);
-        }
-
+        
         private void PreviewHide(object sender, EventArgs e)
         {
             PreviewForm.HidePreview();
+            InPreview = false;
         }
 
         private void PreviewShow(object sender, EventArgs e)
         {
+            InPreview = true;
             PreviewForm.ShowPreview(((ClipButton)sender));
         }
 
@@ -403,9 +396,5 @@ namespace Clips.Controls
                 BackColor = ClipsConfig.ClipsBackColor;
         }
 
-        private void OnVisibleChanged(object sender, EventArgs e)
-        {
-            PreviewHide(null, null);
-        }
     }
 }
