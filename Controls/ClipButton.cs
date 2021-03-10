@@ -49,8 +49,7 @@ namespace Clips
         {
             base.OnClick(e);
 
-            if (OnClipButtonClicked != null)
-                OnClipButtonClicked(this);
+            OnClipButtonClicked?.Invoke(this);
         }
                
         private void SetColors()
