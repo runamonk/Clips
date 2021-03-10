@@ -45,7 +45,7 @@ namespace Clips.Controls
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);
-            
+
             MenuRC = new ClipMenu(myConfig);
             MenuRC.ShowCheckMargin = false;
             MenuRC.ShowImageMargin = false;
@@ -66,7 +66,18 @@ namespace Clips.Controls
                 clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipboardChanged);
             }
         }
-        
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            // Preview form the first time it was shown was some weird default size I could not
+            // get around. ,,|,, M$ - I'll show it off screen first and then hide it.
+            PreviewForm.Left = -8000;
+            PreviewForm.Top = 0;
+            PreviewForm.Show();
+            PreviewForm.Hide();
+            base.OnParentChanged(e);
+        }
+
         #region EventHandlers
         public delegate void ClipAddedHandler(ClipButton Clip, bool ClipSavedToDisk);
         public event ClipAddedHandler OnClipAdded;
@@ -208,7 +219,7 @@ namespace Clips.Controls
                    Clipboard.SetText(TextToCopy);
                 }
             }
-
+            Controls[Controls.Count - 1].Select();
             ResumeLayout();
         }
 
