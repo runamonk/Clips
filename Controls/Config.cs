@@ -53,6 +53,8 @@ namespace Clips
                     ClipRowColor.BackColor = _Config.ClipsRowBackColor;
                     ClipsLinesPerRow.Value = _Config.ClipsLinesPerRow;
                     ClipsMaxClips.Value = _Config.ClipsMaxClips;
+                    ClipsToDisplay.Value = _Config.ClipsToDisplay;
+
                     MenuBackColor.BackColor = _Config.MenuBackColor;
                     MenuBorderColor.BackColor = _Config.MenuBorderColor;
                     MenuButtonColor.BackColor = _Config.MenuButtonColor;
@@ -81,6 +83,8 @@ namespace Clips
                     Key.ForeColor = _Config.ClipsFontColor;
                     ClipsMaxClips.ForeColor = _Config.ClipsFontColor;
                     ClipsLinesPerRow.ForeColor = _Config.ClipsFontColor;
+                    ClipsToDisplay.BackColor = _Config.ClipsBackColor;
+                    ClipsToDisplay.ForeColor = _Config.ClipsFontColor;
                     PreviewMaxLines.ForeColor = _Config.ClipsFontColor;
                     PreviewPopupDelay.ForeColor = _Config.ClipsFontColor;
 
@@ -116,6 +120,7 @@ namespace Clips
                 _Config.ClipsLinesPerRow = Convert.ToInt32(ClipsLinesPerRow.Value);
                 _Config.ClipsMaxClips = Convert.ToInt32(ClipsMaxClips.Value);
                 _Config.ClipsRowBackColor = ClipRowColor.BackColor;
+                _Config.ClipsToDisplay = Convert.ToInt32(ClipsToDisplay.Value);
                 _Config.MenuBackColor = MenuBackColor.BackColor;
                 _Config.MenuBorderColor = MenuBorderColor.BackColor;
                 _Config.MenuButtonColor = MenuButtonColor.BackColor;
@@ -318,6 +323,17 @@ namespace Clips
                 return Convert.ToInt32(s);
             }
             set { SetKey("clips_max_clips", value.ToString()); }
+        }
+
+        public int ClipsToDisplay
+        {
+            get {
+                string s = FindKey("clips_to_display");
+                if (s == "")
+                    s = SetKey("clips_to_display", "20");
+                return Convert.ToInt32(s);
+            }
+            set { SetKey("clips_to_display", value.ToString()); }
         }
 
         public int FormLeft

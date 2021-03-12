@@ -258,21 +258,26 @@ namespace Clips
         {
             if (Clips.InLoad) return;
 
-            int MaxHeight = (int)(Screen.PrimaryScreen.WorkingArea.Height * .50);
-
+            //int MaxHeight = (int)(Screen.PrimaryScreen.WorkingArea.Height * .50);
+             
             if (Config.AutoSizeHeight)
             {
                 int c = 68;
-                for (int i = 0; i <= Clips.Controls.Count - 1; i++)
+                int ButtonCount = 0;
+
+                for (int i = Clips.Controls.Count-1; i > 0; i--)
                 {
                     if (Clips.Controls[i].Visible)
+                    {
                         c = c + Clips.Controls[i].Height;
+
+                        ButtonCount++;
+                        if (ButtonCount >= Config.ClipsToDisplay)
+                            break;
+                    }
                 }
 
-                if (c < MaxHeight)
-                    Height = c;
-                else
-                    Height = MaxHeight;
+                Height = c;
             }
 
             // select the first control.
