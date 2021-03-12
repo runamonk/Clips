@@ -56,17 +56,11 @@ namespace Clips
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
                 PreviewText.Text = clipButton.FullText;
-                Height = PreviewText.PreferredSize.Height + 6;
-                Width = PreviewText.PreferredSize.Width + 6;
-                int rows = 1;
+                int NoOfLines = (PreviewText.Text.Count(x => x == '\n'));
+                int NoOfRows = (Convert.ToInt32(Math.Ceiling((Double)PreviewText.PreferredSize.Width / (Double)MaximumSize.Width) * 100) / 100);
 
-                // handle long lines that are wrapped, expand height so we can see the text.
-                if (PreviewText.PreferredSize.Width > MaximumSize.Width)
-                {
-                    //rows = Convert.ToInt32(Math.Round((Double)PreviewText.PreferredSize.Width / (Double)MaximumSize.Width), (decimal));
-                    rows = (Convert.ToInt32(Math.Ceiling((Double)PreviewText.PreferredSize.Width / (Double)MaximumSize.Width) * 100) / 100); // Force a round up regardless of .5 or .1
-                    Height = FTextHeight * rows  + PreviewText.PreferredSize.Height;
-                }
+                this.Height = ((FTextHeight * (NoOfLines + NoOfRows)) + 3);                
+                this.Width = PreviewText.PreferredSize.Width;
             }
             else
             if (clipButton.FullImage != null)

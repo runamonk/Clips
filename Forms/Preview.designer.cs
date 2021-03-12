@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.TimerShowForm = new System.Windows.Forms.Timer(this.components);
             this.PreviewImage = new System.Windows.Forms.PictureBox();
-            this.PreviewText = new System.Windows.Forms.RichTextBox();
+            this.PreviewText = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -56,15 +56,13 @@
             // 
             this.PreviewText.BackColor = System.Drawing.Color.Blue;
             this.PreviewText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PreviewText.DetectUrls = false;
             this.PreviewText.Location = new System.Drawing.Point(20, 0);
             this.PreviewText.Margin = new System.Windows.Forms.Padding(0);
+            this.PreviewText.MinimumSize = new System.Drawing.Size(0, 15);
+            this.PreviewText.Multiline = true;
             this.PreviewText.Name = "PreviewText";
-            this.PreviewText.ReadOnly = true;
-            this.PreviewText.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.None;
-            this.PreviewText.Size = new System.Drawing.Size(10, 10);
+            this.PreviewText.Size = new System.Drawing.Size(10, 18);
             this.PreviewText.TabIndex = 8;
-            this.PreviewText.Text = "";
             // 
             // Preview
             // 
@@ -86,12 +84,13 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).EndInit();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
         private System.Windows.Forms.Timer TimerShowForm;
         private System.Windows.Forms.PictureBox PreviewImage;
-        private System.Windows.Forms.RichTextBox PreviewText;
+        private System.Windows.Forms.TextBox PreviewText;
     }
 }
