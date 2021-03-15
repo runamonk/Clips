@@ -267,10 +267,7 @@ namespace Clips
                 {
                     if (Clips.Controls[i].Visible)
                     {
-                        if (((ClipButton)Clips.Controls[i]).FullImage != null)
-                            c = c + (Clips.Controls[i].Height + 6);
-                        else
-                            c = c + (Clips.Controls[i].Height + 1);
+                        c = c + (Clips.Controls[i].Height);
 
                         ButtonCount++;
                         if (ButtonCount >= Config.ClipsToDisplay)
@@ -280,7 +277,8 @@ namespace Clips
                     }
                 }
 
-                Height = c + SystemInformation.CaptionHeight + SystemInformation.BorderSize.Height + pTop.Height;
+                //Height = c + SystemInformation.CaptionHeight + SystemInformation.BorderSize.Height + pTop.Height + pMain.Padding.Top + pMain.Padding.Bottom;
+                Height = c + 68;
             }
             
             // select the first control.
