@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
@@ -14,38 +15,51 @@ namespace Clips.Controls
     {
         private Config ClipsConfig { get; set; }
         private bool IsHeader = false;
+        private int FocusedButtonIndex { get; set; }
         private Image LastImage { get; set; }
         private string LastText { get; set; }
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
-
         public bool InPreview { get; set; }
 
         public bool MonitorClipboard
         {
-            get 
-            {
+            get {
                 return clipboard.MonitorClipboard;
             }
-            set 
-            {
+            set {
                 clipboard.MonitorClipboard = value;
             }
         }
- 
+
         private ClipMenu MenuRC;
         private Preview PreviewForm;
         private SharpClipboard clipboard;
-
         private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
 
+        protected override CreateParams CreateParams
+        {
+            // Force the scrollbar to always be in position. That way we can just hide it all the time without
+            // having to try and account for it during the autosize or resize.
+            get {
+                var cp = base.CreateParams;
+                cp.Style |= 0x00200000; // WS_VSCROLL
+                return cp;
+            }
+        }
+
         public ClipPanel(Config myConfig, bool isHeader = false)
-        {            
+        {
             IsHeader = isHeader;
+            VerticalScroll.Enabled = true;
+            HorizontalScroll.Enabled = false;
+
+            AutoScroll = true;
+            
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);
-
+            DoubleBuffered = true;
             MenuRC = new ClipMenu(myConfig);
             MenuRC.ShowCheckMargin = false;
             MenuRC.ShowImageMargin = false;
@@ -87,7 +101,7 @@ namespace Clips.Controls
 
         public delegate void ClipDeletedHandler();
         public event ClipDeletedHandler OnClipDeleted;
-        
+
         public delegate void ClipsLoadedHandler();
         public event ClipsLoadedHandler OnClipsLoaded;
         #endregion
@@ -104,8 +118,7 @@ namespace Clips.Controls
                 FlatStyle = FlatStyle.Flat
             };
 
-            b.OnClipButtonClicked += new  ClipButton.ClipButtonClickedHandler(ButtonClicked);
-
+            b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ButtonClicked);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
             b.ContextMenuStrip = MenuRC;
@@ -167,13 +180,14 @@ namespace Clips.Controls
             ClipButton b = AddClipButton();
             b.Height = 60;
             b.FullImage = image;
+
             string base64 = Convert.ToBase64String(Funcs.ImageToByteArray(b.FullImage));
             if (saveToDisk)
                 b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
             else
                 b.FileName = fileName;
             // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
-            b.Image = image.GetThumbnailImage(60, 60, null, IntPtr.Zero);
+            b.Image = image.GetThumbnailImage(50, 50, null, IntPtr.Zero);
 
             OnClipAdded?.Invoke(b, saveToDisk);
             ResumeLayout();
@@ -198,7 +212,7 @@ namespace Clips.Controls
             SuspendLayout();
             PreviewHide(null, null);
             OnClipClicked?.Invoke(Clip);
-            
+
             if (Clip.FullImage != null)
             {
                 Image ClipToCopy = Clip.FullImage;
@@ -214,9 +228,9 @@ namespace Clips.Controls
                 }
                 else
                 {
-                   string TextToCopy = Clip.FullText;
-                   DeleteClip();
-                   Clipboard.SetText(TextToCopy);
+                    string TextToCopy = Clip.FullText;
+                    DeleteClip();
+                    Clipboard.SetText(TextToCopy);
                 }
             }
             Controls[Controls.Count - 1].Select();
@@ -235,7 +249,7 @@ namespace Clips.Controls
                 }
             }
         }
-               
+
         private void ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
@@ -288,7 +302,7 @@ namespace Clips.Controls
         {
             SetColors();
             CleanupCache();
-            LoadItems();         
+            LoadItems();
         }
 
         public void DeleteOldestClip()
@@ -336,6 +350,7 @@ namespace Clips.Controls
                 }
                 doc = null;
             }
+
             InLoad = false;
             OnClipsLoaded?.Invoke();
             ResumeLayout();
@@ -386,7 +401,7 @@ namespace Clips.Controls
             }
             InMenu = false;
         }
-        
+
         private void PreviewHide(object sender, EventArgs e)
         {
             PreviewForm.HidePreview();

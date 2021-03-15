@@ -15,20 +15,21 @@ namespace Clips
         public string FileName { get; set; }
         public Image FullImage { get; set; }
         public string FullText { get; set; }
+
         public delegate void ClipButtonClickedHandler(ClipButton Button);
         public event ClipButtonClickedHandler OnClipButtonClicked;
-        
+
         public ClipButton(Config myConfig, bool isMenuButton = false)
         {
             FlatAppearance.BorderSize = 0;
             FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             TextAlign = ContentAlignment.TopLeft;
+            ImageAlign = ContentAlignment.MiddleLeft;
             UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
             UseMnemonic = false;
             AutoSize = false;
             IsMenuButton = isMenuButton;
-
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             SetColors();

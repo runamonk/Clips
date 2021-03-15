@@ -32,7 +32,6 @@ namespace Clips
         [System.Runtime.InteropServices.DllImport("user32.dll")]
         public static extern bool ReleaseCapture();
 
-        
         private ClipButton MenuMainButton { get; set; }
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
@@ -257,32 +256,47 @@ namespace Clips
         private void AutoSizeForm(bool ScrollToTop)
         {
             if (Clips.InLoad) return;
-
             //int MaxHeight = (int)(Screen.PrimaryScreen.WorkingArea.Height * .50);
-             
+
             if (Config.AutoSizeHeight)
             {
-                int c = 68;
+                int c = 0;
                 int ButtonCount = 0;
 
                 for (int i = Clips.Controls.Count-1; i > 0; i--)
                 {
                     if (Clips.Controls[i].Visible)
                     {
-                        c = c + Clips.Controls[i].Height;
+                        if (((ClipButton)Clips.Controls[i]).FullImage != null)
+                            c = c + (Clips.Controls[i].Height + 6);
+                        else
+                            c = c + (Clips.Controls[i].Height + 1);
 
                         ButtonCount++;
                         if (ButtonCount >= Config.ClipsToDisplay)
+                        {
                             break;
+                        }                           
                     }
                 }
 
-                Height = c;
+                Height = c + SystemInformation.CaptionHeight + SystemInformation.BorderSize.Height + pTop.Height;
             }
-
+            
             // select the first control.
             if ((ScrollToTop) && (Clips.Controls.Count > 0))
                 Clips.Controls[Clips.Controls.Count-1].Select();
+        }
+
+        private void HideScrollbar()
+        {
+            if (Clips == null)
+                return;
+
+            Clips.Top = 0;
+            Clips.Left = 0;
+            Clips.Height = pMain.Height;
+            Clips.Width = pMain.Width + SystemInformation.VerticalScrollBarWidth; 
         }
 
         private void LoadConfig()
@@ -333,13 +347,12 @@ namespace Clips
                 notifyClips.ContextMenuStrip = MenuMain;
                                
                 Clips = new ClipPanel(Config);
-                Clips.AutoScroll = true;
                 Clips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
                 Clips.OnClipAdded += new ClipPanel.ClipAddedHandler(ClipAdded);
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
                 Clips.OnClipsLoaded += new ClipPanel.ClipsLoadedHandler(ClipsLoaded);
                 Clips.Parent = pMain;
-                Clips.Dock = DockStyle.Fill;
+                //Clips.Dock = DockStyle.Fill;
                 SetFormPos();
             }
 
@@ -405,6 +418,11 @@ namespace Clips
         {
             if (Visible)
                 BringToFront();
+        }
+
+        private void Main_Resize(object sender, EventArgs e)
+        {
+            HideScrollbar();
         }
     } // Main
 }
