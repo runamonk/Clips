@@ -395,7 +395,11 @@ namespace Clips
                 if (Opacity > 0)
                 {
                     Opacity = 0;
+                    // Turn off KeyPreview while the form is hidden so we don't accidentally pick
+                    // up keystrokes before the form actually loses focus.
                     KeyPreview = false;
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
                 }
                 else
                 {
