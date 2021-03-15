@@ -352,8 +352,8 @@ namespace Clips.Controls
             }
 
             InLoad = false;
-            OnClipsLoaded?.Invoke();
             ResumeLayout();
+            OnClipsLoaded?.Invoke();          
         }
 
         private void MenuDelete_Click(object sender, EventArgs e)
