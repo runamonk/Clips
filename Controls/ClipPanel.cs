@@ -405,23 +405,24 @@ namespace Clips.Controls
 
         private void MouseWheelScroll(object sender, MouseEventArgs e)
         {
-            if (VerticalScroll.Value == 0)
-            {
-                // Top
-                if (VerticalScroll.Visible)
-                {
+            // Save for later, I might do something with this.
+            //if (VerticalScroll.Value == 0)
+            //{
+            //    // Top
+            //    if (VerticalScroll.Visible)
+            //    {
 
-                }
-            }
-            else
-            if (VerticalScroll.Value + VerticalScroll.LargeChange > VerticalScroll.Maximum)
-            {
-                // Bottom
-            }
-            else
-            {
-                // Middle
-            }
+            //    }
+            //}
+            //else
+            //if (VerticalScroll.Value + VerticalScroll.LargeChange > VerticalScroll.Maximum)
+            //{
+            //    // Bottom
+            //}
+            //else
+            //{
+            //    // Middle
+            //}
         }
 
         private void PreviewHide(object sender, EventArgs e)
