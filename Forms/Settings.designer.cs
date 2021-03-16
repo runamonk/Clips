@@ -50,6 +50,7 @@
             this.AutoSizeHeight = new System.Windows.Forms.CheckBox();
             this.OpenAtMouse = new System.Windows.Forms.CheckBox();
             this.Startup = new System.Windows.Forms.CheckBox();
+            this.ClipsToDisplay = new System.Windows.Forms.NumericUpDown();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Cancel = new System.Windows.Forms.Button();
@@ -63,6 +64,7 @@
             this.PanelTopSep1 = new System.Windows.Forms.Panel();
             this.PanelTopLeft = new System.Windows.Forms.Panel();
             this.GroupClips = new System.Windows.Forms.GroupBox();
+            this.label16 = new System.Windows.Forms.Label();
             this.label6 = new System.Windows.Forms.Label();
             this.NoOfClipsToDisplay = new System.Windows.Forms.Label();
             this.GroupHotkey = new System.Windows.Forms.GroupBox();
@@ -95,12 +97,13 @@
             this.label14 = new System.Windows.Forms.Label();
             this.DarkTheme = new System.Windows.Forms.RadioButton();
             this.LightTheme = new System.Windows.Forms.RadioButton();
-            this.label16 = new System.Windows.Forms.Label();
-            this.ClipsToDisplay = new System.Windows.Forms.NumericUpDown();
+            this.label17 = new System.Windows.Forms.Label();
+            this.ClipSelected = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsMaxClips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ClipsToDisplay)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.PanelTopRight.SuspendLayout();
@@ -115,7 +118,6 @@
             this.GroupColorClips.SuspendLayout();
             this.GroupColors.SuspendLayout();
             this.panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ClipsToDisplay)).BeginInit();
             this.SuspendLayout();
             // 
             // ClipHeaderColor
@@ -363,6 +365,25 @@
             this.toolTip1.SetToolTip(this.Startup, "Check to automatically start clips.");
             this.Startup.UseVisualStyleBackColor = true;
             // 
+            // ClipsToDisplay
+            // 
+            this.ClipsToDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipsToDisplay.Location = new System.Drawing.Point(107, 46);
+            this.ClipsToDisplay.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.ClipsToDisplay.Name = "ClipsToDisplay";
+            this.ClipsToDisplay.Size = new System.Drawing.Size(51, 20);
+            this.ClipsToDisplay.TabIndex = 8;
+            this.toolTip1.SetToolTip(this.ClipsToDisplay, "Set the maximum number of clips to display on the popup.");
+            this.ClipsToDisplay.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
             // dlgColor
             // 
             this.dlgColor.AnyColor = true;
@@ -372,7 +393,7 @@
             this.groupBox2.Controls.Add(this.Cancel);
             this.groupBox2.Controls.Add(this.OK);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 369);
+            this.groupBox2.Location = new System.Drawing.Point(5, 404);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(462, 54);
             this.groupBox2.TabIndex = 4;
@@ -504,6 +525,17 @@
             this.GroupClips.TabStop = false;
             this.GroupClips.Text = "Clips";
             // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(168, 23);
+            this.label16.Margin = new System.Windows.Forms.Padding(0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(70, 13);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "Lines per row";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label6
             // 
             this.label6.AutoSize = true;
@@ -630,7 +662,7 @@
             this.PanelColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelColors.Location = new System.Drawing.Point(3, 49);
             this.PanelColors.Name = "PanelColors";
-            this.PanelColors.Size = new System.Drawing.Size(456, 152);
+            this.PanelColors.Size = new System.Drawing.Size(456, 187);
             this.PanelColors.TabIndex = 1;
             // 
             // GroupColorPreview
@@ -642,7 +674,7 @@
             this.GroupColorPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupColorPreview.Location = new System.Drawing.Point(343, 0);
             this.GroupColorPreview.Name = "GroupColorPreview";
-            this.GroupColorPreview.Size = new System.Drawing.Size(113, 152);
+            this.GroupColorPreview.Size = new System.Drawing.Size(113, 187);
             this.GroupColorPreview.TabIndex = 8;
             this.GroupColorPreview.TabStop = false;
             this.GroupColorPreview.Text = "Preview";
@@ -672,7 +704,7 @@
             this.PanelColorSep2.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep2.Location = new System.Drawing.Point(338, 0);
             this.PanelColorSep2.Name = "PanelColorSep2";
-            this.PanelColorSep2.Size = new System.Drawing.Size(5, 152);
+            this.PanelColorSep2.Size = new System.Drawing.Size(5, 187);
             this.PanelColorSep2.TabIndex = 7;
             // 
             // GroupColorMenu
@@ -690,7 +722,7 @@
             this.GroupColorMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorMenu.Location = new System.Drawing.Point(145, 0);
             this.GroupColorMenu.Name = "GroupColorMenu";
-            this.GroupColorMenu.Size = new System.Drawing.Size(193, 152);
+            this.GroupColorMenu.Size = new System.Drawing.Size(193, 187);
             this.GroupColorMenu.TabIndex = 6;
             this.GroupColorMenu.TabStop = false;
             this.GroupColorMenu.Text = "Menu";
@@ -750,11 +782,13 @@
             this.PanelColorSep1.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep1.Location = new System.Drawing.Point(140, 0);
             this.PanelColorSep1.Name = "PanelColorSep1";
-            this.PanelColorSep1.Size = new System.Drawing.Size(5, 152);
+            this.PanelColorSep1.Size = new System.Drawing.Size(5, 187);
             this.PanelColorSep1.TabIndex = 5;
             // 
             // GroupColorClips
             // 
+            this.GroupColorClips.Controls.Add(this.label17);
+            this.GroupColorClips.Controls.Add(this.ClipSelected);
             this.GroupColorClips.Controls.Add(this.label9);
             this.GroupColorClips.Controls.Add(this.ClipHeaderColor);
             this.GroupColorClips.Controls.Add(this.label8);
@@ -766,7 +800,7 @@
             this.GroupColorClips.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorClips.Location = new System.Drawing.Point(0, 0);
             this.GroupColorClips.Name = "GroupColorClips";
-            this.GroupColorClips.Size = new System.Drawing.Size(140, 152);
+            this.GroupColorClips.Size = new System.Drawing.Size(140, 187);
             this.GroupColorClips.TabIndex = 0;
             this.GroupColorClips.TabStop = false;
             this.GroupColorClips.Text = "Clips";
@@ -818,7 +852,7 @@
             this.GroupColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupColors.Location = new System.Drawing.Point(5, 165);
             this.GroupColors.Name = "GroupColors";
-            this.GroupColors.Size = new System.Drawing.Size(462, 204);
+            this.GroupColors.Size = new System.Drawing.Size(462, 239);
             this.GroupColors.TabIndex = 7;
             this.GroupColors.TabStop = false;
             this.GroupColors.Text = "Colors";
@@ -867,41 +901,31 @@
             this.LightTheme.UseVisualStyleBackColor = true;
             this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
             // 
-            // label16
+            // label17
             // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(168, 23);
-            this.label16.Margin = new System.Windows.Forms.Padding(0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(70, 13);
-            this.label16.TabIndex = 20;
-            this.label16.Text = "Lines per row";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(39, 157);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(49, 13);
+            this.label17.TabIndex = 21;
+            this.label17.Text = "Selected";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
-            // ClipsToDisplay
+            // ClipSelected
             // 
-            this.ClipsToDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClipsToDisplay.Location = new System.Drawing.Point(107, 46);
-            this.ClipsToDisplay.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
-            this.ClipsToDisplay.Name = "ClipsToDisplay";
-            this.ClipsToDisplay.Size = new System.Drawing.Size(51, 20);
-            this.ClipsToDisplay.TabIndex = 8;
-            this.toolTip1.SetToolTip(this.ClipsToDisplay, "Set the maximum number of clips to display on the popup.");
-            this.ClipsToDisplay.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ClipSelected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipSelected.Location = new System.Drawing.Point(8, 150);
+            this.ClipSelected.Name = "ClipSelected";
+            this.ClipSelected.Size = new System.Drawing.Size(26, 27);
+            this.ClipSelected.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.ClipSelected, "Click to set color.");
+            this.ClipSelected.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(472, 428);
+            this.ClientSize = new System.Drawing.Size(472, 463);
             this.Controls.Add(this.GroupColors);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.groupBox2);
@@ -921,6 +945,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.ClipsMaxClips)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ClipsToDisplay)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.PanelTopRight.ResumeLayout(false);
@@ -943,7 +968,6 @@
             this.GroupColors.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.ClipsToDisplay)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -1017,5 +1041,7 @@
         public System.Windows.Forms.GroupBox GroupColorClips;
         private System.Windows.Forms.Label label16;
         public System.Windows.Forms.NumericUpDown ClipsToDisplay;
+        private System.Windows.Forms.Label label17;
+        public System.Windows.Forms.Panel ClipSelected;
     }
 }

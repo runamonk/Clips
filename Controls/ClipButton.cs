@@ -52,7 +52,34 @@ namespace Clips
 
             OnClipButtonClicked?.Invoke(this);
         }
-               
+
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            if (IsMenuButton)
+            {
+                BackColor = ClipsConfig.MenuSelectedColor;
+            }
+            else
+            {
+                BackColor = ClipsConfig.ClipsSelectedColor;
+            }
+        }
+
+        protected override void OnMouseLeave(EventArgs e)
+        {
+            base.OnMouseLeave(e);
+            if (IsMenuButton)
+            {
+                BackColor = ClipsConfig.MenuButtonColor;
+            }
+            else
+            {
+                BackColor = ClipsConfig.ClipsRowBackColor;
+            }
+        }
+
+
         private void SetColors()
         {
             FlatAppearance.BorderColor = BackColor;

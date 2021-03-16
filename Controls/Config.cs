@@ -54,7 +54,7 @@ namespace Clips
                     ClipsLinesPerRow.Value = _Config.ClipsLinesPerRow;
                     ClipsMaxClips.Value = _Config.ClipsMaxClips;
                     ClipsToDisplay.Value = _Config.ClipsToDisplay;
-
+                    ClipSelected.BackColor = _Config.ClipsSelectedColor;
                     MenuBackColor.BackColor = _Config.MenuBackColor;
                     MenuBorderColor.BackColor = _Config.MenuBorderColor;
                     MenuButtonColor.BackColor = _Config.MenuButtonColor;
@@ -65,7 +65,6 @@ namespace Clips
                     PreviewFontColor.BackColor = _Config.PreviewFontColor;
                     PreviewMaxLines.Value = _Config.PreviewMaxLines;
                     PreviewPopupDelay.Value = _Config.PreviewPopupDelay;
-
                     BackColor = _Config.ClipsBackColor;
                     ForeColor = _Config.ClipsFontColor;
                     GroupClips.ForeColor = _Config.ClipsFontColor;
@@ -87,7 +86,6 @@ namespace Clips
                     ClipsToDisplay.ForeColor = _Config.ClipsFontColor;
                     PreviewMaxLines.ForeColor = _Config.ClipsFontColor;
                     PreviewPopupDelay.ForeColor = _Config.ClipsFontColor;
-
                 }
             }
 
@@ -121,6 +119,7 @@ namespace Clips
                 _Config.ClipsMaxClips = Convert.ToInt32(ClipsMaxClips.Value);
                 _Config.ClipsRowBackColor = ClipRowColor.BackColor;
                 _Config.ClipsToDisplay = Convert.ToInt32(ClipsToDisplay.Value);
+                _Config.ClipsSelectedColor = ClipSelected.BackColor;
                 _Config.MenuBackColor = MenuBackColor.BackColor;
                 _Config.MenuBorderColor = MenuBorderColor.BackColor;
                 _Config.MenuButtonColor = MenuButtonColor.BackColor;
@@ -312,6 +311,17 @@ namespace Clips
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_row_back_color", value.ToArgb().ToString()); }
+        }
+
+        public Color ClipsSelectedColor
+        {
+            get {
+                string s = FindKey("clips_selected_color");
+                if (s == "")
+                    s = SetKey("clips_selected_color", Color.FromName("MenuHighlight").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("clips_selected_color", value.ToArgb().ToString()); }
         }
 
         public int ClipsMaxClips
