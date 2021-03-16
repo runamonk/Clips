@@ -50,7 +50,6 @@
             this.pTop.Name = "pTop";
             this.pTop.Size = new System.Drawing.Size(200, 28);
             this.pTop.TabIndex = 3;
-            this.pTop.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PTop_MouseDown);
             // 
             // pMain
             // 

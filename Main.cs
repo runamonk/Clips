@@ -26,12 +26,6 @@ namespace Clips
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
-        // allow form to be dragged.
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern int SendMessage(IntPtr hWnd, int Msg, int wParam, int lParam);
-        [System.Runtime.InteropServices.DllImport("user32.dll")]
-        public static extern bool ReleaseCapture();
-
         private ClipButton MenuMainButton { get; set; }
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
@@ -49,7 +43,6 @@ namespace Clips
         // TODO Add edit/favorite text editor in config.
         // TODO Add button pad amount that way users can decide how much to pad the ClipButton, rather than just using an arbritrary 8px.
         // TODO Add max form height (to work with auto-size).
-        // TODO Change scrollbar colors to match themes. Make my own control for scrolling?
         #endregion
 
         #region Events
@@ -123,6 +116,11 @@ namespace Clips
             LoadConfig();
         }
 
+        private void Main_Resize(object sender, EventArgs e)
+        {
+            HideScrollbar();
+        }
+
         private void Main_ResizeEnd(object sender, EventArgs e)
         {
             Config.FormSize = Size;
@@ -130,11 +128,17 @@ namespace Clips
             Config.FormLeft = Left;
         }
 
+        private void Main_VisibleChanged(object sender, EventArgs e)
+        {
+            if (Visible)
+                BringToFront();
+        }
+
         private void MenuAbout_Click(object sender, EventArgs e)
         {
             inAbout = true;
             About AboutForm = new About(Config);
-            AboutForm.ShowDialog(this);
+            AboutForm.Show(this);
             inAbout = false;
         }
 
@@ -180,16 +184,6 @@ namespace Clips
         private void NotifyClips_DoubleClick(object sender, EventArgs e)
         {
             ToggleShow(false,false);
-        }
-
-        private void PTop_MouseDown(object sender, MouseEventArgs e)
-        {
-            // drag form.
-            if (e.Button == MouseButtons.Left)
-            {
-                ReleaseCapture();
-                SendMessage(Handle, WM_NCLBUTTONDOWN, HT_CAPTION, 0);
-            }
         }
 
         private void SearchTextChanged(object sender, EventArgs e)
@@ -263,7 +257,7 @@ namespace Clips
                 int c = 0;
                 int ButtonCount = 0;
 
-                for (int i = Clips.Controls.Count-1; i > 0; i--)
+                for (int i = Clips.Controls.Count-1; i > -1; i--)
                 {
                     if (Clips.Controls[i].Visible)
                     {
@@ -405,26 +399,13 @@ namespace Clips
                 {
                     AutoSizeForm(true);
                     if (Config.OpenFormAtCursor)
-                        Funcs.MoveFormToCursor(this, false);
-                    
+                        Funcs.MoveFormToCursor(this, false);                   
                     Opacity = 100;
                     Activate();
                     KeyPreview = true;
                 }
             }
         }
-
         #endregion
-
-        private void Main_VisibleChanged(object sender, EventArgs e)
-        {
-            if (Visible)
-                BringToFront();
-        }
-
-        private void Main_Resize(object sender, EventArgs e)
-        {
-            HideScrollbar();
-        }
     } // Main
 }
