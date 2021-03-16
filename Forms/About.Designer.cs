@@ -40,7 +40,6 @@
             // 
             // panel1
             // 
-            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.panel1.Controls.Add(this.label1);
             this.panel1.Controls.Add(this.lblDesc);
             this.panel1.Controls.Add(this.linkEmail);
@@ -66,7 +65,7 @@
             this.lblDesc.Dock = System.Windows.Forms.DockStyle.Fill;
             this.lblDesc.Location = new System.Drawing.Point(0, 45);
             this.lblDesc.Name = "lblDesc";
-            this.lblDesc.Size = new System.Drawing.Size(273, 102);
+            this.lblDesc.Size = new System.Drawing.Size(275, 104);
             this.lblDesc.TabIndex = 4;
             this.lblDesc.Text = resources.GetString("lblDesc.Text");
             this.lblDesc.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -74,9 +73,9 @@
             // linkEmail
             // 
             this.linkEmail.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.linkEmail.Location = new System.Drawing.Point(0, 147);
+            this.linkEmail.Location = new System.Drawing.Point(0, 149);
             this.linkEmail.Name = "linkEmail";
-            this.linkEmail.Size = new System.Drawing.Size(273, 31);
+            this.linkEmail.Size = new System.Drawing.Size(275, 31);
             this.linkEmail.TabIndex = 3;
             this.linkEmail.TabStop = true;
             this.linkEmail.Text = "runamonk@onlyzuul.org";
@@ -88,7 +87,7 @@
             this.lblVersion.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblVersion.Location = new System.Drawing.Point(0, 22);
             this.lblVersion.Name = "lblVersion";
-            this.lblVersion.Size = new System.Drawing.Size(273, 23);
+            this.lblVersion.Size = new System.Drawing.Size(275, 23);
             this.lblVersion.TabIndex = 1;
             this.lblVersion.Text = "[VERSION]";
             this.lblVersion.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -98,7 +97,7 @@
             this.lblName.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblName.Location = new System.Drawing.Point(0, 0);
             this.lblName.Name = "lblName";
-            this.lblName.Size = new System.Drawing.Size(273, 22);
+            this.lblName.Size = new System.Drawing.Size(275, 22);
             this.lblName.TabIndex = 0;
             this.lblName.Text = "[NAME]";
             this.lblName.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
