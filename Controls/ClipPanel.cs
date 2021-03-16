@@ -51,11 +51,12 @@ namespace Clips.Controls
         public ClipPanel(Config myConfig, bool isHeader = false)
         {
             IsHeader = isHeader;
+           
+            MouseWheel += new MouseEventHandler(MouseWheelScroll);
             VerticalScroll.Enabled = true;
             HorizontalScroll.Enabled = false;
-
             AutoScroll = true;
-            
+           
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);
@@ -353,7 +354,7 @@ namespace Clips.Controls
 
             InLoad = false;
             ResumeLayout();
-            OnClipsLoaded?.Invoke();          
+            OnClipsLoaded?.Invoke();
         }
 
         private void MenuDelete_Click(object sender, EventArgs e)
@@ -400,6 +401,27 @@ namespace Clips.Controls
                     ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage.Save(dlg.FileName);
             }
             InMenu = false;
+        }
+
+        private void MouseWheelScroll(object sender, MouseEventArgs e)
+        {
+            if (VerticalScroll.Value == 0)
+            {
+                // Top
+                if (VerticalScroll.Visible)
+                {
+
+                }
+            }
+            else
+            if (VerticalScroll.Value + VerticalScroll.LargeChange > VerticalScroll.Maximum)
+            {
+                // Bottom
+            }
+            else
+            {
+                // Middle
+            }
         }
 
         private void PreviewHide(object sender, EventArgs e)
