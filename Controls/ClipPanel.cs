@@ -124,13 +124,13 @@ namespace Clips.Controls
             b.MouseLeave += new EventHandler(PreviewHide);
             b.ContextMenuStrip = MenuRC;
             b.ImageAlign = ContentAlignment.MiddleLeft;
-            b.Parent = this;
+            Controls.Add(b);
             return b;
         }
 
         public void AddItem(string text, string fileName, bool saveToDisk = false)
         {
-            if ((text == LastText) || ClipExists(text)) return;
+            if (string.IsNullOrEmpty(text) || (text == LastText) || ClipExists(text)) return;
 
             SuspendLayout();
 
