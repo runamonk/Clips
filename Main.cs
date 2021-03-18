@@ -197,8 +197,7 @@ namespace Clips
                 {
                     if (!b.Visible)
                         b.Visible = true;
-                }
-                Clips.Controls[Clips.Controls.Count-1].Select();
+                }               
             }
             else
             {
@@ -220,6 +219,7 @@ namespace Clips
                     }
                 }
             }
+            Clips.First();
             ResumeLayout();
             AutoSizeForm(false);
         }
@@ -250,7 +250,6 @@ namespace Clips
         private void AutoSizeForm(bool ScrollToTop)
         {
             if (Clips.InLoad) return;
-            //int MaxHeight = (int)(Screen.PrimaryScreen.WorkingArea.Height * .50);
 
             if (Config.AutoSizeHeight)
             {
@@ -276,8 +275,8 @@ namespace Clips
             }
             
             // select the first control.
-            if ((ScrollToTop) && (Clips.Controls.Count > 0))
-                Clips.Controls[Clips.Controls.Count-1].Select();
+            if (ScrollToTop)
+                Clips.First();               
         }
 
         private void HideScrollbar()

@@ -315,6 +315,25 @@ namespace Clips.Controls
             //Controls.RemoveAt(0);
         }
 
+        public void First()
+        {
+            if (Controls.Count > 0)
+            {
+                ScrollControlIntoView(Controls[Controls.Count - 1]);
+                Controls[Controls.Count - 1].Select();
+            }
+               
+        }
+
+        public void Last()
+        {
+            if (Controls.Count > 0)
+            {
+                ScrollControlIntoView(Controls[0]);
+                Controls[0].Select();
+            }
+        }
+
         public void LoadItems()
         {
             SuspendLayout();
