@@ -86,8 +86,8 @@ namespace Clips
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
-            if ((SearchClips.Text == "") && (e.KeyCode == Keys.Escape))
-            {
+            if ((SearchClips.Text == "") && (e.KeyCode == Keys.Escape) && (Opacity > 0)) 
+                {
                     ToggleShow(true);
             }
             else
