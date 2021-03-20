@@ -347,7 +347,7 @@ namespace Clips
                 SetFormPos();
             }
 
-            Text = Funcs.GetName() + " v" + Funcs.GetVersion();
+            Text = Funcs.GetNameAndVersion();
             pTop.BackColor = Config.ClipsHeaderColor;
             BackColor = Config.ClipsBackColor;
             SearchClips.Text = "";
