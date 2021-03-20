@@ -119,7 +119,6 @@ namespace Clips
         private void Main_Resize(object sender, EventArgs e)
         {
             HideScrollbar();
-            Funcs.SetTitleTextCentered(this);
         }
 
         private void Main_ResizeEnd(object sender, EventArgs e)
@@ -344,11 +343,11 @@ namespace Clips
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
                 Clips.OnClipsLoaded += new ClipPanel.ClipsLoadedHandler(ClipsLoaded);
                 Clips.Parent = pMain;
+                //Clips.Dock = DockStyle.Fill;
                 SetFormPos();
             }
 
             Text = Funcs.GetName() + " v" + Funcs.GetVersion();
-            Funcs.SetTitleTextCentered(this);
             pTop.BackColor = Config.ClipsHeaderColor;
             BackColor = Config.ClipsBackColor;
             SearchClips.Text = "";
