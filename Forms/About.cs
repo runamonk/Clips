@@ -20,7 +20,7 @@ namespace Clips
         private void About_Load(object sender, EventArgs e)
         {
             lblName.Text = Funcs.GetName();
-            lblVersion.Text = "Version: " + Funcs.GetVersion();
+            lblVersion.Text = "Version: " + Funcs.GetNameAndVersion();
 
             // Center over parent since CenterParent only works if the form is shown as a dialog.
             if (Owner != null)
