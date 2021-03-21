@@ -38,7 +38,7 @@
             // notifyClips
             // 
             this.notifyClips.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyClips.Icon")));
-            this.notifyClips.Text = "Clips";
+            this.notifyClips.Text = "zuul Clips";
             this.notifyClips.Visible = true;
             this.notifyClips.DoubleClick += new System.EventHandler(this.NotifyClips_DoubleClick);
             // 
