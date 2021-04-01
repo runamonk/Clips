@@ -188,9 +188,8 @@ namespace Clips
 
         private void SearchTextChanged(object sender, EventArgs e)
         {
-            SuspendLayout();
+            Clips.SuspendLayout();
             bool includeImages = (SearchClips.Text.Trim() == ":image");
-
             if (SearchClips.Text.Trim() == "")
             {
                 foreach (ClipButton b in Clips.Controls)
@@ -219,9 +218,10 @@ namespace Clips
                     }
                 }
             }
-            Clips.First();
-            ResumeLayout();
+            Clips.First();            
             AutoSizeForm(false);
+            Funcs.MoveFormToCursor(this);
+            Clips.ResumeLayout();
         }
 
         protected override void OnLoad(EventArgs e)
@@ -359,16 +359,16 @@ namespace Clips
 
         private Process RunningInstance()
         {
-#if !DEBUG            
-            Process current = Process.GetCurrentProcess();
-            Process[] processes = Process.GetProcessesByName(current.ProcessName);
+            if (!Debugger.IsAttached)
+            {
+                Process current = Process.GetCurrentProcess();
+                Process[] processes = Process.GetProcessesByName(current.ProcessName);
 
-            foreach (Process process in processes)
-                if (process.Id != current.Id)
-                    if (Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == current.MainModule.FileName)
-                        return process;
-            
-#endif
+                foreach (Process process in processes)
+                    if (process.Id != current.Id)
+                        if (Assembly.GetExecutingAssembly().Location.Replace("/", "\\") == current.MainModule.FileName)
+                            return process;
+            }
             return null;
         }
 
