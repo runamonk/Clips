@@ -72,19 +72,6 @@ namespace Clips
                 if ((FileName == "") || (!File.Exists(FileName)))
                     FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
 
-                //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-                string[] s = FFullText.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
-                if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
-                    for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
-                    {
-                        if (string.IsNullOrEmpty(Text))
-                            Text = s[i] + "\n";
-                        else
-                            Text = Text + s[i] + "\n";
-                    }
-                else
-                    Text = FFullText;
-
                 CalculateSize();
             }        
         }
@@ -134,9 +121,22 @@ namespace Clips
                     Height = 60;
                 else
                 {
+                    //TODO Come up with a better way to handle displaying multiple lines per ClipButton
+                    string[] s = FFullText.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+                    if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
+                        for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
+                        {
+                            if (string.IsNullOrEmpty(Text))
+                                Text = s[i] + "\n";
+                            else
+                                Text = Text + s[i] + "\n";
+                        }
+                    else
+                        Text = FFullText;
+
                     SizeF ss = TextRenderer.MeasureText("X", Font);
                     int FHeight = Convert.ToInt32(ss.Height);
-                    Height = ( Text.Count(f => f == '\n') >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
+                    Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
                 }
             }
         }
