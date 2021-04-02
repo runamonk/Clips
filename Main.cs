@@ -50,7 +50,6 @@ namespace Clips
         // TODO Add ability to pin a clip.
         // TODO Add support for actually clipping the files from a list of files.
         // TODO Add edit/favorite text editor in config.
-        // TODO Add button pad amount that way users can decide how much to pad the ClipButton, rather than just using an arbritrary 8px.
         // TODO Add max form height (to work with auto-size).
         #endregion
 
@@ -58,6 +57,7 @@ namespace Clips
         private void ConfigChanged(object sender, EventArgs e)
         {
             LoadConfig();
+            AutoSizeForm(true);
         }
 
         private void ClipAdded(ClipButton Clip, bool ClipSavedToDisk)
@@ -69,7 +69,7 @@ namespace Clips
         private void ClipClicked(ClipButton Clip)
         {
             if (Config.AutoHide)
-                 ToggleShow(true, true);
+                 ToggleShow(true);
         }
 
         private void ClipDeleted()
@@ -206,7 +206,7 @@ namespace Clips
 
         private void NotifyClips_DoubleClick(object sender, EventArgs e)
         {
-            ToggleShow(false,false);
+            ToggleShow(false);
         }
 
         private void SearchTextChanged(object sender, EventArgs e)
@@ -411,7 +411,7 @@ namespace Clips
             Size = Config.FormSize;
         }
 
-        private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
+        private void ToggleShow(bool Override = false)
         {
             if ((pinned) || (!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
                 return;
@@ -430,7 +430,7 @@ namespace Clips
                 {
                     AutoSizeForm(true);
                     if (Config.OpenFormAtCursor)
-                        Funcs.MoveFormToCursor(this, IgnoreBounds);                   
+                        Funcs.MoveFormToCursor(this, false);                   
                     Opacity = 100;
                     Activate();
                     KeyPreview = true;

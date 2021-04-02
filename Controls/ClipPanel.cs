@@ -34,8 +34,7 @@ namespace Clips.Controls
         private readonly ClipMenu MenuRC;
         private readonly Preview PreviewForm;
         private readonly SharpClipboard clipboard;
-        private const string  new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
-
+        
         protected override CreateParams CreateParams
         {
             // Force the scrollbar to always be in position. That way we can just hide it all the time without
@@ -135,36 +134,10 @@ namespace Clips.Controls
             SuspendLayout();
             LastText = text;
             ClipButton b = AddClipButton();
-
             b.AutoSize = false;
             b.AutoEllipsis = false;
-            b.FullText = text;
-
-            byte[] plainTextBytes = Encoding.UTF8.GetBytes(text);
-            string base64 = Convert.ToBase64String(plainTextBytes);
-            if (saveToDisk)
-                b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
-            else
-                b.FileName = fileName;
-
-            //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-            string[] s = text.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
-            if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
-                for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
-                {
-                    if (string.IsNullOrEmpty(b.Text))
-                        b.Text = s[i] + "\n";
-                    else
-                        b.Text = b.Text + s[i] + "\n";
-                }
-            else
-                b.Text = text;
-
-            SizeF ss = TextRenderer.MeasureText("X", b.Font);
-            int FHeight = Convert.ToInt32(ss.Height);
-
-            b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
-
+            b.FileName = fileName;
+            b.FullText = text;       
             OnClipAdded?.Invoke(b, saveToDisk);
             ResumeLayout();
         }
@@ -172,21 +145,11 @@ namespace Clips.Controls
         public void AddItem(Image image, string fileName, bool saveToDisk = false)
         {
             if ((LastImage != null) && ClipExists(image)) return;
-
             SuspendLayout();
             LastImage = image;
             ClipButton b = AddClipButton();
-            b.Height = 60;
+            b.FileName = fileName;
             b.FullImage = image;
-
-            string base64 = Convert.ToBase64String(Funcs.ImageToByteArray(b.FullImage));
-            if (saveToDisk)
-                b.FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
-            else
-                b.FileName = fileName;
-            // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
-            b.Image = image.GetThumbnailImage(50, 50, null, IntPtr.Zero);
-
             OnClipAdded?.Invoke(b, saveToDisk);
             ResumeLayout();
         }
@@ -300,7 +263,6 @@ namespace Clips.Controls
         {
             SetColors();
             CleanupCache();
-            LoadItems();
         }
 
         public void DeleteOldestClip()
@@ -334,7 +296,6 @@ namespace Clips.Controls
         public void LoadItems()
         {
             SuspendLayout();
-            Controls.Clear();
             LastImage = null;
             LastText = "";
             InLoad = true;

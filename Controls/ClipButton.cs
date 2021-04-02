@@ -2,6 +2,8 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.Linq;
+using System.Text;
 using System.Windows.Forms;
 using Utility;
 
@@ -14,9 +16,11 @@ namespace Clips
         Pin,
         Seperator
     }
-
+    
     public partial class ClipButton : Button
     {
+        private const string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+
         private Config ClipsConfig { get; set; }
 
         private readonly ButtonType FButtonType;
@@ -26,8 +30,64 @@ namespace Clips
         public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
 
         public string FileName { get; set; }
-        public Image FullImage { get; set; }
-        public string FullText { get; set; }
+
+        private Image FFullImage; 
+        public Image FullImage
+        {
+            get {
+                return FFullImage;
+            }
+            set {
+                FFullImage = value;
+                if (FFullImage == null)
+                    return;
+
+                string base64 = Convert.ToBase64String(Funcs.ImageToByteArray(FFullImage));
+
+                if ((FileName == "") || (!File.Exists(FileName)))
+                    FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
+
+                // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
+                Image = FFullImage.GetThumbnailImage(50, 50, null, IntPtr.Zero);
+                CalculateSize();
+            }
+        }
+
+        private string FFullText;
+        public string FullText 
+        {             
+            get 
+            {
+                return FFullText;
+            }             
+            set 
+            {
+                FFullText = value;               
+                if (FFullText == null)
+                    return;
+                
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(FFullText);
+                string base64 = Convert.ToBase64String(plainTextBytes);
+                    
+                if ((FileName == "") || (!File.Exists(FileName)))
+                    FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
+
+                //TODO Come up with a better way to handle displaying multiple lines per ClipButton
+                string[] s = FFullText.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+                if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
+                    for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
+                    {
+                        if (string.IsNullOrEmpty(Text))
+                            Text = s[i] + "\n";
+                        else
+                            Text = Text + s[i] + "\n";
+                    }
+                else
+                    Text = FFullText;
+
+                CalculateSize();
+            }        
+        }
 
         public delegate void ClipButtonClickedHandler(ClipButton Button);
         public event ClipButtonClickedHandler OnClipButtonClicked;
@@ -66,9 +126,25 @@ namespace Clips
             SetColors();
         }
 
+        private void CalculateSize()
+        {
+            if (ButtonType == ButtonType.Clip)
+            {
+                if (FullImage != null)
+                    Height = 60;
+                else
+                {
+                    SizeF ss = TextRenderer.MeasureText("X", Font);
+                    int FHeight = Convert.ToInt32(ss.Height);
+                    Height = ( Text.Count(f => f == '\n') >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
+                }
+            }
+        }
+
         private void ConfigChanged(object sender, EventArgs e)
         {
             SetColors();
+            CalculateSize();
         }
 
         // Stops the black default border from being displayed on button when the preview form is shown.
@@ -114,7 +190,6 @@ namespace Clips
                 BackColor = ClipsConfig.ClipsRowBackColor;
             }
         }
-
 
         private void SetColors()
         {
