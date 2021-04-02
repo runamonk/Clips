@@ -307,6 +307,9 @@ namespace Clips
 
         private void HideScrollbar()
         {
+            // Since there isn't a way to modify the scrollbar to match a users theme, I am going
+            // to move it out of view. This allows for AutoScroll to still function.
+            // The only other option is to create my own control to handle scrolling; which is still an option.
             if (Clips == null)
                 return;
 
@@ -325,24 +328,13 @@ namespace Clips
                 MenuMain = new ClipMenu(Config);
                 MenuMain.Opening += new System.ComponentModel.CancelEventHandler(MenuClips_Opening);
                 MenuMain.Closed += new ToolStripDropDownClosedEventHandler(MenuClips_Closed);
-                ToolStripMenuItem t;
-                t = new ToolStripMenuItem("&About");
-                t.Click += new EventHandler(MenuAbout_Click);
-                MenuMain.Items.Add(t);
+                Funcs.AddMenuItem(MenuMain, "About", MenuAbout_Click);
                 MenuMain.Items.Add(new ToolStripSeparator());
-                t = new ToolStripMenuItem("&Monitor Clipboard")
-                {
-                    Checked = true,
-                    CheckState = CheckState.Checked
-                };
-                t.Click += new EventHandler(MenuMonitorClipboard_Click);
-                MenuMain.Items.Add(t);
-                t = new ToolStripMenuItem("&Settings");
-                t.Click += new EventHandler(MenuSettings_Click);
-                MenuMain.Items.Add(t);
-                t = new ToolStripMenuItem("&Close");
-                t.Click += new EventHandler(MenuClose_Click);
-                MenuMain.Items.Add(t);
+                ToolStripMenuItem t = Funcs.AddMenuItem(MenuMain, "Monitor Clipboard", MenuMonitorClipboard_Click);
+                t.Checked = true;
+                t.CheckState = CheckState.Checked;
+                Funcs.AddMenuItem(MenuMain, "Settings", MenuSettings_Click);
+                Funcs.AddMenuItem(MenuMain, "Close", MenuClose_Click);
 
                 MenuMainButton = new ClipButton(Config, ButtonType.Menu)
                 {
@@ -384,7 +376,6 @@ namespace Clips
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
                 Clips.OnClipsLoaded += new ClipPanel.ClipsLoadedHandler(ClipsLoaded);
                 Clips.Parent = pMain;
-                //Clips.Dock = DockStyle.Fill;
                 SetFormPos();
             }
 
