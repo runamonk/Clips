@@ -390,7 +390,7 @@ namespace Clips
             get {
                 string s = FindKey("header_back_color");
                 if (s == "")
-                    s = SetKey("header_back_color", Color.FromName("Control").ToArgb().ToString());
+                    s = SetKey("header_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("header_back_color", value.ToArgb().ToString()); }
@@ -401,7 +401,7 @@ namespace Clips
             get {
                 string s = FindKey("header_button_color");
                 if (s == "")
-                    s = SetKey("header_button_color", Color.FromName("Control").ToArgb().ToString());
+                    s = SetKey("header_button_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("header_button_color", value.ToArgb().ToString()); }
@@ -412,12 +412,12 @@ namespace Clips
             get {
                 string s = FindKey("header_font_color");
                 if (s == "")
-                    s = SetKey("header_font_color", Color.White.ToArgb().ToString());
+                    s = SetKey("header_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("header_font_color", value.ToArgb().ToString()); }
         }
-
+        
         public Color HeaderButtonSelectedColor
         {
             get {
