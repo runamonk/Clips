@@ -21,8 +21,8 @@ namespace Clips
             SizeF ss = TextRenderer.MeasureText("X", PreviewText.Font);
             FTextHeight = Convert.ToInt32(ss.Height) + 3;
         }
-        private Config ClipsConfig;
-        private int FTextHeight = 0;
+        private readonly Config ClipsConfig;
+        private readonly int FTextHeight = 0;
         protected override CreateParams CreateParams
         {
             get {

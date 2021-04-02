@@ -14,14 +14,14 @@ namespace Clips
     {
         public const string CONFIG_FILENAME = "Clips.cfg";
 
-        private partial class _Settings : Settings
+        private partial class Settings : Clips.Settings
         {
-            public _Settings()
+            public Settings()
             {
 
             }
 
-            public _Settings(Config Config)
+            public Settings(Config Config)
             {
                 if (Config == null)
                     throw new Exception("Config cannot be null.");
@@ -106,10 +106,10 @@ namespace Clips
                    Shift = 4,
                    WinKey = 8*/
                 int i = 0;
-                if (Alt.Checked) i = (i + 1);
-                if (Control.Checked) i = (i + 2);
-                if (Shift.Checked) i = (i + 4);
-                if (Windows.Checked) i = (i + 8);
+                if (Alt.Checked) i++;
+                if (Control.Checked) i += 2;
+                if (Shift.Checked) i += 4;
+                if (Windows.Checked) i += 8;
                 _Config.AutoHide = AutoHide.Checked;
                 _Config.AutoSizeHeight = AutoSizeHeight.Checked;
                 _Config.ClipsBackColor = ClipBackColor.BackColor;
@@ -216,7 +216,7 @@ namespace Clips
 
         public void ShowConfigForm(bool ParentIsVisible)
         {
-            _Settings f = new _Settings(this);
+            Settings f = new Settings(this);
             if (!ParentIsVisible)
             {
                 f.StartPosition = FormStartPosition.Manual;
@@ -372,8 +372,8 @@ namespace Clips
         {
             get {
                 string s = FindKey("form_size");
-                Size sz = new Size(400, 300);
-                SizeConverter sc = new SizeConverter();
+                Size sz;
+                SizeConverter sc;
 
                 if (s == "")
                 {

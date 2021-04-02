@@ -7,11 +7,24 @@ using Utility;
 
 namespace Clips
 {
+    public enum ButtonType
+    {
+        Clip,
+        Menu,
+        Pin,
+        Seperator
+    }
 
     public partial class ClipButton : Button
     {
         private Config ClipsConfig { get; set; }
-        private bool IsMenuButton = false;
+
+        private readonly ButtonType FButtonType;
+        public ButtonType ButtonType { get { return FButtonType; } }
+        public bool IsMenuButton { get { return (FButtonType == ButtonType.Menu); } }
+        public bool IsPinButton { get { return (FButtonType == ButtonType.Pin); } }
+        public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
+
         public string FileName { get; set; }
         public Image FullImage { get; set; }
         public string FullText { get; set; }
@@ -19,17 +32,35 @@ namespace Clips
         public delegate void ClipButtonClickedHandler(ClipButton Button);
         public event ClipButtonClickedHandler OnClipButtonClicked;
 
-        public ClipButton(Config myConfig, bool isMenuButton = false)
+        public ClipButton(Config myConfig, ButtonType buttonType)
         {
+            FButtonType = buttonType;
             FlatAppearance.BorderSize = 0;
             FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            TextAlign = ContentAlignment.TopLeft;
-            ImageAlign = ContentAlignment.MiddleLeft;
+
+            if (buttonType == ButtonType.Clip)
+            {
+                TextAlign = ContentAlignment.TopLeft;
+                ImageAlign = ContentAlignment.MiddleLeft;
+            }
+            else
+            if (IsHeaderButton())
+            {
+                Padding = new Padding(0, 0, 0, 0);
+                Margin = new Padding(0, 0, 0, 0);
+                TextAlign = ContentAlignment.MiddleCenter;
+            }
+
+            if (IsPinButton)
+            {
+                ToolTip PinButtonToolTip = new ToolTip();
+                PinButtonToolTip.SetToolTip(this, "Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
+            }
+
             UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
             UseMnemonic = false;
-            AutoSize = false;
-            IsMenuButton = isMenuButton;
+            AutoSize = false;       
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             SetColors();
@@ -46,6 +77,11 @@ namespace Clips
             base.NotifyDefault(false);
         }
 
+        private bool IsHeaderButton()
+        {
+            return (IsMenuButton || IsPinButton);
+        }
+
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
@@ -56,7 +92,7 @@ namespace Clips
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            if (IsMenuButton)
+            if (IsHeaderButton())
             {
                 BackColor = ClipsConfig.MenuSelectedColor;
             }
@@ -69,7 +105,7 @@ namespace Clips
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            if (IsMenuButton)
+            if (IsHeaderButton())
             {
                 BackColor = ClipsConfig.MenuButtonColor;
             }

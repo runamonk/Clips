@@ -14,8 +14,7 @@ namespace Clips.Controls
     public partial class ClipPanel : Panel
     {
         private Config ClipsConfig { get; set; }
-        private bool IsHeader = false;
-        private int FocusedButtonIndex { get; set; }
+        private readonly bool IsHeader = false;
         private Image LastImage { get; set; }
         private string LastText { get; set; }
         public bool InMenu { get; set; }
@@ -32,10 +31,10 @@ namespace Clips.Controls
             }
         }
 
-        private ClipMenu MenuRC;
-        private Preview PreviewForm;
-        private SharpClipboard clipboard;
-        private string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+        private readonly ClipMenu MenuRC;
+        private readonly Preview PreviewForm;
+        private readonly SharpClipboard clipboard;
+        private const string  new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
 
         protected override CreateParams CreateParams
         {
@@ -61,16 +60,20 @@ namespace Clips.Controls
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);
             DoubleBuffered = true;
-            MenuRC = new ClipMenu(myConfig);
-            MenuRC.ShowCheckMargin = false;
-            MenuRC.ShowImageMargin = false;
+            MenuRC = new ClipMenu(myConfig)
+            {
+                ShowCheckMargin = false,
+                ShowImageMargin = false
+            };
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
             LoadItems();
             if (clipboard == null)
             {
-                clipboard = new SharpClipboard();
-                clipboard.MonitorClipboard = true;
+                clipboard = new SharpClipboard
+                {
+                    MonitorClipboard = true
+                };
                 clipboard.ObservableFormats.All = true;
                 clipboard.ObservableFormats.Files = true;
                 clipboard.ObservableFormats.Images = true;
@@ -112,18 +115,16 @@ namespace Clips.Controls
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
                 DeleteOldestClip();
 
-            ClipButton b = new ClipButton(ClipsConfig)
+            ClipButton b = new ClipButton(ClipsConfig, ButtonType.Clip)
             {
                 TabStop = false,
-                Dock = DockStyle.Top,
-                FlatStyle = FlatStyle.Flat
+                Dock = DockStyle.Top
             };
 
             b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ButtonClicked);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
             b.ContextMenuStrip = MenuRC;
-            b.ImageAlign = ContentAlignment.MiddleLeft;
             Controls.Add(b);
             return b;
         }
@@ -131,9 +132,7 @@ namespace Clips.Controls
         public void AddItem(string text, string fileName, bool saveToDisk = false)
         {
             if (string.IsNullOrEmpty(text) || (text == LastText) || ClipExists(text)) return;
-
             SuspendLayout();
-
             LastText = text;
             ClipButton b = AddClipButton();
 
@@ -167,13 +166,11 @@ namespace Clips.Controls
             b.Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
 
             OnClipAdded?.Invoke(b, saveToDisk);
-
             ResumeLayout();
         }
 
         public void AddItem(Image image, string fileName, bool saveToDisk = false)
         {
-            //if ((LastImage != null) && Funcs.IsSame(image, LastImage)) return;
             if ((LastImage != null) && ClipExists(image)) return;
 
             SuspendLayout();

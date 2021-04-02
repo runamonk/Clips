@@ -27,6 +27,7 @@ namespace Clips
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
 
         private ClipButton MenuMainButton { get; set; }
+        private ClipButton PinButton { get; set; }
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
         private ClipPanel Clips { get; set; }
@@ -36,6 +37,14 @@ namespace Clips
         private bool inClose = false;
         private bool inMenu = false;
         private bool inSettings = false;
+        private bool pinned = false;
+
+        private const string ICON_PINNED_W7 = "\u25FC";
+        private const string ICON_UNPINNED_W7 = "\u25FB";
+        private const string ICON_PINNED = "\uE1F6";
+        private const string ICON_UNPINNED = "\uE1F7";
+        private const string ICON_MAINMENU = "\uE0C2";
+        private const string ICON_MAINMENU_W7 = "\u268A";
 
         #region Todo
         // TODO Add ability to pin a clip.
@@ -86,15 +95,14 @@ namespace Clips
 
         private void Main_KeyDown(object sender, KeyEventArgs e)
         {
+            if ((Control.ModifierKeys == Keys.Control) && (e.KeyCode == Keys.P))
+                PinButton.PerformClick();
+            else
             if ((SearchClips.Text == "") && (e.KeyCode == Keys.Escape) && (Opacity > 0)) 
-                {
-                    ToggleShow(true);
-            }
+                ToggleShow(true);
             else
             if (e.KeyCode == Keys.Escape)
-            {
                 SearchClips.Text = "";
-            }
             else
             if ((e.KeyCode == Keys.Delete) || (e.KeyCode == Keys.Back))
             {
@@ -159,7 +167,7 @@ namespace Clips
 
         private void MenuMonitorClipboard_Click(object sender, EventArgs e)
         {
-            bool b = false;
+            bool b;
             if (((ToolStripMenuItem)sender).Checked)
                 b = false;
             else
@@ -179,6 +187,21 @@ namespace Clips
         {
             Button b = ((Button)sender);
             MenuMain.Show(b.Left + b.Width + Left, b.Top + b.Height + Top);
+        }
+
+        private void PinButton_Click(object sender, EventArgs e)
+        {
+            ClipButton b = ((ClipButton)sender);
+            if (!pinned)
+            {
+                pinned = true;
+                b.Text = (Funcs.IsWindows7() ? ICON_PINNED_W7 : ICON_PINNED);
+            }
+            else
+            {
+                pinned = false;
+                b.Text = (Funcs.IsWindows7() ? ICON_UNPINNED_W7 : ICON_UNPINNED);
+            }
         }
 
         private void NotifyClips_DoubleClick(object sender, EventArgs e)
@@ -260,7 +283,7 @@ namespace Clips
                 {
                     if (Clips.Controls[i].Visible)
                     {
-                        c = c + (Clips.Controls[i].Height);
+                        c += (Clips.Controls[i].Height);
 
                         ButtonCount++;
                         if (ButtonCount >= Config.ClipsToDisplay)
@@ -272,6 +295,9 @@ namespace Clips
 
                 //Height = c + SystemInformation.CaptionHeight + SystemInformation.BorderSize.Height + pTop.Height + pMain.Padding.Top + pMain.Padding.Bottom;
                 Height = c + 68;
+
+                if (Height >= Screen.PrimaryScreen.WorkingArea.Height)
+                    Height = Screen.PrimaryScreen.WorkingArea.Height;
             }
             
             // select the first control.
@@ -304,9 +330,11 @@ namespace Clips
                 t.Click += new EventHandler(MenuAbout_Click);
                 MenuMain.Items.Add(t);
                 MenuMain.Items.Add(new ToolStripSeparator());
-                t = new ToolStripMenuItem("&Monitor Clipboard");
-                t.Checked = true;
-                t.CheckState = CheckState.Checked;
+                t = new ToolStripMenuItem("&Monitor Clipboard")
+                {
+                    Checked = true,
+                    CheckState = CheckState.Checked
+                };
                 t.Click += new EventHandler(MenuMonitorClipboard_Click);
                 MenuMain.Items.Add(t);
                 t = new ToolStripMenuItem("&Settings");
@@ -315,23 +343,36 @@ namespace Clips
                 t = new ToolStripMenuItem("&Close");
                 t.Click += new EventHandler(MenuClose_Click);
                 MenuMain.Items.Add(t);
-                MenuMainButton = new ClipButton(Config, true)
+
+                MenuMainButton = new ClipButton(Config, ButtonType.Menu)
                 {
-                    Text = "...",
                     Width = 25,
                     Parent = pTop,
                     Dock = DockStyle.Left
                 };
+                MenuMainButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                MenuMainButton.Text = (Funcs.IsWindows7() ? ICON_MAINMENU_W7 : ICON_MAINMENU);
                 MenuMainButton.Click += MainButton_Click;
-                MenuMainButton.Padding = new Padding(0,0,0,3);
-                MenuMainButton.TextAlign = ContentAlignment.MiddleCenter;
-                
-                SearchClips = new ClipSearch();
-                SearchClips.Parent = pTop;
-                SearchClips.Dock = DockStyle.Fill;
-                SearchClips.Margin = new Padding(0, 0, 0, 0);
-                SearchClips.Padding = new Padding(0, 0, 0, 0);
-                SearchClips.TextAlign = ContentAlignment.MiddleCenter;
+
+                PinButton = new ClipButton(Config, ButtonType.Pin)
+                {
+                    Width = 25,
+                    Parent = pTop,
+                    Dock = DockStyle.Right
+                };
+                PinButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                PinButton.Text = (Funcs.IsWindows7() ? ICON_UNPINNED_W7 : ICON_UNPINNED);
+                PinButton.Click += PinButton_Click;
+
+
+                SearchClips = new ClipSearch
+                {
+                    Parent = pTop,
+                    Dock = DockStyle.Fill,
+                    Margin = new Padding(0, 0, 0, 0),
+                    Padding = new Padding(0, 0, 0, 0),
+                    TextAlign = ContentAlignment.MiddleCenter
+                };
                 SearchClips.TextChanged += new EventHandler(SearchTextChanged);
 
                 pTop.Controls.SetChildIndex(SearchClips, 0);
@@ -381,7 +422,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false, bool IgnoreBounds = true)
         {
-            if ((!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
+            if ((pinned) || (!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
                 return;
             else
             {
@@ -398,7 +439,7 @@ namespace Clips
                 {
                     AutoSizeForm(true);
                     if (Config.OpenFormAtCursor)
-                        Funcs.MoveFormToCursor(this, false);                   
+                        Funcs.MoveFormToCursor(this, IgnoreBounds);                   
                     Opacity = 100;
                     Activate();
                     KeyPreview = true;

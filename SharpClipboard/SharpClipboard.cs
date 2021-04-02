@@ -75,8 +75,8 @@ namespace WK.Libraries.SharpClipboardNS
         private bool _monitorClipboard;
         private bool _observeLastEntry;
 
-        private Timer _timer = new Timer();
-        private ClipboardHandle _handle = new ClipboardHandle();
+        private readonly Timer _timer = new Timer();
+        private readonly ClipboardHandle _handle = new ClipboardHandle();
         private ObservableDataFormats _observableFormats = new ObservableDataFormats();
 
         #endregion
@@ -369,7 +369,7 @@ namespace WK.Libraries.SharpClipboardNS
 
             #region Fields
 
-            private SourceApplication _source;
+            private readonly SourceApplication _source;
 
             #endregion
 
@@ -459,8 +459,8 @@ namespace WK.Libraries.SharpClipboardNS
         /// </summary>
         public class WKComponentActionList : DesignerActionList
         {
-            private SharpClipboard WKComponent;
-            private DesignerActionUIService designerActionUISvc = null;
+            private readonly SharpClipboard WKComponent;
+            private readonly DesignerActionUIService designerActionUISvc = null;
 
             public WKComponentActionList(IComponent component) : base(component)
             {
