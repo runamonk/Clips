@@ -170,7 +170,7 @@ namespace Clips
             base.OnMouseEnter(e);
             if (IsHeaderButton())
             {
-                BackColor = ClipsConfig.MenuSelectedColor;
+                BackColor = ClipsConfig.HeaderButtonSelectedColor;
             }
             else
             {
@@ -183,7 +183,7 @@ namespace Clips
             base.OnMouseLeave(e);
             if (IsHeaderButton())
             {
-                BackColor = ClipsConfig.MenuButtonColor;
+                BackColor = ClipsConfig.HeaderButtonColor;
             }
             else
             {
@@ -194,10 +194,10 @@ namespace Clips
         private void SetColors()
         {
             FlatAppearance.BorderColor = BackColor;
-            if (IsMenuButton)
+            if (IsHeaderButton())
             {
-                BackColor = ClipsConfig.MenuButtonColor;
-                ForeColor = ClipsConfig.MenuFontColor;
+                BackColor = ClipsConfig.HeaderButtonColor;
+                ForeColor = ClipsConfig.HeaderFontColor;
             }
             else
             {

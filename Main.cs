@@ -366,7 +366,6 @@ namespace Clips
                     TextAlign = ContentAlignment.MiddleCenter
                 };
                 SearchClips.TextChanged += new EventHandler(SearchTextChanged);
-
                 pTop.Controls.SetChildIndex(SearchClips, 0);
                 notifyClips.ContextMenuStrip = MenuMain;
                                
@@ -380,11 +379,11 @@ namespace Clips
             }
 
             Text = Funcs.GetNameAndVersion();
-            pTop.BackColor = Config.ClipsHeaderColor;
-            BackColor = Config.ClipsBackColor;
+            pTop.BackColor = Config.HeaderBackColor;
+            BackColor = Config.HeaderBackColor;
             SearchClips.Text = "";
-            SearchClips.BackColor = Config.MenuButtonColor;
-            SearchClips.ForeColor = Config.MenuFontColor;
+            SearchClips.BackColor = Config.HeaderBackColor;
+            SearchClips.ForeColor = Config.HeaderFontColor;
             
             RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }

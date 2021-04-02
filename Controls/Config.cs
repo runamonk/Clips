@@ -49,7 +49,10 @@ namespace Clips
                     AutoSizeHeight.Checked = _Config.AutoSizeHeight;
                     ClipBackColor.BackColor = _Config.ClipsBackColor;
                     ClipFontColor.BackColor = _Config.ClipsFontColor;
-                    ClipHeaderColor.BackColor = _Config.ClipsHeaderColor;
+                    HeaderBackColor.BackColor = _Config.HeaderBackColor;
+                    HeaderButtonColor.BackColor = _Config.HeaderButtonColor;
+                    HeaderButtonSelectedColor.BackColor = _Config.HeaderButtonSelectedColor;
+                    HeaderFontColor.BackColor = _Config.HeaderFontColor;
                     ClipRowColor.BackColor = _Config.ClipsRowBackColor;
                     ClipsLinesPerRow.Value = _Config.ClipsLinesPerRow;
                     ClipsMaxClips.Value = _Config.ClipsMaxClips;
@@ -57,7 +60,6 @@ namespace Clips
                     ClipSelected.BackColor = _Config.ClipsSelectedColor;
                     MenuBackColor.BackColor = _Config.MenuBackColor;
                     MenuBorderColor.BackColor = _Config.MenuBorderColor;
-                    MenuButtonColor.BackColor = _Config.MenuButtonColor;
                     MenuFontColor.BackColor = _Config.MenuFontColor;
                     MenuSelectedColor.BackColor = _Config.MenuSelectedColor;
                     OpenAtMouse.Checked = _Config.OpenFormAtCursor;
@@ -68,6 +70,7 @@ namespace Clips
                     BackColor = _Config.ClipsBackColor;
                     ForeColor = _Config.ClipsFontColor;
                     GroupClips.ForeColor = _Config.ClipsFontColor;
+                    GroupColorHeader.ForeColor = _Config.ClipsFontColor;
                     GroupColorClips.ForeColor = _Config.ClipsFontColor;
                     GroupColorMenu.ForeColor = _Config.ClipsFontColor;
                     GroupColorPreview.ForeColor = _Config.ClipsFontColor;
@@ -113,16 +116,18 @@ namespace Clips
                 _Config.AutoHide = AutoHide.Checked;
                 _Config.AutoSizeHeight = AutoSizeHeight.Checked;
                 _Config.ClipsBackColor = ClipBackColor.BackColor;
-                _Config.ClipsFontColor = ClipFontColor.BackColor;
-                _Config.ClipsHeaderColor = ClipHeaderColor.BackColor;
+                _Config.ClipsFontColor = ClipFontColor.BackColor;                
                 _Config.ClipsLinesPerRow = Convert.ToInt32(ClipsLinesPerRow.Value);
                 _Config.ClipsMaxClips = Convert.ToInt32(ClipsMaxClips.Value);
                 _Config.ClipsRowBackColor = ClipRowColor.BackColor;
                 _Config.ClipsToDisplay = Convert.ToInt32(ClipsToDisplay.Value);
                 _Config.ClipsSelectedColor = ClipSelected.BackColor;
+                _Config.HeaderBackColor = HeaderBackColor.BackColor;
+                _Config.HeaderButtonColor = HeaderButtonColor.BackColor;
+                _Config.HeaderButtonSelectedColor = HeaderButtonSelectedColor.BackColor;
+                _Config.HeaderFontColor = HeaderFontColor.BackColor;
                 _Config.MenuBackColor = MenuBackColor.BackColor;
                 _Config.MenuBorderColor = MenuBorderColor.BackColor;
-                _Config.MenuButtonColor = MenuButtonColor.BackColor;
                 _Config.MenuFontColor = MenuFontColor.BackColor;
                 _Config.MenuSelectedColor = MenuSelectedColor.BackColor;
                 _Config.OpenFormAtCursor = OpenAtMouse.Checked;
@@ -263,7 +268,7 @@ namespace Clips
             get {
                 string s = FindKey("clips_back_color");
                 if (s == "")
-                    s = SetKey("clips_back_color", Color.FromName("Control").ToArgb().ToString());
+                    s = SetKey("clips_back_color", Color.White.ToArgb().ToString());
                     return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_back_color", value.ToArgb().ToString()); }
@@ -274,21 +279,10 @@ namespace Clips
             get {
                 string s = FindKey("clips_font_color");
                 if (s == "")
-                    s = SetKey("clips_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                    s = SetKey("clips_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_font_color", value.ToArgb().ToString()); }
-        }
-
-        public Color ClipsHeaderColor
-        {
-            get {
-                string s = FindKey("clips_header_color");
-                if (s == "")
-                    s = SetKey("clips_header_color", Color.FromName("Control").ToArgb().ToString());
-                return Color.FromArgb(Convert.ToInt32(s));
-            }
-            set { SetKey("clips_header_color", value.ToArgb().ToString()); }
         }
 
         public int ClipsLinesPerRow
@@ -307,7 +301,7 @@ namespace Clips
             get {
                 string s = FindKey("clips_row_back_color");
                 if (s == "")
-                    s = SetKey("clips_row_back_color", Color.FromName("Control").ToArgb().ToString());
+                    s = SetKey("clips_row_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_row_back_color", value.ToArgb().ToString()); }
@@ -318,7 +312,7 @@ namespace Clips
             get {
                 string s = FindKey("clips_selected_color");
                 if (s == "")
-                    s = SetKey("clips_selected_color", Color.FromName("MenuHighlight").ToArgb().ToString());
+                    s = SetKey("clips_selected_color", Color.Gray.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("clips_selected_color", value.ToArgb().ToString()); }
@@ -391,12 +385,56 @@ namespace Clips
             }
         }
 
+        public Color HeaderBackColor
+        {
+            get {
+                string s = FindKey("header_back_color");
+                if (s == "")
+                    s = SetKey("header_back_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("header_back_color", value.ToArgb().ToString()); }
+        }
+
+        public Color HeaderButtonColor
+        {
+            get {
+                string s = FindKey("header_button_color");
+                if (s == "")
+                    s = SetKey("header_button_color", Color.FromName("Control").ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("header_button_color", value.ToArgb().ToString()); }
+        }
+
+        public Color HeaderFontColor
+        {
+            get {
+                string s = FindKey("header_font_color");
+                if (s == "")
+                    s = SetKey("header_font_color", Color.White.ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("header_font_color", value.ToArgb().ToString()); }
+        }
+
+        public Color HeaderButtonSelectedColor
+        {
+            get {
+                string s = FindKey("header_button_selected_color");
+                if (s == "")
+                    s = SetKey("header_button_selected_color", Color.Gray.ToArgb().ToString());
+                return Color.FromArgb(Convert.ToInt32(s));
+            }
+            set { SetKey("header_button_selected_color", value.ToArgb().ToString()); }
+        }
+
         public Color MenuBackColor
         {
             get {
                 string s = FindKey("menu_back_color");
                 if (s == "")
-                    s = SetKey("menu_back_color", Color.FromName("Control").ToArgb().ToString());
+                    s = SetKey("menu_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_back_color", value.ToArgb().ToString()); }
@@ -407,21 +445,10 @@ namespace Clips
             get {
                 string s = FindKey("menu_border_color");
                 if (s == "")
-                    s = SetKey("menu_border_color", Color.FromName("Control").ToArgb().ToString());
+                    s = SetKey("menu_border_color", Color.Gray.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_border_color", value.ToArgb().ToString()); }
-        }
-
-        public Color MenuButtonColor
-        {
-            get {
-                string s = FindKey("menu_button_color");
-                if (s == "")
-                    s = SetKey("menu_button_color", Color.FromName("Control").ToArgb().ToString());
-                return Color.FromArgb(Convert.ToInt32(s));
-            }
-            set { SetKey("menu_button_color", value.ToArgb().ToString()); }
         }
 
         public Color MenuFontColor
@@ -429,7 +456,7 @@ namespace Clips
             get {
                 string s = FindKey("menu_font_color");
                 if (s == "")
-                    s = SetKey("menu_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                    s = SetKey("menu_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_font_color", value.ToArgb().ToString()); }
@@ -440,7 +467,7 @@ namespace Clips
             get {
                 string s = FindKey("menu_selected_color");
                 if (s == "")
-                    s = SetKey("menu_selected_color", Color.FromName("MenuHighlight").ToArgb().ToString());
+                    s = SetKey("menu_selected_color", Color.Gray.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("menu_selected_color", value.ToArgb().ToString()); }
@@ -494,7 +521,7 @@ namespace Clips
             get {
                 string s = FindKey("preview_back_color");
                 if (s == "")
-                    s = SetKey("preview_back_color", Color.FromName("Control").ToArgb().ToString());
+                    s = SetKey("preview_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("preview_back_color", value.ToArgb().ToString()); }
@@ -505,7 +532,7 @@ namespace Clips
             get {
                 string s = FindKey("preview_font_color");
                 if (s == "")
-                    s = SetKey("preview_font_color", Color.FromName("ControlText").ToArgb().ToString());
+                    s = SetKey("preview_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("preview_font_color", value.ToArgb().ToString()); }

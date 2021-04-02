@@ -417,7 +417,7 @@ namespace Clips.Controls
         private void SetColors()
         {
             if (IsHeader)
-                BackColor = ClipsConfig.ClipsHeaderColor;
+                BackColor = ClipsConfig.HeaderBackColor;
             else
                 BackColor = ClipsConfig.ClipsBackColor;
         }

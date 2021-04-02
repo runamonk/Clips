@@ -31,14 +31,17 @@ namespace Clips
         private void LightTheme_Click(object sender, EventArgs e)
         {
             DarkTheme.Checked = false;
-            ClipHeaderColor.BackColor = Color.White;
+            HeaderBackColor.BackColor = Color.White;
+            HeaderButtonColor.BackColor = Color.White;
+            HeaderFontColor.BackColor = Color.Black;
+            HeaderButtonSelectedColor.BackColor = Color.Gray;
             ClipBackColor.BackColor = Color.White;
             ClipFontColor.BackColor = Color.Black;
             ClipRowColor.BackColor = Color.White;
             ClipSelected.BackColor = Color.Gray;
             MenuBackColor.BackColor = Color.White;
             MenuBorderColor.BackColor = Color.Gray;
-            MenuButtonColor.BackColor = Color.White;
+            HeaderButtonColor.BackColor = Color.White;
             MenuFontColor.BackColor = Color.Black;
             MenuSelectedColor.BackColor = Color.Gray;
             PreviewBackColor.BackColor = Color.White;
@@ -48,14 +51,17 @@ namespace Clips
         private void DarkTheme_Click(object sender, EventArgs e)
         {
             LightTheme.Checked = false;
-            ClipHeaderColor.BackColor = Color.FromArgb(56, 56, 56);
+            HeaderBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            HeaderButtonColor.BackColor = Color.FromArgb(56, 56, 56);
+            HeaderFontColor.BackColor = Color.White;
+            HeaderButtonSelectedColor.BackColor = Color.DarkGray;
             ClipBackColor.BackColor = Color.FromArgb(56, 56, 56);
             ClipFontColor.BackColor = Color.White;
             ClipRowColor.BackColor = Color.FromArgb(56, 56, 56);
             ClipSelected.BackColor = Color.DarkGray;
             MenuBackColor.BackColor = Color.FromArgb(56, 56, 56);
             MenuBorderColor.BackColor = Color.FromArgb(56, 56, 56);
-            MenuButtonColor.BackColor = Color.FromArgb(56, 56, 56);
+            HeaderButtonColor.BackColor = Color.FromArgb(56, 56, 56);
             MenuSelectedColor.BackColor = Color.DarkGray;
             MenuFontColor.BackColor = Color.White;
             MenuSelectedColor.BackColor = Color.DarkGray;
