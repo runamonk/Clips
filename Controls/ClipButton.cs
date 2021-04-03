@@ -29,26 +29,28 @@ namespace Clips
         public bool IsPinButton { get { return (FButtonType == ButtonType.Pin); } }
         public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
 
+        public byte[] PreviewImageBytes { get; set; }
+        
+        //public int FullImageBytesSize;
+
         public string FileName { get; set; }
 
-        private Image FFullImage; 
-        public Image FullImage
+        private Image FPreviewImage { get; set; }
+        public Image PreviewImage
         {
             get {
-                return FFullImage;
+                return FPreviewImage; 
             }
             set {
-                FFullImage = value;
-                if (FFullImage == null)
-                    return;
-
-                string base64 = Convert.ToBase64String(Funcs.ImageToByteArray(FFullImage));
+                PreviewImageBytes = Funcs.ImageToByteArray(value);
+                FPreviewImage = Funcs.ScaleImage(value, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+                string base64 = Convert.ToBase64String(PreviewImageBytes);
 
                 if ((FileName == "") || (!File.Exists(FileName)))
                     FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
 
                 // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
-                Image = FFullImage.GetThumbnailImage(50, 50, null, IntPtr.Zero);
+                Image = FPreviewImage.GetThumbnailImage(50, 50, null, IntPtr.Zero);
                 CalculateSize();
             }
         }
@@ -117,7 +119,7 @@ namespace Clips
         {
             if (ButtonType == ButtonType.Clip)
             {
-                if (FullImage != null)
+                if (PreviewImage != null)
                     Height = 60;
                 else
                 {

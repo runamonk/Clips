@@ -40,7 +40,7 @@ namespace Clips
 
         public void ShowPreview(ClipButton clipButton)
         {
-            if ((string.IsNullOrEmpty(clipButton.FullText) && (clipButton.FullImage == null)) || (ClipsConfig.PreviewPopupDelay == 0))
+            if ((string.IsNullOrEmpty(clipButton.FullText) && (clipButton.PreviewImage == null)) || (ClipsConfig.PreviewPopupDelay == 0))
                 return;
 
             BackColor = ClipsConfig.PreviewBackColor;
@@ -63,9 +63,9 @@ namespace Clips
                 this.Width = PreviewText.PreferredSize.Width;
             }
             else
-            if (clipButton.FullImage != null)
+            if (clipButton.PreviewImage != null)
             {
-                PreviewImage.Image = Funcs.ScaleImage(clipButton.FullImage, MaximumSize.Width, MaximumSize.Height);
+                PreviewImage.Image = Funcs.ScaleImage(clipButton.PreviewImage, MaximumSize.Width, MaximumSize.Height);
                 PreviewText.Visible = false;
                 PreviewImage.Visible = true;
                 Height = PreviewImage.Image.Height;

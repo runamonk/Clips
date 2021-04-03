@@ -14,7 +14,6 @@ namespace Clips.Controls
     public partial class ClipPanel : Panel
     {
         private Config ClipsConfig { get; set; }
-        private readonly bool IsHeader = false;
         private Image LastImage { get; set; }
         private string LastText { get; set; }
         public bool InMenu { get; set; }
@@ -46,11 +45,8 @@ namespace Clips.Controls
             }
         }
 
-        public ClipPanel(Config myConfig, bool isHeader = false)
+        public ClipPanel(Config myConfig)
         {
-            IsHeader = isHeader;
-           
-            MouseWheel += new MouseEventHandler(MouseWheelScroll);
             VerticalScroll.Enabled = true;
             HorizontalScroll.Enabled = false;
             AutoScroll = true;
@@ -149,7 +145,7 @@ namespace Clips.Controls
             LastImage = image;
             ClipButton b = AddClipButton();
             b.FileName = fileName;
-            b.FullImage = image;
+            b.PreviewImage = image;
             OnClipAdded?.Invoke(b, saveToDisk);
             ResumeLayout();
         }
@@ -161,7 +157,7 @@ namespace Clips.Controls
                 if (File.Exists(Clip.FileName))
                     File.Delete(Clip.FileName);
 
-                if (Funcs.IsSame(Clip.FullImage, LastImage))
+                if (Funcs.IsSame(LastImage, Clip.PreviewImageBytes))
                     LastImage = null;
                 else
                 if (Clip.FullText == LastText)
@@ -174,11 +170,13 @@ namespace Clips.Controls
             PreviewHide(null, null);
             OnClipClicked?.Invoke(Clip);
 
-            if (Clip.FullImage != null)
+            if (Clip.PreviewImage != null)
             {
-                Image ClipToCopy = Clip.FullImage;
+                MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
+                Image img = Image.FromStream(ms);
+                ms.Dispose();
                 DeleteClip();
-                Clipboard.SetImage(ClipToCopy);
+                Clipboard.SetImage(img);
             }
             else
             if (Clip.Text != "")
@@ -250,7 +248,7 @@ namespace Clips.Controls
         {
             foreach (ClipButton b in Controls)
             {
-                if (b.FullImage != null && Funcs.IsSame(b.FullImage, image))
+                if (b.PreviewImage != null && Funcs.IsSame(image, b.PreviewImageBytes))
                 {
                     return true;
                 }
@@ -271,7 +269,6 @@ namespace Clips.Controls
             if (File.Exists(cb.FileName))
                 File.Delete(cb.FileName);
             Controls[0].Dispose();
-            //Controls.RemoveAt(0);
         }
 
         public void First()
@@ -280,8 +277,7 @@ namespace Clips.Controls
             {
                 ScrollControlIntoView(Controls[Controls.Count - 1]);
                 Controls[Controls.Count - 1].Select();
-            }
-               
+            }          
         }
 
         public void Last()
@@ -341,7 +337,7 @@ namespace Clips.Controls
             if (File.Exists(b.FileName))
                 File.Delete(b.FileName);
 
-            if (Funcs.IsSame(b.FullImage, LastImage))
+            if (Funcs.IsSame(LastImage, b.PreviewImageBytes))
                 LastImage = null;
             else
             if (b.FullText == LastText)
@@ -370,36 +366,14 @@ namespace Clips.Controls
                     System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
             }
             else
-                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage != null)
+                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).PreviewImage != null)
             {
                 dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
                 dlg.FilterIndex = 1;
                 if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).FullImage.Save(dlg.FileName);
+                    ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).PreviewImage.Save(dlg.FileName);
             }
             InMenu = false;
-        }
-
-        private void MouseWheelScroll(object sender, MouseEventArgs e)
-        {
-            // Save for later, I might do something with this.
-            //if (VerticalScroll.Value == 0)
-            //{
-            //    // Top
-            //    if (VerticalScroll.Visible)
-            //    {
-
-            //    }
-            //}
-            //else
-            //if (VerticalScroll.Value + VerticalScroll.LargeChange > VerticalScroll.Maximum)
-            //{
-            //    // Bottom
-            //}
-            //else
-            //{
-            //    // Middle
-            //}
         }
 
         private void PreviewHide(object sender, EventArgs e)
@@ -416,11 +390,7 @@ namespace Clips.Controls
 
         private void SetColors()
         {
-            if (IsHeader)
-                BackColor = ClipsConfig.HeaderBackColor;
-            else
                 BackColor = ClipsConfig.ClipsBackColor;
         }
-
     }
 }

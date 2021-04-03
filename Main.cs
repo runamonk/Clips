@@ -225,7 +225,7 @@ namespace Clips
             {
                 foreach (ClipButton b in Clips.Controls)
                 {
-                    if ((includeImages) && (b.FullImage != null))
+                    if ((includeImages) && (b.PreviewImage != null))
                     {
                         b.Visible = true;
                     }
