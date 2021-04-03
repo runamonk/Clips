@@ -170,7 +170,7 @@ namespace Clips.Controls
             PreviewHide(null, null);
             OnClipClicked?.Invoke(Clip);
 
-            if (Clip.PreviewImage != null)
+            if (Clip.HasImage)
             {
                 MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
                 Image img = Image.FromStream(ms);
@@ -248,7 +248,7 @@ namespace Clips.Controls
         {
             foreach (ClipButton b in Controls)
             {
-                if (b.PreviewImage != null && Funcs.IsSame(image, b.PreviewImageBytes))
+                if (b.HasImage && Funcs.IsSame(image, b.PreviewImageBytes))
                 {
                     return true;
                 }
@@ -366,7 +366,7 @@ namespace Clips.Controls
                     System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
             }
             else
-                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).PreviewImage != null)
+                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).HasImage)
             {
                 dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
                 dlg.FilterIndex = 1;
