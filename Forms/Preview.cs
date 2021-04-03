@@ -40,7 +40,7 @@ namespace Clips
 
         public void ShowPreview(ClipButton clipButton)
         {
-            if ((string.IsNullOrEmpty(clipButton.FullText) && (clipButton.PreviewImage == null)) || (ClipsConfig.PreviewPopupDelay == 0))
+            if ((string.IsNullOrEmpty(clipButton.FullText) && (!clipButton.HasImage)) || (ClipsConfig.PreviewPopupDelay == 0))
                 return;
 
             BackColor = ClipsConfig.PreviewBackColor;
@@ -63,7 +63,7 @@ namespace Clips
                 this.Width = PreviewText.PreferredSize.Width;
             }
             else
-            if (clipButton.PreviewImage != null)
+            if (clipButton.HasImage)
             {
                 PreviewImage.Image = Funcs.ScaleImage(clipButton.PreviewImage, MaximumSize.Width, MaximumSize.Height);
                 PreviewText.Visible = false;
@@ -93,6 +93,9 @@ namespace Clips
             PreviewText.Text = "";
             PreviewImage.Image = null;
             Hide();
+
+            GC.Collect();
+            GC.WaitForPendingFinalizers();
         }
 
         private void TimerShowForm_Tick(object sender, EventArgs e)

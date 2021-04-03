@@ -16,7 +16,7 @@ namespace Clips
         Pin,
         Seperator
     }
-    
+
     public partial class ClipButton : Button
     {
         private const string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
@@ -25,58 +25,68 @@ namespace Clips
 
         private readonly ButtonType FButtonType;
         public ButtonType ButtonType { get { return FButtonType; } }
-        public bool IsMenuButton { get { return (FButtonType == ButtonType.Menu); } }
-        public bool IsPinButton { get { return (FButtonType == ButtonType.Pin); } }
-        public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
-
-        public byte[] PreviewImageBytes { get; set; }
-        
-        //public int FullImageBytesSize;
 
         public string FileName { get; set; }
 
-        private Image FPreviewImage { get; set; }
+        private string FFullText;
+
+        public string FullText
+        {
+            get {
+                return FFullText;
+            }
+            set {
+                FFullText = value;
+                if (FFullText == null)
+                    return;
+
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(FFullText);
+                string base64 = Convert.ToBase64String(plainTextBytes);
+
+                if ((FileName == "") || (!File.Exists(FileName)))
+                    FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
+
+                CalculateSize();
+            }
+        }
+
+        public bool HasImage { get { return (PreviewImageBytes != null); } }
+
         public Image PreviewImage
         {
             get {
-                return FPreviewImage; 
+                if (!HasImage)
+                    return null;
+                else
+                {
+                    MemoryStream ms = new MemoryStream(PreviewImageBytes);
+                    Image img = Image.FromStream(ms);
+                    ms.Dispose();
+                    return Funcs.ScaleImage(img, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+                }
             }
             set {
                 PreviewImageBytes = Funcs.ImageToByteArray(value);
-                FPreviewImage = Funcs.ScaleImage(value, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
                 string base64 = Convert.ToBase64String(PreviewImageBytes);
 
                 if ((FileName == "") || (!File.Exists(FileName)))
                     FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
 
                 // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
-                Image = FPreviewImage.GetThumbnailImage(50, 50, null, IntPtr.Zero);
+                Image = value.GetThumbnailImage(50, 50, null, IntPtr.Zero);
                 CalculateSize();
             }
         }
 
-        private string FFullText;
-        public string FullText 
-        {             
-            get 
-            {
-                return FFullText;
-            }             
-            set 
-            {
-                FFullText = value;               
-                if (FFullText == null)
-                    return;
-                
-                byte[] plainTextBytes = Encoding.UTF8.GetBytes(FFullText);
-                string base64 = Convert.ToBase64String(plainTextBytes);
-                    
-                if ((FileName == "") || (!File.Exists(FileName)))
-                    FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
+        public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
 
-                CalculateSize();
-            }        
-        }
+        private bool IsHeaderButton { get { return (IsMenuButton || IsPinButton); } }
+
+        public bool IsMenuButton { get { return (FButtonType == ButtonType.Menu); } }
+        
+        public bool IsPinButton { get { return (FButtonType == ButtonType.Pin); } }
+
+        public byte[] PreviewImageBytes { get; set; }
 
         public delegate void ClipButtonClickedHandler(ClipButton Button);
         public event ClipButtonClickedHandler OnClipButtonClicked;
@@ -93,7 +103,7 @@ namespace Clips
                 ImageAlign = ContentAlignment.MiddleLeft;
             }
             else
-            if (IsHeaderButton())
+            if (IsHeaderButton)
             {
                 Padding = new Padding(0, 0, 0, 0);
                 Margin = new Padding(0, 0, 0, 0);
@@ -119,7 +129,7 @@ namespace Clips
         {
             if (ButtonType == ButtonType.Clip)
             {
-                if (PreviewImage != null)
+                if (HasImage)
                     Height = 60;
                 else
                 {
@@ -155,11 +165,6 @@ namespace Clips
             base.NotifyDefault(false);
         }
 
-        private bool IsHeaderButton()
-        {
-            return (IsMenuButton || IsPinButton);
-        }
-
         protected override void OnClick(EventArgs e)
         {
             base.OnClick(e);
@@ -170,7 +175,7 @@ namespace Clips
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            if (IsHeaderButton())
+            if (IsHeaderButton)
             {
                 BackColor = ClipsConfig.HeaderButtonSelectedColor;
             }
@@ -183,7 +188,7 @@ namespace Clips
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            if (IsHeaderButton())
+            if (IsHeaderButton)
             {
                 BackColor = ClipsConfig.HeaderButtonColor;
             }
@@ -196,7 +201,7 @@ namespace Clips
         private void SetColors()
         {
             FlatAppearance.BorderColor = BackColor;
-            if (IsHeaderButton())
+            if (IsHeaderButton)
             {
                 BackColor = ClipsConfig.HeaderButtonColor;
                 ForeColor = ClipsConfig.HeaderFontColor;
