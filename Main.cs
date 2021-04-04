@@ -69,6 +69,7 @@ namespace Clips
         {
             if (Config.AutoHide)
                  ToggleShow(true);
+
         }
 
         private void ClipDeleted()

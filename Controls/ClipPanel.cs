@@ -7,7 +7,6 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Utility;
-using WK.Libraries.SharpClipboardNS;
 
 namespace Clips.Controls
 {
@@ -19,21 +18,21 @@ namespace Clips.Controls
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
         public bool InPreview { get; set; }
+        public bool MonitorClipboard { get; set; }
 
-        public bool MonitorClipboard
-        {
-            get {
-                return clipboard.MonitorClipboard;
-            }
-            set {
-                clipboard.MonitorClipboard = value;
-            }
-        }
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
+
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
+
+        private const int WM_DRAWCLIPBOARD = 0x0308;        // WM_DRAWCLIPBOARD message
+        private IntPtr _clipboardViewerNext;
 
         private readonly ClipMenu MenuRC;
         private readonly Preview PreviewForm;
-        private readonly SharpClipboard clipboard;
-        
+
         protected override CreateParams CreateParams
         {
             // Force the scrollbar to always be in position. That way we can just hide it all the time without
@@ -47,6 +46,7 @@ namespace Clips.Controls
 
         public ClipPanel(Config myConfig)
         {
+            MonitorClipboard = false;
             VerticalScroll.Enabled = true;
             HorizontalScroll.Enabled = false;
             AutoScroll = true;
@@ -63,21 +63,8 @@ namespace Clips.Controls
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
             LoadItems();
-            if (clipboard == null)
-            {
-                clipboard = new SharpClipboard
-                {
-                    MonitorClipboard = true
-                };
-                clipboard.ObservableFormats.All = true;
-                clipboard.ObservableFormats.Files = true;
-                clipboard.ObservableFormats.Images = true;
-                clipboard.ObservableFormats.Others = true;
-                clipboard.ObservableFormats.Texts = true;
-                clipboard.ObserveLastEntry = false;
-                clipboard.Tag = null;
-                clipboard.ClipboardChanged += new EventHandler<SharpClipboard.ClipboardChangedEventArgs>(ClipboardChanged);
-            }
+            _clipboardViewerNext = SetClipboardViewer(this.Handle);
+            MonitorClipboard = true;
         }
 
         protected override void OnParentChanged(EventArgs e)
@@ -187,8 +174,8 @@ namespace Clips.Controls
                     Clipboard.SetText(TextToCopy);
                 }
             }
-            Controls[Controls.Count - 1].Select();
             ResumeLayout();
+            First();
         }
 
         public void CleanupCache()
@@ -201,19 +188,6 @@ namespace Clips.Controls
                     DeleteOldestClip();
                     clipsToDelete--;
                 }
-            }
-        }
-
-        private void ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
-        {
-            if (e.ContentType == SharpClipboard.ContentTypes.Text)
-                AddClipButton("", clipboard.ClipboardText.Trim());
-            else if (e.ContentType == SharpClipboard.ContentTypes.Image)
-                AddClipButton("", clipboard.ClipboardImage);
-            else if (e.ContentType == SharpClipboard.ContentTypes.Files)
-            {
-                string s = string.Join("\n", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
-                AddClipButton("", s);
             }
         }
 
@@ -263,6 +237,7 @@ namespace Clips.Controls
             {
                 ScrollControlIntoView(Controls[Controls.Count - 1]);
                 Controls[Controls.Count - 1].Select();
+                //Controls[Controls.Count - 1].Focus();
             }          
         }
 
@@ -306,7 +281,6 @@ namespace Clips.Controls
                 LastText = null;
 
             Controls[Controls.IndexOf(b)].Dispose();
-            //Controls.Remove(b);
 
             OnClipDeleted?.Invoke();
             InMenu = false;
@@ -353,6 +327,33 @@ namespace Clips.Controls
         private void SetColors()
         {
                 BackColor = ClipsConfig.ClipsBackColor;
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            ChangeClipboardChain(this.Handle, _clipboardViewerNext);
+            base.OnHandleDestroyed(e);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            base.WndProc(ref m);   
+
+            if ((m.Msg == WM_DRAWCLIPBOARD) && (MonitorClipboard))
+            {
+                IDataObject obj = Clipboard.GetDataObject();      
+                if (obj.GetDataPresent(DataFormats.Text))
+                    AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());               
+                else 
+                if (obj.GetDataPresent(DataFormats.Bitmap))
+                    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
+                else
+                if (obj.GetDataPresent(DataFormats.FileDrop))
+                {
+                    string s = string.Join("\n", ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
+                    AddClipButton("", s);
+                }
+            }
         }
     }
 }
