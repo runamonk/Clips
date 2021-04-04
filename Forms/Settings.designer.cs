@@ -40,6 +40,20 @@
             this.OpenAtMouse = new System.Windows.Forms.CheckBox();
             this.Startup = new System.Windows.Forms.CheckBox();
             this.ClipsToDisplay = new System.Windows.Forms.NumericUpDown();
+            this.MenuSelectedColor = new System.Windows.Forms.Panel();
+            this.MenuBorderColor = new System.Windows.Forms.Panel();
+            this.MenuFontColor = new System.Windows.Forms.Panel();
+            this.MenuBackColor = new System.Windows.Forms.Panel();
+            this.HeaderButtonColor = new System.Windows.Forms.Panel();
+            this.HeaderBackColor = new System.Windows.Forms.Panel();
+            this.ClipSelected = new System.Windows.Forms.Panel();
+            this.ClipRowColor = new System.Windows.Forms.Panel();
+            this.ClipBackColor = new System.Windows.Forms.Panel();
+            this.ClipFontColor = new System.Windows.Forms.Panel();
+            this.PreviewBackColor = new System.Windows.Forms.Panel();
+            this.PreviewFontColor = new System.Windows.Forms.Panel();
+            this.HeaderFontColor = new System.Windows.Forms.Panel();
+            this.HeaderButtonSelectedColor = new System.Windows.Forms.Panel();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Cancel = new System.Windows.Forms.Button();
@@ -65,46 +79,32 @@
             this.Control = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.PanelColors = new System.Windows.Forms.Panel();
+            this.GroupColorPreview = new System.Windows.Forms.GroupBox();
+            this.lblBackColor = new System.Windows.Forms.Label();
+            this.lblFontColor = new System.Windows.Forms.Label();
+            this.PanelColorSep2 = new System.Windows.Forms.Panel();
+            this.GroupColorClips = new System.Windows.Forms.GroupBox();
+            this.label17 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.GroupColorHeader = new System.Windows.Forms.GroupBox();
+            this.label19 = new System.Windows.Forms.Label();
+            this.label18 = new System.Windows.Forms.Label();
+            this.label15 = new System.Windows.Forms.Label();
+            this.label9 = new System.Windows.Forms.Label();
+            this.PanelColorSep1 = new System.Windows.Forms.Panel();
+            this.GroupColorMenu = new System.Windows.Forms.GroupBox();
+            this.label13 = new System.Windows.Forms.Label();
+            this.label12 = new System.Windows.Forms.Label();
+            this.label11 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
             this.GroupColors = new System.Windows.Forms.GroupBox();
             this.panel5 = new System.Windows.Forms.Panel();
             this.label14 = new System.Windows.Forms.Label();
             this.DarkTheme = new System.Windows.Forms.RadioButton();
             this.LightTheme = new System.Windows.Forms.RadioButton();
-            this.PanelColorSep1 = new System.Windows.Forms.Panel();
-            this.GroupColorMenu = new System.Windows.Forms.GroupBox();
-            this.label13 = new System.Windows.Forms.Label();
-            this.MenuSelectedColor = new System.Windows.Forms.Panel();
-            this.label12 = new System.Windows.Forms.Label();
-            this.MenuBorderColor = new System.Windows.Forms.Panel();
-            this.label11 = new System.Windows.Forms.Label();
-            this.MenuFontColor = new System.Windows.Forms.Panel();
-            this.label10 = new System.Windows.Forms.Label();
-            this.MenuBackColor = new System.Windows.Forms.Panel();
-            this.GroupColorHeader = new System.Windows.Forms.GroupBox();
-            this.label15 = new System.Windows.Forms.Label();
-            this.HeaderButtonColor = new System.Windows.Forms.Panel();
-            this.label9 = new System.Windows.Forms.Label();
-            this.HeaderBackColor = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.GroupColorClips = new System.Windows.Forms.GroupBox();
-            this.label17 = new System.Windows.Forms.Label();
-            this.ClipSelected = new System.Windows.Forms.Panel();
-            this.label8 = new System.Windows.Forms.Label();
-            this.ClipRowColor = new System.Windows.Forms.Panel();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.ClipBackColor = new System.Windows.Forms.Panel();
-            this.ClipFontColor = new System.Windows.Forms.Panel();
-            this.PanelColorSep2 = new System.Windows.Forms.Panel();
-            this.GroupColorPreview = new System.Windows.Forms.GroupBox();
-            this.lblBackColor = new System.Windows.Forms.Label();
-            this.lblFontColor = new System.Windows.Forms.Label();
-            this.PreviewBackColor = new System.Windows.Forms.Panel();
-            this.PreviewFontColor = new System.Windows.Forms.Panel();
-            this.label18 = new System.Windows.Forms.Label();
-            this.HeaderFontColor = new System.Windows.Forms.Panel();
-            this.label19 = new System.Windows.Forms.Label();
-            this.HeaderButtonSelectedColor = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsMaxClips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).BeginInit();
@@ -119,12 +119,12 @@
             this.GroupClips.SuspendLayout();
             this.GroupHotkey.SuspendLayout();
             this.PanelColors.SuspendLayout();
+            this.GroupColorPreview.SuspendLayout();
+            this.GroupColorClips.SuspendLayout();
+            this.GroupColorHeader.SuspendLayout();
+            this.GroupColorMenu.SuspendLayout();
             this.GroupColors.SuspendLayout();
             this.panel5.SuspendLayout();
-            this.GroupColorMenu.SuspendLayout();
-            this.GroupColorHeader.SuspendLayout();
-            this.GroupColorClips.SuspendLayout();
-            this.GroupColorPreview.SuspendLayout();
             this.SuspendLayout();
             // 
             // ClipsLinesPerRow
@@ -280,6 +280,146 @@
             0,
             0,
             0});
+            // 
+            // MenuSelectedColor
+            // 
+            this.MenuSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuSelectedColor.Location = new System.Drawing.Point(6, 117);
+            this.MenuSelectedColor.Name = "MenuSelectedColor";
+            this.MenuSelectedColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuSelectedColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.MenuSelectedColor, "Click to set color.");
+            this.MenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuBorderColor
+            // 
+            this.MenuBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuBorderColor.Location = new System.Drawing.Point(6, 84);
+            this.MenuBorderColor.Name = "MenuBorderColor";
+            this.MenuBorderColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuBorderColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.MenuBorderColor, "Click to set color.");
+            this.MenuBorderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuFontColor
+            // 
+            this.MenuFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuFontColor.Location = new System.Drawing.Point(6, 18);
+            this.MenuFontColor.Name = "MenuFontColor";
+            this.MenuFontColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.MenuFontColor, "Click to set color.");
+            this.MenuFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // MenuBackColor
+            // 
+            this.MenuBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.MenuBackColor.Location = new System.Drawing.Point(6, 51);
+            this.MenuBackColor.Name = "MenuBackColor";
+            this.MenuBackColor.Size = new System.Drawing.Size(26, 27);
+            this.MenuBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.MenuBackColor, "Click to set color.");
+            this.MenuBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // HeaderButtonColor
+            // 
+            this.HeaderButtonColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HeaderButtonColor.Location = new System.Drawing.Point(7, 84);
+            this.HeaderButtonColor.Name = "HeaderButtonColor";
+            this.HeaderButtonColor.Size = new System.Drawing.Size(26, 27);
+            this.HeaderButtonColor.TabIndex = 26;
+            this.toolTip1.SetToolTip(this.HeaderButtonColor, "Click to set color.");
+            this.HeaderButtonColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // HeaderBackColor
+            // 
+            this.HeaderBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HeaderBackColor.Location = new System.Drawing.Point(7, 51);
+            this.HeaderBackColor.Name = "HeaderBackColor";
+            this.HeaderBackColor.Size = new System.Drawing.Size(26, 27);
+            this.HeaderBackColor.TabIndex = 24;
+            this.toolTip1.SetToolTip(this.HeaderBackColor, "Click to set color.");
+            this.HeaderBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipSelected
+            // 
+            this.ClipSelected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipSelected.Location = new System.Drawing.Point(7, 117);
+            this.ClipSelected.Name = "ClipSelected";
+            this.ClipSelected.Size = new System.Drawing.Size(26, 27);
+            this.ClipSelected.TabIndex = 20;
+            this.toolTip1.SetToolTip(this.ClipSelected, "Click to set color.");
+            this.ClipSelected.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipRowColor
+            // 
+            this.ClipRowColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipRowColor.Location = new System.Drawing.Point(6, 84);
+            this.ClipRowColor.Name = "ClipRowColor";
+            this.ClipRowColor.Size = new System.Drawing.Size(26, 27);
+            this.ClipRowColor.TabIndex = 3;
+            this.toolTip1.SetToolTip(this.ClipRowColor, "Click to set color.");
+            this.ClipRowColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipBackColor
+            // 
+            this.ClipBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipBackColor.Location = new System.Drawing.Point(6, 51);
+            this.ClipBackColor.Name = "ClipBackColor";
+            this.ClipBackColor.Size = new System.Drawing.Size(26, 27);
+            this.ClipBackColor.TabIndex = 2;
+            this.toolTip1.SetToolTip(this.ClipBackColor, "Click to set color.");
+            this.ClipBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // ClipFontColor
+            // 
+            this.ClipFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.ClipFontColor.Location = new System.Drawing.Point(6, 18);
+            this.ClipFontColor.Name = "ClipFontColor";
+            this.ClipFontColor.Size = new System.Drawing.Size(26, 27);
+            this.ClipFontColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.ClipFontColor, "Click to set color.");
+            this.ClipFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // PreviewBackColor
+            // 
+            this.PreviewBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PreviewBackColor.Location = new System.Drawing.Point(6, 51);
+            this.PreviewBackColor.Name = "PreviewBackColor";
+            this.PreviewBackColor.Size = new System.Drawing.Size(26, 27);
+            this.PreviewBackColor.TabIndex = 1;
+            this.toolTip1.SetToolTip(this.PreviewBackColor, "Click to set color.");
+            this.PreviewBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // PreviewFontColor
+            // 
+            this.PreviewFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.PreviewFontColor.Location = new System.Drawing.Point(6, 18);
+            this.PreviewFontColor.Name = "PreviewFontColor";
+            this.PreviewFontColor.Size = new System.Drawing.Size(26, 27);
+            this.PreviewFontColor.TabIndex = 0;
+            this.toolTip1.SetToolTip(this.PreviewFontColor, "Click to set color.");
+            this.PreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // HeaderFontColor
+            // 
+            this.HeaderFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HeaderFontColor.Location = new System.Drawing.Point(7, 18);
+            this.HeaderFontColor.Name = "HeaderFontColor";
+            this.HeaderFontColor.Size = new System.Drawing.Size(26, 27);
+            this.HeaderFontColor.TabIndex = 28;
+            this.toolTip1.SetToolTip(this.HeaderFontColor, "Click to set color.");
+            this.HeaderFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
+            // 
+            // HeaderButtonSelectedColor
+            // 
+            this.HeaderButtonSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.HeaderButtonSelectedColor.Location = new System.Drawing.Point(7, 117);
+            this.HeaderButtonSelectedColor.Name = "HeaderButtonSelectedColor";
+            this.HeaderButtonSelectedColor.Size = new System.Drawing.Size(26, 27);
+            this.HeaderButtonSelectedColor.TabIndex = 30;
+            this.toolTip1.SetToolTip(this.HeaderButtonSelectedColor, "Click to set color.");
+            this.HeaderButtonSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // dlgColor
             // 
@@ -564,6 +704,238 @@
             this.PanelColors.Size = new System.Drawing.Size(452, 153);
             this.PanelColors.TabIndex = 1;
             // 
+            // GroupColorPreview
+            // 
+            this.GroupColorPreview.Controls.Add(this.lblBackColor);
+            this.GroupColorPreview.Controls.Add(this.lblFontColor);
+            this.GroupColorPreview.Controls.Add(this.PreviewBackColor);
+            this.GroupColorPreview.Controls.Add(this.PreviewFontColor);
+            this.GroupColorPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GroupColorPreview.Location = new System.Drawing.Point(345, 0);
+            this.GroupColorPreview.Name = "GroupColorPreview";
+            this.GroupColorPreview.Size = new System.Drawing.Size(107, 153);
+            this.GroupColorPreview.TabIndex = 28;
+            this.GroupColorPreview.TabStop = false;
+            this.GroupColorPreview.Text = "Preview";
+            // 
+            // lblBackColor
+            // 
+            this.lblBackColor.AutoSize = true;
+            this.lblBackColor.Location = new System.Drawing.Point(38, 58);
+            this.lblBackColor.Name = "lblBackColor";
+            this.lblBackColor.Size = new System.Drawing.Size(65, 13);
+            this.lblBackColor.TabIndex = 7;
+            this.lblBackColor.Text = "Background";
+            this.lblBackColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // lblFontColor
+            // 
+            this.lblFontColor.AutoSize = true;
+            this.lblFontColor.Location = new System.Drawing.Point(38, 25);
+            this.lblFontColor.Name = "lblFontColor";
+            this.lblFontColor.Size = new System.Drawing.Size(28, 13);
+            this.lblFontColor.TabIndex = 6;
+            this.lblFontColor.Text = "Font";
+            this.lblFontColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PanelColorSep2
+            // 
+            this.PanelColorSep2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PanelColorSep2.Location = new System.Drawing.Point(340, 0);
+            this.PanelColorSep2.Name = "PanelColorSep2";
+            this.PanelColorSep2.Size = new System.Drawing.Size(5, 153);
+            this.PanelColorSep2.TabIndex = 27;
+            // 
+            // GroupColorClips
+            // 
+            this.GroupColorClips.Controls.Add(this.label17);
+            this.GroupColorClips.Controls.Add(this.ClipSelected);
+            this.GroupColorClips.Controls.Add(this.label8);
+            this.GroupColorClips.Controls.Add(this.ClipRowColor);
+            this.GroupColorClips.Controls.Add(this.label3);
+            this.GroupColorClips.Controls.Add(this.label5);
+            this.GroupColorClips.Controls.Add(this.ClipBackColor);
+            this.GroupColorClips.Controls.Add(this.ClipFontColor);
+            this.GroupColorClips.Dock = System.Windows.Forms.DockStyle.Left;
+            this.GroupColorClips.Location = new System.Drawing.Point(230, 0);
+            this.GroupColorClips.Name = "GroupColorClips";
+            this.GroupColorClips.Size = new System.Drawing.Size(110, 153);
+            this.GroupColorClips.TabIndex = 26;
+            this.GroupColorClips.TabStop = false;
+            this.GroupColorClips.Text = "Clips";
+            // 
+            // label17
+            // 
+            this.label17.AutoSize = true;
+            this.label17.Location = new System.Drawing.Point(38, 124);
+            this.label17.Name = "label17";
+            this.label17.Size = new System.Drawing.Size(49, 13);
+            this.label17.TabIndex = 21;
+            this.label17.Text = "Selected";
+            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(38, 91);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(29, 13);
+            this.label8.TabIndex = 13;
+            this.label8.Text = "Row";
+            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(38, 58);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(65, 13);
+            this.label3.TabIndex = 11;
+            this.label3.Text = "Background";
+            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(38, 25);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(28, 13);
+            this.label5.TabIndex = 10;
+            this.label5.Text = "Font";
+            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // panel2
+            // 
+            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panel2.Location = new System.Drawing.Point(225, 0);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(5, 153);
+            this.panel2.TabIndex = 25;
+            // 
+            // GroupColorHeader
+            // 
+            this.GroupColorHeader.Controls.Add(this.label19);
+            this.GroupColorHeader.Controls.Add(this.HeaderButtonSelectedColor);
+            this.GroupColorHeader.Controls.Add(this.label18);
+            this.GroupColorHeader.Controls.Add(this.HeaderFontColor);
+            this.GroupColorHeader.Controls.Add(this.label15);
+            this.GroupColorHeader.Controls.Add(this.HeaderButtonColor);
+            this.GroupColorHeader.Controls.Add(this.label9);
+            this.GroupColorHeader.Controls.Add(this.HeaderBackColor);
+            this.GroupColorHeader.Dock = System.Windows.Forms.DockStyle.Left;
+            this.GroupColorHeader.Location = new System.Drawing.Point(115, 0);
+            this.GroupColorHeader.Name = "GroupColorHeader";
+            this.GroupColorHeader.Size = new System.Drawing.Size(110, 153);
+            this.GroupColorHeader.TabIndex = 24;
+            this.GroupColorHeader.TabStop = false;
+            this.GroupColorHeader.Text = "Header";
+            // 
+            // label19
+            // 
+            this.label19.AutoSize = true;
+            this.label19.Location = new System.Drawing.Point(38, 124);
+            this.label19.Name = "label19";
+            this.label19.Size = new System.Drawing.Size(49, 13);
+            this.label19.TabIndex = 31;
+            this.label19.Text = "Selected";
+            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label18
+            // 
+            this.label18.AutoSize = true;
+            this.label18.Location = new System.Drawing.Point(39, 25);
+            this.label18.Name = "label18";
+            this.label18.Size = new System.Drawing.Size(28, 13);
+            this.label18.TabIndex = 29;
+            this.label18.Text = "Font";
+            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label15
+            // 
+            this.label15.AutoSize = true;
+            this.label15.Location = new System.Drawing.Point(39, 91);
+            this.label15.Name = "label15";
+            this.label15.Size = new System.Drawing.Size(43, 13);
+            this.label15.TabIndex = 27;
+            this.label15.Text = "Buttons";
+            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(39, 58);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(65, 13);
+            this.label9.TabIndex = 25;
+            this.label9.Text = "Background";
+            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // PanelColorSep1
+            // 
+            this.PanelColorSep1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PanelColorSep1.Location = new System.Drawing.Point(110, 0);
+            this.PanelColorSep1.Name = "PanelColorSep1";
+            this.PanelColorSep1.Size = new System.Drawing.Size(5, 153);
+            this.PanelColorSep1.TabIndex = 21;
+            // 
+            // GroupColorMenu
+            // 
+            this.GroupColorMenu.Controls.Add(this.label13);
+            this.GroupColorMenu.Controls.Add(this.MenuSelectedColor);
+            this.GroupColorMenu.Controls.Add(this.label12);
+            this.GroupColorMenu.Controls.Add(this.MenuBorderColor);
+            this.GroupColorMenu.Controls.Add(this.label11);
+            this.GroupColorMenu.Controls.Add(this.MenuFontColor);
+            this.GroupColorMenu.Controls.Add(this.label10);
+            this.GroupColorMenu.Controls.Add(this.MenuBackColor);
+            this.GroupColorMenu.Dock = System.Windows.Forms.DockStyle.Left;
+            this.GroupColorMenu.Location = new System.Drawing.Point(0, 0);
+            this.GroupColorMenu.Name = "GroupColorMenu";
+            this.GroupColorMenu.Size = new System.Drawing.Size(110, 153);
+            this.GroupColorMenu.TabIndex = 17;
+            this.GroupColorMenu.TabStop = false;
+            this.GroupColorMenu.Text = "Menu";
+            // 
+            // label13
+            // 
+            this.label13.AutoSize = true;
+            this.label13.Location = new System.Drawing.Point(38, 124);
+            this.label13.Name = "label13";
+            this.label13.Size = new System.Drawing.Size(49, 13);
+            this.label13.TabIndex = 19;
+            this.label13.Text = "Selected";
+            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label12
+            // 
+            this.label12.AutoSize = true;
+            this.label12.Location = new System.Drawing.Point(38, 91);
+            this.label12.Name = "label12";
+            this.label12.Size = new System.Drawing.Size(38, 13);
+            this.label12.TabIndex = 17;
+            this.label12.Text = "Border";
+            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label11
+            // 
+            this.label11.AutoSize = true;
+            this.label11.Location = new System.Drawing.Point(38, 25);
+            this.label11.Name = "label11";
+            this.label11.Size = new System.Drawing.Size(28, 13);
+            this.label11.TabIndex = 15;
+            this.label11.Text = "Font";
+            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(38, 58);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(65, 13);
+            this.label10.TabIndex = 13;
+            this.label10.Text = "Background";
+            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
             // GroupColors
             // 
             this.GroupColors.Controls.Add(this.PanelColors);
@@ -620,377 +992,6 @@
             this.LightTheme.UseVisualStyleBackColor = true;
             this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
             // 
-            // PanelColorSep1
-            // 
-            this.PanelColorSep1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelColorSep1.Location = new System.Drawing.Point(110, 0);
-            this.PanelColorSep1.Name = "PanelColorSep1";
-            this.PanelColorSep1.Size = new System.Drawing.Size(5, 153);
-            this.PanelColorSep1.TabIndex = 21;
-            // 
-            // GroupColorMenu
-            // 
-            this.GroupColorMenu.Controls.Add(this.label13);
-            this.GroupColorMenu.Controls.Add(this.MenuSelectedColor);
-            this.GroupColorMenu.Controls.Add(this.label12);
-            this.GroupColorMenu.Controls.Add(this.MenuBorderColor);
-            this.GroupColorMenu.Controls.Add(this.label11);
-            this.GroupColorMenu.Controls.Add(this.MenuFontColor);
-            this.GroupColorMenu.Controls.Add(this.label10);
-            this.GroupColorMenu.Controls.Add(this.MenuBackColor);
-            this.GroupColorMenu.Dock = System.Windows.Forms.DockStyle.Left;
-            this.GroupColorMenu.Location = new System.Drawing.Point(0, 0);
-            this.GroupColorMenu.Name = "GroupColorMenu";
-            this.GroupColorMenu.Size = new System.Drawing.Size(110, 153);
-            this.GroupColorMenu.TabIndex = 17;
-            this.GroupColorMenu.TabStop = false;
-            this.GroupColorMenu.Text = "Menu";
-            // 
-            // label13
-            // 
-            this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(38, 124);
-            this.label13.Name = "label13";
-            this.label13.Size = new System.Drawing.Size(49, 13);
-            this.label13.TabIndex = 19;
-            this.label13.Text = "Selected";
-            this.label13.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // MenuSelectedColor
-            // 
-            this.MenuSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MenuSelectedColor.Location = new System.Drawing.Point(6, 117);
-            this.MenuSelectedColor.Name = "MenuSelectedColor";
-            this.MenuSelectedColor.Size = new System.Drawing.Size(26, 27);
-            this.MenuSelectedColor.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.MenuSelectedColor, "Click to set color.");
-            this.MenuSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label12
-            // 
-            this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(38, 91);
-            this.label12.Name = "label12";
-            this.label12.Size = new System.Drawing.Size(38, 13);
-            this.label12.TabIndex = 17;
-            this.label12.Text = "Border";
-            this.label12.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // MenuBorderColor
-            // 
-            this.MenuBorderColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MenuBorderColor.Location = new System.Drawing.Point(6, 84);
-            this.MenuBorderColor.Name = "MenuBorderColor";
-            this.MenuBorderColor.Size = new System.Drawing.Size(26, 27);
-            this.MenuBorderColor.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.MenuBorderColor, "Click to set color.");
-            this.MenuBorderColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label11
-            // 
-            this.label11.AutoSize = true;
-            this.label11.Location = new System.Drawing.Point(38, 25);
-            this.label11.Name = "label11";
-            this.label11.Size = new System.Drawing.Size(28, 13);
-            this.label11.TabIndex = 15;
-            this.label11.Text = "Font";
-            this.label11.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // MenuFontColor
-            // 
-            this.MenuFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MenuFontColor.Location = new System.Drawing.Point(6, 18);
-            this.MenuFontColor.Name = "MenuFontColor";
-            this.MenuFontColor.Size = new System.Drawing.Size(26, 27);
-            this.MenuFontColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.MenuFontColor, "Click to set color.");
-            this.MenuFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label10
-            // 
-            this.label10.AutoSize = true;
-            this.label10.Location = new System.Drawing.Point(38, 58);
-            this.label10.Name = "label10";
-            this.label10.Size = new System.Drawing.Size(65, 13);
-            this.label10.TabIndex = 13;
-            this.label10.Text = "Background";
-            this.label10.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // MenuBackColor
-            // 
-            this.MenuBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.MenuBackColor.Location = new System.Drawing.Point(6, 51);
-            this.MenuBackColor.Name = "MenuBackColor";
-            this.MenuBackColor.Size = new System.Drawing.Size(26, 27);
-            this.MenuBackColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.MenuBackColor, "Click to set color.");
-            this.MenuBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // GroupColorHeader
-            // 
-            this.GroupColorHeader.Controls.Add(this.label19);
-            this.GroupColorHeader.Controls.Add(this.HeaderButtonSelectedColor);
-            this.GroupColorHeader.Controls.Add(this.label18);
-            this.GroupColorHeader.Controls.Add(this.HeaderFontColor);
-            this.GroupColorHeader.Controls.Add(this.label15);
-            this.GroupColorHeader.Controls.Add(this.HeaderButtonColor);
-            this.GroupColorHeader.Controls.Add(this.label9);
-            this.GroupColorHeader.Controls.Add(this.HeaderBackColor);
-            this.GroupColorHeader.Dock = System.Windows.Forms.DockStyle.Left;
-            this.GroupColorHeader.Location = new System.Drawing.Point(115, 0);
-            this.GroupColorHeader.Name = "GroupColorHeader";
-            this.GroupColorHeader.Size = new System.Drawing.Size(110, 153);
-            this.GroupColorHeader.TabIndex = 24;
-            this.GroupColorHeader.TabStop = false;
-            this.GroupColorHeader.Text = "Header";
-            // 
-            // label15
-            // 
-            this.label15.AutoSize = true;
-            this.label15.Location = new System.Drawing.Point(39, 91);
-            this.label15.Name = "label15";
-            this.label15.Size = new System.Drawing.Size(43, 13);
-            this.label15.TabIndex = 27;
-            this.label15.Text = "Buttons";
-            this.label15.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // HeaderButtonColor
-            // 
-            this.HeaderButtonColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.HeaderButtonColor.Location = new System.Drawing.Point(7, 84);
-            this.HeaderButtonColor.Name = "HeaderButtonColor";
-            this.HeaderButtonColor.Size = new System.Drawing.Size(26, 27);
-            this.HeaderButtonColor.TabIndex = 26;
-            this.toolTip1.SetToolTip(this.HeaderButtonColor, "Click to set color.");
-            this.HeaderButtonColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label9
-            // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(39, 58);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(65, 13);
-            this.label9.TabIndex = 25;
-            this.label9.Text = "Background";
-            this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // HeaderBackColor
-            // 
-            this.HeaderBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.HeaderBackColor.Location = new System.Drawing.Point(7, 51);
-            this.HeaderBackColor.Name = "HeaderBackColor";
-            this.HeaderBackColor.Size = new System.Drawing.Size(26, 27);
-            this.HeaderBackColor.TabIndex = 24;
-            this.toolTip1.SetToolTip(this.HeaderBackColor, "Click to set color.");
-            this.HeaderBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // panel2
-            // 
-            this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panel2.Location = new System.Drawing.Point(225, 0);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(5, 153);
-            this.panel2.TabIndex = 25;
-            // 
-            // GroupColorClips
-            // 
-            this.GroupColorClips.Controls.Add(this.label17);
-            this.GroupColorClips.Controls.Add(this.ClipSelected);
-            this.GroupColorClips.Controls.Add(this.label8);
-            this.GroupColorClips.Controls.Add(this.ClipRowColor);
-            this.GroupColorClips.Controls.Add(this.label3);
-            this.GroupColorClips.Controls.Add(this.label5);
-            this.GroupColorClips.Controls.Add(this.ClipBackColor);
-            this.GroupColorClips.Controls.Add(this.ClipFontColor);
-            this.GroupColorClips.Dock = System.Windows.Forms.DockStyle.Left;
-            this.GroupColorClips.Location = new System.Drawing.Point(230, 0);
-            this.GroupColorClips.Name = "GroupColorClips";
-            this.GroupColorClips.Size = new System.Drawing.Size(110, 153);
-            this.GroupColorClips.TabIndex = 26;
-            this.GroupColorClips.TabStop = false;
-            this.GroupColorClips.Text = "Clips";
-            // 
-            // label17
-            // 
-            this.label17.AutoSize = true;
-            this.label17.Location = new System.Drawing.Point(38, 124);
-            this.label17.Name = "label17";
-            this.label17.Size = new System.Drawing.Size(49, 13);
-            this.label17.TabIndex = 21;
-            this.label17.Text = "Selected";
-            this.label17.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ClipSelected
-            // 
-            this.ClipSelected.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClipSelected.Location = new System.Drawing.Point(7, 117);
-            this.ClipSelected.Name = "ClipSelected";
-            this.ClipSelected.Size = new System.Drawing.Size(26, 27);
-            this.ClipSelected.TabIndex = 20;
-            this.toolTip1.SetToolTip(this.ClipSelected, "Click to set color.");
-            this.ClipSelected.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label8
-            // 
-            this.label8.AutoSize = true;
-            this.label8.Location = new System.Drawing.Point(38, 91);
-            this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(29, 13);
-            this.label8.TabIndex = 13;
-            this.label8.Text = "Row";
-            this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ClipRowColor
-            // 
-            this.ClipRowColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClipRowColor.Location = new System.Drawing.Point(6, 84);
-            this.ClipRowColor.Name = "ClipRowColor";
-            this.ClipRowColor.Size = new System.Drawing.Size(26, 27);
-            this.ClipRowColor.TabIndex = 3;
-            this.toolTip1.SetToolTip(this.ClipRowColor, "Click to set color.");
-            this.ClipRowColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(38, 58);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(65, 13);
-            this.label3.TabIndex = 11;
-            this.label3.Text = "Background";
-            this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(38, 25);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(28, 13);
-            this.label5.TabIndex = 10;
-            this.label5.Text = "Font";
-            this.label5.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // ClipBackColor
-            // 
-            this.ClipBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClipBackColor.Location = new System.Drawing.Point(6, 51);
-            this.ClipBackColor.Name = "ClipBackColor";
-            this.ClipBackColor.Size = new System.Drawing.Size(26, 27);
-            this.ClipBackColor.TabIndex = 2;
-            this.toolTip1.SetToolTip(this.ClipBackColor, "Click to set color.");
-            this.ClipBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // ClipFontColor
-            // 
-            this.ClipFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.ClipFontColor.Location = new System.Drawing.Point(6, 18);
-            this.ClipFontColor.Name = "ClipFontColor";
-            this.ClipFontColor.Size = new System.Drawing.Size(26, 27);
-            this.ClipFontColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.ClipFontColor, "Click to set color.");
-            this.ClipFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // PanelColorSep2
-            // 
-            this.PanelColorSep2.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelColorSep2.Location = new System.Drawing.Point(340, 0);
-            this.PanelColorSep2.Name = "PanelColorSep2";
-            this.PanelColorSep2.Size = new System.Drawing.Size(5, 153);
-            this.PanelColorSep2.TabIndex = 27;
-            // 
-            // GroupColorPreview
-            // 
-            this.GroupColorPreview.Controls.Add(this.lblBackColor);
-            this.GroupColorPreview.Controls.Add(this.lblFontColor);
-            this.GroupColorPreview.Controls.Add(this.PreviewBackColor);
-            this.GroupColorPreview.Controls.Add(this.PreviewFontColor);
-            this.GroupColorPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupColorPreview.Location = new System.Drawing.Point(345, 0);
-            this.GroupColorPreview.Name = "GroupColorPreview";
-            this.GroupColorPreview.Size = new System.Drawing.Size(107, 153);
-            this.GroupColorPreview.TabIndex = 28;
-            this.GroupColorPreview.TabStop = false;
-            this.GroupColorPreview.Text = "Preview";
-            // 
-            // lblBackColor
-            // 
-            this.lblBackColor.AutoSize = true;
-            this.lblBackColor.Location = new System.Drawing.Point(38, 58);
-            this.lblBackColor.Name = "lblBackColor";
-            this.lblBackColor.Size = new System.Drawing.Size(65, 13);
-            this.lblBackColor.TabIndex = 7;
-            this.lblBackColor.Text = "Background";
-            this.lblBackColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // lblFontColor
-            // 
-            this.lblFontColor.AutoSize = true;
-            this.lblFontColor.Location = new System.Drawing.Point(38, 25);
-            this.lblFontColor.Name = "lblFontColor";
-            this.lblFontColor.Size = new System.Drawing.Size(28, 13);
-            this.lblFontColor.TabIndex = 6;
-            this.lblFontColor.Text = "Font";
-            this.lblFontColor.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // PreviewBackColor
-            // 
-            this.PreviewBackColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PreviewBackColor.Location = new System.Drawing.Point(6, 51);
-            this.PreviewBackColor.Name = "PreviewBackColor";
-            this.PreviewBackColor.Size = new System.Drawing.Size(26, 27);
-            this.PreviewBackColor.TabIndex = 1;
-            this.toolTip1.SetToolTip(this.PreviewBackColor, "Click to set color.");
-            this.PreviewBackColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // PreviewFontColor
-            // 
-            this.PreviewFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.PreviewFontColor.Location = new System.Drawing.Point(6, 18);
-            this.PreviewFontColor.Name = "PreviewFontColor";
-            this.PreviewFontColor.Size = new System.Drawing.Size(26, 27);
-            this.PreviewFontColor.TabIndex = 0;
-            this.toolTip1.SetToolTip(this.PreviewFontColor, "Click to set color.");
-            this.PreviewFontColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
-            // label18
-            // 
-            this.label18.AutoSize = true;
-            this.label18.Location = new System.Drawing.Point(39, 25);
-            this.label18.Name = "label18";
-            this.label18.Size = new System.Drawing.Size(28, 13);
-            this.label18.TabIndex = 29;
-            this.label18.Text = "Font";
-            this.label18.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // HeaderFontColor
-            // 
-            this.HeaderFontColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.HeaderFontColor.Location = new System.Drawing.Point(7, 18);
-            this.HeaderFontColor.Name = "HeaderFontColor";
-            this.HeaderFontColor.Size = new System.Drawing.Size(26, 27);
-            this.HeaderFontColor.TabIndex = 28;
-            this.toolTip1.SetToolTip(this.HeaderFontColor, "Click to set color.");
-            // 
-            // label19
-            // 
-            this.label19.AutoSize = true;
-            this.label19.Location = new System.Drawing.Point(38, 124);
-            this.label19.Name = "label19";
-            this.label19.Size = new System.Drawing.Size(49, 13);
-            this.label19.TabIndex = 31;
-            this.label19.Text = "Selected";
-            this.label19.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            // 
-            // HeaderButtonSelectedColor
-            // 
-            this.HeaderButtonSelectedColor.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.HeaderButtonSelectedColor.Location = new System.Drawing.Point(7, 117);
-            this.HeaderButtonSelectedColor.Name = "HeaderButtonSelectedColor";
-            this.HeaderButtonSelectedColor.Size = new System.Drawing.Size(26, 27);
-            this.HeaderButtonSelectedColor.TabIndex = 30;
-            this.toolTip1.SetToolTip(this.HeaderButtonSelectedColor, "Click to set color.");
-            this.HeaderButtonSelectedColor.MouseClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1029,17 +1030,17 @@
             this.GroupHotkey.ResumeLayout(false);
             this.GroupHotkey.PerformLayout();
             this.PanelColors.ResumeLayout(false);
+            this.GroupColorPreview.ResumeLayout(false);
+            this.GroupColorPreview.PerformLayout();
+            this.GroupColorClips.ResumeLayout(false);
+            this.GroupColorClips.PerformLayout();
+            this.GroupColorHeader.ResumeLayout(false);
+            this.GroupColorHeader.PerformLayout();
+            this.GroupColorMenu.ResumeLayout(false);
+            this.GroupColorMenu.PerformLayout();
             this.GroupColors.ResumeLayout(false);
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
-            this.GroupColorMenu.ResumeLayout(false);
-            this.GroupColorMenu.PerformLayout();
-            this.GroupColorHeader.ResumeLayout(false);
-            this.GroupColorHeader.PerformLayout();
-            this.GroupColorClips.ResumeLayout(false);
-            this.GroupColorClips.PerformLayout();
-            this.GroupColorPreview.ResumeLayout(false);
-            this.GroupColorPreview.PerformLayout();
             this.ResumeLayout(false);
 
         }
