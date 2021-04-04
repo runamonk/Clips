@@ -13,8 +13,6 @@ namespace Clips.Controls
     public partial class ClipPanel : Panel
     {
         private Config ClipsConfig { get; set; }
-        private Image LastImage { get; set; }
-        private string LastText { get; set; }
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
         public bool InPreview { get; set; }
@@ -96,21 +94,11 @@ namespace Clips.Controls
         {
             if (clipContents != null)
             {
-                if (clipContents is String)
-                {
-                    if (string.IsNullOrEmpty(clipContents) || (clipContents == LastText) || ClipExists(clipContents)) 
-                        return;
-                    else 
-                        LastText = clipContents;
-                }
+                if ((clipContents is String) && ClipExists(clipContents))
+                    return;
                 else 
-                if (clipContents is Image)
-                {
-                    if ((LastImage != null) && ClipExists(clipContents))
-                        return;
-                    else
-                        LastImage = clipContents;
-                }
+                if ((clipContents is Image) && ClipExists(clipContents))
+                    return;
             }
 
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
@@ -138,12 +126,6 @@ namespace Clips.Controls
             {
                 if (File.Exists(Clip.FileName))
                     File.Delete(Clip.FileName);
-
-                if (Funcs.IsSame(LastImage, Clip.PreviewImageBytes))
-                    LastImage = null;
-                else
-                if (Clip.FullText == LastText)
-                    LastText = null;
 
                 Controls[Controls.IndexOf(Clip)].Dispose();
             }
@@ -253,8 +235,7 @@ namespace Clips.Controls
         public void LoadItems()
         {
             SuspendLayout();
-            LastImage = null;
-            LastText = "";
+
             InLoad = true;
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
@@ -273,12 +254,6 @@ namespace Clips.Controls
             ClipButton b = ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
             if (File.Exists(b.FileName))
                 File.Delete(b.FileName);
-
-            if (Funcs.IsSame(LastImage, b.PreviewImageBytes))
-                LastImage = null;
-            else
-            if (b.FullText == LastText)
-                LastText = null;
 
             Controls[Controls.IndexOf(b)].Dispose();
 
