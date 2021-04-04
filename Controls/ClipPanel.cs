@@ -13,10 +13,13 @@ namespace Clips.Controls
     public partial class ClipPanel : Panel
     {
         private Config ClipsConfig { get; set; }
+
+        #region Properties
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
         public bool InPreview { get; set; }
         public bool MonitorClipboard { get; set; }
+        #endregion
 
         #region Clipboard hooks
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
@@ -30,17 +33,6 @@ namespace Clips.Controls
 
         private readonly ClipMenu MenuRC;
         private readonly Preview PreviewForm;
-
-        protected override CreateParams CreateParams
-        {
-            // Force the scrollbar to always be in position. That way we can just hide it all the time without
-            // having to try and account for it during the autosize or resize.
-            get {
-                var cp = base.CreateParams;
-                cp.Style |= 0x00200000; // WS_VSCROLL
-                return cp;
-            }
-        }
 
         public ClipPanel(Config myConfig)
         {
@@ -63,17 +55,6 @@ namespace Clips.Controls
             LoadItems();
             _clipboardViewerNext = SetClipboardViewer(this.Handle);
             MonitorClipboard = true;
-        }
-
-        protected override void OnParentChanged(EventArgs e)
-        {
-            // Preview form the first time it was shown was some weird default size I could not
-            // get around. ,,|,, M$ - I'll show it off screen first and then hide it.
-            PreviewForm.Left = -8000;
-            PreviewForm.Top = 0;
-            PreviewForm.Show();
-            PreviewForm.Hide();
-            base.OnParentChanged(e);
         }
 
         #region EventHandlers
@@ -303,10 +284,33 @@ namespace Clips.Controls
                 BackColor = ClipsConfig.ClipsBackColor;
         }
 
+        #region Overrides
+        protected override CreateParams CreateParams
+        {
+            // Force the scrollbar to always be in position. That way we can just hide it all the time without
+            // having to try and account for it during the autosize or resize.
+            get {
+                var cp = base.CreateParams;
+                cp.Style |= 0x00200000; // WS_VSCROLL
+                return cp;
+            }
+        }
+
         protected override void OnHandleDestroyed(EventArgs e)
         {
             ChangeClipboardChain(this.Handle, _clipboardViewerNext);
             base.OnHandleDestroyed(e);
+        }
+
+        protected override void OnParentChanged(EventArgs e)
+        {
+            // Preview form the first time it was shown was some weird default size I could not
+            // get around. ,,|,, M$ - I'll show it off screen first and then hide it.
+            PreviewForm.Left = -8000;
+            PreviewForm.Top = 0;
+            PreviewForm.Show();
+            PreviewForm.Hide();
+            base.OnParentChanged(e);
         }
 
         protected override void WndProc(ref Message m)
@@ -331,5 +335,6 @@ namespace Clips.Controls
             }
             #endregion
         }
+        #endregion
     }
 }

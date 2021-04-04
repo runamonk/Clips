@@ -246,30 +246,9 @@ namespace Clips
             Funcs.MoveFormToCursor(this);
             Clips.ResumeLayout();
         }
-
-        protected override void OnLoad(EventArgs e)
-        {
-            if (RunningInstance() != null)
-            {
-                MessageBox.Show("There is already a version of Clips running.");
-                Application.Exit();
-            }
-            else
-                base.OnLoad(e);
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == 0x0312) //WM_HOTKEY
-            {
-                ToggleShow(true);
-            }
-            base.WndProc(ref m);
-        }
         #endregion
 
-        #region Methods
-        
+        #region Methods       
         private void AutoSizeForm(bool ScrollToTop)
         {
             if (Clips.InLoad) return;
@@ -435,6 +414,28 @@ namespace Clips
                     KeyPreview = true;
                 }
             }
+        }
+        #endregion
+
+        #region Overrides
+        protected override void OnLoad(EventArgs e)
+        {
+            if (RunningInstance() != null)
+            {
+                MessageBox.Show("There is already a version of Clips running.");
+                Application.Exit();
+            }
+            else
+                base.OnLoad(e);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == 0x0312) //WM_HOTKEY
+            {
+                ToggleShow(true);
+            }
+            base.WndProc(ref m);
         }
         #endregion
     } // Main
