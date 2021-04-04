@@ -18,15 +18,15 @@ namespace Clips.Controls
         public bool InPreview { get; set; }
         public bool MonitorClipboard { get; set; }
 
-
+        #region Clipboard hooks
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
-
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
 
-        private const int WM_DRAWCLIPBOARD = 0x0308;        // WM_DRAWCLIPBOARD message
-        private IntPtr _clipboardViewerNext;
+        private static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
+        private const int WM_DRAWCLIPBOARD = 0x0308; 
+        private readonly IntPtr _clipboardViewerNext;
+        #endregion
 
         private readonly ClipMenu MenuRC;
         private readonly Preview PreviewForm;
@@ -110,7 +110,7 @@ namespace Clips.Controls
                 Dock = DockStyle.Top
             };
 
-            b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ButtonClicked);
+            b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipClicked);
             b.MouseHover += new EventHandler(PreviewShow);
             b.MouseLeave += new EventHandler(PreviewHide);
             b.ContextMenuStrip = MenuRC;
@@ -120,7 +120,7 @@ namespace Clips.Controls
                 OnClipAdded?.Invoke(b);
         }
 
-        private void ButtonClicked(ClipButton Clip)
+        private void ClipClicked(ClipButton Clip)
         {
             void DeleteClip()
             {
@@ -219,7 +219,6 @@ namespace Clips.Controls
             {
                 ScrollControlIntoView(Controls[Controls.Count - 1]);
                 Controls[Controls.Count - 1].Select();
-                //Controls[Controls.Count - 1].Focus();
             }          
         }
 
@@ -312,8 +311,9 @@ namespace Clips.Controls
 
         protected override void WndProc(ref Message m)
         {
-            base.WndProc(ref m);   
+            base.WndProc(ref m);
 
+            #region Clipboard hooks
             if ((m.Msg == WM_DRAWCLIPBOARD) && (MonitorClipboard))
             {
                 IDataObject obj = Clipboard.GetDataObject();      
@@ -329,6 +329,7 @@ namespace Clips.Controls
                     AddClipButton("", s);
                 }
             }
+            #endregion
         }
     }
 }
