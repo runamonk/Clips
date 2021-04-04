@@ -92,7 +92,7 @@ namespace Clips.Controls
         }
 
         #region EventHandlers
-        public delegate void ClipAddedHandler(ClipButton Clip, bool ClipSavedToDisk);
+        public delegate void ClipAddedHandler(ClipButton Clip);
         public event ClipAddedHandler OnClipAdded;
 
         public delegate void ClipClickedHandler(ClipButton Clip);
@@ -105,12 +105,31 @@ namespace Clips.Controls
         public event ClipsLoadedHandler OnClipsLoaded;
         #endregion
 
-        private ClipButton AddClipButton()
+        private void AddClipButton(string fileName, dynamic clipContents)
         {
+            if (clipContents != null)
+            {
+                if (clipContents is String)
+                {
+                    if (string.IsNullOrEmpty(clipContents) || (clipContents == LastText) || ClipExists(clipContents)) 
+                        return;
+                    else 
+                        LastText = clipContents;
+                }
+                else 
+                if (clipContents is Image)
+                {
+                    if ((LastImage != null) && ClipExists(clipContents))
+                        return;
+                    else
+                        LastImage = clipContents;
+                }
+            }
+
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
                 DeleteOldestClip();
 
-            ClipButton b = new ClipButton(ClipsConfig, ButtonType.Clip)
+            ClipButton b = new ClipButton(ClipsConfig, ButtonType.Clip, fileName, clipContents)
             {
                 TabStop = false,
                 Dock = DockStyle.Top
@@ -121,33 +140,9 @@ namespace Clips.Controls
             b.MouseLeave += new EventHandler(PreviewHide);
             b.ContextMenuStrip = MenuRC;
             Controls.Add(b);
-            return b;
-        }
 
-        public void AddItem(string text, string fileName, bool saveToDisk = false)
-        {
-            if (string.IsNullOrEmpty(text) || (text == LastText) || ClipExists(text)) return;
-            SuspendLayout();
-            LastText = text;
-            ClipButton b = AddClipButton();
-            b.AutoSize = false;
-            b.AutoEllipsis = false;
-            b.FileName = fileName;
-            b.FullText = text;       
-            OnClipAdded?.Invoke(b, saveToDisk);
-            ResumeLayout();
-        }
-
-        public void AddItem(Image image, string fileName, bool saveToDisk = false)
-        {
-            if ((LastImage != null) && ClipExists(image)) return;
-            SuspendLayout();
-            LastImage = image;
-            ClipButton b = AddClipButton();
-            b.FileName = fileName;
-            b.PreviewImage = image;
-            OnClipAdded?.Invoke(b, saveToDisk);
-            ResumeLayout();
+            if (!InLoad)
+                OnClipAdded?.Invoke(b);
         }
 
         private void ButtonClicked(ClipButton Clip)
@@ -212,22 +207,13 @@ namespace Clips.Controls
         private void ClipboardChanged(object sender, SharpClipboard.ClipboardChangedEventArgs e)
         {
             if (e.ContentType == SharpClipboard.ContentTypes.Text)
-            {
-                AddItem(clipboard.ClipboardText.Trim(), null, true);
-            }
+                AddClipButton("", clipboard.ClipboardText.Trim());
             else if (e.ContentType == SharpClipboard.ContentTypes.Image)
-            {
-                AddItem(clipboard.ClipboardImage, null, true);
-            }
+                AddClipButton("", clipboard.ClipboardImage);
             else if (e.ContentType == SharpClipboard.ContentTypes.Files)
             {
                 string s = string.Join("\n", clipboard.ClipboardFiles.Select(i => i.ToString()).ToArray());
-                AddItem(s, null, true);
-            }
-            else if (e.ContentType == SharpClipboard.ContentTypes.Other)
-            {
-                // Do something with 'clipboard.ClipboardObject' or 'e.Content' here...
-                AddItem(clipboard.ClipboardObject.ToString(), null, true);
+                AddClipButton("", s);
             }
         }
 
@@ -298,31 +284,7 @@ namespace Clips.Controls
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
             {
-                XmlDocument doc = new XmlDocument();
-                doc.Load(file);
-                XmlNode data = doc.DocumentElement.SelectSingleNode("/DATA");
-                string type = data.Attributes["TYPE"]?.InnerText;
-
-                if (type == "IMAGE")
-                {
-                    MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
-                    try
-                    {
-                        Image img = Image.FromStream(ms);
-                        AddItem(img, file, false);
-                    }
-                    finally
-                    {
-                        ms.Close();
-                    }
-                }
-                else
-                {
-                    byte[] base64EncodedBytes = Convert.FromBase64String(data.InnerText);
-                    string decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
-                    AddItem(decodedString, file, false);
-                }
-                doc = null;
+                AddClipButton(file, null);
             }
 
             InLoad = false;

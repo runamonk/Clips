@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using System.Xml;
 using Utility;
 
 namespace Clips
@@ -19,79 +20,7 @@ namespace Clips
 
     public partial class ClipButton : Button
     {
-        private const string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
-
-        private Config ClipsConfig { get; set; }
-
-        private readonly ButtonType FButtonType;
-        public ButtonType ButtonType { get { return FButtonType; } }
-
-        public string FileName { get; set; }
-
-        private string FFullText;
-
-        public string FullText
-        {
-            get {
-                return FFullText;
-            }
-            set {
-                FFullText = value;
-                if (FFullText == null)
-                    return;
-
-                byte[] plainTextBytes = Encoding.UTF8.GetBytes(FFullText);
-                string base64 = Convert.ToBase64String(plainTextBytes);
-
-                if ((FileName == "") || (!File.Exists(FileName)))
-                    FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "TEXT", base64));
-
-                CalculateSize();
-            }
-        }
-
-        public bool HasImage { get { return (PreviewImageBytes != null); } }
-
-        public Image PreviewImage
-        {
-            get {
-                if (!HasImage)
-                    return null;
-                else
-                {
-                    MemoryStream ms = new MemoryStream(PreviewImageBytes);
-                    Image img = Image.FromStream(ms);
-                    ms.Dispose();
-                    return Funcs.ScaleImage(img, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
-                }
-            }
-            set {
-                PreviewImageBytes = Funcs.ImageToByteArray(value);
-                string base64 = Convert.ToBase64String(PreviewImageBytes);
-
-                if ((FileName == "") || (!File.Exists(FileName)))
-                    FileName = Funcs.SaveToCache(string.Format(new_xml_file, "N", "IMAGE", base64));
-
-                // TODO DEFAULT IMAGE THUMBNAIL SIZE.             
-                Image = value.GetThumbnailImage(50, 50, null, IntPtr.Zero);
-                CalculateSize();
-            }
-        }
-
-        public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
-
-        private bool IsHeaderButton { get { return (IsMenuButton || IsPinButton); } }
-
-        public bool IsMenuButton { get { return (FButtonType == ButtonType.Menu); } }
-        
-        public bool IsPinButton { get { return (FButtonType == ButtonType.Pin); } }
-
-        public byte[] PreviewImageBytes { get; set; }
-
-        public delegate void ClipButtonClickedHandler(ClipButton Button);
-        public event ClipButtonClickedHandler OnClipButtonClicked;
-
-        public ClipButton(Config myConfig, ButtonType buttonType)
+        public ClipButton(Config myConfig, ButtonType buttonType, string fileName, dynamic clipContents)
         {
             FButtonType = buttonType;
             FlatAppearance.BorderSize = 0;
@@ -119,12 +48,69 @@ namespace Clips
             UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
             UseMnemonic = false;
-            AutoSize = false;       
+            AutoSize = false;
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             SetColors();
+            if (!string.IsNullOrEmpty(fileName))
+                LoadFromCache(fileName);
+            else
+            if (clipContents != null)
+                SaveToCache(clipContents);
+            CalculateSize();
         }
 
+        private const string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+
+        #region Properties
+        private Config ClipsConfig { get; set; }
+
+        private readonly ButtonType FButtonType;
+        public ButtonType ButtonType { get { return FButtonType; } }
+
+        public string FileName { get; set; }
+
+        public string FullText { get; set; }
+
+        public bool HasImage { get { return (PreviewImageBytes != null); } }
+
+        public Image PreviewImage
+        {
+            get {
+                if (!HasImage)
+                    return null;
+                else
+                {
+                    MemoryStream ms = new MemoryStream(PreviewImageBytes);
+                    Image img = Image.FromStream(ms);
+                    ms.Dispose();
+                    return Funcs.ScaleImage(img, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+                }
+            }
+            set {
+                PreviewImageBytes = Funcs.ImageToByteArray(value);
+                Image = value.GetThumbnailImage(50, 50, null, IntPtr.Zero);
+            }
+        }
+
+        public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
+
+        private bool IsHeaderButton { get { return (IsMenuButton || IsPinButton); } }
+
+        public bool IsMenuButton { get { return (FButtonType == ButtonType.Menu); } }
+        
+        public bool IsPinButton { get { return (FButtonType == ButtonType.Pin); } }
+
+        public byte[] PreviewImageBytes { get; set; }
+
+        #endregion
+
+        #region Events
+        public delegate void ClipButtonClickedHandler(ClipButton Button);
+        public event ClipButtonClickedHandler OnClipButtonClicked;
+        #endregion
+
+        #region Methods
         private void CalculateSize()
         {
             if (ButtonType == ButtonType.Clip)
@@ -134,7 +120,7 @@ namespace Clips
                 else
                 {
                     //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-                    string[] s = FFullText.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
+                    string[] s = FullText.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
                     if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
                         for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
                         {
@@ -144,7 +130,7 @@ namespace Clips
                                 Text = Text + s[i] + "\n";
                         }
                     else
-                        Text = FFullText;
+                        Text = FullText;
 
                     SizeF ss = TextRenderer.MeasureText("X", Font);
                     int FHeight = Convert.ToInt32(ss.Height);
@@ -159,6 +145,83 @@ namespace Clips
             CalculateSize();
         }
 
+        private void LoadFromCache(string fileName)
+        {
+            if (File.Exists(fileName))
+            {
+                FileName = fileName;
+                XmlDocument doc = new XmlDocument();
+                doc.Load(fileName);
+                XmlNode data = doc.DocumentElement.SelectSingleNode("/DATA");
+                string type = data.Attributes["TYPE"]?.InnerText;
+
+                if (type == "IMAGE")
+                {
+                    MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
+                    try
+                    {
+                        PreviewImage = Image.FromStream(ms);
+                    }
+                    finally
+                    {
+                        ms.Close();
+                    }
+                }
+                else
+                {
+                    byte[] base64EncodedBytes = Convert.FromBase64String(data.InnerText);
+                    string decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
+                    FullText = decodedString;
+                }
+            }
+        }
+
+        private void SaveToCache(dynamic clipContents)
+        {
+            string fileContents = "";
+            string base64;
+            string randFileName = Funcs.AppPath() + "\\Cache\\" + DateTime.Now.ToString("yyyymmddhhmmssfff") + Funcs.RandomString(10, true) + ".xml";
+
+            if (clipContents is string)
+            {
+                FullText = clipContents;
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(clipContents);
+                base64 = Convert.ToBase64String(plainTextBytes);
+                fileContents = string.Format(new_xml_file, "N", "TEXT", base64);
+            }
+            else
+            if (clipContents is Image)
+            {
+                PreviewImage = clipContents;
+                base64 = Convert.ToBase64String(PreviewImageBytes);
+                fileContents = string.Format(new_xml_file, "N", "IMAGE", base64);
+            }
+
+            if (fileContents != "")
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(fileContents);
+                doc.Save(randFileName);
+            }
+        }
+
+        private void SetColors()
+        {
+            FlatAppearance.BorderColor = BackColor;
+            if (IsHeaderButton)
+            {
+                BackColor = ClipsConfig.HeaderButtonColor;
+                ForeColor = ClipsConfig.HeaderFontColor;
+            }
+            else
+            {
+                BackColor = ClipsConfig.ClipsRowBackColor;
+                ForeColor = ClipsConfig.ClipsFontColor;
+            }
+        }
+        #endregion
+
+        #region Overrides
         // Stops the black default border from being displayed on button when the preview form is shown.
         public override void NotifyDefault(bool value)
         {
@@ -198,21 +261,6 @@ namespace Clips
             }
         }
 
-        private void SetColors()
-        {
-            FlatAppearance.BorderColor = BackColor;
-            if (IsHeaderButton)
-            {
-                BackColor = ClipsConfig.HeaderButtonColor;
-                ForeColor = ClipsConfig.HeaderFontColor;
-            }
-            else
-            {
-                BackColor = ClipsConfig.ClipsRowBackColor;
-                ForeColor = ClipsConfig.ClipsFontColor;
-            }
-        }
-
         protected override void OnPaint(PaintEventArgs pea)
         {
             base.OnPaint(pea);
@@ -235,5 +283,6 @@ namespace Clips
             }
         }
 
+        #endregion
     } 
 }

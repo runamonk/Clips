@@ -60,10 +60,9 @@ namespace Clips
             AutoSizeForm(true);
         }
 
-        private void ClipAdded(ClipButton Clip, bool ClipSavedToDisk)
+        private void ClipAdded(ClipButton Clip)
         {
-            if (ClipSavedToDisk)
-                AutoSizeForm(true);
+            AutoSizeForm(true);
         }
 
         private void ClipClicked(ClipButton Clip)
@@ -336,7 +335,7 @@ namespace Clips
                 Funcs.AddMenuItem(MenuMain, "Settings", MenuSettings_Click);
                 Funcs.AddMenuItem(MenuMain, "Close", MenuClose_Click);
 
-                MenuMainButton = new ClipButton(Config, ButtonType.Menu)
+                MenuMainButton = new ClipButton(Config, ButtonType.Menu, "", null)
                 {
                     Width = 25,
                     Parent = pTop,
@@ -346,7 +345,7 @@ namespace Clips
                 MenuMainButton.Text = (Funcs.IsWindows7() ? ICON_MAINMENU_W7 : ICON_MAINMENU);
                 MenuMainButton.Click += MainButton_Click;
 
-                PinButton = new ClipButton(Config, ButtonType.Pin)
+                PinButton = new ClipButton(Config, ButtonType.Pin, "", null)
                 {
                     Width = 25,
                     Parent = pTop,
