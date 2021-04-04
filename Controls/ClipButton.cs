@@ -119,6 +119,7 @@ namespace Clips
                     Height = 60;
                 else
                 {
+                    Text = "";
                     //TODO Come up with a better way to handle displaying multiple lines per ClipButton
                     string[] s = FullText.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
                     if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
