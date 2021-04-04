@@ -73,14 +73,8 @@ namespace Clips.Controls
 
         private void AddClipButton(string fileName, dynamic clipContents)
         {
-            if (clipContents != null)
-            {
-                if ((clipContents is String) && ClipExists(clipContents))
-                    return;
-                else 
-                if ((clipContents is Image) && ClipExists(clipContents))
-                    return;
-            }
+            if ((clipContents != null) && ClipExists(clipContents))
+                return;
 
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
                 DeleteOldestClip();
