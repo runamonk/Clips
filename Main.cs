@@ -321,20 +321,20 @@ namespace Clips
 
                 MenuMainButton = new ClipButton(Config, ButtonType.Menu, "", null)
                 {
-                    Width = 25,
                     Parent = pTop,
                     Dock = DockStyle.Left
                 };
+                MenuMainButton.Width = MenuMainButton.Height;
                 MenuMainButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
                 MenuMainButton.Text = (Funcs.IsWindows7() ? ICON_MAINMENU_W7 : ICON_MAINMENU);
                 MenuMainButton.Click += MainButton_Click;
 
                 PinButton = new ClipButton(Config, ButtonType.Pin, "", null)
                 {
-                    Width = 25,
                     Parent = pTop,
                     Dock = DockStyle.Right
                 };
+                PinButton.Width = PinButton.Height;
                 PinButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
                 PinButton.Text = (Funcs.IsWindows7() ? ICON_UNPINNED_W7 : ICON_UNPINNED);
                 PinButton.Click += PinButton_Click;
