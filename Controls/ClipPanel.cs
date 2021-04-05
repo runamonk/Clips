@@ -290,7 +290,7 @@ namespace Clips.Controls
         }
         #endregion
 
-        #region Overrides
+        #region Overrides & Clipboard hooks
         protected override CreateParams CreateParams
         {
             // Force the scrollbar to always be in position. That way we can just hide it all the time without
