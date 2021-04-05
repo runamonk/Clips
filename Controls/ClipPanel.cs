@@ -93,7 +93,8 @@ namespace Clips.Controls
                 // Windows/Applications will put multiple copies of entries into the clipboard in multiple formats.
                 // I don't care about the additionals, I will convert it to the format I want and store it.
                 // so when a new clip is added I disable monitoring for 200ms-ish. This way I don't have to 
-                // store off the "last" clip or check for a duplciate multiple times. This is much less intensive.
+                // store off the "last" clip or check for a duplicates multiple times. This is much less intensive.
+                // Why couldn't they store off a reference id or something so we know they are all related? lazy.
                 MonitorClipboard = false;
                 MonitorTimer.Enabled = true;
 
@@ -319,7 +320,7 @@ namespace Clips.Controls
             #region Clipboard hooks
             if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
             {
-                IDataObject obj = Clipboard.GetDataObject();
+                IDataObject obj = Clipboard.GetDataObject();               
                 if (obj.GetDataPresent(DataFormats.Text))
                     AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
                 else
