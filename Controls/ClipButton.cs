@@ -200,6 +200,7 @@ namespace Clips
 
             if (fileContents != "")
             {
+                FileName = randFileName;
                 XmlDocument doc = new XmlDocument();
                 doc.LoadXml(fileContents);
                 doc.Save(randFileName);

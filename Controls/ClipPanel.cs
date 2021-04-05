@@ -23,16 +23,15 @@ namespace Clips.Controls
 
         #region Clipboard hooks
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        public static extern IntPtr SetClipboardViewer(IntPtr hWndNewViewer);
+        private static extern bool AddClipboardFormatListener(IntPtr hwnd);
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
-
-        private static extern bool ChangeClipboardChain(IntPtr hWndRemove, IntPtr hWndNewNext);
-        private const int WM_DRAWCLIPBOARD = 0x0308; 
-        private readonly IntPtr _clipboardViewerNext;
+        private static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
+        private const int WM_CLIPBOARDUPDATE = 0x031D;
         #endregion
 
         private readonly ClipMenu MenuRC;
         private readonly Preview PreviewForm;
+        private Timer MonitorTimer;
 
         public ClipPanel(Config myConfig)
         {
@@ -40,7 +39,7 @@ namespace Clips.Controls
             VerticalScroll.Enabled = true;
             HorizontalScroll.Enabled = false;
             AutoScroll = true;
-           
+
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);
@@ -53,7 +52,13 @@ namespace Clips.Controls
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
             LoadItems();
-            _clipboardViewerNext = SetClipboardViewer(this.Handle);
+
+            AddClipboardFormatListener(this.Handle);
+
+            MonitorTimer = new Timer();
+            MonitorTimer.Interval = 200;
+            MonitorTimer.Enabled = false;
+            MonitorTimer.Tick += new EventHandler(MonitorTimerTick);
             MonitorClipboard = true;
         }
 
@@ -71,10 +76,31 @@ namespace Clips.Controls
         public event ClipsLoadedHandler OnClipsLoaded;
         #endregion
 
+        private void DeleteClip(ClipButton Clip)
+        {
+            if (string.IsNullOrEmpty(Clip.FileName))
+                return;
+
+            if (File.Exists(Clip.FileName))
+                File.Delete(Clip.FileName);
+            Controls[Controls.IndexOf(Clip)].Dispose();
+        }
+
         private void AddClipButton(string fileName, dynamic clipContents)
         {
-            if ((clipContents != null) && ClipExists(clipContents))
-                return;
+            if (!InLoad && (clipContents != null))
+            {
+                // Windows/Applications will put multiple copies of entries into the clipboard in multiple formats.
+                // I don't care about the additionals, I will convert it to the format I want and store it.
+                // so when a new clip is added I disable monitoring for 200ms-ish. This way I don't have to 
+                // store off the "last" clip or check for a duplciate multiple times. This is much less intensive.
+                MonitorClipboard = false;
+                MonitorTimer.Enabled = true;
+
+                ClipButton find = GetClip(clipContents);
+                if (find != null)
+                    DeleteClip(find);
+            }
 
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
                 DeleteOldestClip();
@@ -97,14 +123,6 @@ namespace Clips.Controls
 
         private void ClipClicked(ClipButton Clip)
         {
-            void DeleteClip()
-            {
-                if (File.Exists(Clip.FileName))
-                    File.Delete(Clip.FileName);
-
-                Controls[Controls.IndexOf(Clip)].Dispose();
-            }
-
             SuspendLayout();
             PreviewHide(null, null);
             OnClipClicked?.Invoke(Clip);
@@ -114,7 +132,7 @@ namespace Clips.Controls
                 MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
                 Image img = Image.FromStream(ms);
                 ms.Dispose();
-                DeleteClip();
+                DeleteClip(Clip);
                 Clipboard.SetImage(img);
             }
             else
@@ -126,9 +144,8 @@ namespace Clips.Controls
                 }
                 else
                 {
-                    string TextToCopy = Clip.FullText;
-                    DeleteClip();
-                    Clipboard.SetText(TextToCopy);
+                    DeleteClip(Clip);
+                    Clipboard.SetText(Clip.FullText);
                 }
             }
             ResumeLayout();
@@ -148,32 +165,6 @@ namespace Clips.Controls
             }
         }
 
-        private bool ClipExists(string text)
-        {
-            foreach (ClipButton b in Controls)
-            {
-                if (b.FullText != "" && b.FullText == text)
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        private bool ClipExists(Image image)
-        {
-            foreach (ClipButton b in Controls)
-            {
-                if (b.HasImage && Funcs.IsSame(image, b.PreviewImageBytes))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
         private void ConfigChanged(object sender, EventArgs e)
         {
             SetColors();
@@ -182,10 +173,7 @@ namespace Clips.Controls
 
         public void DeleteOldestClip()
         {
-            ClipButton cb = ((ClipButton)Controls[0]);
-            if (File.Exists(cb.FileName))
-                File.Delete(cb.FileName);
-            Controls[0].Dispose();
+            DeleteClip(((ClipButton)Controls[0]));;
         }
 
         public void First()
@@ -195,6 +183,22 @@ namespace Clips.Controls
                 ScrollControlIntoView(Controls[Controls.Count - 1]);
                 Controls[Controls.Count - 1].Select();
             }          
+        }
+
+        private ClipButton GetClip(dynamic clip)
+        {
+            foreach (ClipButton b in Controls)
+            {
+                if (string.IsNullOrEmpty(b.FileName))
+                    continue;
+
+                if ((clip is Image) && (b.HasImage && Funcs.IsSame(clip, b.PreviewImageBytes)))
+                    return b;
+                else
+                if ((clip is String) && (b.FullText != "" && b.FullText == clip))
+                    return b;
+            }
+            return null;
         }
 
         public void Last()
@@ -225,12 +229,7 @@ namespace Clips.Controls
         private void MenuDelete_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            ClipButton b = ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
-            if (File.Exists(b.FileName))
-                File.Delete(b.FileName);
-
-            Controls[Controls.IndexOf(b)].Dispose();
-
+            DeleteClip(((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl));
             OnClipDeleted?.Invoke();
             InMenu = false;
         }
@@ -259,6 +258,12 @@ namespace Clips.Controls
                     ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).PreviewImage.Save(dlg.FileName);
             }
             InMenu = false;
+        }
+
+        private void MonitorTimerTick(object sender, EventArgs e)
+        {
+            MonitorTimer.Enabled = false;
+            MonitorClipboard = true;
         }
 
         private void PreviewHide(object sender, EventArgs e)
@@ -292,7 +297,7 @@ namespace Clips.Controls
 
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            ChangeClipboardChain(this.Handle, _clipboardViewerNext);
+            RemoveClipboardFormatListener(this.Handle);
             base.OnHandleDestroyed(e);
         }
 
@@ -312,12 +317,12 @@ namespace Clips.Controls
             base.WndProc(ref m);
 
             #region Clipboard hooks
-            if ((m.Msg == WM_DRAWCLIPBOARD) && (MonitorClipboard))
+            if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
             {
-                IDataObject obj = Clipboard.GetDataObject();      
+                IDataObject obj = Clipboard.GetDataObject();
                 if (obj.GetDataPresent(DataFormats.Text))
-                    AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());               
-                else 
+                    AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
+                else
                 if (obj.GetDataPresent(DataFormats.Bitmap))
                     AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
                 else
