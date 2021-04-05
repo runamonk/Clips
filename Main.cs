@@ -195,11 +195,13 @@ namespace Clips
             if (!pinned)
             {
                 pinned = true;
+                TopMost = true;
                 b.Text = (Funcs.IsWindows7() ? ICON_PINNED_W7 : ICON_PINNED);
             }
             else
             {
                 pinned = false;
+                TopMost = false;
                 b.Text = (Funcs.IsWindows7() ? ICON_UNPINNED_W7 : ICON_UNPINNED);
             }
         }
