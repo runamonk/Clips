@@ -9,6 +9,13 @@ using System.Diagnostics;
 using System.Reflection;
 using Clips.Controls;
 
+#region Todo
+// TODO Add ability to pin a clip.
+// TODO Add support for actually clipping the files from a list of files.
+// TODO Add edit/favorite text editor in config.
+// TODO Add max form height (to work with auto-size).
+#endregion
+
 namespace Clips
 {
     public partial class Main : Form
@@ -18,39 +25,34 @@ namespace Clips
             InitializeComponent();
         }
 
-        public const int WM_NCLBUTTONDOWN = 0xA1;
-        public const int HT_CAPTION = 0x2;
-
+        #region Hotkey
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        #endregion
 
+        #region Properties
         private ClipButton MenuMainButton { get; set; }
         private ClipButton PinButton { get; set; }
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
         private ClipPanel Clips { get; set; }
         private ClipSearch SearchClips { get; set; }
+        #endregion
 
+        #region Privates
         private bool inAbout = false;
         private bool inClose = false;
         private bool inMenu = false;
         private bool inSettings = false;
         private bool pinned = false;
-
         private const string ICON_PINNED_W7 = "\u25FC";
         private const string ICON_UNPINNED_W7 = "\u25FB";
         private const string ICON_PINNED = "\uE1F6";
         private const string ICON_UNPINNED = "\uE1F7";
         private const string ICON_MAINMENU = "\uE0C2";
         private const string ICON_MAINMENU_W7 = "\u268A";
-
-        #region Todo
-        // TODO Add ability to pin a clip.
-        // TODO Add support for actually clipping the files from a list of files.
-        // TODO Add edit/favorite text editor in config.
-        // TODO Add max form height (to work with auto-size).
         #endregion
 
         #region Events

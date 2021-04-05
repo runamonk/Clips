@@ -12,27 +12,6 @@ namespace Clips.Controls
 {
     public partial class ClipPanel : Panel
     {
-        private Config ClipsConfig { get; set; }
-
-        #region Properties
-        public bool InMenu { get; set; }
-        public bool InLoad { get; set; }
-        public bool InPreview { get; set; }
-        public bool MonitorClipboard { get; set; }
-        #endregion
-
-        #region Clipboard hooks
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        private static extern bool AddClipboardFormatListener(IntPtr hwnd);
-        [DllImport("User32.dll", CharSet = CharSet.Auto)]
-        private static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
-        private const int WM_CLIPBOARDUPDATE = 0x031D;
-        #endregion
-
-        private readonly ClipMenu MenuRC;
-        private readonly Preview PreviewForm;
-        private Timer MonitorTimer;
-
         public ClipPanel(Config myConfig)
         {
             MonitorClipboard = false;
@@ -52,15 +31,37 @@ namespace Clips.Controls
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
             LoadItems();
-
             AddClipboardFormatListener(this.Handle);
-
-            MonitorTimer = new Timer();
-            MonitorTimer.Interval = 200;
-            MonitorTimer.Enabled = false;
+            MonitorTimer = new Timer
+            {
+                Interval = 200,
+                Enabled = false
+            };
             MonitorTimer.Tick += new EventHandler(MonitorTimerTick);
             MonitorClipboard = true;
         }
+
+        #region Properties
+        private Config ClipsConfig { get; set; }
+        public bool InMenu { get; set; }
+        public bool InLoad { get; set; }
+        public bool InPreview { get; set; }
+        public bool MonitorClipboard { get; set; }
+        #endregion
+
+        #region Privates
+        private readonly ClipMenu MenuRC;
+        private readonly Preview PreviewForm;
+        private readonly Timer MonitorTimer;
+        #endregion
+
+        #region Clipboard hooks
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        private static extern bool AddClipboardFormatListener(IntPtr hwnd);
+        [DllImport("User32.dll", CharSet = CharSet.Auto)]
+        private static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
+        private const int WM_CLIPBOARDUPDATE = 0x031D;
+        #endregion
 
         #region EventHandlers
         public delegate void ClipAddedHandler(ClipButton Clip);
@@ -76,16 +77,62 @@ namespace Clips.Controls
         public event ClipsLoadedHandler OnClipsLoaded;
         #endregion
 
-        private void DeleteClip(ClipButton Clip)
+        #region Events
+        private void MenuDelete_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(Clip.FileName))
-                return;
-
-            if (File.Exists(Clip.FileName))
-                File.Delete(Clip.FileName);
-            Controls[Controls.IndexOf(Clip)].Dispose();
+            InMenu = true;
+            DeleteClip(((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl));
+            OnClipDeleted?.Invoke();
+            InMenu = false;
         }
 
+        private void MenuSave_Click(object sender, EventArgs e)
+        {
+            InMenu = true;
+            SaveFileDialog dlg = new SaveFileDialog
+            {
+                InitialDirectory = "c:\\"
+            };
+
+            if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text != "")
+            {
+                dlg.Filter = "Text (*.txt)|Any (*.*)";
+                dlg.FilterIndex = 1;
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
+            }
+            else
+                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).HasImage)
+            {
+                dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
+                dlg.FilterIndex = 1;
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).PreviewImage.Save(dlg.FileName);
+            }
+            InMenu = false;
+        }
+
+        private void MonitorTimerTick(object sender, EventArgs e)
+        {
+            MonitorTimer.Enabled = false;
+            MonitorClipboard = true;
+        }
+
+        private void PreviewHide(object sender, EventArgs e)
+        {
+            PreviewForm.HidePreview();
+            InPreview = false;
+        }
+
+        private void PreviewShow(object sender, EventArgs e)
+        {
+            InPreview = true;
+            PreviewForm.ShowPreview(((ClipButton)sender));
+        }
+
+        #endregion
+
+        #region Methods
         private void AddClipButton(string fileName, dynamic clipContents)
         {
             if (!InLoad && (clipContents != null))
@@ -172,6 +219,16 @@ namespace Clips.Controls
             CleanupCache();
         }
 
+        private void DeleteClip(ClipButton Clip)
+        {
+            if (string.IsNullOrEmpty(Clip.FileName))
+                return;
+
+            if (File.Exists(Clip.FileName))
+                File.Delete(Clip.FileName);
+            Controls[Controls.IndexOf(Clip)].Dispose();
+        }
+
         public void DeleteOldestClip()
         {
             DeleteClip(((ClipButton)Controls[0]));;
@@ -227,62 +284,11 @@ namespace Clips.Controls
             OnClipsLoaded?.Invoke();
         }
 
-        private void MenuDelete_Click(object sender, EventArgs e)
-        {
-            InMenu = true;
-            DeleteClip(((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl));
-            OnClipDeleted?.Invoke();
-            InMenu = false;
-        }
-
-        private void MenuSave_Click(object sender, EventArgs e)
-        {
-            InMenu = true;
-            SaveFileDialog dlg = new SaveFileDialog
-            {
-                InitialDirectory = "c:\\"
-            };
-
-            if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text != "")
-            {
-                dlg.Filter = "Text (*.txt)|Any (*.*)";
-                dlg.FilterIndex = 1;
-                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
-            }
-            else
-                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).HasImage)
-            {
-                dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
-                dlg.FilterIndex = 1;
-                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).PreviewImage.Save(dlg.FileName);
-            }
-            InMenu = false;
-        }
-
-        private void MonitorTimerTick(object sender, EventArgs e)
-        {
-            MonitorTimer.Enabled = false;
-            MonitorClipboard = true;
-        }
-
-        private void PreviewHide(object sender, EventArgs e)
-        {
-            PreviewForm.HidePreview();
-            InPreview = false;
-        }
-
-        private void PreviewShow(object sender, EventArgs e)
-        {
-            InPreview = true;
-            PreviewForm.ShowPreview(((ClipButton)sender));
-        }
-
         private void SetColors()
         {
                 BackColor = ClipsConfig.ClipsBackColor;
         }
+        #endregion
 
         #region Overrides
         protected override CreateParams CreateParams

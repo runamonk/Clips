@@ -60,7 +60,9 @@ namespace Clips
             CalculateSize();
         }
 
+        #region Privates
         private const string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+        #endregion
 
         #region Properties
         private Config ClipsConfig { get; set; }
