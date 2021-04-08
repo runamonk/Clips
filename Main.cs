@@ -47,6 +47,7 @@ namespace Clips
         private bool inMenu = false;
         private bool inSettings = false;
         private bool pinned = false;
+        private int HotkeyId = Funcs.RandomNumber();
         private const string ICON_PINNED_W7 = "\u25FC";
         private const string ICON_UNPINNED_W7 = "\u25FB";
         private const string ICON_PINNED = "\uE1F6";
@@ -366,9 +367,8 @@ namespace Clips
             BackColor = Config.HeaderBackColor;
             SearchClips.Text = "";
             SearchClips.BackColor = Config.HeaderBackColor;
-            SearchClips.ForeColor = Config.HeaderFontColor;
-            
-            RegisterHotKey(this.Handle, 1, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
+            SearchClips.ForeColor = Config.HeaderFontColor;           
+            RegisterHotKey(this.Handle, HotkeyId, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
         private Process RunningInstance()
@@ -422,6 +422,13 @@ namespace Clips
         #endregion
 
         #region Overrides
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            UnregisterHotKey(this.Handle, HotkeyId);
+            base.OnHandleDestroyed(e);
+        }
+
         protected override void OnLoad(EventArgs e)
         {
             if (RunningInstance() != null)
@@ -441,6 +448,7 @@ namespace Clips
             }
             base.WndProc(ref m);
         }
+                
         #endregion
     } // Main
 }
