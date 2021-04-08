@@ -78,7 +78,7 @@
             this.linkEmail.Size = new System.Drawing.Size(275, 31);
             this.linkEmail.TabIndex = 3;
             this.linkEmail.TabStop = true;
-            this.linkEmail.Text = "runamonk@onlyzuul.org";
+            this.linkEmail.Text = "info@onlyzuul.org";
             this.linkEmail.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             this.linkEmail.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabel1_LinkClicked);
             // 
