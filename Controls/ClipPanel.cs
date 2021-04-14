@@ -322,11 +322,14 @@ namespace Clips.Controls
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-
+            // Why does pasting an image into an outlook email copy the image to the clipboard??
             #region Clipboard hooks
             if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
             {
-                IDataObject obj = Clipboard.GetDataObject();               
+                IDataObject obj = Clipboard.GetDataObject();
+                if (obj == null)
+                    return;
+
                 if (obj.GetDataPresent(DataFormats.Text))
                     AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
                 else
