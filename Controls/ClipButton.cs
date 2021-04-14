@@ -117,6 +117,9 @@ namespace Clips
         {
             if (ButtonType == ButtonType.Clip)
             {
+                if ((!HasImage) && ((FullText == null) || (FullText == "")))
+                    return;
+
                 if (HasImage)
                     Height = 60;
                 else
