@@ -56,7 +56,6 @@ namespace Clips
 
             if (!string.IsNullOrEmpty(clipButton.FullText))
             {
-                PreviewText.SuspendLayout();
                 PreviewText.Text = "";
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
@@ -71,7 +70,6 @@ namespace Clips
 
                 this.Height = PreviewText.PreferredSize.Height + 3;
                 this.Width = PreviewText.PreferredSize.Width;
-                PreviewText.ResumeLayout();
             }
             else
             if (clipButton.HasImage)
