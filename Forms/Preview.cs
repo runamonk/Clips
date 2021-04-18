@@ -19,13 +19,11 @@ namespace Clips
             ClipsConfig = myConfig;
             AutoSize = false;
             SizeF ss = TextRenderer.MeasureText("X", PreviewText.Font);
-            FTextHeight = Convert.ToInt32(ss.Height) + 3;
             FTextWidth = Convert.ToInt32(ss.Width);
-
         }
+
         private readonly Config ClipsConfig;
-        private readonly int FTextHeight = 0;
-        private readonly int FTextWidth = 0;
+        private readonly int FTextWidth;
         protected override CreateParams CreateParams
         {
             get {
@@ -51,6 +49,7 @@ namespace Clips
             PreviewText.BackColor = ClipsConfig.PreviewBackColor;
             PreviewText.ForeColor = ClipsConfig.PreviewFontColor;
             MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
+            PreviewText.MaximumSize = MaximumSize;
             PreviewText.Dock = DockStyle.Fill;
             PreviewImage.Dock = DockStyle.Fill;
 
@@ -67,13 +66,13 @@ namespace Clips
                     PreviewText.Text = clipButton.FullText;
                 else
                     PreviewText.Text = clipButton.FullText.Substring(0, MaxCharsAllRows);
-
-                this.Height = PreviewText.PreferredSize.Height + 3;
-                this.Width = PreviewText.PreferredSize.Width;
+                
+                this.AutoSize = true;
             }
             else
             if (clipButton.HasImage)
             {
+                this.AutoSize = false;
                 PreviewImage.Image = Funcs.ScaleImage(clipButton.PreviewImage, MaximumSize.Width, MaximumSize.Height);
                 PreviewText.Visible = false;
                 PreviewImage.Visible = true;
@@ -81,6 +80,8 @@ namespace Clips
                 Width = PreviewImage.Image.Width;
             }
 
+            // pop the form up to the left or right of the main form, try and keep
+            // it on screen.
             Form MainForm = (Form)clipButton.Parent.Parent.Parent;
             int MFRight = (MainForm.Left + MainForm.Width);
             int MFLeft = (MainForm.Left - this.Width);
@@ -112,5 +113,6 @@ namespace Clips
             TimerShowForm.Enabled = false;
             Funcs.ShowInactiveTopmost(this);
         }
+
     }
 }

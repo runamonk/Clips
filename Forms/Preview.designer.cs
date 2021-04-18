@@ -31,7 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.TimerShowForm = new System.Windows.Forms.Timer(this.components);
             this.PreviewImage = new System.Windows.Forms.PictureBox();
-            this.PreviewText = new System.Windows.Forms.TextBox();
+            this.PreviewText = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).BeginInit();
             this.SuspendLayout();
             // 
@@ -43,10 +43,10 @@
             // PreviewImage
             // 
             this.PreviewImage.BackColor = System.Drawing.Color.Red;
-            this.PreviewImage.Location = new System.Drawing.Point(0, 0);
+            this.PreviewImage.Location = new System.Drawing.Point(10, 3);
             this.PreviewImage.Margin = new System.Windows.Forms.Padding(0);
             this.PreviewImage.Name = "PreviewImage";
-            this.PreviewImage.Size = new System.Drawing.Size(10, 10);
+            this.PreviewImage.Size = new System.Drawing.Size(11, 17);
             this.PreviewImage.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.PreviewImage.TabIndex = 7;
             this.PreviewImage.TabStop = false;
@@ -54,15 +54,18 @@
             // 
             // PreviewText
             // 
+            this.PreviewText.AutoSize = true;
             this.PreviewText.BackColor = System.Drawing.Color.Blue;
-            this.PreviewText.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.PreviewText.Location = new System.Drawing.Point(20, 0);
+            this.PreviewText.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.PreviewText.ForeColor = System.Drawing.Color.White;
+            this.PreviewText.Location = new System.Drawing.Point(30, 3);
             this.PreviewText.Margin = new System.Windows.Forms.Padding(0);
-            this.PreviewText.MinimumSize = new System.Drawing.Size(0, 15);
-            this.PreviewText.Multiline = true;
             this.PreviewText.Name = "PreviewText";
-            this.PreviewText.Size = new System.Drawing.Size(10, 18);
+            this.PreviewText.Size = new System.Drawing.Size(11, 17);
             this.PreviewText.TabIndex = 8;
+            this.PreviewText.Text = "T";
+            this.PreviewText.UseCompatibleTextRendering = true;
+            this.PreviewText.UseMnemonic = false;
             // 
             // Preview
             // 
@@ -92,6 +95,6 @@
         #endregion
         private System.Windows.Forms.Timer TimerShowForm;
         private System.Windows.Forms.PictureBox PreviewImage;
-        private System.Windows.Forms.TextBox PreviewText;
+        private System.Windows.Forms.Label PreviewText;
     }
 }
