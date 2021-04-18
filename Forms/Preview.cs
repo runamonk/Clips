@@ -20,9 +20,12 @@ namespace Clips
             AutoSize = false;
             SizeF ss = TextRenderer.MeasureText("X", PreviewText.Font);
             FTextHeight = Convert.ToInt32(ss.Height) + 3;
+            FTextWidth = Convert.ToInt32(ss.Width);
+
         }
         private readonly Config ClipsConfig;
         private readonly int FTextHeight = 0;
+        private readonly int FTextWidth = 0;
         protected override CreateParams CreateParams
         {
             get {
@@ -47,20 +50,28 @@ namespace Clips
             ForeColor = ClipsConfig.PreviewFontColor;
             PreviewText.BackColor = ClipsConfig.PreviewBackColor;
             PreviewText.ForeColor = ClipsConfig.PreviewFontColor;
-            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
             PreviewText.Dock = DockStyle.Fill;
             PreviewImage.Dock = DockStyle.Fill;
 
             if (!string.IsNullOrEmpty(clipButton.FullText))
             {
+                PreviewText.SuspendLayout();
+                PreviewText.Text = "";
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
-                PreviewText.Text = clipButton.FullText;
-                int NoOfLines = (PreviewText.Text.Count(x => x == '\n'));
-                int NoOfRows = (Convert.ToInt32(Math.Ceiling((Double)PreviewText.PreferredSize.Width / (Double)MaximumSize.Width) * 100) / 100);
 
-                this.Height = ((FTextHeight * (NoOfLines + NoOfRows)) + 3);                
+                int MaxNoOfCharsPerLine = (MaximumSize.Width / FTextWidth);
+                int MaxCharsAllRows = MaxNoOfCharsPerLine * ClipsConfig.PreviewMaxLines;
+
+                if (clipButton.FullText.Length <= MaxCharsAllRows)
+                    PreviewText.Text = clipButton.FullText;
+                else
+                    PreviewText.Text = clipButton.FullText.Substring(0, MaxCharsAllRows);
+
+                this.Height = PreviewText.PreferredSize.Height + 3;
                 this.Width = PreviewText.PreferredSize.Width;
+                PreviewText.ResumeLayout();
             }
             else
             if (clipButton.HasImage)

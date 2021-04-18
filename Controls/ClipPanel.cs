@@ -332,7 +332,9 @@ namespace Clips.Controls
 
                 if (obj.GetDataPresent(DataFormats.Text))
                     AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
-                else
+                //else
+                //if (obj.GetDataPresent(DataFormats.Bitmap))
+                //    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Dib));  Do I want to support this?
                 if (obj.GetDataPresent(DataFormats.Bitmap))
                     AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
                 else
