@@ -230,19 +230,13 @@ namespace Clips
             {
                 foreach (ClipButton b in Clips.Controls)
                 {
-                    if ((includeImages) && (b.PreviewImage != null))
+                    if (includeImages)
                     {
-                        b.Visible = true;
+                        b.Visible = (b.PreviewImage != null);
                     }
                     else
                     {
-                        if ((b.FullText == null) && (!includeImages))
-                            b.Visible = false;
-                        else
-                        if (b.FullText.ToLower().Contains(SearchClips.Text.ToLower().Trim()))
-                            b.Visible = true;
-                        else
-                            b.Visible = false;
+                        b.Visible = ((b.FullText != null) && (b.FullText.ToLower().Contains(SearchClips.Text.ToLower().Trim())));
                     }
                 }
             }
