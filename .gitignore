@@ -1,6 +1,4 @@
-/*
-!/Controls*
-!/Forms*
-!/Properties*
-!/SharpClipboard*
-!.gitignore
+/.vs
+/bin
+/obj
+
