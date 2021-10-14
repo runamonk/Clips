@@ -81,7 +81,7 @@ namespace Clips.Controls
         private void MenuDelete_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            DeleteClip(((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl));
+            DeleteClip((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
             OnClipDeleted?.Invoke();
             InMenu = false;
         }
