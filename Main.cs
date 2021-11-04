@@ -427,7 +427,7 @@ namespace Clips
         {
             if (RunningInstance() != null)
             {
-                MessageBox.Show("There is already a version of Clips running.");
+                MessageBox.Show("There is already a version of zuulClips running.");
                 Application.Exit();
             }
             else
