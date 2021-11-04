@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Clips")]
+[assembly: AssemblyTitle("zuulClips")]
 [assembly: AssemblyDescription("Clips, Clipboard History")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("onlyzuul.org")]
-[assembly: AssemblyProduct("Clips")]
+[assembly: AssemblyProduct("zuulClips")]
 [assembly: AssemblyCopyright("Copyright ©  2020")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
