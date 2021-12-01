@@ -159,14 +159,20 @@ namespace Clips.Controls
                 Dock = DockStyle.Top
             };
 
-            b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipClicked);
-            b.MouseHover += new EventHandler(PreviewShow);
-            b.MouseLeave += new EventHandler(PreviewHide);
-            b.ContextMenuStrip = MenuRC;
-            Controls.Add(b);
-
-            if (!InLoad)
-                OnClipAdded?.Invoke(b);
+            if ((b != null) && (b.ButtonType == ButtonType.Clip) && string.IsNullOrEmpty(b.FullText) && !b.HasImage)
+            {
+                DeleteClip(b);
+            }               
+            else
+            {
+                b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipClicked);
+                b.MouseHover += new EventHandler(PreviewShow);
+                b.MouseLeave += new EventHandler(PreviewHide);
+                b.ContextMenuStrip = MenuRC;
+                Controls.Add(b);
+                if (!InLoad)
+                    OnClipAdded?.Invoke(b);
+            }
         }
 
         private void ClipClicked(ClipButton Clip)
@@ -226,7 +232,9 @@ namespace Clips.Controls
 
             if (File.Exists(Clip.FileName))
                 File.Delete(Clip.FileName);
-            Controls[Controls.IndexOf(Clip)].Dispose();
+
+            if (Controls.IndexOf(Clip) > 0)
+                Controls[Controls.IndexOf(Clip)].Dispose();
         }
 
         public void DeleteOldestClip()
