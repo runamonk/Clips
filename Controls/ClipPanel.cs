@@ -34,7 +34,6 @@ namespace Clips.Controls
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
             
-
             LoadItems();
             AddClipboardFormatListener(this.Handle);
             MonitorTimer = new Timer
@@ -91,6 +90,7 @@ namespace Clips.Controls
             OnClipDeleted?.Invoke();
             InMenu = false;
         }
+
         private void MenuPin_Click(object sender, EventArgs e)
         {
             InMenu = true;
@@ -99,9 +99,12 @@ namespace Clips.Controls
                 b.Pinned = false;
             else
                 b.Pinned = true;
+
+            ClipPinned(b);
             b.Save();
             InMenu = false;
         }
+
         private void MenuRC_Opening(object sender, EventArgs e)
         {
             if (((ClipButton)(((ClipMenu)sender).SourceControl)).Pinned)
@@ -109,6 +112,7 @@ namespace Clips.Controls
             else
                 PinMenuItem.Text = "Pin";
         }
+
         private void MenuSave_Click(object sender, EventArgs e)
         {
             InMenu = true;
@@ -194,6 +198,10 @@ namespace Clips.Controls
                 b.MouseLeave += new EventHandler(PreviewHide);
                 b.ContextMenuStrip = MenuRC;
                 Controls.Add(b);
+
+                if (b.Pinned)
+                    ClipPinned(b);
+
                 if (!InLoad)
                     OnClipAdded?.Invoke(b);
             }
@@ -206,11 +214,12 @@ namespace Clips.Controls
             OnClipClicked?.Invoke(Clip);
 
             if (Clip.HasImage)
-            {
+            {              
                 MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
                 Image img = Image.FromStream(ms);
                 ms.Dispose();
-                DeleteClip(Clip);
+                if (!Clip.Pinned)
+                    DeleteClip(Clip);
                 Clipboard.SetImage(img);
             }
             else
@@ -222,12 +231,18 @@ namespace Clips.Controls
                 }
                 else
                 {
-                    DeleteClip(Clip);
+                    if (!Clip.Pinned)
+                        DeleteClip(Clip);
                     Clipboard.SetText(Clip.FullText);
                 }
             }
             ResumeLayout();
             First();
+        }
+
+        private void ClipPinned(ClipButton b)
+        {
+
         }
 
         public void CleanupCache()
@@ -263,7 +278,8 @@ namespace Clips.Controls
 
         public void DeleteOldestClip()
         {
-            DeleteClip(((ClipButton)Controls[0]));;
+            if (!((ClipButton)Controls[0]).Pinned)
+                DeleteClip(((ClipButton)Controls[0]));
         }
 
         public void First()
@@ -277,6 +293,8 @@ namespace Clips.Controls
 
         private ClipButton GetClip(dynamic clip)
         {
+            if (clip is Image) return null; // don't look for duplicate images.
+
             foreach (ClipButton b in Controls)
             {
                 if (string.IsNullOrEmpty(b.FileName))

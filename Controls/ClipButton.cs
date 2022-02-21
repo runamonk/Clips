@@ -25,7 +25,6 @@ namespace Clips
             FButtonType = buttonType;
             FlatAppearance.BorderSize = 0;
             FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-
             if (buttonType == ButtonType.Clip)
             {
                 TextAlign = ContentAlignment.TopLeft;
@@ -38,17 +37,17 @@ namespace Clips
                 Margin = new Padding(0, 0, 0, 0);
                 TextAlign = ContentAlignment.MiddleCenter;
             }
-
             if (IsPinButton)
             {
                 ToolTip PinButtonToolTip = new ToolTip();
                 PinButtonToolTip.SetToolTip(this, "Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
             }
-
             UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
             UseMnemonic = false;
             AutoSize = false;
+            Pinned = false;
+            PinnedIndex = 0;
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
             SetColors();
@@ -61,7 +60,7 @@ namespace Clips
         }
 
         #region Privates
-        private const string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" TYPE=\"{1}\">{2}\r\n</DATA>";
+        private const string new_xml_file = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" PINNEDINDEX=\"{1}\" TYPE=\"{2}\">{3}\r\n</DATA>";
         #endregion
 
         #region Properties
@@ -77,6 +76,8 @@ namespace Clips
         public bool HasImage { get { return (PreviewImageBytes != null); } }
 
         public bool Pinned { get; set; } 
+
+        public int PinnedIndex { get; set; }
         
         public Image PreviewImage
         {
@@ -163,6 +164,8 @@ namespace Clips
                 XmlNode data = doc.DocumentElement.SelectSingleNode("/DATA");
                 string type = data.Attributes["TYPE"]?.InnerText;
                 Pinned = (data.Attributes["PINNED"]?.InnerText == "Y");
+                PinnedIndex = Convert.ToInt32(data.Attributes["PINNED_INDEX"]?.InnerText);
+
                 if (type == "IMAGE")
                 {
                     MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
@@ -191,7 +194,8 @@ namespace Clips
                 XmlDocument doc = new XmlDocument();
                 doc.Load(FileName);
                 XmlNode data = doc.DocumentElement.SelectSingleNode("/DATA");
-                data.Attributes["PINNED"].InnerText = (Pinned == true ? "Y" : "N");
+                SetAttrib(doc, data, "PINNED", (Pinned == true ? "Y" : "N"));
+                SetAttrib(doc, data, "PINNED_INDEX", PinnedIndex.ToString());
                 doc.Save(FileName);
             }
         }
@@ -200,22 +204,22 @@ namespace Clips
         {
             string fileContents = "";
             string base64;
-            string randFileName = (FileName == "") ? (Funcs.AppPath() + "\\Cache\\" + DateTime.Now.ToString("yyyymmddhhmmssfff") + Funcs.RandomString(10, true) + ".xml") : FileName;
+            string randFileName = (Funcs.AppPath() + "\\Cache\\" + DateTime.Now.ToString("yyyymmddhhmmssfff") + Funcs.RandomString(10, true) + ".xml");
             string strPinned = (Pinned == true ? "Y" : "N");
-
+ 
             if (clipContents is string)
             {
                 FullText = clipContents;
                 byte[] plainTextBytes = Encoding.UTF8.GetBytes(clipContents);
                 base64 = Convert.ToBase64String(plainTextBytes);
-                fileContents = string.Format(new_xml_file, strPinned, "TEXT", base64);
+                fileContents = string.Format(new_xml_file, strPinned, PinnedIndex.ToString(), "TEXT", base64);
             }
             else
             if (clipContents is Image)
             {
                 PreviewImage = clipContents;
                 base64 = Convert.ToBase64String(PreviewImageBytes);
-                fileContents = string.Format(new_xml_file, strPinned, "IMAGE", base64);
+                fileContents = string.Format(new_xml_file, strPinned, PinnedIndex.ToString(), "IMAGE", base64);
             }
 
             if (fileContents != "")
@@ -225,6 +229,20 @@ namespace Clips
                 doc.LoadXml(fileContents);
                 doc.Save(randFileName);
             }
+        }
+
+        private void SetAttrib(XmlDocument doc, XmlNode Node, string AttribName, string Value)
+        {
+            XmlAttribute XmlAtt;
+            if (Node.Attributes[AttribName] == null)
+            {
+                XmlAtt = doc.CreateAttribute(AttribName);
+            }
+            else
+                XmlAtt = Node.Attributes[AttribName];
+
+            XmlAtt.Value = Value;
+            Node.Attributes.Append(XmlAtt);
         }
 
         private void SetColors()
