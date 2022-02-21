@@ -76,6 +76,8 @@ namespace Clips
 
         public bool HasImage { get { return (PreviewImageBytes != null); } }
 
+        public bool Pinned { get; set; } 
+        
         public Image PreviewImage
         {
             get {
@@ -160,7 +162,7 @@ namespace Clips
                 doc.Load(fileName);
                 XmlNode data = doc.DocumentElement.SelectSingleNode("/DATA");
                 string type = data.Attributes["TYPE"]?.InnerText;
-
+                Pinned = (data.Attributes["PINNED"]?.InnerText == "Y");
                 if (type == "IMAGE")
                 {
                     MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
@@ -182,25 +184,38 @@ namespace Clips
             }
         }
 
+        public void Save()
+        {
+            if (File.Exists(FileName))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(FileName);
+                XmlNode data = doc.DocumentElement.SelectSingleNode("/DATA");
+                data.Attributes["PINNED"].InnerText = (Pinned == true ? "Y" : "N");
+                doc.Save(FileName);
+            }
+        }
+
         private void SaveToCache(dynamic clipContents)
         {
             string fileContents = "";
             string base64;
-            string randFileName = Funcs.AppPath() + "\\Cache\\" + DateTime.Now.ToString("yyyymmddhhmmssfff") + Funcs.RandomString(10, true) + ".xml";
+            string randFileName = (FileName == "") ? (Funcs.AppPath() + "\\Cache\\" + DateTime.Now.ToString("yyyymmddhhmmssfff") + Funcs.RandomString(10, true) + ".xml") : FileName;
+            string strPinned = (Pinned == true ? "Y" : "N");
 
             if (clipContents is string)
             {
                 FullText = clipContents;
                 byte[] plainTextBytes = Encoding.UTF8.GetBytes(clipContents);
                 base64 = Convert.ToBase64String(plainTextBytes);
-                fileContents = string.Format(new_xml_file, "N", "TEXT", base64);
+                fileContents = string.Format(new_xml_file, strPinned, "TEXT", base64);
             }
             else
             if (clipContents is Image)
             {
                 PreviewImage = clipContents;
                 base64 = Convert.ToBase64String(PreviewImageBytes);
-                fileContents = string.Format(new_xml_file, "N", "IMAGE", base64);
+                fileContents = string.Format(new_xml_file, strPinned, "IMAGE", base64);
             }
 
             if (fileContents != "")

@@ -28,8 +28,13 @@ namespace Clips.Controls
                 ShowCheckMargin = false,
                 ShowImageMargin = false
             };
+            MenuRC.Opening += MenuRC_Opening;
+            PinMenuItem = Funcs.AddMenuItem(MenuRC, "Pin", MenuPin_Click);
+            Funcs.AddMenuItem(MenuRC, "-", null);      
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
+            
+
             LoadItems();
             AddClipboardFormatListener(this.Handle);
             MonitorTimer = new Timer
@@ -53,6 +58,7 @@ namespace Clips.Controls
         private readonly ClipMenu MenuRC;
         private readonly Preview PreviewForm;
         private readonly Timer MonitorTimer;
+        private ToolStripMenuItem PinMenuItem;
         #endregion
 
         #region Clipboard hooks
@@ -81,11 +87,28 @@ namespace Clips.Controls
         private void MenuDelete_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            DeleteClip((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl);
+            DeleteClip(((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl));
             OnClipDeleted?.Invoke();
             InMenu = false;
         }
-
+        private void MenuPin_Click(object sender, EventArgs e)
+        {
+            InMenu = true;
+            ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
+            if (b.Pinned)
+                b.Pinned = false;
+            else
+                b.Pinned = true;
+            b.Save();
+            InMenu = false;
+        }
+        private void MenuRC_Opening(object sender, EventArgs e)
+        {
+            if (((ClipButton)(((ClipMenu)sender).SourceControl)).Pinned)
+                PinMenuItem.Text = "Unpin";
+            else
+                PinMenuItem.Text = "Pin";
+        }
         private void MenuSave_Click(object sender, EventArgs e)
         {
             InMenu = true;
@@ -93,21 +116,22 @@ namespace Clips.Controls
             {
                 InitialDirectory = "c:\\"
             };
+            ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
 
-            if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text != "")
+            if (b.Text != "")
             {
                 dlg.Filter = "Text (*.txt)|Any (*.*)";
                 dlg.FilterIndex = 1;
-                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    System.IO.File.WriteAllText(dlg.FileName, ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).Text);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                    System.IO.File.WriteAllText(dlg.FileName, b.Text);
             }
             else
-                if (((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).HasImage)
+            if (b.HasImage)
             {
                 dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
                 dlg.FilterIndex = 1;
-                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                    ((ClipButton)((ContextMenuStrip)((ToolStripMenuItem)sender).Owner).SourceControl).PreviewImage.Save(dlg.FileName);
+                if (dlg.ShowDialog() == DialogResult.OK)
+                    b.PreviewImage.Save(dlg.FileName);
             }
             InMenu = false;
         }
