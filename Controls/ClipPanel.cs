@@ -6,34 +6,30 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
+using System.Collections.Generic;
 using Utility;
 
 namespace Clips.Controls
 {
-    public partial class ClipPanel : Panel
+    public partial class ClipPanel : BasePanel
     {
-        public ClipPanel(Config myConfig)
+        public ClipPanel(Config myConfig) : base(myConfig)
         {
             MonitorClipboard = false;
-            VerticalScroll.Enabled = true;
-            HorizontalScroll.Enabled = false;
-            AutoScroll = true;
+            OnConfigChanged += new EventHandler(ConfigChanged);
 
-            ClipsConfig = myConfig;
-            ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
-            PreviewForm = new Preview(ClipsConfig);
-            DoubleBuffered = true;
-            MenuRC = new ClipMenu(myConfig)
+            MenuRC = new ClipMenu(ClipsConfig)
             {
                 ShowCheckMargin = false,
                 ShowImageMargin = false
             };
             MenuRC.Opening += MenuRC_Opening;
             PinMenuItem = Funcs.AddMenuItem(MenuRC, "Pin", MenuPin_Click);
+
             Funcs.AddMenuItem(MenuRC, "-", null);      
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
-            
+
             LoadItems();
             AddClipboardFormatListener(this.Handle);
             MonitorTimer = new Timer
@@ -46,16 +42,13 @@ namespace Clips.Controls
         }
 
         #region Properties
-        private Config ClipsConfig { get; set; }
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
-        public bool InPreview { get; set; }
         public bool MonitorClipboard { get; set; }
         #endregion
 
         #region Privates
-        private readonly ClipMenu MenuRC;
-        private readonly Preview PreviewForm;
+        private readonly ClipMenu MenuRC;       
         private readonly Timer MonitorTimer;
         private ToolStripMenuItem PinMenuItem;
         #endregion
@@ -95,13 +88,7 @@ namespace Clips.Controls
         {
             InMenu = true;
             ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
-            if (b.Pinned)
-                b.Pinned = false;
-            else
-                b.Pinned = true;
-
-            ClipPinned(b);
-            b.Save();
+            ClipPinned(b, true);
             InMenu = false;
         }
 
@@ -146,18 +133,6 @@ namespace Clips.Controls
             MonitorClipboard = true;
         }
 
-        private void PreviewHide(object sender, EventArgs e)
-        {
-            PreviewForm.HidePreview();
-            InPreview = false;
-        }
-
-        private void PreviewShow(object sender, EventArgs e)
-        {
-            InPreview = true;
-            PreviewForm.ShowPreview(((ClipButton)sender));
-        }
-
         #endregion
 
         #region Methods
@@ -197,10 +172,8 @@ namespace Clips.Controls
                 b.MouseHover += new EventHandler(PreviewShow);
                 b.MouseLeave += new EventHandler(PreviewHide);
                 b.ContextMenuStrip = MenuRC;
-                Controls.Add(b);
 
-                if (b.Pinned)
-                    ClipPinned(b);
+                Controls.Add(b);
 
                 if (!InLoad)
                     OnClipAdded?.Invoke(b);
@@ -240,9 +213,24 @@ namespace Clips.Controls
             First();
         }
 
-        private void ClipPinned(ClipButton b)
+        private void ClipPinned(ClipButton b, bool DoSave)
         {
+            if (DoSave)
+            {
+                if (b.Pinned)
+                {
+                    b.Pinned = false;
+                    b.PinnedIndex = 0;
+                }                 
+                else
+                {
+                    b.Pinned = true;
+                    b.PinnedIndex = GetPinnedIndex();
+                }                    
 
+                b.Save();
+            }
+            Controls.SetChildIndex(b, Controls.Count-1);
         }
 
         public void CleanupCache()
@@ -260,7 +248,6 @@ namespace Clips.Controls
 
         private void ConfigChanged(object sender, EventArgs e)
         {
-            SetColors();
             CleanupCache();
         }
 
@@ -309,6 +296,11 @@ namespace Clips.Controls
             return null;
         }
 
+        private int GetPinnedIndex()
+        {
+            return 0;
+        }
+
         public void Last()
         {
             if (Controls.Count > 0)
@@ -334,10 +326,6 @@ namespace Clips.Controls
             OnClipsLoaded?.Invoke();
         }
 
-        private void SetColors()
-        {
-                BackColor = ClipsConfig.ClipsBackColor;
-        }
         #endregion
 
         #region Overrides & Clipboard hooks
@@ -345,7 +333,8 @@ namespace Clips.Controls
         {
             // Force the scrollbar to always be in position. That way we can just hide it all the time without
             // having to try and account for it during the autosize or resize.
-            get {
+            get
+            {
                 var cp = base.CreateParams;
                 cp.Style |= 0x00200000; // WS_VSCROLL
                 return cp;
@@ -397,5 +386,6 @@ namespace Clips.Controls
             #endregion
         }
         #endregion
+
     }
 }
