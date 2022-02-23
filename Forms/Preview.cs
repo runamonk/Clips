@@ -103,9 +103,6 @@ namespace Clips
             PreviewText.Text = "";
             PreviewImage.Image = null;
             Hide();
-
-            GC.Collect();
-            GC.WaitForPendingFinalizers();
         }
 
         private void TimerShowForm_Tick(object sender, EventArgs e)

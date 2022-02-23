@@ -281,6 +281,13 @@ namespace Clips
             OnClipButtonClicked?.Invoke(this);
         }
 
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            PreviewForm.Close();
+            PreviewForm = null;
+            base.OnHandleDestroyed(e);
+        }
+
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
