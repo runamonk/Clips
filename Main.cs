@@ -8,6 +8,7 @@ using Utility;
 using System.Diagnostics;
 using System.Reflection;
 using Clips.Controls;
+using static Clips.Controls.BasePanel;
 
 #region Todo
 // TODO Add ability to pin a clip.
@@ -57,7 +58,7 @@ namespace Clips
         #endregion
 
         #region Events
-        private void ConfigChanged(object sender, EventArgs e)
+        private void ConfigChanged()
         {
             LoadConfig();
             AutoSizeForm(true);
@@ -72,7 +73,6 @@ namespace Clips
         {
             if (Config.AutoHide)
                  ToggleShow(true);
-
         }
 
         private void ClipDeleted()
@@ -302,7 +302,7 @@ namespace Clips
             if (Config == null)
             {
                 Config = new Config();
-                Config.ConfigChanged += new EventHandler(ConfigChanged);
+                Config.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
                 MenuMain = new ClipMenu(Config);
                 MenuMain.Opening += new System.ComponentModel.CancelEventHandler(MenuClips_Opening);
                 MenuMain.Closed += new ToolStripDropDownClosedEventHandler(MenuClips_Closed);

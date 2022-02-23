@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Clips.Controls.BasePanel;
 
 namespace Clips.Controls
 {
@@ -16,7 +17,7 @@ namespace Clips.Controls
         public ClipMenu(Config myConfig)
         {
             ClipsConfig = myConfig;
-            ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
+            ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
             SetColors();
         }
 
@@ -27,7 +28,7 @@ namespace Clips.Controls
             Renderer = null;
             Renderer = new CustomToolstripRenderer(ClipsConfig);
         }
-        private void ConfigChanged(object sender, EventArgs e)
+        private void ConfigChanged()
         {
             SetColors();
         }

@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Utility;
+using static Clips.Controls.BasePanel;
 
 namespace Clips
 {
@@ -49,7 +50,7 @@ namespace Clips
             Pinned = false;
             PinnedIndex = 0;
             ClipsConfig = myConfig;
-            ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
+            ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
             SetColors();
             if (!string.IsNullOrEmpty(fileName))
                 LoadFromCache(fileName);
@@ -148,7 +149,7 @@ namespace Clips
             }
         }
 
-        private void ConfigChanged(object sender, EventArgs e)
+        private void ConfigChanged()
         {
             SetColors();
             CalculateSize();

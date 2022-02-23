@@ -3,10 +3,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
-using System.Xml;
-using System.Collections.Generic;
 using Utility;
 
 namespace Clips.Controls
@@ -16,7 +13,7 @@ namespace Clips.Controls
         public ClipPanel(Config myConfig) : base(myConfig)
         {
             MonitorClipboard = false;
-            OnConfigChanged += new EventHandler(ConfigChanged);
+            //OnConfigChanged += new ConfigChangedHandler(ConfigChanged);
 
             MenuRC = new ClipMenu(ClipsConfig)
             {
@@ -61,26 +58,19 @@ namespace Clips.Controls
         private const int WM_CLIPBOARDUPDATE = 0x031D;
         #endregion
 
-        #region EventHandlers
-        public delegate void ClipAddedHandler(ClipButton Clip);
-        public event ClipAddedHandler OnClipAdded;
-
-        public delegate void ClipClickedHandler(ClipButton Clip);
-        public event ClipClickedHandler OnClipClicked;
-
-        public delegate void ClipDeletedHandler();
-        public event ClipDeletedHandler OnClipDeleted;
-
-        public delegate void ClipsLoadedHandler();
-        public event ClipsLoadedHandler OnClipsLoaded;
-        #endregion
-
         #region Events
+
+        protected override void ConfigChanged()
+        {
+            base.ConfigChanged();
+            CleanupCache();
+        }
+
         private void MenuDelete_Click(object sender, EventArgs e)
         {
             InMenu = true;
             DeleteClip(((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl));
-            OnClipDeleted?.Invoke();
+            base.ClipDeleted();
             InMenu = false;
         }
 
@@ -168,7 +158,7 @@ namespace Clips.Controls
             }               
             else
             {
-                b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipClicked);
+                b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipButtonClicked);
                 b.MouseHover += new EventHandler(PreviewShow);
                 b.MouseLeave += new EventHandler(PreviewHide);
                 b.ContextMenuStrip = MenuRC;
@@ -176,15 +166,15 @@ namespace Clips.Controls
                 Controls.Add(b);
 
                 if (!InLoad)
-                    OnClipAdded?.Invoke(b);
+                    base.ClipAdded(b);
             }
         }
 
-        private void ClipClicked(ClipButton Clip)
+        private void ClipButtonClicked(ClipButton Clip)
         {
             SuspendLayout();
             PreviewHide(null, null);
-            OnClipClicked?.Invoke(Clip);
+            base.ClipClicked(Clip);
 
             if (Clip.HasImage)
             {              
@@ -244,11 +234,6 @@ namespace Clips.Controls
                     clipsToDelete--;
                 }
             }
-        }
-
-        private void ConfigChanged(object sender, EventArgs e)
-        {
-            CleanupCache();
         }
 
         private void DeleteClip(ClipButton Clip)
@@ -323,7 +308,7 @@ namespace Clips.Controls
 
             InLoad = false;
             ResumeLayout();
-            OnClipsLoaded?.Invoke();
+            base.ClipsLoaded();
         }
 
         #endregion

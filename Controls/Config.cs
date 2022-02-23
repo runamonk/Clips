@@ -7,6 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using Microsoft.Win32;
 using Utility;
+using static Clips.Controls.BasePanel;
 
 namespace Clips
 {
@@ -142,7 +143,7 @@ namespace Clips
             }
         }
 
-        public event EventHandler ConfigChanged;
+        public event ConfigChangedHandler ConfigChanged;
         List<string> _Config;
 
         public Config()
@@ -235,7 +236,7 @@ namespace Clips
             if (f.ShowDialog() == DialogResult.OK)
             {
                 SaveConfiguration();
-                ConfigChanged(this, null);
+                ConfigChanged();
             }
             f.Close();
         }

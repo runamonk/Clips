@@ -13,7 +13,7 @@ namespace Clips.Controls
             DoubleBuffered = true;
 
             ClipsConfig = myConfig;
-            ClipsConfig.ConfigChanged += new EventHandler(ConfigChanged);
+            ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
             PreviewForm = new Preview(ClipsConfig);    
         }
 
@@ -27,12 +27,45 @@ namespace Clips.Controls
         #endregion
 
         #region Events
-        internal event EventHandler OnConfigChanged;
+        public delegate void ConfigChangedHandler();
+        public event ConfigChangedHandler OnConfigChanged;
 
-        private void ConfigChanged(object sender, EventArgs e)
+        public delegate void ClipAddedHandler(ClipButton Clip);
+        public event ClipAddedHandler OnClipAdded;
+
+        public delegate void ClipClickedHandler(ClipButton Clip);
+        public event ClipClickedHandler OnClipClicked;
+
+        public delegate void ClipDeletedHandler();
+        public event ClipDeletedHandler OnClipDeleted;
+
+        public delegate void ClipsLoadedHandler();
+        public event ClipsLoadedHandler OnClipsLoaded;
+
+        protected virtual void ConfigChanged()
         {
             SetColors();
-            OnConfigChanged?.Invoke(sender, e);
+            OnConfigChanged?.Invoke();
+        }
+
+        protected void ClipAdded(ClipButton Clip)
+        {
+            OnClipAdded?.Invoke(Clip);
+        }
+
+        protected void ClipClicked(ClipButton Clip)
+        {
+            OnClipClicked?.Invoke(Clip);
+        }
+
+        protected void ClipDeleted()
+        {
+            OnClipDeleted?.Invoke();
+        }
+
+        protected void ClipsLoaded()
+        {
+            OnClipsLoaded?.Invoke();
         }
         #endregion
 
