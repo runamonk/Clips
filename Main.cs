@@ -389,7 +389,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false)
         {
-            if ((pinned) || (!Override) && (inClose || inAbout || Clips.InPreview || Clips.InMenu || inMenu || inSettings))
+            if ((pinned) || (!Override) && (inClose || inAbout || Clips.InMenu || inMenu || inSettings))
                 return;
             else
             {

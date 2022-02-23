@@ -13,19 +13,14 @@ namespace Clips.Controls
             DoubleBuffered = true;
 
             ClipsConfig = myConfig;
-            ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
-            PreviewForm = new Preview(ClipsConfig);    
+            ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);  
         }
 
         #region Properties
         internal Config ClipsConfig { get; set; }
-        internal bool InPreview { get; set; }
         #endregion
 
-        #region Privates
-        internal readonly Preview PreviewForm;
-        #endregion
-
+        
         #region Events
         public delegate void ConfigChangedHandler();
         public event ConfigChangedHandler OnConfigChanged;
@@ -68,18 +63,6 @@ namespace Clips.Controls
             OnClipsLoaded?.Invoke();
         }
         #endregion
-
-        internal void PreviewHide(object sender, EventArgs e)
-        {
-            PreviewForm.HidePreview();
-            InPreview = false;
-        }
-
-        internal void PreviewShow(object sender, EventArgs e)
-        {
-            InPreview = true;
-            PreviewForm.ShowPreview(((ClipButton)sender));
-        }
 
         private void SetColors()
         {

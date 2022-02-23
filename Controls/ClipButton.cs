@@ -51,6 +51,9 @@ namespace Clips
             PinnedIndex = 0;
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
+            
+            PreviewForm = new Preview(ClipsConfig);
+
             SetColors();
             if (!string.IsNullOrEmpty(fileName))
                 LoadFromCache(fileName);
@@ -79,7 +82,9 @@ namespace Clips
         public bool Pinned { get; set; } 
 
         public int PinnedIndex { get; set; }
-        
+
+        private Preview PreviewForm;
+
         public Image PreviewImage
         {
             get {
@@ -271,14 +276,15 @@ namespace Clips
 
         protected override void OnClick(EventArgs e)
         {
+            PreviewForm.HidePreview();
             base.OnClick(e);
-
             OnClipButtonClicked?.Invoke(this);
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
+            PreviewForm.ShowPreview(this);
             if (IsHeaderButton)
             {
                 BackColor = ClipsConfig.HeaderButtonSelectedColor;
@@ -292,6 +298,7 @@ namespace Clips
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
+            PreviewForm.HidePreview();
             if (IsHeaderButton)
             {
                 BackColor = ClipsConfig.HeaderButtonColor;

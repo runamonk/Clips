@@ -159,8 +159,6 @@ namespace Clips.Controls
             else
             {
                 b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipButtonClicked);
-                b.MouseHover += new EventHandler(PreviewShow);
-                b.MouseLeave += new EventHandler(PreviewHide);
                 b.ContextMenuStrip = MenuRC;
 
                 Controls.Add(b);
@@ -173,7 +171,6 @@ namespace Clips.Controls
         private void ClipButtonClicked(ClipButton Clip)
         {
             SuspendLayout();
-            PreviewHide(null, null);
             base.ClipClicked(Clip);
 
             if (Clip.HasImage)
@@ -330,17 +327,6 @@ namespace Clips.Controls
         {
             RemoveClipboardFormatListener(this.Handle);
             base.OnHandleDestroyed(e);
-        }
-
-        protected override void OnParentChanged(EventArgs e)
-        {
-            // Preview form the first time it was shown was some weird default size I could not
-            // get around. ,,|,, M$ - I'll show it off screen first and then hide it.
-            PreviewForm.Left = -8000;
-            PreviewForm.Top = 0;
-            PreviewForm.Show();
-            PreviewForm.Hide();
-            base.OnParentChanged(e);
         }
 
         protected override void WndProc(ref Message m)
