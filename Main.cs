@@ -39,6 +39,7 @@ namespace Clips
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
         private ClipPanel Clips { get; set; }
+        private ClipPinnedPanel PinnedClips { get; set; }
         private ClipSearch SearchClips { get; set; }
         #endregion
 
@@ -212,7 +213,7 @@ namespace Clips
         private void SearchTextChanged(object sender, EventArgs e)
         {
             Clips.SuspendLayout();
-            bool includeImages = (SearchClips.Text.Trim() == ":image");
+            bool includeImages = (SearchClips.Text.Trim().ToLower() == ":image");
             if (SearchClips.Text.Trim() == "")
             {
                 foreach (ClipButton b in Clips.Controls)

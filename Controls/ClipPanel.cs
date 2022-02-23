@@ -14,14 +14,8 @@ namespace Clips.Controls
         {
             MonitorClipboard = false;
 
-            MenuRC = new ClipMenu(ClipsConfig)
-            {
-                ShowCheckMargin = false,
-                ShowImageMargin = false
-            };
             MenuRC.Opening += MenuRC_Opening;
             PinMenuItem = Funcs.AddMenuItem(MenuRC, "Pin", MenuPin_Click);
-
             Funcs.AddMenuItem(MenuRC, "-", null);      
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
@@ -33,18 +27,16 @@ namespace Clips.Controls
                 Interval = 200,
                 Enabled = false
             };
+            
             MonitorTimer.Tick += new EventHandler(MonitorTimerTick);
             MonitorClipboard = true;
         }
 
         #region Properties
-        public bool InMenu { get; set; }
-        public bool InLoad { get; set; }
         public bool MonitorClipboard { get; set; }
         #endregion
 
-        #region Privates
-        private readonly ClipMenu MenuRC;       
+        #region Privates          
         private readonly Timer MonitorTimer;
         private ToolStripMenuItem PinMenuItem;
         #endregion
