@@ -7,8 +7,12 @@ namespace Clips.Controls
     {
         public BasePanel(Config myConfig)
         {
-            VerticalScroll.Enabled = true;
-            HorizontalScroll.Enabled = false;
+            // Hide scrollbars and then enable AutoScroll.
+            AutoScroll = false;
+            HorizontalScroll.Maximum = 0;
+            HorizontalScroll.Visible = false;
+            VerticalScroll.Maximum = 0;
+            VerticalScroll.Visible = false;
             AutoScroll = true;
             DoubleBuffered = true;
 

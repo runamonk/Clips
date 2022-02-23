@@ -86,7 +86,6 @@
             this.VisibleChanged += new System.EventHandler(this.Main_VisibleChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Main_KeyPress);
-            this.Resize += new System.EventHandler(this.Main_Resize);
             this.ResumeLayout(false);
 
         }

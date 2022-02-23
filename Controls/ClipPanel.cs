@@ -13,7 +13,6 @@ namespace Clips.Controls
         public ClipPanel(Config myConfig) : base(myConfig)
         {
             MonitorClipboard = false;
-            //OnConfigChanged += new ConfigChangedHandler(ConfigChanged);
 
             MenuRC = new ClipMenu(ClipsConfig)
             {

@@ -127,11 +127,6 @@ namespace Clips
             LoadConfig();
         }
 
-        private void Main_Resize(object sender, EventArgs e)
-        {
-            HideScrollbar();
-        }
-
         private void Main_ResizeEnd(object sender, EventArgs e)
         {
             Config.FormSize = Size;
@@ -283,20 +278,6 @@ namespace Clips
                 Clips.First();               
         }
 
-        private void HideScrollbar()
-        {
-            // Since there isn't a way to modify the scrollbar to match a users theme, I am going
-            // to move it out of view. This allows for AutoScroll to still function.
-            // The only other option is to create my own control to handle scrolling; which is still an option.
-            if (Clips == null)
-                return;
-
-            Clips.Top = 0;
-            Clips.Left = 0;
-            Clips.Height = pMain.Height;
-            Clips.Width = pMain.Width + SystemInformation.VerticalScrollBarWidth; 
-        }
-
         private void LoadConfig()
         {
             if (Config == null)
@@ -353,6 +334,7 @@ namespace Clips
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
                 Clips.OnClipsLoaded += new ClipPanel.ClipsLoadedHandler(ClipsLoaded);
                 Clips.Parent = pMain;
+                Clips.Dock = DockStyle.Fill;
                 SetFormPos();
             }
 
@@ -361,7 +343,11 @@ namespace Clips
             BackColor = Config.HeaderBackColor;
             SearchClips.Text = "";
             SearchClips.BackColor = Config.HeaderBackColor;
-            SearchClips.ForeColor = Config.HeaderFontColor;           
+            SearchClips.ForeColor = Config.HeaderFontColor;
+            
+            if ((Config.AutoSizeHeight) && Visible)
+                AutoSizeForm(false);
+
             RegisterHotKey(this.Handle, HotkeyId, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
         }
 
