@@ -324,6 +324,7 @@ namespace Clips
             //}
         }
 
+        // hides the focus rectangle
         protected override bool ShowFocusCues
         {
             get {
