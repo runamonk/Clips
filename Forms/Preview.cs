@@ -111,5 +111,9 @@ namespace Clips
             Funcs.ShowInactiveTopmost(this);
         }
 
+        private void Preview_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            TimerShowForm.Enabled = false;
+        }
     }
 }

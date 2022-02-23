@@ -242,7 +242,10 @@ namespace Clips.Controls
                 File.Delete(Clip.FileName);
 
             if (Controls.IndexOf(Clip) > 0)
+            {
+                Clip.OnClipButtonClicked -= ClipButtonClicked;
                 Controls[Controls.IndexOf(Clip)].Dispose();
+            }               
         }
 
         public void DeleteOldestClip()
@@ -295,14 +298,12 @@ namespace Clips.Controls
         public void LoadItems()
         {
             SuspendLayout();
-
             InLoad = true;
             string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
             foreach (string file in files)
             {
                 AddClipButton(file, null);
             }
-
             InLoad = false;
             ResumeLayout();
             base.ClipsLoaded();

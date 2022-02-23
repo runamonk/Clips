@@ -86,6 +86,7 @@
             this.ShowIcon = false;
             this.ShowInTaskbar = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Preview_FormClosing);
             ((System.ComponentModel.ISupportInitialize)(this.PreviewImage)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
