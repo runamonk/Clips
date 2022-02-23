@@ -312,18 +312,6 @@ namespace Clips.Controls
         #endregion
 
         #region Overrides & Clipboard hooks
-        protected override CreateParams CreateParams
-        {
-            // Force the scrollbar to always be in position. That way we can just hide it all the time without
-            // having to try and account for it during the autosize or resize.
-            get
-            {
-                var cp = base.CreateParams;
-                cp.Style |= 0x00200000; // WS_VSCROLL
-                return cp;
-            }
-        }
-
         protected override void OnHandleDestroyed(EventArgs e)
         {
             RemoveClipboardFormatListener(this.Handle);

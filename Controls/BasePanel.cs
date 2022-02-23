@@ -16,11 +16,22 @@ namespace Clips.Controls
             ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);  
         }
 
+        protected override CreateParams CreateParams
+        {
+            // Force the scrollbar to always be in position. That way we can just hide it all the time without
+            // having to try and account for it during the autosize or resize.
+            get
+            {
+                var cp = base.CreateParams;
+                cp.Style |= 0x00200000; // WS_VSCROLL
+                return cp;
+            }
+        }
+
         #region Properties
         internal Config ClipsConfig { get; set; }
         #endregion
-
-        
+                
         #region Events
         public delegate void ConfigChangedHandler();
         public event ConfigChangedHandler OnConfigChanged;
@@ -64,7 +75,7 @@ namespace Clips.Controls
         }
         #endregion
 
-        private void SetColors()
+        protected void SetColors()
         {
             BackColor = ClipsConfig.ClipsBackColor;
         }
