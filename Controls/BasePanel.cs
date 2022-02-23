@@ -23,20 +23,9 @@ namespace Clips.Controls
             {
                 ShowCheckMargin = false,
                 ShowImageMargin = false
-            };           
+            };
+            SetColors();
         }
-
-        //protected override CreateParams CreateParams
-        //{
-        //    // Force the scrollbar to always be in position. That way we can just hide it all the time without
-        //    // having to try and account for it during the autosize or resize.
-        //    get
-        //    {
-        //        var cp = base.CreateParams;
-        //        cp.Style |= 0x00200000; // WS_VSCROLL
-        //        return cp;
-        //    }
-        //}
 
         #region Properties
         internal Config ClipsConfig { get; set; }
@@ -89,7 +78,7 @@ namespace Clips.Controls
         }
         #endregion
 
-        protected void SetColors()
+        protected virtual void SetColors()
         {
             BackColor = ClipsConfig.ClipsBackColor;
         }

@@ -267,8 +267,7 @@ namespace Clips
                     }
                 }
 
-                //Height = c + SystemInformation.CaptionHeight + SystemInformation.BorderSize.Height + pTop.Height + pMain.Padding.Top + pMain.Padding.Bottom;
-                Height = c + 68;
+                Height = c + 68 + PinnedClips.Height;
 
                 if (Height >= Screen.PrimaryScreen.WorkingArea.Height)
                     Height = Screen.PrimaryScreen.WorkingArea.Height;
@@ -316,7 +315,6 @@ namespace Clips
                 PinButton.Text = (Funcs.IsWindows7() ? ICON_UNPINNED_W7 : ICON_UNPINNED);
                 PinButton.Click += PinButton_Click;
 
-
                 SearchClips = new ClipSearch
                 {
                     Parent = pTop,
@@ -328,14 +326,22 @@ namespace Clips
                 SearchClips.TextChanged += new EventHandler(SearchTextChanged);
                 pTop.Controls.SetChildIndex(SearchClips, 0);
                 notifyClips.ContextMenuStrip = MenuMain;
-                               
+
+                PinnedClips = new ClipPinnedPanel(Config);
+                PinnedClips.Parent = pMain;
+                PinnedClips.Dock = DockStyle.Top;
+                PinnedClips.Height = 0;
+                pMain.Controls.SetChildIndex(PinnedClips, 0);
+
                 Clips = new ClipPanel(Config);
                 Clips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
                 Clips.OnClipAdded += new ClipPanel.ClipAddedHandler(ClipAdded);
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
                 Clips.OnClipsLoaded += new ClipPanel.ClipsLoadedHandler(ClipsLoaded);
+                
                 Clips.Parent = pMain;
                 Clips.Dock = DockStyle.Fill;
+                pMain.Controls.SetChildIndex(Clips, 0);
                 SetFormPos();
             }
 
