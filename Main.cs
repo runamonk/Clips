@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -8,7 +7,7 @@ using Utility;
 using System.Diagnostics;
 using System.Reflection;
 using Clips.Controls;
-using static Clips.Controls.BasePanel;
+//using static Clips.Controls.BasePanel;
 
 #region Todo
 // TODO Add ability to pin a clip.
@@ -83,6 +82,18 @@ namespace Clips
 
         private void ClipsLoaded()
         {
+            AutoSizeForm(true);
+        }
+
+        private void ClipPinned(ClipButton Clip, bool doSave)
+        {
+            PinnedClips.AddClipButton(Clip, doSave);
+            AutoSizeForm(true);
+        }
+
+        private void ClipUnpinned(ClipButton Clip)
+        {
+            Clips.AddClipButton(Clip, true);
             AutoSizeForm(true);
         }
 
@@ -283,7 +294,7 @@ namespace Clips
             if (Config == null)
             {
                 Config = new Config();
-                Config.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
+                Config.ConfigChanged += new BasePanel.ConfigChangedHandler(ConfigChanged);
                 MenuMain = new ClipMenu(Config);
                 MenuMain.Opening += new System.ComponentModel.CancelEventHandler(MenuClips_Opening);
                 MenuMain.Closed += new ToolStripDropDownClosedEventHandler(MenuClips_Closed);
@@ -330,7 +341,9 @@ namespace Clips
                 PinnedClips = new ClipPinnedPanel(Config);
                 PinnedClips.Parent = pMain;
                 PinnedClips.Dock = DockStyle.Top;
-                PinnedClips.Height = 0;
+                PinnedClips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
+                PinnedClips.OnClipUnpinned += new ClipPinnedPanel.ClipUnpinnedHandler(ClipUnpinned);
+                PinnedClips.OnSetClipboardMonitoring += new ClipPinnedPanel.SetClipboardMonitoring(SetClipboardMonitoring);
                 pMain.Controls.SetChildIndex(PinnedClips, 0);
 
                 Clips = new ClipPanel(Config);
@@ -338,7 +351,10 @@ namespace Clips
                 Clips.OnClipAdded += new ClipPanel.ClipAddedHandler(ClipAdded);
                 Clips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
                 Clips.OnClipsLoaded += new ClipPanel.ClipsLoadedHandler(ClipsLoaded);
-                
+                Clips.OnClipPinned += new ClipPanel.ClipPinnedHandler(ClipPinned);
+                Clips.LoadItems();
+                Clips.MonitorClipboard = true;
+
                 Clips.Parent = pMain;
                 Clips.Dock = DockStyle.Fill;
                 pMain.Controls.SetChildIndex(Clips, 0);
@@ -371,6 +387,11 @@ namespace Clips
                             return process;
             }
             return null;
+        }
+
+        private void SetClipboardMonitoring(bool SetMonitorClipboard)
+        {
+            Clips.MonitorClipboard = SetMonitorClipboard;
         }
 
         private void SetFormPos()
@@ -407,7 +428,6 @@ namespace Clips
         #endregion
 
         #region Overrides
-
         protected override void OnHandleDestroyed(EventArgs e)
         {
             UnregisterHotKey(this.Handle, HotkeyId);

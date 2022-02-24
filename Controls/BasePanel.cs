@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Clips.Controls
@@ -25,6 +26,12 @@ namespace Clips.Controls
                 ShowImageMargin = false
             };
             SetColors();
+        }
+
+        [Obsolete]
+        public BasePanel()
+        {
+
         }
 
         #region Properties
@@ -77,6 +84,26 @@ namespace Clips.Controls
             OnClipsLoaded?.Invoke();
         }
         #endregion
+
+        protected virtual void ClipButtonClicked(ClipButton Clip)
+        {
+
+        }
+
+        public void DeleteClip(ClipButton Clip)
+        {
+            if (string.IsNullOrEmpty(Clip.FileName))
+                return;
+
+            if (File.Exists(Clip.FileName))
+                File.Delete(Clip.FileName);
+
+            if (Controls.IndexOf(Clip) > -1)
+            {
+                Clip.OnClipButtonClicked -= ClipButtonClicked;
+                Controls[Controls.IndexOf(Clip)].Dispose();
+            }
+        }
 
         protected virtual void SetColors()
         {

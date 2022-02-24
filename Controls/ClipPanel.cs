@@ -12,34 +12,30 @@ namespace Clips.Controls
     {
         public ClipPanel(Config myConfig) : base(myConfig)
         {
-            MonitorClipboard = false;
-
-            MenuRC.Opening += MenuRC_Opening;
-            PinMenuItem = Funcs.AddMenuItem(MenuRC, "Pin", MenuPin_Click);
-            Funcs.AddMenuItem(MenuRC, "-", null);      
+            Funcs.AddMenuItem(MenuRC, "Pin", MenuPin_Click);
+            Funcs.AddMenuItem(MenuRC, "-", null);
             Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
             Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
 
-            LoadItems();
             AddClipboardFormatListener(this.Handle);
             MonitorTimer = new Timer
             {
                 Interval = 200,
                 Enabled = false
             };
-            
+
             MonitorTimer.Tick += new EventHandler(MonitorTimerTick);
-            MonitorClipboard = true;
+            MonitorClipboard = false;
         }
 
-        #region Properties
-        public bool MonitorClipboard { get; set; }
-        #endregion
+        [Obsolete]
+        public ClipPanel()
+        {
 
-        #region Privates          
+        }
+
         private readonly Timer MonitorTimer;
-        private ToolStripMenuItem PinMenuItem;
-        #endregion
+        public bool MonitorClipboard { get; set; }
 
         #region Clipboard hooks
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
@@ -50,6 +46,9 @@ namespace Clips.Controls
         #endregion
 
         #region Events
+
+        public delegate void ClipPinnedHandler(ClipButton Clip, bool doSave);
+        public event ClipPinnedHandler OnClipPinned;
 
         protected override void ConfigChanged()
         {
@@ -69,16 +68,10 @@ namespace Clips.Controls
         {
             InMenu = true;
             ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
-            ClipPinned(b, true);
+            if (Controls.IndexOf(b) > -1) Controls.Remove(b);
+            b.OnClipButtonClicked -= ClipButtonClicked;
+            OnClipPinned?.Invoke(b, true);
             InMenu = false;
-        }
-
-        private void MenuRC_Opening(object sender, EventArgs e)
-        {
-            if (((ClipButton)(((ClipMenu)sender).SourceControl)).Pinned)
-                PinMenuItem.Text = "Unpin";
-            else
-                PinMenuItem.Text = "Pin";
         }
 
         private void MenuSave_Click(object sender, EventArgs e)
@@ -117,6 +110,18 @@ namespace Clips.Controls
         #endregion
 
         #region Methods
+        public void AddClipButton(ClipButton Clip, bool doSave)
+        {
+            Controls.Add(Clip);
+            Clip.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipButtonClicked);
+            Clip.ContextMenuStrip = MenuRC;
+            if (doSave)
+            {
+                Clip.Pinned = false;
+                Clip.Save();
+            }
+        }
+
         private void AddClipButton(string fileName, dynamic clipContents)
         {
             if (!InLoad && (clipContents != null))
@@ -146,26 +151,26 @@ namespace Clips.Controls
             if ((b != null) && (b.ButtonType == ButtonType.Clip) && string.IsNullOrEmpty(b.FullText) && !b.HasImage)
             {
                 DeleteClip(b);
-            }               
+            }
             else
             {
-                b.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipButtonClicked);
-                b.ContextMenuStrip = MenuRC;
-
-                Controls.Add(b);
+                if (b.Pinned)
+                    OnClipPinned?.Invoke(b, false);
+                else
+                    AddClipButton(b, false);
 
                 if (!InLoad)
                     base.ClipAdded(b);
             }
         }
 
-        private void ClipButtonClicked(ClipButton Clip)
+        protected override void ClipButtonClicked(ClipButton Clip)
         {
             SuspendLayout();
             base.ClipClicked(Clip);
 
             if (Clip.HasImage)
-            {              
+            {
                 MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
                 Image img = Image.FromStream(ms);
                 ms.Dispose();
@@ -191,26 +196,6 @@ namespace Clips.Controls
             First();
         }
 
-        private void ClipPinned(ClipButton b, bool DoSave)
-        {
-            if (DoSave)
-            {
-                if (b.Pinned)
-                {
-                    b.Pinned = false;
-                    b.PinnedIndex = 0;
-                }                 
-                else
-                {
-                    b.Pinned = true;
-                    b.PinnedIndex = GetPinnedIndex();
-                }                    
-
-                b.Save();
-            }
-            Controls.SetChildIndex(b, Controls.Count-1);
-        }
-
         public void CleanupCache()
         {
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
@@ -222,21 +207,6 @@ namespace Clips.Controls
                     clipsToDelete--;
                 }
             }
-        }
-
-        private void DeleteClip(ClipButton Clip)
-        {
-            if (string.IsNullOrEmpty(Clip.FileName))
-                return;
-
-            if (File.Exists(Clip.FileName))
-                File.Delete(Clip.FileName);
-
-            if (Controls.IndexOf(Clip) > 0)
-            {
-                Clip.OnClipButtonClicked -= ClipButtonClicked;
-                Controls[Controls.IndexOf(Clip)].Dispose();
-            }               
         }
 
         public void DeleteOldestClip()
@@ -251,7 +221,7 @@ namespace Clips.Controls
             {
                 ScrollControlIntoView(Controls[Controls.Count - 1]);
                 Controls[Controls.Count - 1].Select();
-            }          
+            }
         }
 
         private ClipButton GetClip(dynamic clip)
@@ -270,11 +240,6 @@ namespace Clips.Controls
                     return b;
             }
             return null;
-        }
-
-        private int GetPinnedIndex()
-        {
-            return 0;
         }
 
         public void Last()
@@ -298,6 +263,11 @@ namespace Clips.Controls
             InLoad = false;
             ResumeLayout();
             base.ClipsLoaded();
+        }
+
+        public void SetMonitorClipboard(bool doMonitorBoard)
+        {
+            MonitorClipboard = doMonitorBoard;
         }
 
         #endregion
@@ -337,6 +307,5 @@ namespace Clips.Controls
             #endregion
         }
         #endregion
-
     }
 }
