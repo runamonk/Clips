@@ -319,16 +319,14 @@ namespace Clips
         protected override void OnPaint(PaintEventArgs pea)
         {
             base.OnPaint(pea);
-
-            //if (!IsMenuButton)
-            //{
-            //    // Defines pen 
-            //    Pen pen = new Pen(ControlPaint.Dark(ClipsConfig.ClipsRowBackColor, 25));
-                               
-            //    PointF pt1 = new PointF(0F, Height-1);
-            //    PointF pt2 = new PointF(0F, Height);
-            //    pea.Graphics.DrawLine(pen, pt1, pt2);
-            //}
+            if (Pinned)
+            {
+                // Make a little triangle the upper right corner.
+                Pen pen = new Pen(ControlPaint.Dark(ClipsConfig.ClipsRowBackColor, 25), 10);
+                PointF pt1 = new PointF(Left + Width - 10, -10);
+                PointF pt2 = new PointF(Left + Width + 10, 10);
+                pea.Graphics.DrawLine(pen, pt1, pt2);
+            }
         }
 
         // hides the focus rectangle
