@@ -124,20 +124,6 @@ namespace Clips.Controls
 
         private void AddClipButton(string fileName, dynamic clipContents)
         {
-            if (!InLoad && (clipContents != null))
-            {
-                // Windows/Applications will put multiple copies of entries into the clipboard in multiple formats.
-                // I don't care about the additionals, I will convert it to the format I want and store it.
-                // so when a new clip is added I disable monitoring for 200ms-ish. This way I don't have to 
-                // store off the "last" clip or check for a duplicates multiple times. This is much less intensive.
-                // Why couldn't they store off a reference id or something so we know they are all related? lazy.
-                MonitorClipboard = false;
-                MonitorTimer.Enabled = true;
-
-                ClipButton find = GetClip(clipContents);
-                if (find != null)
-                    DeleteClip(find);
-            }
 
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
                 DeleteOldestClip();
@@ -168,14 +154,13 @@ namespace Clips.Controls
         {
             SuspendLayout();
             base.ClipClicked(Clip);
+            MonitorClipboard = false;
 
             if (Clip.HasImage)
             {
                 MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
                 Image img = Image.FromStream(ms);
                 ms.Dispose();
-                if (!Clip.Pinned)
-                    DeleteClip(Clip);
                 Clipboard.SetImage(img);
             }
             else
@@ -187,13 +172,18 @@ namespace Clips.Controls
                 }
                 else
                 {
-                    if (!Clip.Pinned)
-                        DeleteClip(Clip);
                     Clipboard.SetText(Clip.FullText);
                 }
             }
+
+            if (!Clip.Pinned)
+            {
+                Clip.Save();
+                Controls.SetChildIndex(Clip, Controls.Count-1);
+            }
             ResumeLayout();
             First();
+            MonitorTimer.Enabled = true;
         }
 
         public void CleanupCache()
@@ -226,16 +216,17 @@ namespace Clips.Controls
 
         private ClipButton GetClip(dynamic clip)
         {
-            if (clip is Image) return null; // don't look for duplicate images.
+            if ((clip is Image) && (Controls.Count > 0))
+            {
+                if (((ClipButton)Controls[Controls.Count-1]).HasImage && Funcs.IsSame(clip, ((ClipButton)Controls[Controls.Count-1]).PreviewImageBytes))
+                    return ((ClipButton)Controls[Controls.Count-1]);
+            }
 
             foreach (ClipButton b in Controls)
             {
                 if (string.IsNullOrEmpty(b.FileName))
                     continue;
 
-                if ((clip is Image) && (b.HasImage && Funcs.IsSame(clip, b.PreviewImageBytes)))
-                    return b;
-                else
                 if ((clip is String) && (b.FullText != "" && b.FullText == clip))
                     return b;
             }
@@ -286,6 +277,8 @@ namespace Clips.Controls
             #region Clipboard hooks
             if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
             {
+                MonitorClipboard = false;
+
                 IDataObject obj = Clipboard.GetDataObject();
                 if (obj == null)
                     return;
@@ -296,13 +289,20 @@ namespace Clips.Controls
                 //if (obj.GetDataPresent(DataFormats.Bitmap))
                 //    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Dib));  Do I want to support this?
                 if (obj.GetDataPresent(DataFormats.Bitmap))
-                    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
+                {
+                    if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
+                        AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
+                }
+                    
                 else
                 if (obj.GetDataPresent(DataFormats.FileDrop))
                 {
+                   
                     string s = string.Join("\n", ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
-                    AddClipButton("", s);
+                    if (GetClip(s) == null)
+                        AddClipButton("", s);
                 }
+                MonitorTimer.Enabled = true;
             }
             #endregion
         }
