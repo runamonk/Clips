@@ -210,7 +210,7 @@ namespace Clips
         {
             string fileContents = "";
             string base64;
-            string randFileName = (Funcs.AppPath() + "\\Cache\\" + DateTime.Now.ToString("yyyymmddhhmmssfff") + Funcs.RandomString(10, true) + ".xml");
+            string randFileName = (Funcs.AppPath() + "\\Cache\\" + Funcs.RandomString(20, true) + ".xml"); // DateTime.Now.ToString("yyyymmddhhmmssfff")
             string strPinned = (Pinned == true ? "Y" : "N");
  
             if (clipContents is string)
