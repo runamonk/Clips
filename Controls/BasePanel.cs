@@ -25,6 +25,7 @@ namespace Clips.Controls
                 ShowCheckMargin = false,
                 ShowImageMargin = false
             };
+
             SetColors();
         }
 

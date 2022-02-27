@@ -409,6 +409,9 @@ namespace Clips
             {
                 if (Opacity > 0)
                 {
+                    // Set visible=false to hide the form, then change the opacity that way we can show the form later and then
+                    // resize it without it jumping around the screen (if the mouse has moved to a new position).
+                    Visible = false;
                     Opacity = 0;
                     // Turn off KeyPreview while the form is hidden so we don't accidentally pick
                     // up keystrokes before the form actually loses focus.
@@ -416,10 +419,11 @@ namespace Clips
                 }
                 else
                 {
+                    Visible = true;
                     AutoSizeForm(true);
                     if (Config.OpenFormAtCursor)
                         Funcs.MoveFormToCursor(this, false);                   
-                    Opacity = 100;
+                    Opacity = 100;                    
                     Activate();
                     KeyPreview = true;
                 }
@@ -449,7 +453,7 @@ namespace Clips
         {
             if (m.Msg == 0x0312) //WM_HOTKEY
             {
-                ToggleShow(true);
+                ToggleShow();
             }
             base.WndProc(ref m);
         }
