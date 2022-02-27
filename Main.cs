@@ -411,6 +411,7 @@ namespace Clips
                 {
                     // Set visible=false to hide the form, then change the opacity that way we can show the form later and then
                     // resize it without it jumping around the screen (if the mouse has moved to a new position).
+                    // Setting visible=false will automatically hide all submenus if they are displayed.
                     Visible = false;
                     Opacity = 0;
                     // Turn off KeyPreview while the form is hidden so we don't accidentally pick
