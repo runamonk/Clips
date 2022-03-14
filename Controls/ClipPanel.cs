@@ -221,15 +221,22 @@ namespace Clips.Controls
                 if (((ClipButton)Controls[Controls.Count-1]).HasImage && Funcs.IsSame(clip, ((ClipButton)Controls[Controls.Count-1]).PreviewImageBytes))
                     return ((ClipButton)Controls[Controls.Count-1]);
             }
-
-            foreach (ClipButton b in Controls)
+            else
+            if ((clip is String) && (Controls.Count > 0))
             {
-                if (string.IsNullOrEmpty(b.FileName))
-                    continue;
+                if ((((ClipButton)Controls[Controls.Count - 1]).FullText != "") && (((ClipButton)Controls[Controls.Count - 1]).FullText == clip))
+                    return ((ClipButton)Controls[Controls.Count - 1]);
 
-                if ((clip is String) && (b.FullText != "" && b.FullText == clip))
-                    return b;
+                foreach (ClipButton b in Controls)
+                {
+                    if (string.IsNullOrEmpty(b.FileName))
+                        continue;
+
+                    if ((clip is String) && (b.FullText != "" && b.FullText == clip))
+                        return b;
+                }
             }
+
             return null;
         }
 
@@ -284,20 +291,21 @@ namespace Clips.Controls
                     return;
 
                 if (obj.GetDataPresent(DataFormats.Text))
-                    AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
+                {
+                    if (GetClip((string)obj.GetData(DataFormats.Text)) == null)
+                        AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
+                }           
                 else
                 //if (obj.GetDataPresent(DataFormats.Bitmap))
                 //    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Dib));  Do I want to support this?
                 if (obj.GetDataPresent(DataFormats.Bitmap))
                 {
-                    if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
+                    //if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
                         AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
-                }
-                    
+                }                   
                 else
                 if (obj.GetDataPresent(DataFormats.FileDrop))
-                {
-                   
+                {                 
                     string s = string.Join("\n", ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
                     if (GetClip(s) == null)
                         AddClipButton("", s);
