@@ -300,7 +300,7 @@ namespace Clips.Controls
                 //    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Dib));  Do I want to support this?
                 if (obj.GetDataPresent(DataFormats.Bitmap))
                 {
-                    //if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
+                    if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
                         AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
                 }                   
                 else
