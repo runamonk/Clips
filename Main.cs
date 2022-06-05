@@ -10,7 +10,7 @@ using Clips.Controls;
 //using static Clips.Controls.BasePanel;
 
 #region Todo
-// TODO Add ability to pin a clip.
+// TODO Add support for setting a description of a pinned ? any clip.
 // TODO Add support for actually clipping the files from a list of files.
 // TODO Add edit/favorite text editor in config.
 // TODO Add max form height (to work with auto-size).
