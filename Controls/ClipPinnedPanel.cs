@@ -62,7 +62,15 @@ namespace Clips.Controls
             {
                 MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
                 Image img = Image.FromStream(ms);
-                Clipboard.SetImage(img);
+
+                try
+                {
+                    Clipboard.SetImage(img);
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             if (Clip.Text != "")
@@ -73,7 +81,14 @@ namespace Clips.Controls
                 }
                 else
                 {
-                    Clipboard.SetText(Clip.FullText);
+                    try
+                    {
+                        Clipboard.SetText(Clip.FullText);
+                    }
+                    catch (Exception e)
+                    {
+                        MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             MonitorTimer.Enabled = true;
