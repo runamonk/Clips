@@ -189,7 +189,7 @@ namespace Clips
         private void MenuSettings_Click(object sender, EventArgs e)
         {
             inSettings = true;
-            Config.ShowConfigForm((Opacity > 1));
+            Config.ShowConfigForm((Opacity > 0));
             inSettings = false;
         }
 
