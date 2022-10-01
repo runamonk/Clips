@@ -139,19 +139,19 @@ namespace Clips
                     {
                         g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
                         SizeF size = g.MeasureString("X", this.Font, new PointF(0, 0), StringFormat.GenericTypographic);
-                        int maxNumOfChars = (int)(ClipsConfig.FormSize.Width / size.Width);
-                        int maxNumOfCharsForRows = (maxNumOfChars * ClipsConfig.ClipsLinesPerRow);
+                        int NumOfCharsPerRow = (int)(ClipsConfig.FormSize.Width / size.Width);
+                        int maxChars = (NumOfCharsPerRow * ClipsConfig.ClipsLinesPerRow);
 
-                        if (maxNumOfChars == maxNumOfCharsForRows)
-                            Text = FullText.Substring(0, maxNumOfChars);
-                        else
-                        {
-                            Text = FullText.Substring(0, maxNumOfCharsForRows);
-                        }
+                        if (maxChars > FullText.Length)
+                            maxChars = FullText.Length;
 
+                        Text = FullText.Substring(0, maxChars);
+
+                        int maxRows = (maxChars / NumOfCharsPerRow);
+                        if (maxRows == 0) maxRows = 1;
                         int FHeight = Convert.ToInt32(size.Height);
-                        Height = (ClipsConfig.ClipsLinesPerRow * FHeight + 8);
 
+                        Height = (maxRows * FHeight + 8);
                     }
                 }
             }
