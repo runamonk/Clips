@@ -124,6 +124,9 @@ namespace Clips
         #region Methods
         private void CalculateSize()
         {
+            if (IsDisposed)
+                return;
+
             if (ButtonType == ButtonType.Clip)
             {
                 if ((!HasImage) && ((FullText == null) || (FullText == "")))
@@ -134,33 +137,34 @@ namespace Clips
                 else
                 {
                     Text = "";
+                    Graphics g = this.CreateGraphics();
+                    
+                    g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                    SizeF size = g.MeasureString("x", this.Font, new PointF(0, 0), StringFormat.GenericTypographic);
+                    int NumOfCharsPerRow = (int)(ClipsConfig.FormSize.Width / size.Width);
+                    int maxChars = (NumOfCharsPerRow * ClipsConfig.ClipsLinesPerRow);
 
-                    using (Graphics g = this.CreateGraphics())
-                    {
-                        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
-                        SizeF size = g.MeasureString("X", this.Font, new PointF(0, 0), StringFormat.GenericTypographic);
-                        int NumOfCharsPerRow = (int)(ClipsConfig.FormSize.Width / size.Width);
-                        int maxChars = (NumOfCharsPerRow * ClipsConfig.ClipsLinesPerRow);
+                    if (maxChars > FullText.Length)
+                        maxChars = FullText.Length;
 
-                        if (maxChars > FullText.Length)
-                            maxChars = FullText.Length;
+                    Text = FullText.Substring(0, maxChars);
 
-                        Text = FullText.Substring(0, maxChars);
+                    int maxRows = (maxChars / NumOfCharsPerRow);
+                    if (maxRows == 0) maxRows = 1;
+                    int FHeight = Convert.ToInt32(size.Height);
 
-                        int maxRows = (maxChars / NumOfCharsPerRow);
-                        if (maxRows == 0) maxRows = 1;
-                        int FHeight = Convert.ToInt32(size.Height);
-
-                        Height = (maxRows * FHeight + 8);
-                    }
+                    Height = (maxRows * FHeight + 8);
                 }
             }
         }
 
         private void ConfigChanged()
         {
-            SetColors();
-            CalculateSize();
+            if (! IsDisposed)
+            {
+                SetColors();
+                CalculateSize();
+            }
         }
 
         private void LoadFromCache(string fileName)
