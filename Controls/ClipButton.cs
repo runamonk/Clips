@@ -134,22 +134,25 @@ namespace Clips
                 else
                 {
                     Text = "";
-                    //TODO Come up with a better way to handle displaying multiple lines per ClipButton
-                    string[] s = FullText.TrimStart().Replace("\r", "").Split(new string[] { "\n" }, StringSplitOptions.None);
-                    if (s.Count() >= ClipsConfig.ClipsLinesPerRow)
-                        for (int i = 0; i < ClipsConfig.ClipsLinesPerRow; i++)
-                        {
-                            if (string.IsNullOrEmpty(Text))
-                                Text = s[i] + "\n";
-                            else
-                                Text = Text + s[i] + "\n";
-                        }
-                    else
-                        Text = FullText;
 
-                    SizeF ss = TextRenderer.MeasureText("X", Font);
-                    int FHeight = Convert.ToInt32(ss.Height);
-                    Height = (s.Count() > 0 && s.Count() >= ClipsConfig.ClipsLinesPerRow ? ClipsConfig.ClipsLinesPerRow * FHeight + 8 : FHeight + 8);
+                    using (Graphics g = this.CreateGraphics())
+                    {
+                        g.TextRenderingHint = System.Drawing.Text.TextRenderingHint.AntiAlias;
+                        SizeF size = g.MeasureString("X", this.Font, new PointF(0, 0), StringFormat.GenericTypographic);
+                        int maxNumOfChars = (int)(ClipsConfig.FormSize.Width / size.Width);
+                        int maxNumOfCharsForRows = (maxNumOfChars * ClipsConfig.ClipsLinesPerRow);
+
+                        if (maxNumOfChars == maxNumOfCharsForRows)
+                            Text = FullText.Substring(0, maxNumOfChars);
+                        else
+                        {
+                            Text = FullText.Substring(0, maxNumOfCharsForRows);
+                        }
+
+                        int FHeight = Convert.ToInt32(size.Height);
+                        Height = (ClipsConfig.ClipsLinesPerRow * FHeight + 8);
+
+                    }
                 }
             }
         }
@@ -335,7 +338,7 @@ namespace Clips
             get {
                 return false;
             }
-        }
+        }                                                                                                                                                                                                                    
 
         #endregion
     } 
