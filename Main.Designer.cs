@@ -40,7 +40,7 @@
             this.notifyClips.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyClips.Icon")));
             this.notifyClips.Text = "zuul Clips";
             this.notifyClips.Visible = true;
-            this.notifyClips.DoubleClick += new System.EventHandler(this.NotifyClips_DoubleClick);
+            this.notifyClips.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyClips_MouseDoubleClick);
             // 
             // pTop
             // 

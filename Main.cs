@@ -216,7 +216,7 @@ namespace Clips
             }
         }
 
-        private void NotifyClips_DoubleClick(object sender, EventArgs e)
+        private void notifyClips_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             ToggleShow(false);
         }
@@ -458,7 +458,8 @@ namespace Clips
             }
             base.WndProc(ref m);
         }
-                
+
         #endregion
+
     } // Main
 }
