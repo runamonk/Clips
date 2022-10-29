@@ -342,6 +342,7 @@ namespace Clips
                 PinnedClips.Parent = pMain;
                 PinnedClips.Dock = DockStyle.Top;
                 PinnedClips.OnClipClicked += new ClipPanel.ClipClickedHandler(ClipClicked);
+                PinnedClips.OnClipDeleted += new ClipPanel.ClipDeletedHandler(ClipDeleted);
                 PinnedClips.OnClipUnpinned += new ClipPinnedPanel.ClipUnpinnedHandler(ClipUnpinned);
                 PinnedClips.OnSetClipboardMonitoring += new ClipPinnedPanel.SetClipboardMonitoring(SetClipboardMonitoring);
                 pMain.Controls.SetChildIndex(PinnedClips, 0);
