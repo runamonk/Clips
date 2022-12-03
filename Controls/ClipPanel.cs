@@ -267,7 +267,12 @@ namespace Clips.Controls
         {
             SuspendLayout();
             InLoad = true;
-            string[] files = Funcs.GetFiles(Funcs.AppPath() + "\\Cache", "*.xml");
+            var dirCache = Funcs.AppPath() + "\\Cache";
+
+            if (!Directory.Exists(dirCache))
+                Directory.CreateDirectory(dirCache);
+
+            string[] files = Funcs.GetFiles(dirCache, "*.xml");
             foreach (string file in files)
             {
                 AddClipButton(file, null);
@@ -300,7 +305,7 @@ namespace Clips.Controls
             {
                 MonitorClipboard = false;
 
-                IDataObject obj = Clipboard.GetDataObject();
+                System.Windows.Forms.IDataObject obj = Clipboard.GetDataObject();
                 if (obj == null)
                     return;
 
@@ -308,7 +313,7 @@ namespace Clips.Controls
                 {
                     if (GetClip((string)obj.GetData(DataFormats.Text)) == null)
                         AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
-                }           
+                }
                 else
                 //if (obj.GetDataPresent(DataFormats.Bitmap))
                 //    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Dib));  Do I want to support this?
@@ -316,11 +321,18 @@ namespace Clips.Controls
                 {
                     if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
                         AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
-                }                   
+                }
                 else
                 if (obj.GetDataPresent(DataFormats.FileDrop))
-                {                 
+                {
                     string s = string.Join("\n", ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
+                    string[] imageTypes = { ".JPG", ".TIFF", ".TIF", ".BMP", ".PNG", "TIF", ".JPEG" };
+                    // Some apps like WhatsApp rather than putting the image in the clipboard will issue a filedrop to the clipboard with the filename.
+                    if (File.Exists(s) && imageTypes.Contains(Path.GetExtension(s).ToUpper()))
+                    {
+                        AddClipButton("", new Bitmap(s));
+                    }
+                    else
                     if (GetClip(s) == null)
                         AddClipButton("", s);
                 }
