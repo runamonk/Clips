@@ -297,5 +297,27 @@ namespace Utility
             else
                 return image;
         }
+
+        public static void Wait(int ms)
+        {
+            var waitTimer = new System.Windows.Forms.Timer();
+            if (ms <= 0) return;
+
+            waitTimer.Interval = ms;
+            waitTimer.Enabled = true;
+            waitTimer.Start();
+
+            waitTimer.Tick += (s, e) =>
+            {
+                waitTimer.Enabled = false;
+                waitTimer.Stop();
+            };
+
+            //while (waitTimer.Enabled)
+            //{
+            //    Application.DoEvents();
+            //}
+            waitTimer.Dispose();
+        }
     }
 }
