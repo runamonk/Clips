@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -304,10 +305,18 @@ namespace Clips.Controls
             if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
             {
                 MonitorClipboard = false;
-
                 System.Windows.Forms.IDataObject obj = Clipboard.GetDataObject();
                 if (obj == null)
                     return;
+
+                Funcs.Wait(100); // Occasionally - We were trying to pull data from the clipboard faster than it could give it and it would be blank.
+                                 // This caused several issues but mainly either a blank image (which we handled) or a clip to be totally ignored.
+
+                if (Debugger.IsAttached)
+                {                   
+                    var f = obj.GetFormats();
+                    Console.WriteLine("Clipboard Ojb Formats: [{0}]", string.Join(", ", f));
+                }
 
                 if (obj.GetDataPresent(DataFormats.Text))
                 {
@@ -315,8 +324,6 @@ namespace Clips.Controls
                         AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
                 }
                 else
-                //if (obj.GetDataPresent(DataFormats.Bitmap))
-                //    AddClipButton("", (Bitmap)obj.GetData(DataFormats.Dib));  Do I want to support this?
                 if (obj.GetDataPresent(DataFormats.Bitmap))
                 {
                     if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
@@ -335,6 +342,14 @@ namespace Clips.Controls
                     else
                     if (GetClip(s) == null)
                         AddClipButton("", s);
+                }
+                else
+                if (obj.GetDataPresent(DataFormats.Dib))
+                {
+                    var b = (Bitmap)obj.GetData(DataFormats.Bitmap, true);
+                    if (GetClip(b) == null)
+                        AddClipButton("", b);
+                    b.Dispose();
                 }
                 MonitorTimer.Enabled = true;
             }
