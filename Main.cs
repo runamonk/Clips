@@ -225,6 +225,7 @@ namespace Clips
         {
             Clips.SuspendLayout();
             bool includeImages = (SearchClips.Text.Trim().ToLower() == ":image");
+            bool includeLinks = (SearchClips.Text.Trim().ToLower() == ":link");
             if (SearchClips.Text.Trim() == "")
             {
                 foreach (ClipButton b in Clips.Controls)
@@ -237,6 +238,11 @@ namespace Clips
             {
                 foreach (ClipButton b in Clips.Controls)
                 {
+                    if (includeLinks)
+                    {
+                        b.Visible = (b.Text.ToLower().StartsWith("https://") || b.Text.ToLower().StartsWith("http://") || b.Text.ToLower().StartsWith("www.") || b.Text.ToLower().StartsWith("ftp://"));
+                    }
+                    else
                     if (includeImages)
                     {
                         b.Visible = (b.PreviewImage != null);
