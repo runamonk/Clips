@@ -7,6 +7,7 @@ using Utility;
 using System.Diagnostics;
 using System.Reflection;
 using Clips.Controls;
+using System.Threading;
 //using static Clips.Controls.BasePanel;
 
 #region Todo
@@ -25,11 +26,15 @@ namespace Clips
             InitializeComponent();
         }
 
-        #region Hotkey
+        #region Imports
         [DllImport("user32.dll")]
         private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
         [DllImport("user32.dll")]
         private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+        [DllImport("user32.dll")]
+        static extern IntPtr GetForegroundWindow();
+        [DllImport("user32.dll")]
+        private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
         #endregion
 
         #region Properties
@@ -49,12 +54,18 @@ namespace Clips
         private bool inSettings = false;
         private bool pinned = false;
         private int HotkeyId = Funcs.RandomNumber();
+        private bool monitorWindows = false;
+        private bool hotkeyEnabled = false;
+
         private const string ICON_PINNED_W7 = "\u25FC";
         private const string ICON_UNPINNED_W7 = "\u25FB";
         private const string ICON_PINNED = "\uE1F6";
         private const string ICON_UNPINNED = "\uE1F7";
         private const string ICON_MAINMENU = "\uE0C2";
         private const string ICON_MAINMENU_W7 = "\u268A";
+
+        private Thread monitorWindowThread;
+
         #endregion
 
         #region Events
@@ -378,7 +389,63 @@ namespace Clips
             if ((Config.AutoSizeHeight) && Visible)
                 AutoSizeForm(false);
 
-            RegisterHotKey(this.Handle, HotkeyId, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
+            EnableHotkey();
+            MonitorWindowChanges();
+        }
+
+        public void EnableHotkey()
+        {
+            if (Config.PopupHotkey == "")
+            {
+                hotkeyEnabled = false;
+            }
+            else
+            if (hotkeyEnabled == false)
+            {
+                hotkeyEnabled = true;
+                RegisterHotKey(this.Handle, HotkeyId, Config.PopupHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
+            }
+        }
+
+        public void DisableHotkey()
+        {
+            if (hotkeyEnabled)
+            {
+                hotkeyEnabled = false;
+                UnregisterHotKey(this.Handle, HotkeyId);
+            }
+        }
+
+        private void MonitorWindowChanges()
+        {
+            void CheckForegroundWindow()
+            {
+                void WindowChanged(IntPtr handle)
+                {
+                    uint pid;
+
+                    GetWindowThreadProcessId(handle, out pid);
+                    Process p = Process.GetProcessById((int)pid);
+
+                    if (p.MainWindowTitle.Contains("VMWare"))
+                    {
+                        DisableHotkey();
+                    }
+                    else
+                        EnableHotkey();
+                    p.Dispose();
+                }
+
+                while (monitorWindows)
+                {
+                    this.Invoke((MethodInvoker)delegate { WindowChanged(GetForegroundWindow()); });
+                    Thread.Sleep(100);
+                }
+            }
+
+            monitorWindows = true;
+            monitorWindowThread = new Thread(() => CheckForegroundWindow());
+            monitorWindowThread.Start();
         }
 
         private Process RunningInstance()
@@ -442,7 +509,8 @@ namespace Clips
         #region Overrides
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            UnregisterHotKey(this.Handle, HotkeyId);
+            monitorWindows = false;
+            DisableHotkey();
             base.OnHandleDestroyed(e);
         }
 
