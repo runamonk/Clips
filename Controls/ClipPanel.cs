@@ -299,59 +299,72 @@ namespace Clips.Controls
 
         protected override void WndProc(ref Message m)
         {
-            base.WndProc(ref m);
-            // Why does pasting an image into an outlook email copy the image to the clipboard??
-            #region Clipboard hooks
-            if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
+            try 
             {
-                MonitorClipboard = false;
-                System.Windows.Forms.IDataObject obj = Clipboard.GetDataObject();
-                if (obj == null)
-                    return;
-
-                Funcs.Wait(100); // Occasionally - We were trying to pull data from the clipboard faster than it could give it and it would be blank.
-                                 // This caused several issues but mainly either a blank image (which we handled) or a clip to be totally ignored.
-
-                if (Debugger.IsAttached)
-                {                   
-                    var f = obj.GetFormats();
-                    Console.WriteLine("Clipboard Ojb Formats: [{0}]", string.Join(", ", f));
-                }
-
-                if (obj.GetDataPresent(DataFormats.Text))
+                base.WndProc(ref m);
+                // Why does pasting an image into an outlook email copy the image to the clipboard??
+                #region Clipboard hooks
+                if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
                 {
-                    if (GetClip((string)obj.GetData(DataFormats.Text)) == null)
-                        AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
-                }
-                else
-                if (obj.GetDataPresent(DataFormats.Bitmap))
-                {
-                    if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
-                        AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
-                }
-                else
-                if (obj.GetDataPresent(DataFormats.FileDrop))
-                {
-                    string s = string.Join("\n", ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
-                    string[] imageTypes = { ".JPG", ".TIFF", ".TIF", ".BMP", ".PNG", "TIF", ".JPEG" };
-                    // Some apps like WhatsApp rather than putting the image in the clipboard will issue a filedrop to the clipboard with the filename.
-                    if (File.Exists(s) && imageTypes.Contains(Path.GetExtension(s).ToUpper()))
+                    MonitorClipboard = false;
+                    try
                     {
-                        AddClipButton("", new Bitmap(s));
+                        System.Windows.Forms.IDataObject obj = Clipboard.GetDataObject();
+                        if (obj == null)
+                            return;
+
+                        Funcs.Wait(100); // Occasionally - We were trying to pull data from the clipboard faster than it could give it and it would be blank.
+                                         // This caused several issues but mainly either a blank image (which we handled) or a clip to be totally ignored.
+
+                        if (Debugger.IsAttached)
+                        {
+                            var f = obj.GetFormats();
+                            Console.WriteLine("Clipboard Ojb Formats: [{0}]", string.Join(", ", f));
+                        }
+
+                        if (obj.GetDataPresent(DataFormats.Text))
+                        {
+                            if (GetClip((string)obj.GetData(DataFormats.Text)) == null)
+                                AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
+                        }
+                        else
+                        if (obj.GetDataPresent(DataFormats.Bitmap))
+                        {
+                            if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
+                                AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
+                        }
+                        else
+                        if (obj.GetDataPresent(DataFormats.FileDrop))
+                        {
+                            string s = string.Join("\n", ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
+                            string[] imageTypes = { ".JPG", ".TIFF", ".TIF", ".BMP", ".PNG", "TIF", ".JPEG" };
+                            // Some apps like WhatsApp rather than putting the image in the clipboard will issue a filedrop to the clipboard with the filename.
+                            if (File.Exists(s) && imageTypes.Contains(Path.GetExtension(s).ToUpper()))
+                            {
+                                AddClipButton("", new Bitmap(s));
+                            }
+                            else
+                            if (GetClip(s) == null)
+                                AddClipButton("", s);
+                        }
+                        else
+                        if (obj.GetDataPresent(DataFormats.Dib))
+                        {
+                            var b = (Bitmap)obj.GetData(DataFormats.Bitmap, true);
+                            if (GetClip(b) == null)
+                                AddClipButton("", b);
+                            b.Dispose();
+                        }
                     }
-                    else
-                    if (GetClip(s) == null)
-                        AddClipButton("", s);
+                    finally
+                    { 
+                        MonitorClipboard = true; 
+                    }
                 }
-                else
-                if (obj.GetDataPresent(DataFormats.Dib))
-                {
-                    var b = (Bitmap)obj.GetData(DataFormats.Bitmap, true);
-                    if (GetClip(b) == null)
-                        AddClipButton("", b);
-                    b.Dispose();
-                }
-                MonitorTimer.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
             }
             #endregion
         }

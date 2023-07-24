@@ -423,17 +423,15 @@ namespace Clips
                 void WindowChanged(IntPtr handle)
                 {
                     uint pid;
-
                     GetWindowThreadProcessId(handle, out pid);
-                    Process p = Process.GetProcessById((int)pid);
-
-                    if (p.MainWindowTitle.Contains("VMWare"))
+                    string t = Process.GetProcessById((int)pid).MainWindowTitle;
+                    //Console.WriteLine(t);
+                    if (t.ToLower().Contains("vmware"))
                     {
                         DisableHotkey();
                     }
                     else
                         EnableHotkey();
-                    p.Dispose();
                 }
 
                 while (monitorWindows)
@@ -443,6 +441,7 @@ namespace Clips
                         var h = GetForegroundWindow();
                         if (h != null)
                             this.Invoke((MethodInvoker)delegate { WindowChanged(h); });
+
                     }
                     catch { }
                     Thread.Sleep(100);
