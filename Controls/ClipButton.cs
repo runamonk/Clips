@@ -2,12 +2,14 @@
 using System;
 using System.Drawing;
 using System.IO;
+using System.IO.Ports;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Utility;
 using static Clips.Controls.BasePanel;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Clips
 {
@@ -51,7 +53,10 @@ namespace Clips
             PinnedIndex = 0;
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
-            
+
+            if (buttonType == ButtonType.Clip)
+                KeyDown += new KeyEventHandler(Button_KeyDown);  
+                                    
             PreviewForm = new Preview(ClipsConfig);
 
             SetColors();
@@ -281,6 +286,14 @@ namespace Clips
             base.NotifyDefault(false);
         }
 
+        private void Button_KeyDown(object sender, KeyEventArgs e)
+        {
+            if ((ButtonType == ButtonType.Clip) && (e.KeyCode == Keys.Delete))
+            {
+                ((ClipPanel)Parent).DeleteClip(this);
+            }
+        }
+
         protected override void OnClick(EventArgs e)
         {
             PreviewForm.HidePreview();
@@ -306,6 +319,7 @@ namespace Clips
             else
             {
                 BackColor = ClipsConfig.ClipsSelectedColor;
+                Focus();
             }
         }
 
