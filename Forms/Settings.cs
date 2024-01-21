@@ -9,6 +9,8 @@ namespace Clips
         public Settings()
         {
             InitializeComponent();
+            gpTrack.Minimum = (int)gpSize.Minimum;
+            gpTrack.Maximum = (int)gpSize.Maximum;
         }
 
         private void FormConfig_KeyDown(object sender, KeyEventArgs e)
@@ -83,6 +85,21 @@ namespace Clips
         private void Clear_Click(object sender, EventArgs e)
         {
             Key.Clear();
+        }
+
+        private void gpClear_Click(object sender, EventArgs e)
+        {
+            gpKey.Clear();
+        }
+
+        private void gpSize_ValueChanged(object sender, EventArgs e)
+        {
+            gpTrack.Value = (int)gpSize.Value;
+        }
+
+        private void gpTrack_ValueChanged(object sender, EventArgs e)
+        {
+            gpSize.Value = (int)gpTrack.Value;
         }
     }
 }

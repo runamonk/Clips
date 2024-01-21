@@ -29,7 +29,7 @@ namespace Clips
                 else
                 {
                     _Config = Config;
-                    OK.Click += new EventHandler(ButtonClick);
+                    OK.Click += new EventHandler(OKButtonClick);
                     Key.Text = _Config.PopupHotkey;
 
                     // fill out the hotkey modifiers
@@ -39,8 +39,8 @@ namespace Clips
                        Control = 2,
                        Shift = 4,
                        WinKey = 8*/
-
-                    int m = _Config.PopupHotkeyModifier;
+                    int m = 0;
+                    m = _Config.PopupHotkeyModifier;
                     Alt.Checked = (m == 1 || m == 3 || m == 5 || m == 9);
                     Control.Checked = (m == 2 || m == 3 || m == 6 || m == 10);
                     Shift.Checked = (m == 4 || m == 5 || m == 6 || m == 12);
@@ -90,6 +90,15 @@ namespace Clips
                     ClipsToDisplay.ForeColor = _Config.ClipsFontColor;
                     PreviewMaxLines.ForeColor = _Config.ClipsFontColor;
                     PreviewPopupDelay.ForeColor = _Config.ClipsFontColor;
+                    gpKey.Text = _Config.gpHotkey;
+                    m = _Config.gpHotkeyModifier;
+                    gpAlt.Checked = (m == 1 || m == 3 || m == 5 || m == 9);
+                    gpControl.Checked = (m == 2 || m == 3 || m == 6 || m == 10);
+                    gpShift.Checked = (m == 4 || m == 5 || m == 6 || m == 12);
+                    gpWindows.Checked = (m == 8 || m == 9 || m == 10 || m == 12);
+                    gpNumbers.Checked = _Config.gpIncNumbers;
+                    gpSymbols.Checked = _Config.gpIncSymbols;
+                    gpSize.Value = _Config.gpSize;
                 }
             }
 
@@ -100,7 +109,7 @@ namespace Clips
                 set { _Config = value; }
             }
 
-            private void ButtonClick(object sender, EventArgs e)
+            private void OKButtonClick(object sender, EventArgs e)
             {
                 _Config.PopupHotkey = Key.Text;
                 /* Modifier
@@ -109,11 +118,13 @@ namespace Clips
                    Control = 2,
                    Shift = 4,
                    WinKey = 8*/
-                int i = 0;
+                int i = 0; 
+
                 if (Alt.Checked) i++;
                 if (Control.Checked) i += 2;
                 if (Shift.Checked) i += 4;
                 if (Windows.Checked) i += 8;
+                _Config.PopupHotkeyModifier = i;
                 _Config.AutoHide = AutoHide.Checked;
                 _Config.AutoSizeHeight = AutoSizeHeight.Checked;
                 _Config.ClipsBackColor = ClipBackColor.BackColor;
@@ -123,6 +134,16 @@ namespace Clips
                 _Config.ClipsRowBackColor = ClipRowColor.BackColor;
                 _Config.ClipsToDisplay = Convert.ToInt32(ClipsToDisplay.Value);
                 _Config.ClipsSelectedColor = ClipSelected.BackColor;
+                _Config.gpHotkey = gpKey.Text;
+                i = 0;
+                if (gpAlt.Checked) i++;
+                if (gpControl.Checked) i += 2;
+                if (gpShift.Checked) i += 4;
+                if (gpWindows.Checked) i += 8;
+                _Config.gpHotkeyModifier = i;
+                _Config.gpIncNumbers = gpNumbers.Checked;
+                _Config.gpIncSymbols = gpSymbols.Checked;
+                _Config.gpSize = (int)gpSize.Value;
                 _Config.HeaderBackColor = HeaderBackColor.BackColor;
                 _Config.HeaderButtonColor = HeaderButtonColor.BackColor;
                 _Config.HeaderButtonSelectedColor = HeaderButtonSelectedColor.BackColor;
@@ -131,14 +152,13 @@ namespace Clips
                 _Config.MenuBorderColor = MenuBorderColor.BackColor;
                 _Config.MenuFontColor = MenuFontColor.BackColor;
                 _Config.MenuSelectedColor = MenuSelectedColor.BackColor;
-                _Config.OpenFormAtCursor = OpenAtMouse.Checked;
-                _Config.PopupHotkeyModifier = i;
+                _Config.OpenFormAtCursor = OpenAtMouse.Checked;             
                 _Config.PreviewBackColor = PreviewBackColor.BackColor;
                 _Config.PreviewFontColor = PreviewFontColor.BackColor;
                 _Config.PreviewMaxLines = Convert.ToInt32(PreviewMaxLines.Value);
                 _Config.PreviewPopupDelay = Convert.ToInt32(PreviewPopupDelay.Value);
                 _Config.StartWithWindows = Startup.Checked;
-
+                
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
         }
@@ -384,6 +404,73 @@ namespace Clips
                 SizeConverter sc = new SizeConverter();
                 SetKey("form_size", sc.ConvertToString(value), true);
             }
+        }
+
+        public string gpHotkey
+        {
+            get
+            {
+                string s = FindKey("gp_hotkey");
+                if (s == "")
+                    s = SetKey("gp_hotkey", "None");
+                return s;
+            }
+            set { SetKey("gp_hotkey", value.ToString()); }
+        }
+
+        public int gpHotkeyModifier
+        {
+            /* Modifier
+               None = 0,
+               Alt = 1,
+               Control = 2,
+               Shift = 4,
+               WinKey = 8*/
+
+            get
+            {
+                string s = FindKey("gp_hotkey_modifier");
+                if (s == "")
+                    s = SetKey("gp_hotkey_modifier", "0");
+                return Convert.ToInt32(s);
+            }
+            set { SetKey("gp_hotkey_modifier", value.ToString()); }
+        }
+
+        public int gpSize
+        {
+            get
+            {
+                string s = FindKey("gp_size");
+                if (s == "")
+                    s = SetKey("gp_size", "5", true);
+                return Convert.ToInt32(s);
+            }
+            set { SetKey("gp_size", value.ToString(), true); }
+        }
+
+        public Boolean gpIncNumbers
+        {
+            get
+            {
+                string s = FindKey("gp_incnumbers");
+                if (s == "")
+                    s = SetKey("gp_incnumbers", "false");
+                return bool.Parse(s);
+            }
+            set { SetKey("gp_incnumbers", value.ToString()); }
+        }
+
+        public Boolean gpIncSymbols
+        {
+            get
+            {
+                string s = FindKey("gp_incsymbols");
+                if (s == "")
+                    s = SetKey("gp_incsymbols", "false");
+                return bool.Parse(s);
+            }
+            set { SetKey("gp_incsymbols", value.ToString()); }
         }
 
         public Color HeaderBackColor

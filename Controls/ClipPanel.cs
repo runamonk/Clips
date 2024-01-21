@@ -362,7 +362,7 @@ namespace Clips.Controls
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 //MessageBox.Show(ex.Message);
             }
