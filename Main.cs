@@ -188,6 +188,10 @@ namespace Clips
         {
             Close();
         }
+        private void MenuGeneratePassword_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(Funcs.GeneratePassword(Config.gpIncNumbers, Config.gpIncSymbols, Config.gpSize));
+        }
 
         private void MenuMonitorClipboard_Click(object sender, EventArgs e)
         {
@@ -323,6 +327,8 @@ namespace Clips
                 ToolStripMenuItem t = Funcs.AddMenuItem(MenuMain, "Monitor Clipboard", MenuMonitorClipboard_Click);
                 t.Checked = true;
                 t.CheckState = CheckState.Checked;
+                
+                Funcs.AddMenuItem(MenuMain, "Generate Password", MenuGeneratePassword_Click);
                 Funcs.AddMenuItem(MenuMain, "Settings", MenuSettings_Click);
                 Funcs.AddMenuItem(MenuMain, "Close", MenuClose_Click);
 
@@ -427,37 +433,6 @@ namespace Clips
                 hotkeyEnabled = false;
                 UnregisterHotKey(this.Handle, HotkeyId);
             }
-        }
-
-        private void GeneratePassword()
-        {
-            string alpha = "abcdefghijklmnopqrstuvwxyz";
-            string numbers = "0123456789";
-            string symbols = "!@#$%^&*()_-+={[}]|:;<,>.?/";
-            string src = (alpha + (Config.gpIncNumbers == true ? numbers : "") + (Config.gpIncSymbols == true ? symbols : ""));
-
-            var sb = new StringBuilder();
-            Random RNG = new Random();
-
-            for (var i = 0; i < Config.gpSize; i++)
-            {
-                var c = src[RNG.Next(0, src.Length)];
-                sb.Append(c);
-            }
-            string s = sb.ToString();
-            
-            // Uppercase one alpha character.
-            while (true)
-            {
-                int r = RNG.Next(1,sb.Length);
-                if (alpha.IndexOf(s[r]) > -1)
-                {
-                    s = s.Substring(0,r) + s.Substring(r,1).ToUpper() + s.Substring(r+1);
-                    break;
-                }
-            }
-            
-            Clipboard.SetText(sb.ToString());
         }
 
         private void MonitorWindowChanges()
@@ -579,7 +554,9 @@ namespace Clips
             if (m.Msg == 0x0312)
             {
                 if (m.WParam.ToInt32() == gpHotkeyId)
-                    GeneratePassword();
+                {
+                    Clipboard.SetText(Funcs.GeneratePassword(Config.gpIncNumbers, Config.gpIncSymbols, Config.gpSize)); 
+                }
 
                 if (m.WParam.ToInt32() == HotkeyId)
                     ToggleShow();
