@@ -66,7 +66,7 @@ namespace Utility
         {
             string alpha = "abcdefghijklmnopqrstuvwxyz";
             string numbers = "0123456789";
-            string symbols = "!@#$%^&*()_-+={[}]|:;<,>.?/";
+            string symbols = "!@#$%^&*()_-+={[}]|:;<,>";
             string src = (alpha + (incNumbers == true ? numbers : "") + (incSymbols == true ? symbols : ""));
 
             var sb = new StringBuilder();
