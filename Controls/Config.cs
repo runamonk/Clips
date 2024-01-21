@@ -78,6 +78,14 @@ namespace Clips
                     GroupColors.ForeColor = _Config.ClipsFontColor;
                     GroupHotkey.ForeColor = _Config.ClipsFontColor;
                     GroupPreview.ForeColor = _Config.ClipsFontColor;
+                    
+                    gbGenPass.ForeColor = _Config.ClipsFontColor;
+                    gbgpShortcut.ForeColor = _Config.ClipsFontColor;
+                    gpKey.ForeColor = _Config.ClipsFontColor;
+                    gpKey.BackColor = _Config.ClipsBackColor;
+                    gpExample.ForeColor = _Config.ClipsFontColor;
+                    gpExample.BackColor = _Config.ClipsBackColor;
+
                     Key.BackColor = _Config.ClipsBackColor;
                     ClipsMaxClips.BackColor = _Config.ClipsBackColor;
                     ClipsLinesPerRow.BackColor = _Config.ClipsBackColor;
