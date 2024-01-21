@@ -62,6 +62,35 @@ namespace Utility
             else
                 return "";
         }
+        public static string GeneratePassword(bool incNumbers, bool incSymbols, int Size)
+        {
+            string alpha = "abcdefghijklmnopqrstuvwxyz";
+            string numbers = "0123456789";
+            string symbols = "!@#$%^&*()_-+={[}]|:;<,>.?/";
+            string src = (alpha + (incNumbers == true ? numbers : "") + (incSymbols == true ? symbols : ""));
+
+            var sb = new StringBuilder();
+            Random RNG = new Random();
+
+            for (var i = 0; i < Size; i++)
+            {
+                var c = src[RNG.Next(0, src.Length)];
+                sb.Append(c);
+            }
+            string s = sb.ToString();
+
+            // Uppercase one alpha character.
+            while (true)
+            {
+                int r = RNG.Next(1, s.Length);
+                if (alpha.IndexOf(s[r]) > -1)
+                {
+                    s = s.Substring(0, r) + s.Substring(r, 1).ToUpper() + s.Substring(r + 1);
+                    break;
+                }
+            }
+            return s;
+        }
         public static string[] GetFiles(string path, string searchPattern)
         {
             string[] files;
