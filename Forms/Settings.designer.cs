@@ -87,7 +87,7 @@
             this.gpTrack = new System.Windows.Forms.TrackBar();
             this.gpExample = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.gbgpShortcut = new System.Windows.Forms.GroupBox();
             this.gpClear = new System.Windows.Forms.Button();
             this.gpWindows = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
@@ -138,7 +138,7 @@
             this.GroupHotkey.SuspendLayout();
             this.gbGenPass.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gpTrack)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.gbgpShortcut.SuspendLayout();
             this.GroupColors.SuspendLayout();
             this.PanelColors.SuspendLayout();
             this.GroupColorPreview.SuspendLayout();
@@ -310,6 +310,7 @@
             this.PreviewBackColor.Size = new System.Drawing.Size(26, 27);
             this.PreviewBackColor.TabIndex = 1;
             this.toolTip1.SetToolTip(this.PreviewBackColor, "Click to set color.");
+            this.PreviewBackColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // PreviewFontColor
             // 
@@ -319,6 +320,7 @@
             this.PreviewFontColor.Size = new System.Drawing.Size(26, 27);
             this.PreviewFontColor.TabIndex = 0;
             this.toolTip1.SetToolTip(this.PreviewFontColor, "Click to set color.");
+            this.PreviewFontColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // ClipSelected
             // 
@@ -328,6 +330,7 @@
             this.ClipSelected.Size = new System.Drawing.Size(26, 27);
             this.ClipSelected.TabIndex = 20;
             this.toolTip1.SetToolTip(this.ClipSelected, "Click to set color.");
+            this.ClipSelected.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // ClipRowColor
             // 
@@ -337,6 +340,7 @@
             this.ClipRowColor.Size = new System.Drawing.Size(26, 27);
             this.ClipRowColor.TabIndex = 3;
             this.toolTip1.SetToolTip(this.ClipRowColor, "Click to set color.");
+            this.ClipRowColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // ClipBackColor
             // 
@@ -346,6 +350,7 @@
             this.ClipBackColor.Size = new System.Drawing.Size(26, 27);
             this.ClipBackColor.TabIndex = 2;
             this.toolTip1.SetToolTip(this.ClipBackColor, "Click to set color.");
+            this.ClipBackColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // ClipFontColor
             // 
@@ -355,6 +360,7 @@
             this.ClipFontColor.Size = new System.Drawing.Size(26, 27);
             this.ClipFontColor.TabIndex = 1;
             this.toolTip1.SetToolTip(this.ClipFontColor, "Click to set color.");
+            this.ClipFontColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // HeaderButtonSelectedColor
             // 
@@ -364,6 +370,7 @@
             this.HeaderButtonSelectedColor.Size = new System.Drawing.Size(26, 27);
             this.HeaderButtonSelectedColor.TabIndex = 30;
             this.toolTip1.SetToolTip(this.HeaderButtonSelectedColor, "Click to set color.");
+            this.HeaderButtonSelectedColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // HeaderFontColor
             // 
@@ -373,6 +380,7 @@
             this.HeaderFontColor.Size = new System.Drawing.Size(26, 27);
             this.HeaderFontColor.TabIndex = 28;
             this.toolTip1.SetToolTip(this.HeaderFontColor, "Click to set color.");
+            this.HeaderFontColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // HeaderButtonColor
             // 
@@ -382,6 +390,7 @@
             this.HeaderButtonColor.Size = new System.Drawing.Size(26, 27);
             this.HeaderButtonColor.TabIndex = 26;
             this.toolTip1.SetToolTip(this.HeaderButtonColor, "Click to set color.");
+            this.HeaderButtonColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // HeaderBackColor
             // 
@@ -391,6 +400,7 @@
             this.HeaderBackColor.Size = new System.Drawing.Size(26, 27);
             this.HeaderBackColor.TabIndex = 24;
             this.toolTip1.SetToolTip(this.HeaderBackColor, "Click to set color.");
+            this.HeaderBackColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // MenuSelectedColor
             // 
@@ -400,6 +410,7 @@
             this.MenuSelectedColor.Size = new System.Drawing.Size(26, 27);
             this.MenuSelectedColor.TabIndex = 3;
             this.toolTip1.SetToolTip(this.MenuSelectedColor, "Click to set color.");
+            this.MenuSelectedColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // MenuBorderColor
             // 
@@ -409,6 +420,7 @@
             this.MenuBorderColor.Size = new System.Drawing.Size(26, 27);
             this.MenuBorderColor.TabIndex = 2;
             this.toolTip1.SetToolTip(this.MenuBorderColor, "Click to set color.");
+            this.MenuBorderColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // MenuFontColor
             // 
@@ -418,6 +430,7 @@
             this.MenuFontColor.Size = new System.Drawing.Size(26, 27);
             this.MenuFontColor.TabIndex = 0;
             this.toolTip1.SetToolTip(this.MenuFontColor, "Click to set color.");
+            this.MenuFontColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // MenuBackColor
             // 
@@ -427,6 +440,7 @@
             this.MenuBackColor.Size = new System.Drawing.Size(26, 27);
             this.MenuBackColor.TabIndex = 1;
             this.toolTip1.SetToolTip(this.MenuBackColor, "Click to set color.");
+            this.MenuBackColor.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.ColorControl_MouseClick);
             // 
             // gpKey
             // 
@@ -741,7 +755,7 @@
             this.gbGenPass.Controls.Add(this.gpTrack);
             this.gbGenPass.Controls.Add(this.gpExample);
             this.gbGenPass.Controls.Add(this.label22);
-            this.gbGenPass.Controls.Add(this.groupBox1);
+            this.gbGenPass.Controls.Add(this.gbgpShortcut);
             this.gbGenPass.Dock = System.Windows.Forms.DockStyle.Top;
             this.gbGenPass.Location = new System.Drawing.Point(5, 165);
             this.gbGenPass.Name = "gbGenPass";
@@ -802,6 +816,7 @@
             this.gpExample.ReadOnly = true;
             this.gpExample.Size = new System.Drawing.Size(442, 20);
             this.gpExample.TabIndex = 4;
+            this.gpExample.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label22
             // 
@@ -812,23 +827,23 @@
             this.label22.TabIndex = 2;
             this.label22.Text = "Characters";
             // 
-            // groupBox1
+            // gbgpShortcut
             // 
-            this.groupBox1.Controls.Add(this.gpClear);
-            this.groupBox1.Controls.Add(this.gpKey);
-            this.groupBox1.Controls.Add(this.gpWindows);
-            this.groupBox1.Controls.Add(this.label20);
-            this.groupBox1.Controls.Add(this.gpShift);
-            this.groupBox1.Controls.Add(this.gpAlt);
-            this.groupBox1.Controls.Add(this.gpControl);
-            this.groupBox1.Controls.Add(this.label21);
-            this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.groupBox1.Location = new System.Drawing.Point(3, 16);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(452, 67);
-            this.groupBox1.TabIndex = 1;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Shortcut";
+            this.gbgpShortcut.Controls.Add(this.gpClear);
+            this.gbgpShortcut.Controls.Add(this.gpKey);
+            this.gbgpShortcut.Controls.Add(this.gpWindows);
+            this.gbgpShortcut.Controls.Add(this.label20);
+            this.gbgpShortcut.Controls.Add(this.gpShift);
+            this.gbgpShortcut.Controls.Add(this.gpAlt);
+            this.gbgpShortcut.Controls.Add(this.gpControl);
+            this.gbgpShortcut.Controls.Add(this.label21);
+            this.gbgpShortcut.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbgpShortcut.Location = new System.Drawing.Point(3, 16);
+            this.gbgpShortcut.Name = "gbgpShortcut";
+            this.gbgpShortcut.Size = new System.Drawing.Size(452, 67);
+            this.gbgpShortcut.TabIndex = 1;
+            this.gbgpShortcut.TabStop = false;
+            this.gbgpShortcut.Text = "Shortcut";
             // 
             // gpClear
             // 
@@ -1195,6 +1210,7 @@
             this.DarkTheme.TabStop = true;
             this.DarkTheme.Text = "Dark";
             this.DarkTheme.UseVisualStyleBackColor = true;
+            this.DarkTheme.Click += new System.EventHandler(this.DarkTheme_Click);
             // 
             // LightTheme
             // 
@@ -1206,6 +1222,7 @@
             this.LightTheme.TabStop = true;
             this.LightTheme.Text = "Light";
             this.LightTheme.UseVisualStyleBackColor = true;
+            this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
             // 
             // Settings
             // 
@@ -1249,8 +1266,8 @@
             this.gbGenPass.ResumeLayout(false);
             this.gbGenPass.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.gpTrack)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.gbgpShortcut.ResumeLayout(false);
+            this.gbgpShortcut.PerformLayout();
             this.GroupColors.ResumeLayout(false);
             this.PanelColors.ResumeLayout(false);
             this.GroupColorPreview.ResumeLayout(false);
@@ -1303,7 +1320,6 @@
         public System.Windows.Forms.GroupBox GroupPreview;
         private System.Windows.Forms.Label label16;
         public System.Windows.Forms.NumericUpDown ClipsToDisplay;
-        private System.Windows.Forms.GroupBox gbGenPass;
         public System.Windows.Forms.GroupBox GroupColors;
         private System.Windows.Forms.Panel PanelColors;
         public System.Windows.Forms.GroupBox GroupColorPreview;
@@ -1345,7 +1361,7 @@
         private System.Windows.Forms.Label label14;
         private System.Windows.Forms.RadioButton DarkTheme;
         private System.Windows.Forms.RadioButton LightTheme;
-        public System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.GroupBox gbgpShortcut;
         private System.Windows.Forms.Button gpClear;
         public System.Windows.Forms.TextBox gpKey;
         public System.Windows.Forms.CheckBox gpWindows;
@@ -1354,12 +1370,13 @@
         public System.Windows.Forms.CheckBox gpAlt;
         public System.Windows.Forms.CheckBox gpControl;
         private System.Windows.Forms.Label label21;
-        private System.Windows.Forms.TrackBar gpTrack;
-        private System.Windows.Forms.TextBox gpExample;
         private System.Windows.Forms.Label label22;
         private System.Windows.Forms.Label label23;
         public System.Windows.Forms.CheckBox gpSymbols;
         public System.Windows.Forms.CheckBox gpNumbers;
         public System.Windows.Forms.NumericUpDown gpSize;
+        public System.Windows.Forms.GroupBox gbGenPass;
+        public System.Windows.Forms.TextBox gpExample;
+        public System.Windows.Forms.TrackBar gpTrack;
     }
 }
