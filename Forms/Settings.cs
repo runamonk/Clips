@@ -1,6 +1,7 @@
 using System;
 using System.Drawing;
 using System.Windows.Forms;
+using Utility;
 
 namespace Clips
 {
@@ -13,6 +14,10 @@ namespace Clips
             gpTrack.Maximum = (int)gpSize.Maximum;
         }
 
+        private void SetSamplePassword()
+        {
+            gpExample.Text = Funcs.GeneratePassword(gpNumbers.Checked,gpSymbols.Checked,(int)gpSize.Value);
+        }
         private void FormConfig_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
@@ -95,6 +100,7 @@ namespace Clips
         private void gpSize_ValueChanged(object sender, EventArgs e)
         {
             gpTrack.Value = (int)gpSize.Value;
+            SetSamplePassword();
         }
 
         private void gpTrack_ValueChanged(object sender, EventArgs e)
@@ -106,6 +112,15 @@ namespace Clips
         {
             Keys k = (Keys)e.KeyCode;
             gpKey.Text = k.ToString();
+        }
+
+        private void gpSymbols_CheckedChanged(object sender, EventArgs e)
+        {
+            SetSamplePassword();
+        }
+        private void gpNumbers_CheckedChanged(object sender, EventArgs e)
+        {
+            SetSamplePassword();
         }
     }
 }

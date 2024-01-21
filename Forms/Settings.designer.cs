@@ -769,6 +769,7 @@
             this.gpSymbols.TabIndex = 17;
             this.gpSymbols.Text = "Symbols";
             this.gpSymbols.UseVisualStyleBackColor = true;
+            this.gpSymbols.CheckedChanged += new System.EventHandler(this.gpSymbols_CheckedChanged);
             // 
             // gpNumbers
             // 
@@ -780,6 +781,7 @@
             this.gpNumbers.TabIndex = 16;
             this.gpNumbers.Text = "Numbers";
             this.gpNumbers.UseVisualStyleBackColor = true;
+            this.gpNumbers.CheckedChanged += new System.EventHandler(this.gpNumbers_CheckedChanged);
             // 
             // gpTrack
             // 
