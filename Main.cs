@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Clips.Controls;
 using System.Threading;
+using System.Text;
 //using static Clips.Controls.BasePanel;
 
 #region Todo
@@ -53,7 +54,9 @@ namespace Clips
         private bool inMenu = false;
         private bool inSettings = false;
         private bool pinned = false;
-        private int HotkeyId = Funcs.RandomNumber();
+        private int HotkeyId = 1;
+        private int gpHotkeyId = 2;
+
         private bool monitorWindows = false;
         private bool hotkeyEnabled = false;
 
@@ -390,12 +393,22 @@ namespace Clips
                 AutoSizeForm(false);
 
             EnableHotkey();
+
+            if (Config.gpHotkey != "None")
+            {
+                RegisterHotKey(this.Handle, gpHotkeyId, Config.gpHotkeyModifier, ((Keys)Enum.Parse(typeof(Keys), Config.gpHotkey)).GetHashCode());
+            }
+            else
+            {
+                UnregisterHotKey(this.Handle, gpHotkeyId);
+            }
+
             MonitorWindowChanges();
         }
 
         public void EnableHotkey()
         {
-            if (Config.PopupHotkey == "")
+            if (Config.PopupHotkey == "None")
             {
                 hotkeyEnabled = false;
             }
@@ -414,6 +427,37 @@ namespace Clips
                 hotkeyEnabled = false;
                 UnregisterHotKey(this.Handle, HotkeyId);
             }
+        }
+
+        private void GeneratePassword()
+        {
+            string alpha = "abcdefghijklmnopqrstuvwxyz";
+            string numbers = "0123456789";
+            string symbols = "!@#$%^&*()_-+={[}]|:;<,>.?/";
+            string src = (alpha + (Config.gpIncNumbers == true ? numbers : "") + (Config.gpIncSymbols == true ? symbols : ""));
+
+            var sb = new StringBuilder();
+            Random RNG = new Random();
+
+            for (var i = 0; i < Config.gpSize; i++)
+            {
+                var c = src[RNG.Next(0, src.Length)];
+                sb.Append(c);
+            }
+            string s = sb.ToString();
+            
+            // Uppercase one alpha character.
+            while (true)
+            {
+                int r = RNG.Next(1,sb.Length);
+                if (alpha.IndexOf(s[r]) > -1)
+                {
+                    s = s.Substring(0,r) + s.Substring(r,1).ToUpper() + s.Substring(r+1);
+                    break;
+                }
+            }
+            
+            Clipboard.SetText(sb.ToString());
         }
 
         private void MonitorWindowChanges()
@@ -532,14 +576,17 @@ namespace Clips
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == 0x0312) //WM_HOTKEY
+            if (m.Msg == 0x0312)
             {
-                ToggleShow();
+                if (m.WParam.ToInt32() == gpHotkeyId)
+                    GeneratePassword();
+
+                if (m.WParam.ToInt32() == HotkeyId)
+                    ToggleShow();
+               
             }
             base.WndProc(ref m);
         }
-
         #endregion
-
     } // Main
 }

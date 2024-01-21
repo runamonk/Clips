@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Drawing;
 using System.Windows.Forms;
 
@@ -100,6 +100,12 @@ namespace Clips
         private void gpTrack_ValueChanged(object sender, EventArgs e)
         {
             gpSize.Value = (int)gpTrack.Value;
+        }
+
+        private void gpKey_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keys k = (Keys)e.KeyCode;
+            gpKey.Text = k.ToString();
         }
     }
 }

@@ -436,6 +436,8 @@
             this.gpKey.Size = new System.Drawing.Size(80, 20);
             this.gpKey.TabIndex = 0;
             this.toolTip1.SetToolTip(this.gpKey, "Press key to define as a hotkey.");
+            this.gpKey.KeyDown += new System.Windows.Forms.KeyEventHandler(this.gpKey_KeyDown);
+            this.gpKey.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Key_KeyPress);
             // 
             // gpSize
             // 
