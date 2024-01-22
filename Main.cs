@@ -54,17 +54,11 @@ namespace Clips
         private bool inClose = false;
         private bool inMenu = false;
         private bool inSettings = false;
-        private bool pinned = false;
         private int HotkeyId = 1;
         private int gpHotkeyId = 2;
 
         private bool monitorWindows = false;
         private bool hotkeyEnabled = false;
-
-        private const string ICON_PINNED = "\uE1F6";
-        private const string ICON_UNPINNED = "\uE1F7";
-        private const string ICON_MAINMENU = "\uE0C2";
-        private const string ICON_PASSWORD = "\uE192";
 
         private Thread monitorWindowThread;
 
@@ -224,19 +218,7 @@ namespace Clips
 
         private void PinButton_Click(object sender, EventArgs e)
         {
-            ClipButton b = ((ClipButton)sender);
-            if (!pinned)
-            {
-                pinned = true;
-                TopMost = true;
-                b.Text = (ICON_PINNED);
-            }
-            else
-            {
-                pinned = false;
-                TopMost = false;
-                b.Text = (ICON_UNPINNED);
-            }
+            TopMost = !TopMost;
         }
 
         private void notifyClips_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -342,9 +324,6 @@ namespace Clips
                     Parent = pTop,
                     Dock = DockStyle.Left
                 };
-                PasswordButton.Width = PasswordButton.Height;
-                PasswordButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                PasswordButton.Text = (ICON_PASSWORD);
                 PasswordButton.Click += PasswordButton_Click;
 
                 MenuMainButton = new ClipButton(Config, ButtonType.Menu, "", null)
@@ -352,20 +331,13 @@ namespace Clips
                     Parent = pTop,
                     Dock = DockStyle.Left
                 };
-                MenuMainButton.Width = MenuMainButton.Height;
-                MenuMainButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                MenuMainButton.Text = (ICON_MAINMENU);
                 MenuMainButton.Click += MainButton_Click;
-
 
                 PinButton = new ClipButton(Config, ButtonType.Pin, "", null)
                 {
                     Parent = pTop,
                     Dock = DockStyle.Right
                 };
-                PinButton.Width = PinButton.Height;
-                PinButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                PinButton.Text = (ICON_UNPINNED);
                 PinButton.Click += PinButton_Click;
 
                 SearchClips = new ClipSearch
@@ -521,7 +493,7 @@ namespace Clips
 
         private void ToggleShow(bool Override = false)
         {
-            if ((pinned) || (!Override) && (inClose || inAbout || Clips.InMenu || inMenu || inSettings))
+            if ((TopMost) || (!Override) && (inClose || inAbout || Clips.InMenu || inMenu || inSettings))
                 return;
             else
             {

@@ -24,11 +24,37 @@ namespace Clips
 
     public partial class ClipButton : Button
     {
+        private const string ICON_PINNED = "\uE1F6";
+        private const string ICON_UNPINNED = "\uE1F7";
+        private const string ICON_MAINMENU = "\uE0C2";
+        private const string ICON_PASSWORD = "\uE192";
+
         public ClipButton(Config myConfig, ButtonType buttonType, string fileName, dynamic clipContents)
         {
             FButtonType = buttonType;
             FlatAppearance.BorderSize = 0;
             FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            if (buttonType== ButtonType.PasswordGen) 
+            {
+                Width = Height;
+                Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                Text = (ICON_PASSWORD);               
+            }
+            else
+            if (buttonType== ButtonType.Menu) 
+            {
+                Width = Height;
+                Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                Text = (ICON_MAINMENU);
+            }
+            else
+            if (buttonType== ButtonType.Pin)
+            {
+                Width = Height;
+                Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                Text = (ICON_UNPINNED);
+            }
+            
             if (buttonType == ButtonType.Clip)
             {
                 TextAlign = ContentAlignment.TopLeft;
@@ -46,6 +72,8 @@ namespace Clips
                 ToolTip PinButtonToolTip = new ToolTip();
                 PinButtonToolTip.SetToolTip(this, "Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
             }
+            
+
             UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
             UseMnemonic = false;
@@ -297,6 +325,13 @@ namespace Clips
 
         protected override void OnClick(EventArgs e)
         {
+            if (ButtonType== ButtonType.Pin) 
+            {
+                if (Text == ICON_PINNED)
+                    Text = ICON_UNPINNED;
+                else
+                    Text = ICON_PINNED;
+            }
             PreviewForm.HidePreview();
             base.OnClick(e);
             OnClipButtonClicked?.Invoke(this);
