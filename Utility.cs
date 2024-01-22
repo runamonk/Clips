@@ -79,7 +79,7 @@ namespace Utility
             }
             string s = sb.ToString();
 
-            // Uppercase one alpha character.
+            // Uppercase one random alpha character.
             while (true)
             {
                 int r = RNG.Next(1, s.Length);

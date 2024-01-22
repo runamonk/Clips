@@ -315,7 +315,11 @@ namespace Clips
         {
             if ((ButtonType == ButtonType.Clip) && (e.KeyCode == Keys.Delete))
             {
-                ((ClipPanel)Parent).DeleteClip(this);
+                if (this.Parent is ClipPanel)
+                    ((ClipPanel)Parent).DeleteClip(this);
+                else
+                if (this.Parent is ClipPinnedPanel)
+                    ((ClipPinnedPanel)Parent).DeleteClip(this);
             }
         }
 
