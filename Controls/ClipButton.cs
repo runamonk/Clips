@@ -2,14 +2,11 @@
 using System;
 using System.Drawing;
 using System.IO;
-using System.IO.Ports;
-using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Utility;
 using static Clips.Controls.BasePanel;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Window;
 
 namespace Clips
 {
@@ -24,6 +21,7 @@ namespace Clips
 
     public partial class ClipButton : Button
     {
+        // Segoe UI Symbol font escape codes.
         private const string ICON_PINNED = "\uE1F6";
         private const string ICON_UNPINNED = "\uE1F7";
         private const string ICON_MAINMENU = "\uE0C2";
