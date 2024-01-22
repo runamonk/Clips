@@ -38,7 +38,9 @@ namespace Clips
             {
                 Width = Height;
                 Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                Text = (ICON_PASSWORD);               
+                Text = (ICON_PASSWORD);
+                ToolTip PasswordButtonTooltip = new ToolTip();
+                PasswordButtonTooltip.SetToolTip(this, "Click to generate a random password and copy it to the clipboard.");
             }
             else
             if (buttonType== ButtonType.Menu) 
@@ -53,6 +55,8 @@ namespace Clips
                 Width = Height;
                 Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
                 Text = (ICON_UNPINNED);
+                ToolTip PinButtonToolTip = new ToolTip();
+                PinButtonToolTip.SetToolTip(this, "Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
             }
             
             if (buttonType == ButtonType.Clip)
@@ -67,12 +71,6 @@ namespace Clips
                 Margin = new Padding(0, 0, 0, 0);
                 TextAlign = ContentAlignment.MiddleCenter;
             }
-            if (IsPinButton)
-            {
-                ToolTip PinButtonToolTip = new ToolTip();
-                PinButtonToolTip.SetToolTip(this, "Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
-            }
-            
 
             UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
             AutoEllipsis = false;
