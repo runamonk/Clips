@@ -470,7 +470,7 @@
             this.gpSize.Name = "gpSize";
             this.gpSize.Size = new System.Drawing.Size(51, 20);
             this.gpSize.TabIndex = 15;
-            this.toolTip1.SetToolTip(this.gpSize, "Delay in milliseconds before preview pops up.");
+            this.toolTip1.SetToolTip(this.gpSize, "Length of password.");
             this.gpSize.Value = new decimal(new int[] {
             10,
             0,
@@ -678,6 +678,7 @@
             this.Clear.Size = new System.Drawing.Size(56, 20);
             this.Clear.TabIndex = 1;
             this.Clear.Text = "Clear";
+            this.toolTip1.SetToolTip(this.Clear, "Click to clear hotkey.");
             this.Clear.UseCompatibleTextRendering = true;
             this.Clear.UseVisualStyleBackColor = true;
             this.Clear.Click += new System.EventHandler(this.Clear_Click);
@@ -691,6 +692,7 @@
             this.Windows.Size = new System.Drawing.Size(67, 17);
             this.Windows.TabIndex = 5;
             this.Windows.Text = "Windows";
+            this.toolTip1.SetToolTip(this.Windows, "Click to add modifier.");
             this.Windows.UseVisualStyleBackColor = true;
             // 
             // label2
@@ -712,6 +714,7 @@
             this.Shift.Size = new System.Drawing.Size(44, 17);
             this.Shift.TabIndex = 4;
             this.Shift.Text = "Shift";
+            this.toolTip1.SetToolTip(this.Shift, "Click to add modifier.");
             this.Shift.UseVisualStyleBackColor = true;
             // 
             // Alt
@@ -723,6 +726,7 @@
             this.Alt.Size = new System.Drawing.Size(35, 17);
             this.Alt.TabIndex = 3;
             this.Alt.Text = "Alt";
+            this.toolTip1.SetToolTip(this.Alt, "Click to add modifier.");
             this.Alt.UseVisualStyleBackColor = true;
             // 
             // Control
@@ -734,6 +738,7 @@
             this.Control.Size = new System.Drawing.Size(56, 17);
             this.Control.TabIndex = 2;
             this.Control.Text = "Control";
+            this.toolTip1.SetToolTip(this.Control, "Click to add modifier.");
             this.Control.UseVisualStyleBackColor = true;
             // 
             // label1
@@ -782,6 +787,7 @@
             this.gpSymbols.Size = new System.Drawing.Size(62, 17);
             this.gpSymbols.TabIndex = 17;
             this.gpSymbols.Text = "Symbols";
+            this.toolTip1.SetToolTip(this.gpSymbols, "Check to include symbols in password.");
             this.gpSymbols.UseVisualStyleBackColor = true;
             this.gpSymbols.CheckedChanged += new System.EventHandler(this.gpSymbols_CheckedChanged);
             // 
@@ -794,6 +800,7 @@
             this.gpNumbers.Size = new System.Drawing.Size(65, 17);
             this.gpNumbers.TabIndex = 16;
             this.gpNumbers.Text = "Numbers";
+            this.toolTip1.SetToolTip(this.gpNumbers, "Check to include numbers in password.");
             this.gpNumbers.UseVisualStyleBackColor = true;
             this.gpNumbers.CheckedChanged += new System.EventHandler(this.gpNumbers_CheckedChanged);
             // 
@@ -806,6 +813,7 @@
             this.gpTrack.Size = new System.Drawing.Size(320, 23);
             this.gpTrack.TabIndex = 0;
             this.gpTrack.TickStyle = System.Windows.Forms.TickStyle.None;
+            this.toolTip1.SetToolTip(this.gpTrack, "Adjust the lenth of passwords.");
             this.gpTrack.ValueChanged += new System.EventHandler(this.gpTrack_ValueChanged);
             // 
             // gpExample
@@ -817,6 +825,7 @@
             this.gpExample.Size = new System.Drawing.Size(442, 20);
             this.gpExample.TabIndex = 4;
             this.gpExample.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.toolTip1.SetToolTip(this.gpExample, "Displays an example password.");
             // 
             // label22
             // 
@@ -853,6 +862,7 @@
             this.gpClear.Size = new System.Drawing.Size(56, 20);
             this.gpClear.TabIndex = 1;
             this.gpClear.Text = "Clear";
+            this.toolTip1.SetToolTip(this.gpClear, "Click to clear hotkey.");
             this.gpClear.UseCompatibleTextRendering = true;
             this.gpClear.UseVisualStyleBackColor = true;
             this.gpClear.Click += new System.EventHandler(this.gpClear_Click);
@@ -866,6 +876,7 @@
             this.gpWindows.Size = new System.Drawing.Size(67, 17);
             this.gpWindows.TabIndex = 5;
             this.gpWindows.Text = "Windows";
+            this.toolTip1.SetToolTip(this.gpWindows, "Click to add modifier.");
             this.gpWindows.UseVisualStyleBackColor = true;
             // 
             // label20
@@ -887,6 +898,7 @@
             this.gpShift.Size = new System.Drawing.Size(44, 17);
             this.gpShift.TabIndex = 4;
             this.gpShift.Text = "Shift";
+            this.toolTip1.SetToolTip(this.gpShift, "Click to add modifier.");
             this.gpShift.UseVisualStyleBackColor = true;
             // 
             // gpAlt
@@ -898,6 +910,7 @@
             this.gpAlt.Size = new System.Drawing.Size(35, 17);
             this.gpAlt.TabIndex = 3;
             this.gpAlt.Text = "Alt";
+            this.toolTip1.SetToolTip(this.gpAlt, "Click to add modifier.");
             this.gpAlt.UseVisualStyleBackColor = true;
             // 
             // gpControl
@@ -909,6 +922,7 @@
             this.gpControl.Size = new System.Drawing.Size(56, 17);
             this.gpControl.TabIndex = 2;
             this.gpControl.Text = "Control";
+            this.toolTip1.SetToolTip(this.gpControl, "Click to add modifier.");
             this.gpControl.UseVisualStyleBackColor = true;
             // 
             // label21
