@@ -16,6 +16,7 @@ namespace Clips
     public enum ButtonType
     {
         Clip,
+        PasswordGen,
         Menu,
         Pin,
         Seperator
@@ -111,7 +112,7 @@ namespace Clips
 
         public bool IsClipButton { get { return (FButtonType == ButtonType.Clip); } }
 
-        private bool IsHeaderButton { get { return (IsMenuButton || IsPinButton); } }
+        private bool IsHeaderButton { get { return (IsMenuButton || IsPinButton || FButtonType == ButtonType.PasswordGen); } }
 
         public bool IsMenuButton { get { return (FButtonType == ButtonType.Menu); } }
         

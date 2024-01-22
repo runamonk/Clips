@@ -41,6 +41,7 @@ namespace Clips
         #region Properties
         private ClipButton MenuMainButton { get; set; }
         private ClipButton PinButton { get; set; }
+        private ClipButton PasswordButton { get; set; }
         private ClipMenu MenuMain { get; set; }
         private Config Config { get; set; }
         private ClipPanel Clips { get; set; }
@@ -60,12 +61,10 @@ namespace Clips
         private bool monitorWindows = false;
         private bool hotkeyEnabled = false;
 
-        private const string ICON_PINNED_W7 = "\u25FC";
-        private const string ICON_UNPINNED_W7 = "\u25FB";
         private const string ICON_PINNED = "\uE1F6";
         private const string ICON_UNPINNED = "\uE1F7";
         private const string ICON_MAINMENU = "\uE0C2";
-        private const string ICON_MAINMENU_W7 = "\u268A";
+        private const string ICON_PASSWORD = "\uE192";
 
         private Thread monitorWindowThread;
 
@@ -188,9 +187,10 @@ namespace Clips
         {
             Close();
         }
+
         private void MenuGeneratePassword_Click(object sender, EventArgs e)
         {
-            Clipboard.SetText(Funcs.GeneratePassword(Config.gpIncNumbers, Config.gpIncSymbols, Config.gpSize));
+            GeneratePassword();
         }
 
         private void MenuMonitorClipboard_Click(object sender, EventArgs e)
@@ -217,6 +217,11 @@ namespace Clips
             MenuMain.Show(b.Left + b.Width + Left, b.Top + b.Height + Top);
         }
 
+        private void PasswordButton_Click(object sender, EventArgs e)
+        {
+            GeneratePassword();
+        }
+
         private void PinButton_Click(object sender, EventArgs e)
         {
             ClipButton b = ((ClipButton)sender);
@@ -224,13 +229,13 @@ namespace Clips
             {
                 pinned = true;
                 TopMost = true;
-                b.Text = (Funcs.IsWindows7() ? ICON_PINNED_W7 : ICON_PINNED);
+                b.Text = (ICON_PINNED);
             }
             else
             {
                 pinned = false;
                 TopMost = false;
-                b.Text = (Funcs.IsWindows7() ? ICON_UNPINNED_W7 : ICON_UNPINNED);
+                b.Text = (ICON_UNPINNED);
             }
         }
 
@@ -332,6 +337,16 @@ namespace Clips
                 Funcs.AddMenuItem(MenuMain, "Settings", MenuSettings_Click);
                 Funcs.AddMenuItem(MenuMain, "Close", MenuClose_Click);
 
+                PasswordButton = new ClipButton(Config, ButtonType.PasswordGen, "", null)
+                {
+                    Parent = pTop,
+                    Dock = DockStyle.Left
+                };
+                PasswordButton.Width = PasswordButton.Height;
+                PasswordButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                PasswordButton.Text = (ICON_PASSWORD);
+                PasswordButton.Click += PasswordButton_Click;
+
                 MenuMainButton = new ClipButton(Config, ButtonType.Menu, "", null)
                 {
                     Parent = pTop,
@@ -339,8 +354,9 @@ namespace Clips
                 };
                 MenuMainButton.Width = MenuMainButton.Height;
                 MenuMainButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                MenuMainButton.Text = (Funcs.IsWindows7() ? ICON_MAINMENU_W7 : ICON_MAINMENU);
+                MenuMainButton.Text = (ICON_MAINMENU);
                 MenuMainButton.Click += MainButton_Click;
+
 
                 PinButton = new ClipButton(Config, ButtonType.Pin, "", null)
                 {
@@ -349,7 +365,7 @@ namespace Clips
                 };
                 PinButton.Width = PinButton.Height;
                 PinButton.Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                PinButton.Text = (Funcs.IsWindows7() ? ICON_UNPINNED_W7 : ICON_UNPINNED);
+                PinButton.Text = (ICON_UNPINNED);
                 PinButton.Click += PinButton_Click;
 
                 SearchClips = new ClipSearch
@@ -435,6 +451,10 @@ namespace Clips
             }
         }
 
+        private void GeneratePassword()
+        {
+            Clipboard.SetText(Funcs.GeneratePassword(Config.gpIncNumbers, Config.gpIncSymbols, Config.gpSize));
+        }
         private void MonitorWindowChanges()
         {
             void CheckForegroundWindow()
@@ -555,7 +575,7 @@ namespace Clips
             {
                 if (m.WParam.ToInt32() == gpHotkeyId)
                 {
-                    Clipboard.SetText(Funcs.GeneratePassword(Config.gpIncNumbers, Config.gpIncSymbols, Config.gpSize)); 
+                    GeneratePassword(); 
                 }
 
                 if (m.WParam.ToInt32() == HotkeyId)
