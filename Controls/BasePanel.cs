@@ -104,6 +104,7 @@ namespace Clips.Controls
                 Clip.OnClipButtonClicked -= ClipButtonClicked;
                 Controls[Controls.IndexOf(Clip)].Dispose();
             }
+            ClipDeleted();
         }
 
         protected virtual void SetColors()

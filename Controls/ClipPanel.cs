@@ -61,7 +61,6 @@ namespace Clips.Controls
         {
             InMenu = true;
             DeleteClip(((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl));
-            base.ClipDeleted();
             InMenu = false;
         }
 
