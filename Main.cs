@@ -9,6 +9,7 @@ using System.Reflection;
 using Clips.Controls;
 using System.Threading;
 using System.Text;
+using System.Configuration;
 //using static Clips.Controls.BasePanel;
 
 #region Todo
@@ -59,6 +60,7 @@ namespace Clips
 
         private bool monitorWindows = false;
         private bool hotkeyEnabled = false;
+        private string[] ignoreWindowsList;
 
         private Thread monitorWindowThread;
 
@@ -379,6 +381,7 @@ namespace Clips
             Text = Funcs.GetNameAndVersion();
             pTop.BackColor = Config.HeaderBackColor;
             BackColor = Config.HeaderBackColor;
+            ignoreWindowsList = Config.IgnoreWindows.Split(',');
             SearchClips.Text = "";
             SearchClips.BackColor = Config.HeaderBackColor;
             SearchClips.ForeColor = Config.HeaderFontColor;
@@ -427,6 +430,19 @@ namespace Clips
         {
             Clipboard.SetText(Funcs.GeneratePassword(Config.gpIncNumbers, Config.gpIncSymbols, Config.gpSize));
         }
+        
+        private bool InWindowList(string title)
+        {
+            if (title != "")
+                foreach (string s in ignoreWindowsList)
+                {
+                    if ((s.Trim() != "") && (title.ToLower().Contains(s.ToLower())))
+                        return true;
+                }
+
+            return false;
+        }
+
         private void MonitorWindowChanges()
         {
             void CheckForegroundWindow()
@@ -436,8 +452,8 @@ namespace Clips
                     uint pid;
                     GetWindowThreadProcessId(handle, out pid);
                     string t = Process.GetProcessById((int)pid).MainWindowTitle;
-                    //Console.WriteLine(t);
-                    if (t.ToLower().Contains("vmware") || t.ToLower().Contains(" remote desktop connection") || t.ToLower().Contains("dbkdvwsrhines"))
+                   
+                    if (InWindowList(t))
                     {
                         DisableHotkey();
                     }

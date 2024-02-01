@@ -56,6 +56,20 @@
             this.MenuBackColor = new System.Windows.Forms.Panel();
             this.gpKey = new System.Windows.Forms.TextBox();
             this.gpSize = new System.Windows.Forms.NumericUpDown();
+            this.Clear = new System.Windows.Forms.Button();
+            this.Windows = new System.Windows.Forms.CheckBox();
+            this.Shift = new System.Windows.Forms.CheckBox();
+            this.Alt = new System.Windows.Forms.CheckBox();
+            this.Control = new System.Windows.Forms.CheckBox();
+            this.gpSymbols = new System.Windows.Forms.CheckBox();
+            this.gpNumbers = new System.Windows.Forms.CheckBox();
+            this.gpTrack = new System.Windows.Forms.TrackBar();
+            this.gpExample = new System.Windows.Forms.TextBox();
+            this.gpClear = new System.Windows.Forms.Button();
+            this.gpWindows = new System.Windows.Forms.CheckBox();
+            this.gpShift = new System.Windows.Forms.CheckBox();
+            this.gpAlt = new System.Windows.Forms.CheckBox();
+            this.gpControl = new System.Windows.Forms.CheckBox();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Cancel = new System.Windows.Forms.Button();
@@ -73,27 +87,13 @@
             this.label6 = new System.Windows.Forms.Label();
             this.NoOfClipsToDisplay = new System.Windows.Forms.Label();
             this.GroupHotkey = new System.Windows.Forms.GroupBox();
-            this.Clear = new System.Windows.Forms.Button();
-            this.Windows = new System.Windows.Forms.CheckBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.Shift = new System.Windows.Forms.CheckBox();
-            this.Alt = new System.Windows.Forms.CheckBox();
-            this.Control = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
             this.gbGenPass = new System.Windows.Forms.GroupBox();
             this.label23 = new System.Windows.Forms.Label();
-            this.gpSymbols = new System.Windows.Forms.CheckBox();
-            this.gpNumbers = new System.Windows.Forms.CheckBox();
-            this.gpTrack = new System.Windows.Forms.TrackBar();
-            this.gpExample = new System.Windows.Forms.TextBox();
             this.label22 = new System.Windows.Forms.Label();
             this.gbgpShortcut = new System.Windows.Forms.GroupBox();
-            this.gpClear = new System.Windows.Forms.Button();
-            this.gpWindows = new System.Windows.Forms.CheckBox();
             this.label20 = new System.Windows.Forms.Label();
-            this.gpShift = new System.Windows.Forms.CheckBox();
-            this.gpAlt = new System.Windows.Forms.CheckBox();
-            this.gpControl = new System.Windows.Forms.CheckBox();
             this.label21 = new System.Windows.Forms.Label();
             this.GroupColors = new System.Windows.Forms.GroupBox();
             this.PanelColors = new System.Windows.Forms.Panel();
@@ -122,12 +122,15 @@
             this.label14 = new System.Windows.Forms.Label();
             this.DarkTheme = new System.Windows.Forms.RadioButton();
             this.LightTheme = new System.Windows.Forms.RadioButton();
+            this.IgnoreWindows = new System.Windows.Forms.TextBox();
+            this.label24 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsMaxClips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsToDisplay)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gpSize)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gpTrack)).BeginInit();
             this.groupBox2.SuspendLayout();
             this.panel1.SuspendLayout();
             this.PanelTopRight.SuspendLayout();
@@ -137,7 +140,6 @@
             this.GroupClips.SuspendLayout();
             this.GroupHotkey.SuspendLayout();
             this.gbGenPass.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gpTrack)).BeginInit();
             this.gbgpShortcut.SuspendLayout();
             this.GroupColors.SuspendLayout();
             this.PanelColors.SuspendLayout();
@@ -478,198 +480,6 @@
             0});
             this.gpSize.ValueChanged += new System.EventHandler(this.gpSize_ValueChanged);
             // 
-            // dlgColor
-            // 
-            this.dlgColor.AnyColor = true;
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Controls.Add(this.Cancel);
-            this.groupBox2.Controls.Add(this.OK);
-            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.groupBox2.Location = new System.Drawing.Point(5, 551);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(458, 54);
-            this.groupBox2.TabIndex = 4;
-            this.groupBox2.TabStop = false;
-            // 
-            // Cancel
-            // 
-            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Cancel.Location = new System.Drawing.Point(234, 18);
-            this.Cancel.Name = "Cancel";
-            this.Cancel.Size = new System.Drawing.Size(75, 25);
-            this.Cancel.TabIndex = 18;
-            this.Cancel.Text = "Cancel";
-            this.Cancel.UseVisualStyleBackColor = true;
-            // 
-            // OK
-            // 
-            this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.OK.Location = new System.Drawing.Point(153, 18);
-            this.OK.Name = "OK";
-            this.OK.Size = new System.Drawing.Size(75, 25);
-            this.OK.TabIndex = 17;
-            this.OK.Text = "OK";
-            this.OK.UseVisualStyleBackColor = true;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.PanelTopRight);
-            this.panel1.Controls.Add(this.PanelTopSep1);
-            this.panel1.Controls.Add(this.PanelTopLeft);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
-            this.panel1.Location = new System.Drawing.Point(5, 5);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(458, 160);
-            this.panel1.TabIndex = 6;
-            // 
-            // PanelTopRight
-            // 
-            this.PanelTopRight.Controls.Add(this.GroupPreview);
-            this.PanelTopRight.Controls.Add(this.GroupOther);
-            this.PanelTopRight.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PanelTopRight.Location = new System.Drawing.Point(306, 0);
-            this.PanelTopRight.Name = "PanelTopRight";
-            this.PanelTopRight.Size = new System.Drawing.Size(152, 160);
-            this.PanelTopRight.TabIndex = 10;
-            // 
-            // GroupPreview
-            // 
-            this.GroupPreview.Controls.Add(this.label4);
-            this.GroupPreview.Controls.Add(this.PreviewMaxLines);
-            this.GroupPreview.Controls.Add(this.label7);
-            this.GroupPreview.Controls.Add(this.PreviewPopupDelay);
-            this.GroupPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupPreview.Location = new System.Drawing.Point(0, 86);
-            this.GroupPreview.Name = "GroupPreview";
-            this.GroupPreview.Size = new System.Drawing.Size(152, 74);
-            this.GroupPreview.TabIndex = 3;
-            this.GroupPreview.TabStop = false;
-            this.GroupPreview.Text = "Preview";
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 21);
-            this.label4.Margin = new System.Windows.Forms.Padding(0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(73, 13);
-            this.label4.TabIndex = 24;
-            this.label4.Text = "Max # of lines";
-            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(30, 46);
-            this.label7.Margin = new System.Windows.Forms.Padding(0);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(56, 13);
-            this.label7.TabIndex = 22;
-            this.label7.Text = "Delay (ms)";
-            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // GroupOther
-            // 
-            this.GroupOther.Controls.Add(this.AutoHide);
-            this.GroupOther.Controls.Add(this.AutoSizeHeight);
-            this.GroupOther.Controls.Add(this.OpenAtMouse);
-            this.GroupOther.Controls.Add(this.Startup);
-            this.GroupOther.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GroupOther.Location = new System.Drawing.Point(0, 0);
-            this.GroupOther.Name = "GroupOther";
-            this.GroupOther.Size = new System.Drawing.Size(152, 86);
-            this.GroupOther.TabIndex = 1;
-            this.GroupOther.TabStop = false;
-            // 
-            // PanelTopSep1
-            // 
-            this.PanelTopSep1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelTopSep1.Location = new System.Drawing.Point(301, 0);
-            this.PanelTopSep1.Name = "PanelTopSep1";
-            this.PanelTopSep1.Size = new System.Drawing.Size(5, 160);
-            this.PanelTopSep1.TabIndex = 9;
-            // 
-            // PanelTopLeft
-            // 
-            this.PanelTopLeft.Controls.Add(this.GroupClips);
-            this.PanelTopLeft.Controls.Add(this.GroupHotkey);
-            this.PanelTopLeft.Dock = System.Windows.Forms.DockStyle.Left;
-            this.PanelTopLeft.Location = new System.Drawing.Point(0, 0);
-            this.PanelTopLeft.Name = "PanelTopLeft";
-            this.PanelTopLeft.Size = new System.Drawing.Size(301, 160);
-            this.PanelTopLeft.TabIndex = 8;
-            // 
-            // GroupClips
-            // 
-            this.GroupClips.Controls.Add(this.label16);
-            this.GroupClips.Controls.Add(this.ClipsToDisplay);
-            this.GroupClips.Controls.Add(this.label6);
-            this.GroupClips.Controls.Add(this.NoOfClipsToDisplay);
-            this.GroupClips.Controls.Add(this.ClipsLinesPerRow);
-            this.GroupClips.Controls.Add(this.ClipsMaxClips);
-            this.GroupClips.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupClips.Location = new System.Drawing.Point(0, 67);
-            this.GroupClips.Name = "GroupClips";
-            this.GroupClips.Size = new System.Drawing.Size(301, 93);
-            this.GroupClips.TabIndex = 2;
-            this.GroupClips.TabStop = false;
-            this.GroupClips.Text = "Clips";
-            // 
-            // label16
-            // 
-            this.label16.AutoSize = true;
-            this.label16.Location = new System.Drawing.Point(168, 23);
-            this.label16.Margin = new System.Windows.Forms.Padding(0);
-            this.label16.Name = "label16";
-            this.label16.Size = new System.Drawing.Size(70, 13);
-            this.label16.TabIndex = 20;
-            this.label16.Text = "Lines per row";
-            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(31, 23);
-            this.label6.Margin = new System.Windows.Forms.Padding(0);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(73, 13);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "Max # of clips";
-            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // NoOfClipsToDisplay
-            // 
-            this.NoOfClipsToDisplay.AutoSize = true;
-            this.NoOfClipsToDisplay.Location = new System.Drawing.Point(7, 49);
-            this.NoOfClipsToDisplay.Margin = new System.Windows.Forms.Padding(0);
-            this.NoOfClipsToDisplay.Name = "NoOfClipsToDisplay";
-            this.NoOfClipsToDisplay.Size = new System.Drawing.Size(97, 13);
-            this.NoOfClipsToDisplay.TabIndex = 15;
-            this.NoOfClipsToDisplay.Text = "# of clips to display";
-            this.NoOfClipsToDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // GroupHotkey
-            // 
-            this.GroupHotkey.Controls.Add(this.Clear);
-            this.GroupHotkey.Controls.Add(this.Key);
-            this.GroupHotkey.Controls.Add(this.Windows);
-            this.GroupHotkey.Controls.Add(this.label2);
-            this.GroupHotkey.Controls.Add(this.Shift);
-            this.GroupHotkey.Controls.Add(this.Alt);
-            this.GroupHotkey.Controls.Add(this.Control);
-            this.GroupHotkey.Controls.Add(this.label1);
-            this.GroupHotkey.Dock = System.Windows.Forms.DockStyle.Top;
-            this.GroupHotkey.Location = new System.Drawing.Point(0, 0);
-            this.GroupHotkey.Name = "GroupHotkey";
-            this.GroupHotkey.Size = new System.Drawing.Size(301, 67);
-            this.GroupHotkey.TabIndex = 0;
-            this.GroupHotkey.TabStop = false;
-            this.GroupHotkey.Text = "Popup Shortcut";
-            // 
             // Clear
             // 
             this.Clear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -694,16 +504,6 @@
             this.Windows.Text = "Windows";
             this.toolTip1.SetToolTip(this.Windows, "Click to add modifier.");
             this.Windows.UseVisualStyleBackColor = true;
-            // 
-            // label2
-            // 
-            this.label2.Location = new System.Drawing.Point(8, 45);
-            this.label2.Margin = new System.Windows.Forms.Padding(0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(47, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "Modifier";
-            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // Shift
             // 
@@ -740,43 +540,6 @@
             this.Control.Text = "Control";
             this.toolTip1.SetToolTip(this.Control, "Click to add modifier.");
             this.Control.UseVisualStyleBackColor = true;
-            // 
-            // label1
-            // 
-            this.label1.Location = new System.Drawing.Point(8, 22);
-            this.label1.Margin = new System.Windows.Forms.Padding(0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(47, 13);
-            this.label1.TabIndex = 6;
-            this.label1.Text = "Key";
-            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            // 
-            // gbGenPass
-            // 
-            this.gbGenPass.Controls.Add(this.label23);
-            this.gbGenPass.Controls.Add(this.gpSymbols);
-            this.gbGenPass.Controls.Add(this.gpNumbers);
-            this.gbGenPass.Controls.Add(this.gpSize);
-            this.gbGenPass.Controls.Add(this.gpTrack);
-            this.gbGenPass.Controls.Add(this.gpExample);
-            this.gbGenPass.Controls.Add(this.label22);
-            this.gbGenPass.Controls.Add(this.gbgpShortcut);
-            this.gbGenPass.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbGenPass.Location = new System.Drawing.Point(5, 165);
-            this.gbGenPass.Name = "gbGenPass";
-            this.gbGenPass.Size = new System.Drawing.Size(458, 182);
-            this.gbGenPass.TabIndex = 9;
-            this.gbGenPass.TabStop = false;
-            this.gbGenPass.Text = "Generate Password";
-            // 
-            // label23
-            // 
-            this.label23.AutoSize = true;
-            this.label23.Location = new System.Drawing.Point(27, 160);
-            this.label23.Name = "label23";
-            this.label23.Size = new System.Drawing.Size(42, 13);
-            this.label23.TabIndex = 18;
-            this.label23.Text = "Include";
             // 
             // gpSymbols
             // 
@@ -827,33 +590,6 @@
             this.gpExample.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             this.toolTip1.SetToolTip(this.gpExample, "Displays an example password.");
             // 
-            // label22
-            // 
-            this.label22.AutoSize = true;
-            this.label22.Location = new System.Drawing.Point(11, 134);
-            this.label22.Name = "label22";
-            this.label22.Size = new System.Drawing.Size(58, 13);
-            this.label22.TabIndex = 2;
-            this.label22.Text = "Characters";
-            // 
-            // gbgpShortcut
-            // 
-            this.gbgpShortcut.Controls.Add(this.gpClear);
-            this.gbgpShortcut.Controls.Add(this.gpKey);
-            this.gbgpShortcut.Controls.Add(this.gpWindows);
-            this.gbgpShortcut.Controls.Add(this.label20);
-            this.gbgpShortcut.Controls.Add(this.gpShift);
-            this.gbgpShortcut.Controls.Add(this.gpAlt);
-            this.gbgpShortcut.Controls.Add(this.gpControl);
-            this.gbgpShortcut.Controls.Add(this.label21);
-            this.gbgpShortcut.Dock = System.Windows.Forms.DockStyle.Top;
-            this.gbgpShortcut.Location = new System.Drawing.Point(3, 16);
-            this.gbgpShortcut.Name = "gbgpShortcut";
-            this.gbgpShortcut.Size = new System.Drawing.Size(452, 67);
-            this.gbgpShortcut.TabIndex = 1;
-            this.gbgpShortcut.TabStop = false;
-            this.gbgpShortcut.Text = "Shortcut";
-            // 
             // gpClear
             // 
             this.gpClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -878,16 +614,6 @@
             this.gpWindows.Text = "Windows";
             this.toolTip1.SetToolTip(this.gpWindows, "Click to add modifier.");
             this.gpWindows.UseVisualStyleBackColor = true;
-            // 
-            // label20
-            // 
-            this.label20.Location = new System.Drawing.Point(8, 45);
-            this.label20.Margin = new System.Windows.Forms.Padding(0);
-            this.label20.Name = "label20";
-            this.label20.Size = new System.Drawing.Size(47, 13);
-            this.label20.TabIndex = 1;
-            this.label20.Text = "Modifier";
-            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             // 
             // gpShift
             // 
@@ -925,6 +651,284 @@
             this.toolTip1.SetToolTip(this.gpControl, "Click to add modifier.");
             this.gpControl.UseVisualStyleBackColor = true;
             // 
+            // dlgColor
+            // 
+            this.dlgColor.AnyColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.Cancel);
+            this.groupBox2.Controls.Add(this.OK);
+            this.groupBox2.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.groupBox2.Location = new System.Drawing.Point(5, 574);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(458, 54);
+            this.groupBox2.TabIndex = 4;
+            this.groupBox2.TabStop = false;
+            // 
+            // Cancel
+            // 
+            this.Cancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.Cancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.Cancel.Location = new System.Drawing.Point(234, 18);
+            this.Cancel.Name = "Cancel";
+            this.Cancel.Size = new System.Drawing.Size(75, 25);
+            this.Cancel.TabIndex = 18;
+            this.Cancel.Text = "Cancel";
+            this.Cancel.UseVisualStyleBackColor = true;
+            // 
+            // OK
+            // 
+            this.OK.DialogResult = System.Windows.Forms.DialogResult.OK;
+            this.OK.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.OK.Location = new System.Drawing.Point(153, 18);
+            this.OK.Name = "OK";
+            this.OK.Size = new System.Drawing.Size(75, 25);
+            this.OK.TabIndex = 17;
+            this.OK.Text = "OK";
+            this.OK.UseVisualStyleBackColor = true;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.PanelTopRight);
+            this.panel1.Controls.Add(this.PanelTopSep1);
+            this.panel1.Controls.Add(this.PanelTopLeft);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
+            this.panel1.Location = new System.Drawing.Point(5, 5);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(458, 181);
+            this.panel1.TabIndex = 6;
+            // 
+            // PanelTopRight
+            // 
+            this.PanelTopRight.Controls.Add(this.GroupPreview);
+            this.PanelTopRight.Controls.Add(this.GroupOther);
+            this.PanelTopRight.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PanelTopRight.Location = new System.Drawing.Point(306, 0);
+            this.PanelTopRight.Name = "PanelTopRight";
+            this.PanelTopRight.Size = new System.Drawing.Size(152, 181);
+            this.PanelTopRight.TabIndex = 10;
+            // 
+            // GroupPreview
+            // 
+            this.GroupPreview.Controls.Add(this.label4);
+            this.GroupPreview.Controls.Add(this.PreviewMaxLines);
+            this.GroupPreview.Controls.Add(this.label7);
+            this.GroupPreview.Controls.Add(this.PreviewPopupDelay);
+            this.GroupPreview.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GroupPreview.Location = new System.Drawing.Point(0, 86);
+            this.GroupPreview.Name = "GroupPreview";
+            this.GroupPreview.Size = new System.Drawing.Size(152, 95);
+            this.GroupPreview.TabIndex = 3;
+            this.GroupPreview.TabStop = false;
+            this.GroupPreview.Text = "Preview";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(13, 21);
+            this.label4.Margin = new System.Windows.Forms.Padding(0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(73, 13);
+            this.label4.TabIndex = 24;
+            this.label4.Text = "Max # of lines";
+            this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(30, 46);
+            this.label7.Margin = new System.Windows.Forms.Padding(0);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(56, 13);
+            this.label7.TabIndex = 22;
+            this.label7.Text = "Delay (ms)";
+            this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // GroupOther
+            // 
+            this.GroupOther.Controls.Add(this.AutoHide);
+            this.GroupOther.Controls.Add(this.AutoSizeHeight);
+            this.GroupOther.Controls.Add(this.OpenAtMouse);
+            this.GroupOther.Controls.Add(this.Startup);
+            this.GroupOther.Dock = System.Windows.Forms.DockStyle.Top;
+            this.GroupOther.Location = new System.Drawing.Point(0, 0);
+            this.GroupOther.Name = "GroupOther";
+            this.GroupOther.Size = new System.Drawing.Size(152, 86);
+            this.GroupOther.TabIndex = 1;
+            this.GroupOther.TabStop = false;
+            // 
+            // PanelTopSep1
+            // 
+            this.PanelTopSep1.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PanelTopSep1.Location = new System.Drawing.Point(301, 0);
+            this.PanelTopSep1.Name = "PanelTopSep1";
+            this.PanelTopSep1.Size = new System.Drawing.Size(5, 181);
+            this.PanelTopSep1.TabIndex = 9;
+            // 
+            // PanelTopLeft
+            // 
+            this.PanelTopLeft.Controls.Add(this.GroupClips);
+            this.PanelTopLeft.Controls.Add(this.GroupHotkey);
+            this.PanelTopLeft.Dock = System.Windows.Forms.DockStyle.Left;
+            this.PanelTopLeft.Location = new System.Drawing.Point(0, 0);
+            this.PanelTopLeft.Name = "PanelTopLeft";
+            this.PanelTopLeft.Size = new System.Drawing.Size(301, 181);
+            this.PanelTopLeft.TabIndex = 8;
+            // 
+            // GroupClips
+            // 
+            this.GroupClips.Controls.Add(this.label16);
+            this.GroupClips.Controls.Add(this.ClipsToDisplay);
+            this.GroupClips.Controls.Add(this.label6);
+            this.GroupClips.Controls.Add(this.NoOfClipsToDisplay);
+            this.GroupClips.Controls.Add(this.ClipsLinesPerRow);
+            this.GroupClips.Controls.Add(this.ClipsMaxClips);
+            this.GroupClips.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.GroupClips.Location = new System.Drawing.Point(0, 107);
+            this.GroupClips.Name = "GroupClips";
+            this.GroupClips.Size = new System.Drawing.Size(301, 74);
+            this.GroupClips.TabIndex = 2;
+            this.GroupClips.TabStop = false;
+            this.GroupClips.Text = "Clips";
+            // 
+            // label16
+            // 
+            this.label16.AutoSize = true;
+            this.label16.Location = new System.Drawing.Point(168, 23);
+            this.label16.Margin = new System.Windows.Forms.Padding(0);
+            this.label16.Name = "label16";
+            this.label16.Size = new System.Drawing.Size(70, 13);
+            this.label16.TabIndex = 20;
+            this.label16.Text = "Lines per row";
+            this.label16.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(31, 23);
+            this.label6.Margin = new System.Windows.Forms.Padding(0);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(73, 13);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "Max # of clips";
+            this.label6.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // NoOfClipsToDisplay
+            // 
+            this.NoOfClipsToDisplay.AutoSize = true;
+            this.NoOfClipsToDisplay.Location = new System.Drawing.Point(7, 49);
+            this.NoOfClipsToDisplay.Margin = new System.Windows.Forms.Padding(0);
+            this.NoOfClipsToDisplay.Name = "NoOfClipsToDisplay";
+            this.NoOfClipsToDisplay.Size = new System.Drawing.Size(97, 13);
+            this.NoOfClipsToDisplay.TabIndex = 15;
+            this.NoOfClipsToDisplay.Text = "# of clips to display";
+            this.NoOfClipsToDisplay.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // GroupHotkey
+            // 
+            this.GroupHotkey.Controls.Add(this.label24);
+            this.GroupHotkey.Controls.Add(this.IgnoreWindows);
+            this.GroupHotkey.Controls.Add(this.Clear);
+            this.GroupHotkey.Controls.Add(this.Key);
+            this.GroupHotkey.Controls.Add(this.Windows);
+            this.GroupHotkey.Controls.Add(this.label2);
+            this.GroupHotkey.Controls.Add(this.Shift);
+            this.GroupHotkey.Controls.Add(this.Alt);
+            this.GroupHotkey.Controls.Add(this.Control);
+            this.GroupHotkey.Controls.Add(this.label1);
+            this.GroupHotkey.Dock = System.Windows.Forms.DockStyle.Top;
+            this.GroupHotkey.Location = new System.Drawing.Point(0, 0);
+            this.GroupHotkey.Name = "GroupHotkey";
+            this.GroupHotkey.Size = new System.Drawing.Size(301, 107);
+            this.GroupHotkey.TabIndex = 0;
+            this.GroupHotkey.TabStop = false;
+            this.GroupHotkey.Text = "Popup Shortcut";
+            // 
+            // label2
+            // 
+            this.label2.Location = new System.Drawing.Point(8, 45);
+            this.label2.Margin = new System.Windows.Forms.Padding(0);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(47, 13);
+            this.label2.TabIndex = 1;
+            this.label2.Text = "Modifier";
+            this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(8, 22);
+            this.label1.Margin = new System.Windows.Forms.Padding(0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(47, 13);
+            this.label1.TabIndex = 6;
+            this.label1.Text = "Key";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // gbGenPass
+            // 
+            this.gbGenPass.Controls.Add(this.label23);
+            this.gbGenPass.Controls.Add(this.gpSymbols);
+            this.gbGenPass.Controls.Add(this.gpNumbers);
+            this.gbGenPass.Controls.Add(this.gpSize);
+            this.gbGenPass.Controls.Add(this.gpTrack);
+            this.gbGenPass.Controls.Add(this.gpExample);
+            this.gbGenPass.Controls.Add(this.label22);
+            this.gbGenPass.Controls.Add(this.gbgpShortcut);
+            this.gbGenPass.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbGenPass.Location = new System.Drawing.Point(5, 186);
+            this.gbGenPass.Name = "gbGenPass";
+            this.gbGenPass.Size = new System.Drawing.Size(458, 182);
+            this.gbGenPass.TabIndex = 9;
+            this.gbGenPass.TabStop = false;
+            this.gbGenPass.Text = "Generate Password";
+            // 
+            // label23
+            // 
+            this.label23.AutoSize = true;
+            this.label23.Location = new System.Drawing.Point(27, 160);
+            this.label23.Name = "label23";
+            this.label23.Size = new System.Drawing.Size(42, 13);
+            this.label23.TabIndex = 18;
+            this.label23.Text = "Include";
+            // 
+            // label22
+            // 
+            this.label22.AutoSize = true;
+            this.label22.Location = new System.Drawing.Point(11, 134);
+            this.label22.Name = "label22";
+            this.label22.Size = new System.Drawing.Size(58, 13);
+            this.label22.TabIndex = 2;
+            this.label22.Text = "Characters";
+            // 
+            // gbgpShortcut
+            // 
+            this.gbgpShortcut.Controls.Add(this.gpClear);
+            this.gbgpShortcut.Controls.Add(this.gpKey);
+            this.gbgpShortcut.Controls.Add(this.gpWindows);
+            this.gbgpShortcut.Controls.Add(this.label20);
+            this.gbgpShortcut.Controls.Add(this.gpShift);
+            this.gbgpShortcut.Controls.Add(this.gpAlt);
+            this.gbgpShortcut.Controls.Add(this.gpControl);
+            this.gbgpShortcut.Controls.Add(this.label21);
+            this.gbgpShortcut.Dock = System.Windows.Forms.DockStyle.Top;
+            this.gbgpShortcut.Location = new System.Drawing.Point(3, 16);
+            this.gbgpShortcut.Name = "gbgpShortcut";
+            this.gbgpShortcut.Size = new System.Drawing.Size(452, 67);
+            this.gbgpShortcut.TabIndex = 1;
+            this.gbgpShortcut.TabStop = false;
+            this.gbgpShortcut.Text = "Shortcut";
+            // 
+            // label20
+            // 
+            this.label20.Location = new System.Drawing.Point(8, 45);
+            this.label20.Margin = new System.Windows.Forms.Padding(0);
+            this.label20.Name = "label20";
+            this.label20.Size = new System.Drawing.Size(47, 13);
+            this.label20.TabIndex = 1;
+            this.label20.Text = "Modifier";
+            this.label20.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
             // label21
             // 
             this.label21.Location = new System.Drawing.Point(8, 22);
@@ -940,9 +944,9 @@
             this.GroupColors.Controls.Add(this.PanelColors);
             this.GroupColors.Controls.Add(this.panel5);
             this.GroupColors.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupColors.Location = new System.Drawing.Point(5, 347);
+            this.GroupColors.Location = new System.Drawing.Point(5, 368);
             this.GroupColors.Name = "GroupColors";
-            this.GroupColors.Size = new System.Drawing.Size(458, 204);
+            this.GroupColors.Size = new System.Drawing.Size(458, 206);
             this.GroupColors.TabIndex = 10;
             this.GroupColors.TabStop = false;
             this.GroupColors.Text = "Colors";
@@ -959,7 +963,7 @@
             this.PanelColors.Dock = System.Windows.Forms.DockStyle.Fill;
             this.PanelColors.Location = new System.Drawing.Point(3, 49);
             this.PanelColors.Name = "PanelColors";
-            this.PanelColors.Size = new System.Drawing.Size(452, 152);
+            this.PanelColors.Size = new System.Drawing.Size(452, 154);
             this.PanelColors.TabIndex = 1;
             // 
             // GroupColorPreview
@@ -971,7 +975,7 @@
             this.GroupColorPreview.Dock = System.Windows.Forms.DockStyle.Fill;
             this.GroupColorPreview.Location = new System.Drawing.Point(345, 0);
             this.GroupColorPreview.Name = "GroupColorPreview";
-            this.GroupColorPreview.Size = new System.Drawing.Size(107, 152);
+            this.GroupColorPreview.Size = new System.Drawing.Size(107, 154);
             this.GroupColorPreview.TabIndex = 28;
             this.GroupColorPreview.TabStop = false;
             this.GroupColorPreview.Text = "Preview";
@@ -1001,7 +1005,7 @@
             this.PanelColorSep2.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep2.Location = new System.Drawing.Point(340, 0);
             this.PanelColorSep2.Name = "PanelColorSep2";
-            this.PanelColorSep2.Size = new System.Drawing.Size(5, 152);
+            this.PanelColorSep2.Size = new System.Drawing.Size(5, 154);
             this.PanelColorSep2.TabIndex = 27;
             // 
             // GroupColorClips
@@ -1017,7 +1021,7 @@
             this.GroupColorClips.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorClips.Location = new System.Drawing.Point(230, 0);
             this.GroupColorClips.Name = "GroupColorClips";
-            this.GroupColorClips.Size = new System.Drawing.Size(110, 152);
+            this.GroupColorClips.Size = new System.Drawing.Size(110, 154);
             this.GroupColorClips.TabIndex = 26;
             this.GroupColorClips.TabStop = false;
             this.GroupColorClips.Text = "Clips";
@@ -1067,7 +1071,7 @@
             this.panel2.Dock = System.Windows.Forms.DockStyle.Left;
             this.panel2.Location = new System.Drawing.Point(225, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(5, 152);
+            this.panel2.Size = new System.Drawing.Size(5, 154);
             this.panel2.TabIndex = 25;
             // 
             // GroupColorHeader
@@ -1083,7 +1087,7 @@
             this.GroupColorHeader.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorHeader.Location = new System.Drawing.Point(115, 0);
             this.GroupColorHeader.Name = "GroupColorHeader";
-            this.GroupColorHeader.Size = new System.Drawing.Size(110, 152);
+            this.GroupColorHeader.Size = new System.Drawing.Size(110, 154);
             this.GroupColorHeader.TabIndex = 24;
             this.GroupColorHeader.TabStop = false;
             this.GroupColorHeader.Text = "Header";
@@ -1133,7 +1137,7 @@
             this.PanelColorSep1.Dock = System.Windows.Forms.DockStyle.Left;
             this.PanelColorSep1.Location = new System.Drawing.Point(110, 0);
             this.PanelColorSep1.Name = "PanelColorSep1";
-            this.PanelColorSep1.Size = new System.Drawing.Size(5, 152);
+            this.PanelColorSep1.Size = new System.Drawing.Size(5, 154);
             this.PanelColorSep1.TabIndex = 21;
             // 
             // GroupColorMenu
@@ -1149,7 +1153,7 @@
             this.GroupColorMenu.Dock = System.Windows.Forms.DockStyle.Left;
             this.GroupColorMenu.Location = new System.Drawing.Point(0, 0);
             this.GroupColorMenu.Name = "GroupColorMenu";
-            this.GroupColorMenu.Size = new System.Drawing.Size(110, 152);
+            this.GroupColorMenu.Size = new System.Drawing.Size(110, 154);
             this.GroupColorMenu.TabIndex = 17;
             this.GroupColorMenu.TabStop = false;
             this.GroupColorMenu.Text = "Menu";
@@ -1238,11 +1242,29 @@
             this.LightTheme.UseVisualStyleBackColor = true;
             this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
             // 
+            // IgnoreWindows
+            // 
+            this.IgnoreWindows.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.IgnoreWindows.Location = new System.Drawing.Point(10, 83);
+            this.IgnoreWindows.Name = "IgnoreWindows";
+            this.IgnoreWindows.Size = new System.Drawing.Size(282, 20);
+            this.IgnoreWindows.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.IgnoreWindows, "Enter partial window titles (seperated by a comma) to ignore.");
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(8, 64);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(84, 13);
+            this.label24.TabIndex = 8;
+            this.label24.Text = "Ignore Windows";
+            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(468, 610);
+            this.ClientSize = new System.Drawing.Size(468, 633);
             this.Controls.Add(this.GroupColors);
             this.Controls.Add(this.gbGenPass);
             this.Controls.Add(this.panel1);
@@ -1265,6 +1287,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.PreviewPopupDelay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsToDisplay)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gpSize)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.gpTrack)).EndInit();
             this.groupBox2.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
             this.PanelTopRight.ResumeLayout(false);
@@ -1279,7 +1302,6 @@
             this.GroupHotkey.PerformLayout();
             this.gbGenPass.ResumeLayout(false);
             this.gbGenPass.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.gpTrack)).EndInit();
             this.gbgpShortcut.ResumeLayout(false);
             this.gbgpShortcut.PerformLayout();
             this.GroupColors.ResumeLayout(false);
@@ -1392,5 +1414,7 @@
         public System.Windows.Forms.GroupBox gbGenPass;
         public System.Windows.Forms.TextBox gpExample;
         public System.Windows.Forms.TrackBar gpTrack;
+        private System.Windows.Forms.Label label24;
+        public System.Windows.Forms.TextBox IgnoreWindows;
     }
 }

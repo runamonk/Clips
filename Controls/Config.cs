@@ -77,15 +77,16 @@ namespace Clips
                     GroupColorPreview.ForeColor = _Config.ClipsFontColor;
                     GroupColors.ForeColor = _Config.ClipsFontColor;
                     GroupHotkey.ForeColor = _Config.ClipsFontColor;
-                    GroupPreview.ForeColor = _Config.ClipsFontColor;
-                    
+                    GroupPreview.ForeColor = _Config.ClipsFontColor;                  
                     gbGenPass.ForeColor = _Config.ClipsFontColor;
                     gbgpShortcut.ForeColor = _Config.ClipsFontColor;
                     gpKey.ForeColor = _Config.ClipsFontColor;
                     gpKey.BackColor = _Config.ClipsBackColor;
                     gpExample.ForeColor = _Config.ClipsFontColor;
                     gpExample.BackColor = _Config.ClipsBackColor;
-
+                    IgnoreWindows.Text = _Config.IgnoreWindows;
+                    IgnoreWindows.BackColor = _Config.ClipsBackColor;
+                    IgnoreWindows.ForeColor = _Config.ClipsFontColor;
                     Key.BackColor = _Config.ClipsBackColor;
                     ClipsMaxClips.BackColor = _Config.ClipsBackColor;
                     ClipsLinesPerRow.BackColor = _Config.ClipsBackColor;
@@ -156,6 +157,7 @@ namespace Clips
                 _Config.HeaderButtonColor = HeaderButtonColor.BackColor;
                 _Config.HeaderButtonSelectedColor = HeaderButtonSelectedColor.BackColor;
                 _Config.HeaderFontColor = HeaderFontColor.BackColor;
+                _Config.IgnoreWindows = IgnoreWindows.Text;
                 _Config.MenuBackColor = MenuBackColor.BackColor;
                 _Config.MenuBorderColor = MenuBorderColor.BackColor;
                 _Config.MenuFontColor = MenuFontColor.BackColor;
@@ -523,6 +525,18 @@ namespace Clips
                 return Color.FromArgb(Convert.ToInt32(s));
             }
             set { SetKey("header_button_selected_color", value.ToArgb().ToString()); }
+        }
+
+        public string IgnoreWindows
+        {
+            get
+            {
+                string s = FindKey("ignorewindows");
+                if (s == "")
+                    s = SetKey("ignorewindows", "");
+                return s;
+            }
+            set { SetKey("ignorewindows", value); }
         }
 
         public Color MenuBackColor
