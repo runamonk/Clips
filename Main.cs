@@ -8,9 +8,7 @@ using System.Diagnostics;
 using System.Reflection;
 using Clips.Controls;
 using System.Threading;
-using System.Text;
-using System.Configuration;
-//using static Clips.Controls.BasePanel;
+using zuulWindowTracker;
 
 #region Todo
 // TODO Add support for setting a description of a pinned ? any clip.
@@ -58,11 +56,9 @@ namespace Clips
         private int HotkeyId = 1;
         private int gpHotkeyId = 2;
 
-        private bool monitorWindows = false;
         private bool hotkeyEnabled = false;
         private string[] ignoreWindowsList;
-
-        private Thread monitorWindowThread;
+        private WindowTracker windowTracker;
 
         #endregion
 
@@ -211,6 +207,20 @@ namespace Clips
         {
             Button b = ((Button)sender);
             MenuMain.Show(b.Left + b.Width + Left, b.Top + b.Height + Top);
+        }
+
+        private void OnWindowChanged(IntPtr handle)
+        {
+            uint pid;
+            GetWindowThreadProcessId(handle, out pid);
+            string t = Process.GetProcessById((int)pid).MainWindowTitle;
+
+            if (InWindowList(t))
+            {
+                DisableHotkey();
+            }
+            else
+                EnableHotkey();
         }
 
         private void PasswordButton_Click(object sender, EventArgs e)
@@ -445,39 +455,11 @@ namespace Clips
 
         private void MonitorWindowChanges()
         {
-            void CheckForegroundWindow()
+            if (windowTracker == null)
             {
-                void WindowChanged(IntPtr handle)
-                {
-                    uint pid;
-                    GetWindowThreadProcessId(handle, out pid);
-                    string t = Process.GetProcessById((int)pid).MainWindowTitle;
-                   
-                    if (InWindowList(t))
-                    {
-                        DisableHotkey();
-                    }
-                    else
-                        EnableHotkey();
-                }
-
-                while (monitorWindows)
-                {
-                    try
-                    {
-                        var h = GetForegroundWindow();
-                        if (h != null)
-                            this.Invoke((MethodInvoker)delegate { WindowChanged(h); });
-
-                    }
-                    catch { }
-                    Thread.Sleep(1000);
-                }
+                windowTracker = new WindowTracker();
+                windowTracker.WindowChanged += OnWindowChanged;
             }
-
-            monitorWindows = true;
-            monitorWindowThread = new Thread(() => CheckForegroundWindow());
-            monitorWindowThread.Start();
         }
 
         private Process RunningInstance()
@@ -541,7 +523,7 @@ namespace Clips
         #region Overrides
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            monitorWindows = false;
+            windowTracker = null;
             DisableHotkey();
             base.OnHandleDestroyed(e);
         }

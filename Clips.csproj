@@ -79,6 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared_Misc\WindowTracker.cs">
+      <Link>WindowTracker.cs</Link>
+    </Compile>
     <Compile Include="Controls\BasePanel.cs">
       <SubType>Component</SubType>
     </Compile>
