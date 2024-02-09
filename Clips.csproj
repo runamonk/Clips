@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A369982E-08AC-4A75-A5CB-2BB63C06E091}</ProjectGuid>
+    <ProjectGuid>{80219CC0-BB8B-48F4-91D6-DB248C5D5737}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>Clips</RootNamespace>
     <AssemblyName>zuulClips</AssemblyName>
@@ -79,6 +79,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\Shared_Misc\Utility.cs">
+      <Link>Utility.cs</Link>
+    </Compile>
     <Compile Include="..\Shared_Misc\WindowTracker.cs">
       <Link>WindowTracker.cs</Link>
     </Compile>
@@ -127,7 +130,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Utility.cs" />
     <EmbeddedResource Include="Forms\About.resx">
       <DependentUpon>About.cs</DependentUpon>
     </EmbeddedResource>

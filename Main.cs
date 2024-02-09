@@ -211,16 +211,23 @@ namespace Clips
 
         private void OnWindowChanged(IntPtr handle)
         {
-            uint pid;
-            GetWindowThreadProcessId(handle, out pid);
-            string t = Process.GetProcessById((int)pid).MainWindowTitle;
-
-            if (InWindowList(t))
+            try
             {
-                DisableHotkey();
+                uint pid;
+                GetWindowThreadProcessId(handle, out pid);
+                string t = Process.GetProcessById((int)pid).MainWindowTitle;
+
+                if (InWindowList(t))
+                {
+                    DisableHotkey();
+                }
+                else
+                    EnableHotkey();
             }
-            else
+            catch 
+            {
                 EnableHotkey();
+            }
         }
 
         private void PasswordButton_Click(object sender, EventArgs e)
