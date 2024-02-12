@@ -45,7 +45,7 @@ namespace Clips
                     Control.Checked = (m == 2 || m == 3 || m == 6 || m == 10);
                     Shift.Checked = (m == 4 || m == 5 || m == 6 || m == 12);
                     Windows.Checked = (m == 8 || m == 9 || m == 10 || m == 12);
-                    Startup.Checked = _Config.StartWithWindows;
+                    Startup.Checked = Funcs.StartWithWindows;
                     AutoHide.Checked = _Config.AutoHide;
                     AutoSizeHeight.Checked = _Config.AutoSizeHeight;
                     ClipBackColor.BackColor = _Config.ClipsBackColor;
@@ -167,7 +167,7 @@ namespace Clips
                 _Config.PreviewFontColor = PreviewFontColor.BackColor;
                 _Config.PreviewMaxLines = Convert.ToInt32(PreviewMaxLines.Value);
                 _Config.PreviewPopupDelay = Convert.ToInt32(PreviewPopupDelay.Value);
-                _Config.StartWithWindows = Startup.Checked;
+                Funcs.StartWithWindows = Startup.Checked;
                 
                 DialogResult = System.Windows.Forms.DialogResult.OK;
             }
@@ -669,43 +669,6 @@ namespace Clips
                 return Convert.ToInt32(s);
             }
             set { SetKey("preview_max_lines", value.ToString()); }
-        }
-
-        public Boolean StartWithWindows
-        {
-            get {
-                RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
-                var k = key.GetValue(Funcs.GetFileName());
-
-                if (k != null)
-                {
-                    return true;
-                }
-                else
-                    return false;
-            }
-            set {
-                if (value == false)
-                {
-                    RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
-                    var k = key.GetValue(Funcs.GetFileName());
-                    if ((k != null) && (!k.ToString().Contains(Funcs.GetFilePathAndName())))
-                        return;
-
-                    key.DeleteValue(Funcs.GetFileName(), false);
-                    key.Close();
-                }
-                else
-                {
-                    RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run\\", true);
-                    var k = key.GetValue(Funcs.GetFileName());
-                    if ((k != null) && (!k.ToString().Contains(Funcs.GetFilePathAndName())))
-                        return;
-
-                    key.SetValue(Funcs.GetFileName(), '"' + Funcs.GetFilePathAndName() + '"');
-                    key.Close();
-                }
-            }
         }
     }
 }
