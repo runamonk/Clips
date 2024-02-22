@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Utility;
 
-namespace Clips.Controls
+namespace Clips
 {
     public partial class ClipPanel : BasePanel
     {

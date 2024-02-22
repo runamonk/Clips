@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Utility;
 
-namespace Clips.Controls
+namespace Clips
 {
     public partial class ClipPinnedPanel : BasePanel
     {

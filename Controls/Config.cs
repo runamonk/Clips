@@ -7,7 +7,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using Microsoft.Win32;
 using Utility;
-using static Clips.Controls.BasePanel;
+using static Clips.BasePanel;
 
 namespace Clips
 {

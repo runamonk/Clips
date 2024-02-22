@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static Clips.Controls.BasePanel;
+using static Clips.BasePanel;
 
-namespace Clips.Controls
+namespace Clips
 {
     public partial class ClipMenu : ContextMenuStrip
 

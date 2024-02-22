@@ -1,12 +1,11 @@
-﻿using Clips.Controls;
-using System;
+﻿using System;
 using System.Drawing;
 using System.IO;
 using System.Text;
 using System.Windows.Forms;
 using System.Xml;
 using Utility;
-using static Clips.Controls.BasePanel;
+using static Clips.BasePanel;
 
 namespace Clips
 {

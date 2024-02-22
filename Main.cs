@@ -6,8 +6,6 @@ using System.Runtime.InteropServices;
 using Utility;
 using System.Diagnostics;
 using System.Reflection;
-using Clips.Controls;
-using System.Threading;
 using zuulWindowTracker;
 
 #region Todo

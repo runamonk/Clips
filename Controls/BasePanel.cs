@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace Clips.Controls
+namespace Clips
 {
     public partial class BasePanel : Panel
     {
