@@ -1,54 +1,56 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
 using System.Windows.Forms;
+using Clips.Controls;
 using Utility;
 
-namespace Clips
+namespace Clips.Forms
 {
     public partial class Preview : Form
     {
+        private readonly int _fTextWidth;
+
         public Preview(Config myConfig)
         {
             InitializeComponent();
             ClipsConfig = myConfig;
-            AutoSize = false;
             SizeF ss = TextRenderer.MeasureText("X", PreviewText.Font);
-            FTextWidth = Convert.ToInt32(ss.Width);
+            _fTextWidth = Convert.ToInt32(ss.Width);
         }
 
-        private readonly Config ClipsConfig;
-        private readonly int FTextWidth;
+        private Config ClipsConfig { get; }
+
         protected override CreateParams CreateParams
         {
-            get {
+            get
+            {
                 //Add a DropShadow
-                CreateParams cp = base.CreateParams;
+                var cp = base.CreateParams;
                 cp.ClassStyle |= 0x00020000;
                 return cp;
             }
         }
 
-        protected override bool ShowWithoutActivation
+        protected override bool ShowWithoutActivation => true;
+
+        protected override void OnCreateControl()
         {
-            get { return true; }
+            base.OnCreateControl();
+            AutoSize = false;
         }
 
         public void ShowPreview(ClipButton clipButton)
         {
-            if ((string.IsNullOrEmpty(clipButton.FullText) && (!clipButton.HasImage)) || (ClipsConfig.PreviewPopupDelay == 0))
+            if ((string.IsNullOrEmpty(clipButton.FullText) && !clipButton.HasImage) ||
+                ClipsConfig.PreviewPopupDelay == 0)
                 return;
 
             BackColor = ClipsConfig.PreviewBackColor;
             ForeColor = ClipsConfig.PreviewFontColor;
             PreviewText.BackColor = ClipsConfig.PreviewBackColor;
             PreviewText.ForeColor = ClipsConfig.PreviewFontColor;
-            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
+            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30),
+                (int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
             PreviewText.MaximumSize = MaximumSize;
             PreviewText.Dock = DockStyle.Fill;
             PreviewImage.Dock = DockStyle.Fill;
@@ -59,20 +61,16 @@ namespace Clips
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
 
-                int MaxNoOfCharsPerLine = (MaximumSize.Width / FTextWidth);
-                int MaxCharsAllRows = MaxNoOfCharsPerLine * ClipsConfig.PreviewMaxLines;
+                var maxNoOfCharsPerLine = MaximumSize.Width / _fTextWidth;
+                var maxCharsAllRows = maxNoOfCharsPerLine * ClipsConfig.PreviewMaxLines;
 
-                if (clipButton.FullText.Length <= MaxCharsAllRows)
-                    PreviewText.Text = clipButton.FullText;
-                else
-                    PreviewText.Text = clipButton.FullText.Substring(0, MaxCharsAllRows);
-                
-                this.AutoSize = true;
+                PreviewText.Text = clipButton.FullText.Length <= maxCharsAllRows ? clipButton.FullText : clipButton.FullText.Substring(0, maxCharsAllRows);
+
+                AutoSize = true;
             }
-            else
-            if (clipButton.HasImage)
+            else if (clipButton.HasImage)
             {
-                this.AutoSize = false;
+                AutoSize = false;
                 PreviewImage.Image = Funcs.ScaleImage(clipButton.PreviewImage, MaximumSize.Width, MaximumSize.Height);
                 PreviewText.Visible = false;
                 PreviewImage.Visible = true;
@@ -82,19 +80,16 @@ namespace Clips
 
             // pop the form up to the left or right of the main form, try and keep
             // it on screen.
-            Form MainForm = (Form)clipButton.Parent.Parent.Parent;
-            int MFRight = (MainForm.Left + MainForm.Width);
-            int MFLeft = (MainForm.Left - this.Width);
-            int MFTop = (MainForm.Top);
+            var mainForm = (Form)clipButton.Parent.Parent.Parent;
+            var mfRight = mainForm.Left + mainForm.Width;
+            var mfLeft = mainForm.Left - Width;
+            var mfTop = mainForm.Top;
 
-            this.Top = MFTop;
-            if ((MFRight + this.Width) < Screen.PrimaryScreen.WorkingArea.Width)
-                this.Left = MFRight;
-            else
-                this.Left = MFLeft;
+            Top = mfTop;
+            Left = mfRight + Width < Screen.PrimaryScreen.WorkingArea.Width ? mfRight : mfLeft;
 
             TimerShowForm.Interval = ClipsConfig.PreviewPopupDelay;
-            TimerShowForm.Enabled = true; 
+            TimerShowForm.Enabled = true;
         }
 
         public void HidePreview()

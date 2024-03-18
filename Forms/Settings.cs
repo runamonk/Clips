@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using Utility;
 
-namespace Clips
+namespace Clips.Forms
 {
     public partial class Settings : Form
     {
@@ -16,23 +16,20 @@ namespace Clips
 
         private void SetSamplePassword()
         {
-            gpExample.Text = Funcs.GeneratePassword(gpNumbers.Checked,gpSymbols.Checked,(int)gpSize.Value);
+            gpExample.Text = Funcs.GeneratePassword(gpNumbers.Checked, gpSymbols.Checked, (int)gpSize.Value);
         }
+
         private void FormConfig_KeyDown(object sender, KeyEventArgs e)
         {
             if (e.KeyCode == Keys.Enter)
                 OK.PerformClick();
-            else
-                if (e.KeyCode == Keys.Escape)
+            else if (e.KeyCode == Keys.Escape)
                 Cancel.PerformClick();
         }
 
         private void ColorControl_MouseClick(object sender, MouseEventArgs e)
         {
-            if (dlgColor.ShowDialog() == DialogResult.OK)
-            {
-                ((Panel)sender).BackColor = dlgColor.Color;
-            }
+            if (dlgColor.ShowDialog() == DialogResult.OK) ((Panel)sender).BackColor = dlgColor.Color;
         }
 
         private void LightTheme_Click(object sender, EventArgs e)
@@ -78,7 +75,7 @@ namespace Clips
 
         private void Key_KeyDown(object sender, KeyEventArgs e)
         {
-            Keys k = (Keys)e.KeyCode;
+            var k = e.KeyCode;
             Key.Text = k.ToString();
         }
 
@@ -105,12 +102,12 @@ namespace Clips
 
         private void gpTrack_ValueChanged(object sender, EventArgs e)
         {
-            gpSize.Value = (int)gpTrack.Value;
+            gpSize.Value = gpTrack.Value;
         }
 
         private void gpKey_KeyDown(object sender, KeyEventArgs e)
         {
-            Keys k = (Keys)e.KeyCode;
+            var k = e.KeyCode;
             gpKey.Text = k.ToString();
         }
 
@@ -118,6 +115,7 @@ namespace Clips
         {
             SetSamplePassword();
         }
+
         private void gpNumbers_CheckedChanged(object sender, EventArgs e)
         {
             SetSamplePassword();

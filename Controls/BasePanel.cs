@@ -2,12 +2,59 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace Clips
+namespace Clips.Controls
 {
-    public partial class BasePanel : Panel
+    public class BasePanel : Panel
     {
+        internal readonly ClipMenu MenuRc;
+
         public BasePanel(Config myConfig)
         {
+            ClipsConfig = myConfig;
+            ClipsConfig.ConfigChanged += ConfigChanged;
+
+            MenuRc = new ClipMenu(ClipsConfig)
+            {
+                ShowCheckMargin = false,
+                ShowImageMargin = false
+            };
+        }
+
+        [Obsolete]
+        public BasePanel()
+        {
+        }
+
+        protected virtual void ClipButtonClicked(ClipButton clip)
+        {
+        }
+
+        public void DeleteClip(ClipButton clip)
+        {
+            if (string.IsNullOrEmpty(clip.FileName))
+                return;
+
+            if (File.Exists(clip.FileName))
+                File.Delete(clip.FileName);
+
+            if (Controls.IndexOf(clip) > -1)
+            {
+                clip.OnClipButtonClicked -= ClipButtonClicked;
+                Controls[Controls.IndexOf(clip)].Dispose();
+            }
+
+            ClipDeleted();
+        }
+
+        protected virtual void SetColors()
+        {
+            BackColor = ClipsConfig.ClipsBackColor;
+        }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+
             // Hide scrollbars and then enable AutoScroll.
             AutoScroll = false;
             HorizontalScroll.Maximum = 0;
@@ -16,47 +63,37 @@ namespace Clips
             VerticalScroll.Visible = false;
             AutoScroll = true;
             DoubleBuffered = true;
-
-            ClipsConfig = myConfig;
-            ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
-
-            MenuRC = new ClipMenu(ClipsConfig)
-            {
-                ShowCheckMargin = false,
-                ShowImageMargin = false
-            };
-
             SetColors();
         }
 
-        [Obsolete]
-        public BasePanel()
-        {
-
-        }
-
         #region Properties
+
         internal Config ClipsConfig { get; set; }
         public bool InMenu { get; set; }
         public bool InLoad { get; set; }
+
         #endregion
 
-        internal readonly ClipMenu MenuRC;
-
         #region Events
+
         public delegate void ConfigChangedHandler();
+
         public event ConfigChangedHandler OnConfigChanged;
 
-        public delegate void ClipAddedHandler(ClipButton Clip);
+        public delegate void ClipAddedHandler(ClipButton clip);
+
         public event ClipAddedHandler OnClipAdded;
 
-        public delegate void ClipClickedHandler(ClipButton Clip);
+        public delegate void ClipClickedHandler(ClipButton clip);
+
         public event ClipClickedHandler OnClipClicked;
 
         public delegate void ClipDeletedHandler();
+
         public event ClipDeletedHandler OnClipDeleted;
 
         public delegate void ClipsLoadedHandler();
+
         public event ClipsLoadedHandler OnClipsLoaded;
 
         protected virtual void ConfigChanged()
@@ -65,14 +102,14 @@ namespace Clips
             OnConfigChanged?.Invoke();
         }
 
-        protected void ClipAdded(ClipButton Clip)
+        protected void ClipAdded(ClipButton clip)
         {
-            OnClipAdded?.Invoke(Clip);
+            OnClipAdded?.Invoke(clip);
         }
 
-        protected void ClipClicked(ClipButton Clip)
+        protected void ClipClicked(ClipButton clip)
         {
-            OnClipClicked?.Invoke(Clip);
+            OnClipClicked?.Invoke(clip);
         }
 
         protected void ClipDeleted()
@@ -84,32 +121,7 @@ namespace Clips
         {
             OnClipsLoaded?.Invoke();
         }
+
         #endregion
-
-        protected virtual void ClipButtonClicked(ClipButton Clip)
-        {
-
-        }
-
-        public void DeleteClip(ClipButton Clip)
-        {
-            if (string.IsNullOrEmpty(Clip.FileName))
-                return;
-
-            if (File.Exists(Clip.FileName))
-                File.Delete(Clip.FileName);
-
-            if (Controls.IndexOf(Clip) > -1)
-            {
-                Clip.OnClipButtonClicked -= ClipButtonClicked;
-                Controls[Controls.IndexOf(Clip)].Dispose();
-            }
-            ClipDeleted();
-        }
-
-        protected virtual void SetColors()
-        {
-            BackColor = ClipsConfig.ClipsBackColor;
-        }
     }
 }

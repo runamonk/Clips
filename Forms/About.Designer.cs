@@ -1,4 +1,4 @@
-﻿namespace Clips
+﻿namespace Clips.Forms
 {
     partial class About
     {

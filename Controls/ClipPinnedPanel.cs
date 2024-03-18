@@ -1,67 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Utility;
 
-namespace Clips
+namespace Clips.Controls
 {
-    public partial class ClipPinnedPanel : BasePanel
+    public class ClipPinnedPanel : BasePanel
     {
+        private readonly Timer _monitorTimer;
+
         public ClipPinnedPanel(Config myConfig) : base(myConfig)
         {
             Height = 0;
-            ControlAdded += new System.Windows.Forms.ControlEventHandler(ControlsChanged);
-            ControlRemoved += new System.Windows.Forms.ControlEventHandler(ControlsChanged);
+            ControlAdded += ControlsChanged;
+            ControlRemoved += ControlsChanged;
 
-            Funcs.AddMenuItem(MenuRC, "UnPin", MenuUnPin_Click);
-            Funcs.AddMenuItem(MenuRC, "-", null);
-            Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
-            Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
+            Funcs.AddMenuItem(MenuRc, "UnPin", MenuUnPin_Click);
+            Funcs.AddMenuItem(MenuRc, "-", null);
+            Funcs.AddMenuItem(MenuRc, "Save", MenuSave_Click);
+            Funcs.AddMenuItem(MenuRc, "Delete", MenuDelete_Click);
 
-            MonitorTimer = new Timer
+            _monitorTimer = new Timer
             {
                 Interval = 200,
                 Enabled = false
             };
 
-            MonitorTimer.Tick += new EventHandler(MonitorTimerTick);
+            _monitorTimer.Tick += MonitorTimerTick;
         }
 
         [Obsolete]
         public ClipPinnedPanel()
         {
-
         }
 
-        private readonly Timer MonitorTimer;
-
-        public void AddClipButton(ClipButton Clip, bool doSave)
+        public void AddClipButton(ClipButton clip, bool doSave)
         {
-            Controls.Add(Clip);
-            Clip.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipButtonClicked);
-            Clip.ContextMenuStrip = MenuRC;
-            
+            Controls.Add(clip);
+            clip.OnClipButtonClicked += ClipButtonClicked;
+            clip.ContextMenuStrip = MenuRc;
+
             // Set index
             if (doSave)
             {
-                Clip.Pinned = true;
-                Clip.Save();
+                clip.Pinned = true;
+                clip.Save();
             }
         }
 
-        protected override void ClipButtonClicked(ClipButton Clip)
+        protected override void ClipButtonClicked(ClipButton clip)
         {
-            OnSetClipboardMonitoring?.Invoke(false);      
-            base.ClipClicked(Clip);
-            if (Clip.HasImage)
+            OnSetClipboardMonitoring?.Invoke(false);
+            ClipClicked(clip);
+            if (clip.HasImage)
             {
-                MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
-                Image img = Image.FromStream(ms);
+                var ms = new MemoryStream(clip.PreviewImageBytes);
+                var img = Image.FromStream(ms);
 
                 try
                 {
@@ -69,33 +65,40 @@ namespace Clips
                 }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
             }
-            else
-            if (Clip.Text != "")
+            else if (clip.Text != "")
             {
-                if ((Form.ModifierKeys == Keys.Control) && Funcs.IsUrl(Clip.FullText))
-                {
-                    System.Diagnostics.Process.Start(Clip.FullText);
-                }
+                if (ModifierKeys == Keys.Control && Funcs.IsUrl(clip.FullText))
+                    Process.Start(clip.FullText);
                 else
-                {
                     try
                     {
-                        Clipboard.SetText(Clip.FullText);
+                        Clipboard.SetText(clip.FullText);
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
-                }
             }
-            MonitorTimer.Enabled = true;
+
+            _monitorTimer.Enabled = true;
+        }
+
+        private void ResizePanel()
+        {
+            var c = 0;
+            for (var i = 0; i < Controls.Count; i++) c += Controls[i].Height;
+            Height = c;
         }
 
         #region Events
-        public delegate void ClipUnpinnedHandler(ClipButton Clip);
+
+        public delegate void ClipUnpinnedHandler(ClipButton clip);
+
         public event ClipUnpinnedHandler OnClipUnpinned;
 
         private void ControlsChanged(object sender, ControlEventArgs e)
@@ -106,15 +109,15 @@ namespace Clips
         private void MenuDelete_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            DeleteClip(((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl));
-            base.ClipDeleted();
+            DeleteClip((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
+            ClipDeleted();
             InMenu = false;
         }
 
         private void MenuUnPin_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
+            var b = (ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl;
             Controls.Remove(b);
             b.OnClipButtonClicked -= ClipButtonClicked;
             OnClipUnpinned?.Invoke(b);
@@ -124,48 +127,40 @@ namespace Clips
         private void MenuSave_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            SaveFileDialog dlg = new SaveFileDialog
+            var dlg = new SaveFileDialog
             {
                 InitialDirectory = "c:\\"
             };
-            ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
+            var b = (ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl;
 
             if (b.Text != "")
             {
                 dlg.Filter = "Text (*.txt)|Any (*.*)";
                 dlg.FilterIndex = 1;
                 if (dlg.ShowDialog() == DialogResult.OK)
-                    System.IO.File.WriteAllText(dlg.FileName, b.Text);
+                    File.WriteAllText(dlg.FileName, b.Text);
             }
-            else
-            if (b.HasImage)
+            else if (b.HasImage)
             {
                 dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
                 dlg.FilterIndex = 1;
                 if (dlg.ShowDialog() == DialogResult.OK)
                     b.PreviewImage.Save(dlg.FileName);
             }
+
             InMenu = false;
         }
 
-        public delegate void SetClipboardMonitoring(bool SetMonitorClipboard);
+        public delegate void SetClipboardMonitoring(bool setMonitorClipboard);
+
         public event SetClipboardMonitoring OnSetClipboardMonitoring;
 
         private void MonitorTimerTick(object sender, EventArgs e)
         {
-            MonitorTimer.Enabled = false;
+            _monitorTimer.Enabled = false;
             OnSetClipboardMonitoring?.Invoke(true);
         }
 
         #endregion
-        private void ResizePanel()
-        {
-            int c = 0;
-            for (int i = 0; i < Controls.Count; i++)
-            {
-                c += (Controls[i].Height);
-            }
-            Height = c;
-        }
     }
 }

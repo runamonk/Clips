@@ -1,25 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
-using static Clips.BasePanel;
 
-namespace Clips
+namespace Clips.Controls
 {
-    public partial class ClipMenu : ContextMenuStrip
+    public class ClipMenu : ContextMenuStrip
 
     {
-        private Config ClipsConfig { get; set; }
-
         public ClipMenu(Config myConfig)
         {
             ClipsConfig = myConfig;
-            ClipsConfig.ConfigChanged += new ConfigChangedHandler(ConfigChanged);
+            ClipsConfig.ConfigChanged += ConfigChanged;
             SetColors();
         }
+
+        private Config ClipsConfig { get; }
 
         private void SetColors()
         {
@@ -28,64 +22,47 @@ namespace Clips
             Renderer = null;
             Renderer = new CustomToolstripRenderer(ClipsConfig);
         }
+
         private void ConfigChanged()
         {
             SetColors();
         }
     }
-   
+
     public class CustomToolstripRenderer : ToolStripProfessionalRenderer
     {
-        public CustomToolstripRenderer(Config MyConfig) : base(new CustomColors(MyConfig)) { }
+        public CustomToolstripRenderer(Config myConfig) : base(new CustomColors(myConfig))
+        {
+        }
     }
 
     public class CustomColors : ProfessionalColorTable
     {
-        readonly Config config;
-        public CustomColors(Config MyConfig)
+        private readonly Config _config;
+
+        public CustomColors(Config myConfig)
         {
-            config = MyConfig;
+            _config = myConfig;
         }
 
-        public override Color ButtonSelectedBorder
-        {
-            get { return Color.Transparent; }
-        }
-        public override Color ImageMarginGradientBegin
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color ImageMarginGradientMiddle
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color ImageMarginGradientEnd
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color MenuItemSelected
-        {
-            get { return config.MenuSelectedColor; }
-        }
-        public override Color MenuItemBorder
-        {
-            get { return config.MenuSelectedColor; }
-        }
-        public override Color MenuBorder
-        {
-            get { return config.MenuBorderColor; }
-        }
-        public override Color CheckSelectedBackground
-        {
-            get { return config.MenuSelectedColor; }
-        }
-        public override Color CheckBackground
-        {
-            get { return config.MenuBackColor; }
-        }
-        public override Color CheckPressedBackground
-        {
-            get { return config.MenuBackColor; }
-        }
+        public override Color ButtonSelectedBorder => Color.Transparent;
+
+        public override Color ImageMarginGradientBegin => _config.MenuBackColor;
+
+        public override Color ImageMarginGradientMiddle => _config.MenuBackColor;
+
+        public override Color ImageMarginGradientEnd => _config.MenuBackColor;
+
+        public override Color MenuItemSelected => _config.MenuSelectedColor;
+
+        public override Color MenuItemBorder => _config.MenuSelectedColor;
+
+        public override Color MenuBorder => _config.MenuBorderColor;
+
+        public override Color CheckSelectedBackground => _config.MenuSelectedColor;
+
+        public override Color CheckBackground => _config.MenuBackColor;
+
+        public override Color CheckPressedBackground => _config.MenuBackColor;
     }
 }

@@ -1,17 +1,27 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
+using Clips.Controls;
 using Utility;
 
-namespace Clips
+namespace Clips.Forms
 {
     public partial class About : Form
     {
         public About(Config myConfig)
         {
             InitializeComponent();
-            BackColor = myConfig.ClipsBackColor;
-            ForeColor = myConfig.ClipsFontColor;
+            ClipsConfig = myConfig;
+        }
+
+        internal Config ClipsConfig { get; set; }
+
+        protected override void OnCreateControl()
+        {
+            base.OnCreateControl();
+            BackColor = ClipsConfig.ClipsBackColor;
+            ForeColor = ClipsConfig.ClipsFontColor;
             linkEmail.BackColor = BackColor;
             linkEmail.ForeColor = ForeColor;
             linkEmail.LinkColor = ForeColor;
@@ -30,7 +40,7 @@ namespace Clips
 
         private void LinkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("mailto:" + linkEmail.Text);
+            Process.Start("mailto:" + linkEmail.Text);
         }
 
         private void About_Deactivate(object sender, EventArgs e)

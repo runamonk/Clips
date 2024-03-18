@@ -7,48 +7,53 @@ using System.Runtime.InteropServices;
 using System.Windows.Forms;
 using Utility;
 
-namespace Clips
+namespace Clips.Controls
 {
-    public partial class ClipPanel : BasePanel
+    public class ClipPanel : BasePanel
     {
+        private readonly Timer _monitorTimer;
+
         public ClipPanel(Config myConfig) : base(myConfig)
         {
-            Funcs.AddMenuItem(MenuRC, "Pin", MenuPin_Click);
-            Funcs.AddMenuItem(MenuRC, "-", null);
-            Funcs.AddMenuItem(MenuRC, "Save", MenuSave_Click);
-            Funcs.AddMenuItem(MenuRC, "Delete", MenuDelete_Click);
+            Funcs.AddMenuItem(MenuRc, "Pin", MenuPin_Click);
+            Funcs.AddMenuItem(MenuRc, "-", null);
+            Funcs.AddMenuItem(MenuRc, "Save", MenuSave_Click);
+            Funcs.AddMenuItem(MenuRc, "Delete", MenuDelete_Click);
 
-            AddClipboardFormatListener(this.Handle);
-            MonitorTimer = new Timer
+            AddClipboardFormatListener(Handle);
+            _monitorTimer = new Timer
             {
                 Interval = 200,
                 Enabled = false
             };
 
-            MonitorTimer.Tick += new EventHandler(MonitorTimerTick);
+            _monitorTimer.Tick += MonitorTimerTick;
             MonitorClipboard = false;
         }
 
         [Obsolete]
         public ClipPanel()
         {
-
         }
 
-        private readonly Timer MonitorTimer;
         public bool MonitorClipboard { get; set; }
 
         #region Clipboard hooks
+
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         private static extern bool AddClipboardFormatListener(IntPtr hwnd);
+
         [DllImport("User32.dll", CharSet = CharSet.Auto)]
         private static extern bool RemoveClipboardFormatListener(IntPtr hwnd);
-        private const int WM_CLIPBOARDUPDATE = 0x031D;
+
+        private const int WmClipboardupdate = 0x031D;
+
         #endregion
 
         #region Events
 
-        public delegate void ClipPinnedHandler(ClipButton Clip, bool doSave);
+        public delegate void ClipPinnedHandler(ClipButton clip, bool doSave);
+
         public event ClipPinnedHandler OnClipPinned;
 
         protected override void ConfigChanged()
@@ -60,14 +65,14 @@ namespace Clips
         private void MenuDelete_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            DeleteClip(((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl));
+            DeleteClip((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
             InMenu = false;
         }
 
         private void MenuPin_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
+            var b = (ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl;
             if (Controls.IndexOf(b) > -1) Controls.Remove(b);
             b.OnClipButtonClicked -= ClipButtonClicked;
             OnClipPinned?.Invoke(b, true);
@@ -77,64 +82,64 @@ namespace Clips
         private void MenuSave_Click(object sender, EventArgs e)
         {
             InMenu = true;
-            SaveFileDialog dlg = new SaveFileDialog
+            var dlg = new SaveFileDialog
             {
                 InitialDirectory = "c:\\"
             };
-            ClipButton b = ((ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl);
+            var b = (ClipButton)((ClipMenu)((ToolStripMenuItem)sender).Owner).SourceControl;
 
             if (b.Text != "")
             {
                 dlg.Filter = "Text (*.txt)|Any (*.*)";
                 dlg.FilterIndex = 1;
                 if (dlg.ShowDialog() == DialogResult.OK)
-                    System.IO.File.WriteAllText(dlg.FileName, b.Text);
+                    File.WriteAllText(dlg.FileName, b.Text);
             }
-            else
-            if (b.HasImage)
+            else if (b.HasImage)
             {
                 dlg.Filter = "Picture (*.png)|Jpeg (*.jpg)";
                 dlg.FilterIndex = 1;
                 if (dlg.ShowDialog() == DialogResult.OK)
                     b.PreviewImage.Save(dlg.FileName);
             }
+
             InMenu = false;
         }
 
         private void MonitorTimerTick(object sender, EventArgs e)
         {
-            MonitorTimer.Enabled = false;
+            _monitorTimer.Enabled = false;
             MonitorClipboard = true;
         }
 
         #endregion
 
         #region Methods
-        public void AddClipButton(ClipButton Clip, bool doSave)
+
+        public void AddClipButton(ClipButton clip, bool doSave)
         {
-            Controls.Add(Clip);
-            Clip.OnClipButtonClicked += new ClipButton.ClipButtonClickedHandler(ClipButtonClicked);
-            Clip.ContextMenuStrip = MenuRC;
+            Controls.Add(clip);
+            clip.OnClipButtonClicked += ClipButtonClicked;
+            clip.ContextMenuStrip = MenuRc;
             if (doSave)
             {
-                Clip.Pinned = false;
-                Clip.Save();
+                clip.Pinned = false;
+                clip.Save();
             }
         }
 
         private void AddClipButton(string fileName, dynamic clipContents)
         {
-
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
                 DeleteOldestClip();
 
-            ClipButton b = new ClipButton(ClipsConfig, ButtonType.Clip, fileName, clipContents)
+            var b = new ClipButton(ClipsConfig, ButtonType.Clip, fileName, clipContents)
             {
                 TabStop = false,
                 Dock = DockStyle.Top
             };
 
-            if ((b != null) && (b.ButtonType == ButtonType.Clip) && string.IsNullOrEmpty(b.FullText) && !b.HasImage)
+            if (b.ButtonType == ButtonType.Clip && string.IsNullOrEmpty(b.FullText) && !b.HasImage)
             {
                 DeleteClip(b);
             }
@@ -146,65 +151,63 @@ namespace Clips
                     AddClipButton(b, false);
 
                 if (!InLoad)
-                    base.ClipAdded(b);
+                    ClipAdded(b);
             }
         }
 
-        protected override void ClipButtonClicked(ClipButton Clip)
+        protected override void ClipButtonClicked(ClipButton clip)
         {
             SuspendLayout();
-            base.ClipClicked(Clip);
+            ClipClicked(clip);
             MonitorClipboard = false;
 
-            if (Clip.HasImage)
+            if (clip.HasImage)
             {
-                MemoryStream ms = new MemoryStream(Clip.PreviewImageBytes);
-                Image img = Image.FromStream(ms);
+                var ms = new MemoryStream(clip.PreviewImageBytes);
+                var img = Image.FromStream(ms);
                 ms.Dispose();
                 try
                 {
                     Clipboard.SetImage(img);
-                } 
+                }
                 catch (Exception e)
                 {
-                    MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }    
-            }
-            else
-            if (Clip.Text != "")
-            {
-                if ((Form.ModifierKeys == Keys.Control) && Funcs.IsUrl(Clip.FullText))
-                {
-                    System.Diagnostics.Process.Start(Clip.FullText);
+                    MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK,
+                        MessageBoxIcon.Error);
                 }
+            }
+            else if (clip.Text != "")
+            {
+                if (ModifierKeys == Keys.Control && Funcs.IsUrl(clip.FullText))
+                    Process.Start(clip.FullText);
                 else
-                {
                     try
                     {
-                        Clipboard.SetText(Clip.FullText);
+                        Clipboard.SetText(clip.FullText);
                     }
                     catch (Exception e)
                     {
-                        MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Clip appears to be locked.", e.Message, MessageBoxButtons.OK,
+                            MessageBoxIcon.Error);
                     }
-                }
             }
 
-            if (!Clip.Pinned)
+            if (!clip.Pinned)
             {
-                Clip.Save();
-                Controls.SetChildIndex(Clip, Controls.Count-1);
+                clip.Save();
+                Controls.SetChildIndex(clip, Controls.Count - 1);
             }
+
             ResumeLayout();
             First();
-            MonitorTimer.Enabled = true;
+            _monitorTimer.Enabled = true;
         }
 
         public void CleanupCache()
         {
             if (Controls.Count >= ClipsConfig.ClipsMaxClips)
             {
-                int clipsToDelete = (Controls.Count - ClipsConfig.ClipsMaxClips);
+                var clipsToDelete = Controls.Count - ClipsConfig.ClipsMaxClips;
                 while (clipsToDelete > 0)
                 {
                     DeleteOldestClip();
@@ -216,7 +219,7 @@ namespace Clips
         public void DeleteOldestClip()
         {
             if (!((ClipButton)Controls[0]).Pinned)
-                DeleteClip(((ClipButton)Controls[0]));
+                DeleteClip((ClipButton)Controls[0]);
         }
 
         public void First()
@@ -230,23 +233,24 @@ namespace Clips
 
         private ClipButton GetClip(dynamic clip)
         {
-            if ((clip is Image) && (Controls.Count > 0))
+            if (clip is Image && Controls.Count > 0)
             {
-                if (((ClipButton)Controls[Controls.Count-1]).HasImage && Funcs.IsSame(clip, ((ClipButton)Controls[Controls.Count-1]).PreviewImageBytes))
-                    return ((ClipButton)Controls[Controls.Count-1]);
+                if (((ClipButton)Controls[Controls.Count - 1]).HasImage && Funcs.IsSame(clip,
+                        ((ClipButton)Controls[Controls.Count - 1]).PreviewImageBytes))
+                    return (ClipButton)Controls[Controls.Count - 1];
             }
-            else
-            if ((clip is String) && (Controls.Count > 0))
+            else if (clip is string && Controls.Count > 0)
             {
-                if ((((ClipButton)Controls[Controls.Count - 1]).FullText != "") && (((ClipButton)Controls[Controls.Count - 1]).FullText == clip))
-                    return ((ClipButton)Controls[Controls.Count - 1]);
+                if (((ClipButton)Controls[Controls.Count - 1]).FullText != "" &&
+                    ((ClipButton)Controls[Controls.Count - 1]).FullText == clip)
+                    return (ClipButton)Controls[Controls.Count - 1];
 
                 foreach (ClipButton b in Controls)
                 {
                     if (string.IsNullOrEmpty(b.FileName))
                         continue;
 
-                    if ((clip is String) && (b.FullText != "" && b.FullText == clip))
+                    if (b.FullText != "" && b.FullText == clip)
                         return b;
                 }
             }
@@ -272,14 +276,11 @@ namespace Clips
             if (!Directory.Exists(dirCache))
                 Directory.CreateDirectory(dirCache);
 
-            string[] files = Funcs.GetFiles(dirCache, "*.xml");
-            foreach (string file in files)
-            {
-                AddClipButton(file, null);
-            }
+            var files = Funcs.GetFiles(dirCache, "*.xml");
+            foreach (var file in files) AddClipButton(file, null);
             InLoad = false;
             ResumeLayout();
-            base.ClipsLoaded();
+            ClipsLoaded();
         }
 
         public void SetMonitorClipboard(bool doMonitorBoard)
@@ -290,30 +291,33 @@ namespace Clips
         #endregion
 
         #region Overrides & Clipboard hooks
+
         protected override void OnHandleDestroyed(EventArgs e)
         {
-            RemoveClipboardFormatListener(this.Handle);
+            RemoveClipboardFormatListener(Handle);
             base.OnHandleDestroyed(e);
         }
 
         protected override void WndProc(ref Message m)
         {
-            try 
+            try
             {
                 base.WndProc(ref m);
                 // Why does pasting an image into an outlook email copy the image to the clipboard??
+
                 #region Clipboard hooks
-                if ((m.Msg == WM_CLIPBOARDUPDATE) && (MonitorClipboard))
+
+                if (m.Msg == WmClipboardupdate && MonitorClipboard)
                 {
                     MonitorClipboard = false;
                     try
                     {
-                        System.Windows.Forms.IDataObject obj = Clipboard.GetDataObject();
+                        var obj = Clipboard.GetDataObject();
                         if (obj == null)
                             return;
 
                         Funcs.Wait(100); // Occasionally - We were trying to pull data from the clipboard faster than it could give it and it would be blank.
-                                         // This caused several issues but mainly either a blank image (which we handled) or a clip to be totally ignored.
+                        // This caused several issues but mainly either a blank image (which we handled) or a clip to be totally ignored.
 
                         if (Debugger.IsAttached)
                         {
@@ -326,28 +330,23 @@ namespace Clips
                             if (GetClip((string)obj.GetData(DataFormats.Text)) == null)
                                 AddClipButton("", ((string)obj.GetData(DataFormats.Text)).Trim());
                         }
-                        else
-                        if (obj.GetDataPresent(DataFormats.Bitmap))
+                        else if (obj.GetDataPresent(DataFormats.Bitmap))
                         {
                             if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
                                 AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
                         }
-                        else
-                        if (obj.GetDataPresent(DataFormats.FileDrop))
+                        else if (obj.GetDataPresent(DataFormats.FileDrop))
                         {
-                            string s = string.Join("\n", ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
+                            var s = string.Join("\n",
+                                ((string[])obj.GetData(DataFormats.FileDrop)).Select(i => i.ToString()).ToArray());
                             string[] imageTypes = { ".JPG", ".TIFF", ".TIF", ".BMP", ".PNG", "TIF", ".JPEG" };
                             // Some apps like WhatsApp rather than putting the image in the clipboard will issue a filedrop to the clipboard with the filename.
                             if (File.Exists(s) && imageTypes.Contains(Path.GetExtension(s).ToUpper()))
-                            {
                                 AddClipButton("", new Bitmap(s));
-                            }
-                            else
-                            if (GetClip(s) == null)
+                            else if (GetClip(s) == null)
                                 AddClipButton("", s);
                         }
-                        else
-                        if (obj.GetDataPresent(DataFormats.Dib))
+                        else if (obj.GetDataPresent(DataFormats.Dib))
                         {
                             var b = (Bitmap)obj.GetData(DataFormats.Bitmap, true);
                             if (GetClip(b) == null)
@@ -356,8 +355,8 @@ namespace Clips
                         }
                     }
                     finally
-                    { 
-                        MonitorClipboard = true; 
+                    {
+                        MonitorClipboard = true;
                     }
                 }
             }
@@ -365,8 +364,10 @@ namespace Clips
             {
                 //MessageBox.Show(ex.Message);
             }
+
             #endregion
         }
+
         #endregion
     }
 }
