@@ -70,6 +70,8 @@
             this.gpShift = new System.Windows.Forms.CheckBox();
             this.gpAlt = new System.Windows.Forms.CheckBox();
             this.gpControl = new System.Windows.Forms.CheckBox();
+            this.IgnoreWindows = new System.Windows.Forms.TextBox();
+            this.KeepOnTop = new System.Windows.Forms.CheckBox();
             this.dlgColor = new System.Windows.Forms.ColorDialog();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.Cancel = new System.Windows.Forms.Button();
@@ -87,6 +89,7 @@
             this.label6 = new System.Windows.Forms.Label();
             this.NoOfClipsToDisplay = new System.Windows.Forms.Label();
             this.GroupHotkey = new System.Windows.Forms.GroupBox();
+            this.label24 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.gbGenPass = new System.Windows.Forms.GroupBox();
@@ -122,8 +125,6 @@
             this.label14 = new System.Windows.Forms.Label();
             this.DarkTheme = new System.Windows.Forms.RadioButton();
             this.LightTheme = new System.Windows.Forms.RadioButton();
-            this.IgnoreWindows = new System.Windows.Forms.TextBox();
-            this.label24 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsLinesPerRow)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ClipsMaxClips)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.PreviewMaxLines)).BeginInit();
@@ -154,49 +155,25 @@
             // 
             this.ClipsLinesPerRow.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ClipsLinesPerRow.Location = new System.Drawing.Point(241, 20);
-            this.ClipsLinesPerRow.Maximum = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
-            this.ClipsLinesPerRow.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ClipsLinesPerRow.Maximum = new decimal(new int[] { 10, 0, 0, 0 });
+            this.ClipsLinesPerRow.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             this.ClipsLinesPerRow.Name = "ClipsLinesPerRow";
             this.ClipsLinesPerRow.Size = new System.Drawing.Size(51, 20);
             this.ClipsLinesPerRow.TabIndex = 7;
             this.toolTip1.SetToolTip(this.ClipsLinesPerRow, "Set the number of rows of text per clip to display in list.");
-            this.ClipsLinesPerRow.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ClipsLinesPerRow.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // ClipsMaxClips
             // 
             this.ClipsMaxClips.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ClipsMaxClips.Location = new System.Drawing.Point(107, 20);
-            this.ClipsMaxClips.Maximum = new decimal(new int[] {
-            999,
-            0,
-            0,
-            0});
-            this.ClipsMaxClips.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ClipsMaxClips.Maximum = new decimal(new int[] { 999, 0, 0, 0 });
+            this.ClipsMaxClips.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             this.ClipsMaxClips.Name = "ClipsMaxClips";
             this.ClipsMaxClips.Size = new System.Drawing.Size(51, 20);
             this.ClipsMaxClips.TabIndex = 6;
             this.toolTip1.SetToolTip(this.ClipsMaxClips, "Set  the max number of clips to save.");
-            this.ClipsMaxClips.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ClipsMaxClips.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // Key
             // 
@@ -213,11 +190,7 @@
             // 
             this.PreviewMaxLines.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PreviewMaxLines.Location = new System.Drawing.Point(94, 18);
-            this.PreviewMaxLines.Maximum = new decimal(new int[] {
-            9999,
-            0,
-            0,
-            0});
+            this.PreviewMaxLines.Maximum = new decimal(new int[] { 9999, 0, 0, 0 });
             this.PreviewMaxLines.Name = "PreviewMaxLines";
             this.PreviewMaxLines.Size = new System.Drawing.Size(51, 20);
             this.PreviewMaxLines.TabIndex = 13;
@@ -227,11 +200,7 @@
             // 
             this.PreviewPopupDelay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.PreviewPopupDelay.Location = new System.Drawing.Point(94, 43);
-            this.PreviewPopupDelay.Maximum = new decimal(new int[] {
-            9000,
-            0,
-            0,
-            0});
+            this.PreviewPopupDelay.Maximum = new decimal(new int[] { 9000, 0, 0, 0 });
             this.PreviewPopupDelay.Name = "PreviewPopupDelay";
             this.PreviewPopupDelay.Size = new System.Drawing.Size(51, 20);
             this.PreviewPopupDelay.TabIndex = 14;
@@ -289,20 +258,12 @@
             // 
             this.ClipsToDisplay.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.ClipsToDisplay.Location = new System.Drawing.Point(107, 46);
-            this.ClipsToDisplay.Minimum = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ClipsToDisplay.Minimum = new decimal(new int[] { 1, 0, 0, 0 });
             this.ClipsToDisplay.Name = "ClipsToDisplay";
             this.ClipsToDisplay.Size = new System.Drawing.Size(51, 20);
             this.ClipsToDisplay.TabIndex = 8;
             this.toolTip1.SetToolTip(this.ClipsToDisplay, "Set the maximum number of clips to display on the popup.");
-            this.ClipsToDisplay.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
+            this.ClipsToDisplay.Value = new decimal(new int[] { 1, 0, 0, 0 });
             // 
             // PreviewBackColor
             // 
@@ -459,25 +420,13 @@
             // 
             this.gpSize.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.gpSize.Location = new System.Drawing.Point(399, 131);
-            this.gpSize.Maximum = new decimal(new int[] {
-            25,
-            0,
-            0,
-            0});
-            this.gpSize.Minimum = new decimal(new int[] {
-            5,
-            0,
-            0,
-            0});
+            this.gpSize.Maximum = new decimal(new int[] { 25, 0, 0, 0 });
+            this.gpSize.Minimum = new decimal(new int[] { 5, 0, 0, 0 });
             this.gpSize.Name = "gpSize";
             this.gpSize.Size = new System.Drawing.Size(51, 20);
             this.gpSize.TabIndex = 15;
             this.toolTip1.SetToolTip(this.gpSize, "Length of password.");
-            this.gpSize.Value = new decimal(new int[] {
-            10,
-            0,
-            0,
-            0});
+            this.gpSize.Value = new decimal(new int[] { 10, 0, 0, 0 });
             this.gpSize.ValueChanged += new System.EventHandler(this.gpSize_ValueChanged);
             // 
             // Clear
@@ -651,6 +600,27 @@
             this.toolTip1.SetToolTip(this.gpControl, "Click to add modifier.");
             this.gpControl.UseVisualStyleBackColor = true;
             // 
+            // IgnoreWindows
+            // 
+            this.IgnoreWindows.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.IgnoreWindows.Location = new System.Drawing.Point(10, 83);
+            this.IgnoreWindows.Name = "IgnoreWindows";
+            this.IgnoreWindows.Size = new System.Drawing.Size(282, 20);
+            this.IgnoreWindows.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.IgnoreWindows, "Enter partial window titles (seperated by a comma) to ignore.");
+            // 
+            // KeepOnTop
+            // 
+            this.KeepOnTop.AutoSize = true;
+            this.KeepOnTop.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.KeepOnTop.Location = new System.Drawing.Point(6, 83);
+            this.KeepOnTop.Name = "KeepOnTop";
+            this.KeepOnTop.Size = new System.Drawing.Size(81, 17);
+            this.KeepOnTop.TabIndex = 13;
+            this.KeepOnTop.Text = "Keep on top";
+            this.toolTip1.SetToolTip(this.KeepOnTop, "Check to keep clips on top of other windows.");
+            this.KeepOnTop.UseVisualStyleBackColor = true;
+            // 
             // dlgColor
             // 
             this.dlgColor.AnyColor = true;
@@ -716,9 +686,9 @@
             this.GroupPreview.Controls.Add(this.label7);
             this.GroupPreview.Controls.Add(this.PreviewPopupDelay);
             this.GroupPreview.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.GroupPreview.Location = new System.Drawing.Point(0, 86);
+            this.GroupPreview.Location = new System.Drawing.Point(0, 107);
             this.GroupPreview.Name = "GroupPreview";
-            this.GroupPreview.Size = new System.Drawing.Size(152, 95);
+            this.GroupPreview.Size = new System.Drawing.Size(152, 74);
             this.GroupPreview.TabIndex = 3;
             this.GroupPreview.TabStop = false;
             this.GroupPreview.Text = "Preview";
@@ -747,6 +717,7 @@
             // 
             // GroupOther
             // 
+            this.GroupOther.Controls.Add(this.KeepOnTop);
             this.GroupOther.Controls.Add(this.AutoHide);
             this.GroupOther.Controls.Add(this.AutoSizeHeight);
             this.GroupOther.Controls.Add(this.OpenAtMouse);
@@ -754,7 +725,7 @@
             this.GroupOther.Dock = System.Windows.Forms.DockStyle.Top;
             this.GroupOther.Location = new System.Drawing.Point(0, 0);
             this.GroupOther.Name = "GroupOther";
-            this.GroupOther.Size = new System.Drawing.Size(152, 86);
+            this.GroupOther.Size = new System.Drawing.Size(152, 107);
             this.GroupOther.TabIndex = 1;
             this.GroupOther.TabStop = false;
             // 
@@ -844,6 +815,15 @@
             this.GroupHotkey.TabIndex = 0;
             this.GroupHotkey.TabStop = false;
             this.GroupHotkey.Text = "Popup Shortcut";
+            // 
+            // label24
+            // 
+            this.label24.AutoSize = true;
+            this.label24.Location = new System.Drawing.Point(8, 64);
+            this.label24.Name = "label24";
+            this.label24.Size = new System.Drawing.Size(84, 13);
+            this.label24.TabIndex = 8;
+            this.label24.Text = "Ignore Windows";
             // 
             // label2
             // 
@@ -1242,24 +1222,6 @@
             this.LightTheme.UseVisualStyleBackColor = true;
             this.LightTheme.Click += new System.EventHandler(this.LightTheme_Click);
             // 
-            // IgnoreWindows
-            // 
-            this.IgnoreWindows.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.IgnoreWindows.Location = new System.Drawing.Point(10, 83);
-            this.IgnoreWindows.Name = "IgnoreWindows";
-            this.IgnoreWindows.Size = new System.Drawing.Size(282, 20);
-            this.IgnoreWindows.TabIndex = 7;
-            this.toolTip1.SetToolTip(this.IgnoreWindows, "Enter partial window titles (seperated by a comma) to ignore.");
-            // 
-            // label24
-            // 
-            this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(8, 64);
-            this.label24.Name = "label24";
-            this.label24.Size = new System.Drawing.Size(84, 13);
-            this.label24.TabIndex = 8;
-            this.label24.Text = "Ignore Windows";
-            // 
             // Settings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1317,8 +1279,9 @@
             this.panel5.ResumeLayout(false);
             this.panel5.PerformLayout();
             this.ResumeLayout(false);
-
         }
+
+        public System.Windows.Forms.CheckBox KeepOnTop;
 
         #endregion
         private System.Windows.Forms.ToolTip toolTip1;

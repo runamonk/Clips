@@ -292,10 +292,10 @@ namespace Clips.Controls
 
         #region Overrides & Clipboard hooks
 
-        protected override void OnHandleDestroyed(EventArgs e)
+        protected override void Dispose(bool disposing)
         {
             RemoveClipboardFormatListener(Handle);
-            base.OnHandleDestroyed(e);
+            base.Dispose(disposing);
         }
 
         protected override void WndProc(ref Message m)
@@ -332,6 +332,15 @@ namespace Clips.Controls
                         }
                         else if (obj.GetDataPresent(DataFormats.Bitmap))
                         {
+                            var f = obj.GetFormats();
+                            if (f.Contains("application/x-moz-nativeimage"))
+                            {
+                                // firefox images are weird, don't always paste into other applications (including whatsapp)
+                                // push it back to the clipboard.
+                                Clipboard.SetImage(((Bitmap)obj.GetData(DataFormats.Bitmap)));
+                                return;
+                            }
+
                             if (GetClip((Bitmap)obj.GetData(DataFormats.Bitmap)) == null)
                                 AddClipButton("", (Bitmap)obj.GetData(DataFormats.Bitmap));
                         }

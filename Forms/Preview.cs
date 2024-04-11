@@ -13,6 +13,7 @@ namespace Clips.Forms
         public Preview(Config myConfig)
         {
             InitializeComponent();
+            AutoSize = false;
             ClipsConfig = myConfig;
             SizeF ss = TextRenderer.MeasureText("X", PreviewText.Font);
             _fTextWidth = Convert.ToInt32(ss.Width);
@@ -33,11 +34,6 @@ namespace Clips.Forms
 
         protected override bool ShowWithoutActivation => true;
 
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-            AutoSize = false;
-        }
 
         public void ShowPreview(ClipButton clipButton)
         {
@@ -49,8 +45,7 @@ namespace Clips.Forms
             ForeColor = ClipsConfig.PreviewFontColor;
             PreviewText.BackColor = ClipsConfig.PreviewBackColor;
             PreviewText.ForeColor = ClipsConfig.PreviewFontColor;
-            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30),
-                (int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
+            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30),(int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
             PreviewText.MaximumSize = MaximumSize;
             PreviewText.Dock = DockStyle.Fill;
             PreviewImage.Dock = DockStyle.Fill;

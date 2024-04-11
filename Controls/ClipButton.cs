@@ -29,21 +29,81 @@ namespace Clips.Controls
 
         #region Privates
 
-        private const string NewXmlFile =
-            "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" PINNEDINDEX=\"{1}\" TYPE=\"{2}\">{3}\r\n</DATA>";
+        private const string NewXmlFile = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" PINNED_INDEX=\"{1}\" TYPE=\"{2}\">{3}\r\n</DATA>";
 
         #endregion
 
         public ClipButton(Config myConfig, ButtonType buttonType, string fileName, dynamic clipContents)
         {
             ButtonType = buttonType;
+
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += ConfigChanged;
+
+            FlatAppearance.BorderSize = 0;
+            FlatStyle = FlatStyle.Flat;
+            switch (ButtonType)
+            {
+                case ButtonType.PasswordGen:
+                {
+                    Width = Height;
+                    Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                    Text = IconPassword;
+                    var passwordButtonTooltip = new ToolTip();
+                    passwordButtonTooltip.SetToolTip(this,"Click to generate a random password and copy it to the clipboard.");
+                    break;
+                }
+                case ButtonType.Menu:
+                    Width = Height;
+                    Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                    Text = IconMainmenu;
+                    break;
+                case ButtonType.Pin:
+                {
+                    Width = Height;
+                    Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
+                    Text = IconUnpinned;
+                    var pinButtonToolTip = new ToolTip();
+                    pinButtonToolTip.SetToolTip(this,"Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
+                    break;
+                }
+                case ButtonType.Clip:
+                    TextAlign = ContentAlignment.TopLeft;
+                    ImageAlign = ContentAlignment.MiddleLeft;
+                    break;
+                default:
+                {
+                    if (IsHeaderButton)
+                    {
+                        Padding = new Padding(0, 0, 0, 0);
+                        Margin = new Padding(0, 0, 0, 0);
+                        TextAlign = ContentAlignment.MiddleCenter;
+                    }
+
+                    break;
+                }
+            }
+
+            UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
+            AutoEllipsis = false;
+            UseMnemonic = false;
+            AutoSize = false;
+            Pinned = false;
+            PinnedIndex = 0;
 
             if (!string.IsNullOrEmpty(fileName))
                 LoadFromCache(fileName);
             else if (clipContents != null)
                 SaveToCache(clipContents);
+
+            if (ButtonType == ButtonType.Clip)
+            {
+                KeyDown += Button_KeyDown;
+                _previewForm = new Preview(ClipsConfig);
+            }
+
+            SetColors();
+            CalculateSize();
         }
 
         #region Properties
@@ -73,8 +133,7 @@ namespace Clips.Controls
                 var ms = new MemoryStream(PreviewImageBytes);
                 var img = Image.FromStream(ms);
                 ms.Dispose();
-                return Funcs.ScaleImage(img, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30),
-                    (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+                return Funcs.ScaleImage(img, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30),(int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
             }
             set
             {
@@ -203,7 +262,6 @@ namespace Clips.Controls
                     return;
                 }
 
-
                 SetAttrib(doc, data, "PINNED", Pinned ? "Y" : "N");
                 SetAttrib(doc, data, "PINNED_INDEX", PinnedIndex.ToString());
                 doc.Save(FileName);
@@ -283,96 +341,34 @@ namespace Clips.Controls
                 pp.DeleteClip(this);
         }
 
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-            FlatAppearance.BorderSize = 0;
-            FlatStyle = FlatStyle.Flat;
-            switch (ButtonType)
-            {
-                case ButtonType.PasswordGen:
-                {
-                    Width = Height;
-                    Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                    Text = IconPassword;
-                    var passwordButtonTooltip = new ToolTip();
-                    passwordButtonTooltip.SetToolTip(this,
-                        "Click to generate a random password and copy it to the clipboard.");
-                    break;
-                }
-                case ButtonType.Menu:
-                    Width = Height;
-                    Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                    Text = IconMainmenu;
-                    break;
-                case ButtonType.Pin:
-                {
-                    Width = Height;
-                    Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
-                    Text = IconUnpinned;
-                    var pinButtonToolTip = new ToolTip();
-                    pinButtonToolTip.SetToolTip(this,
-                        "Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
-                    break;
-                }
-                case ButtonType.Clip:
-                    TextAlign = ContentAlignment.TopLeft;
-                    ImageAlign = ContentAlignment.MiddleLeft;
-                    break;
-                default:
-                {
-                    if (IsHeaderButton)
-                    {
-                        Padding = new Padding(0, 0, 0, 0);
-                        Margin = new Padding(0, 0, 0, 0);
-                        TextAlign = ContentAlignment.MiddleCenter;
-                    }
-
-                    break;
-                }
-            }
-
-            UseCompatibleTextRendering = true; // keeps text from being wrapped prematurely.
-            AutoEllipsis = false;
-            UseMnemonic = false;
-            AutoSize = false;
-            Pinned = false;
-            PinnedIndex = 0;
-
-
-            if (ButtonType == ButtonType.Clip)
-                KeyDown += Button_KeyDown;
-
-            _previewForm = new Preview(ClipsConfig);
-
-            SetColors();
-
-            CalculateSize();
-        }
-
         protected override void OnClick(EventArgs e)
         {
             if (ButtonType == ButtonType.Pin)
-            {
                 Text = Text == IconPinned ? IconUnpinned : IconPinned;
-            }
 
-            _previewForm.HidePreview();
+            if (ButtonType == ButtonType.Clip)
+                _previewForm.HidePreview();
+
             base.OnClick(e);
-            OnClipButtonClicked?.Invoke(this);
+            if (ButtonType == ButtonType.Clip)
+                OnClipButtonClicked?.Invoke(this);
         }
 
-        protected override void OnHandleDestroyed(EventArgs e)
+        protected override void Dispose(bool disposing)
         {
-            _previewForm.Close();
-            _previewForm = null;
-            base.OnHandleDestroyed(e);
+            if (_previewForm != null)
+            {
+                _previewForm.Close();
+                _previewForm = null;
+            }
+
+            base.Dispose(disposing);
         }
 
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
-            _previewForm.ShowPreview(this);
+
             if (IsHeaderButton)
             {
                 BackColor = ClipsConfig.HeaderButtonSelectedColor;
@@ -382,12 +378,16 @@ namespace Clips.Controls
                 BackColor = ClipsConfig.ClipsSelectedColor;
                 Focus();
             }
+
+            if (ButtonType == ButtonType.Clip)
+                _previewForm.ShowPreview(this);
         }
 
         protected override void OnMouseLeave(EventArgs e)
         {
             base.OnMouseLeave(e);
-            _previewForm.HidePreview();
+            if (ButtonType == ButtonType.Clip)
+                _previewForm.HidePreview();
             BackColor = IsHeaderButton ? ClipsConfig.HeaderButtonColor : ClipsConfig.ClipsRowBackColor;
         }
 

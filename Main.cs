@@ -9,6 +9,8 @@ using Clips.Controls;
 using Clips.Forms;
 using Utility;
 using zuulWindowTracker;
+using Resolve.HotKeys;
+
 
 #region Todo
 
@@ -29,15 +31,6 @@ namespace Clips
         }
 
         #region Imports
-
-        [DllImport("user32.dll")]
-        private static extern bool RegisterHotKey(IntPtr hWnd, int id, int fsModifiers, int vk);
-
-        [DllImport("user32.dll")]
-        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
 
         [DllImport("user32.dll")]
         private static extern uint GetWindowThreadProcessId(IntPtr hWnd, out uint lpdwProcessId);
@@ -63,12 +56,12 @@ namespace Clips
         private bool _inClose;
         private bool _inMenu;
         private bool _inSettings;
-        private readonly int _hotkeyId = 1;
-        private readonly int _gpHotkeyId = 2;
+        private bool _firstTime = true;
 
-        private bool _hotkeyEnabled;
         private string[] _ignoreWindowsList;
         private WindowTracker _windowTracker;
+        private HotKey _hotkey1;
+        private HotKey _hotkey2;
 
         #endregion
 
@@ -87,8 +80,7 @@ namespace Clips
 
         private void ClipClicked(ClipButton clip)
         {
-            if (Config.AutoHide)
-                ToggleShow(true);
+            ToggleShow();
         }
 
         private void ClipDeleted()
@@ -115,12 +107,15 @@ namespace Clips
 
         private void Main_Deactivate(object sender, EventArgs e)
         {
-            if (Opacity > 0)
-                ToggleShow();
+             if (!_firstTime && Config.AutoHide && IsVisible())
+                 ToggleShow();
         }
 
         private void Main_FormClosing(object sender, FormClosingEventArgs e)
         {
+            DisableHotkey();
+            DisableGPHotkey();
+
             _inClose = true;
             _windowTracker = null;
         }
@@ -129,8 +124,8 @@ namespace Clips
         {
             if (ModifierKeys == Keys.Control && e.KeyCode == Keys.P)
                 PinButton.PerformClick();
-            else if (SearchClips.Text == "" && e.KeyCode == Keys.Escape && Opacity > 0)
-                ToggleShow(true);
+            else if (SearchClips.Text == "" && e.KeyCode == Keys.Escape)
+                ToggleShow();
             else if (e.KeyCode == Keys.Escape)
                 SearchClips.Text = "";
             else if (e.KeyCode == Keys.Delete || e.KeyCode == Keys.Back)
@@ -145,11 +140,6 @@ namespace Clips
                 SearchClips.Text += e.KeyChar.ToString();
         }
 
-        private void Main_Load(object sender, EventArgs e)
-        {
-            LoadConfig();
-        }
-
         private void Main_ResizeEnd(object sender, EventArgs e)
         {
             Config.FormSize = Size;
@@ -159,7 +149,7 @@ namespace Clips
 
         private void Main_VisibleChanged(object sender, EventArgs e)
         {
-            if (Visible)
+            if (IsVisible())
                 BringToFront();
         }
 
@@ -201,7 +191,7 @@ namespace Clips
         private void MenuSettings_Click(object sender, EventArgs e)
         {
             _inSettings = true;
-            Config.ShowConfigForm(Opacity > 0);
+            Config.ShowConfigForm(IsVisible());
             _inSettings = false;
         }
 
@@ -213,7 +203,7 @@ namespace Clips
 
         private void OnWindowChanged(IntPtr handle)
         {
-            if (_inClose) return;
+            if (_inClose || Config.IgnoreWindows == "") return;
             try
             {
                 GetWindowThreadProcessId(handle, out var pid);
@@ -377,7 +367,6 @@ namespace Clips
                 Clips.OnClipPinned += ClipPinned;
                 Clips.LoadItems();
                 Clips.MonitorClipboard = true;
-
                 Clips.Parent = pMain;
                 Clips.Dock = DockStyle.Fill;
                 pMain.Controls.SetChildIndex(Clips, 0);
@@ -392,46 +381,69 @@ namespace Clips
             SearchClips.BackColor = Config.HeaderBackColor;
             SearchClips.ForeColor = Config.HeaderFontColor;
 
-            if (Config.AutoSizeHeight && Visible)
+            if (Config.AutoSizeHeight && IsVisible())
                 AutoSizeForm(false);
 
-            EnableHotkey();
-
-            if (Config.GpHotkey != "None")
-                RegisterHotKey(Handle, _gpHotkeyId, Config.GpHotkeyModifier,
-                    ((Keys)Enum.Parse(typeof(Keys), Config.GpHotkey)).GetHashCode());
+            if (Config.PopupHotkey == Keys.None)
+                DisableHotkey();
             else
-                UnregisterHotKey(Handle, _gpHotkeyId);
+                 EnableHotkey();
+
+            if (Config.GpHotkey == Keys.None)
+                DisableGPHotkey();
+            else
+                EnableGPHotkey();
 
             MonitorWindowChanges();
+
+            ShowInTaskbar = (!Config.AutoHide);
+
+            TogglePin();
+            ToggleShow();
         }
 
-        public void EnableHotkey()
+        private void EnableHotkey()
         {
-            if (Config.PopupHotkey == "None")
+            DisableHotkey();
+            _hotkey1 = new HotKey(Config.PopupHotkey, Config.PopupHotkeyModifier);
+            _hotkey1.Pressed += (sender, args) => ToggleShow();
+            _hotkey1.Register();
+        }
+
+        private void DisableHotkey()
+        {
+            if (_hotkey1 != null)
             {
-                _hotkeyEnabled = false;
-            }
-            else if (_hotkeyEnabled == false)
-            {
-                _hotkeyEnabled = true;
-                RegisterHotKey(Handle, _hotkeyId, Config.PopupHotkeyModifier,
-                    ((Keys)Enum.Parse(typeof(Keys), Config.PopupHotkey)).GetHashCode());
+                _hotkey1.Unregister();
+                _hotkey1.Dispose();
             }
         }
 
-        public void DisableHotkey()
+        private void EnableGPHotkey()
         {
-            if (_hotkeyEnabled)
+            DisableGPHotkey();
+            _hotkey2 = new HotKey(Config.GpHotkey, Config.GpHotkeyModifier);
+            _hotkey2.Pressed += (sender, args) => GeneratePassword();
+            _hotkey2.Register();
+        }
+
+        private void DisableGPHotkey()
+        {
+            if (_hotkey2 != null)
             {
-                _hotkeyEnabled = false;
-                UnregisterHotKey(Handle, _hotkeyId);
+                _hotkey2.Unregister();
+                _hotkey2.Dispose();
             }
         }
 
         private void GeneratePassword()
         {
             Clipboard.SetText(Funcs.GeneratePassword(Config.GpIncNumbers, Config.GpIncSymbols, Config.GpSize));
+        }
+
+        private bool IsVisible()
+        {
+            return (Opacity >= 1);
         }
 
         private bool InWindowList(string title)
@@ -465,30 +477,51 @@ namespace Clips
             Size = Config.FormSize;
         }
 
-        private void ToggleShow(bool @override = false)
+        private void TogglePin()
         {
-            if (TopMost || (!@override && (_inClose || _inAbout || Clips.InMenu || _inMenu || _inSettings))) return;
+            PinButton.Enabled = true;
 
-            if (Opacity > 0)
+            if (((!Config.AutoHide) && (Config.KeepOnTop) && !TopMost) || (TopMost && !Config.KeepOnTop))
+                PinButton.PerformClick();
+
+            if (Config.KeepOnTop && !Config.AutoHide)
+                PinButton.Enabled = false;
+        }
+
+        private void ToggleShow()
+        {
+            void SetVisible(bool setVis)
             {
-                // Set visible=false to hide the form, then change the opacity that way we can show the form later and then
-                // resize it without it jumping around the screen (if the mouse has moved to a new position).
-                // Setting visible=false will automatically hide all submenus if they are displayed.
-                Visible = false;
-                Opacity = 0;
-                // Turn off KeyPreview while the form is hidden so we don't accidentally pick
-                // up keystrokes before the form actually loses focus.
-                KeyPreview = false;
+                if (!setVis)
+                {
+                    KeyPreview = false;
+                    Opacity = 0;
+                }
+                else
+                {
+                    if (Config.OpenFormAtCursor)
+                        Funcs.MoveFormToCursor(this);
+
+                    AutoSizeForm(true);
+                    Opacity = 100;
+                    Activate();
+                    KeyPreview = true;
+                }
+            }
+
+            if (_inClose || _inAbout || Clips.InMenu || _inMenu || _inSettings) return;
+
+
+            if  ((_firstTime && Config.AutoHide) || (!TopMost && Config.AutoHide && IsVisible()))
+            {
+                SetVisible(false);
+                _firstTime = false;
             }
             else
+            if ((_firstTime && !Config.AutoHide) || (!_firstTime && !IsVisible()))
             {
-                Visible = true;
-                AutoSizeForm(true);
-                if (Config.OpenFormAtCursor)
-                    Funcs.MoveFormToCursor(this);
-                Opacity = 100;
-                Activate();
-                KeyPreview = true;
+                SetVisible(true);
+                _firstTime = false;
             }
         }
 
@@ -496,32 +529,14 @@ namespace Clips
 
         #region Overrides
 
-        protected override void OnHandleDestroyed(EventArgs e)
-        {
-            _windowTracker = null;
-            DisableHotkey();
-            base.OnHandleDestroyed(e);
-        }
-
         protected override void OnLoad(EventArgs e)
         {
             if (Funcs.IsRunningDoShow()) Application.Exit();
             base.OnLoad(e);
-        }
-
-        protected override void WndProc(ref Message m)
-        {
-            if (m.Msg == 0x0312)
-            {
-                if (m.WParam.ToInt32() == _gpHotkeyId) GeneratePassword();
-
-                if (m.WParam.ToInt32() == _hotkeyId)
-                    ToggleShow();
-            }
-
-            base.WndProc(ref m);
+            LoadConfig();
         }
 
         #endregion
+
     } // Main
 }

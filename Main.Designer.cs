@@ -81,13 +81,11 @@
             this.Text = "Clips";
             this.Deactivate += new System.EventHandler(this.Main_Deactivate);
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Main_FormClosing);
-            this.Load += new System.EventHandler(this.Main_Load);
             this.ResizeEnd += new System.EventHandler(this.Main_ResizeEnd);
             this.VisibleChanged += new System.EventHandler(this.Main_VisibleChanged);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Main_KeyDown);
             this.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.Main_KeyPress);
             this.ResumeLayout(false);
-
         }
 
         #endregion

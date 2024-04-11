@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using Utility;
 using static Clips.Controls.BasePanel;
+using Resolve.HotKeys;
 
 namespace Clips.Controls
 {
@@ -176,19 +177,19 @@ namespace Clips.Controls
             }
         }
 
-        public string GpHotkey
+        public Keys GpHotkey
         {
             get
             {
                 var s = FindKey("gp_hotkey");
                 if (s == "")
                     s = SetKey("gp_hotkey", "None");
-                return s;
+                return Funcs.StringToKey(s);
             }
-            set => SetKey("gp_hotkey", value);
+            set => SetKey("gp_hotkey", value.ToString());
         }
 
-        public int GpHotkeyModifier
+        public Resolve.HotKeys.ModifierKey GpHotkeyModifier
         {
             /* Modifier
                None = 0,
@@ -202,9 +203,9 @@ namespace Clips.Controls
                 var s = FindKey("gp_hotkey_modifier");
                 if (s == "")
                     s = SetKey("gp_hotkey_modifier", "0");
-                return Convert.ToInt32(s);
+                return (Resolve.HotKeys.ModifierKey)Int32.Parse(s);
             }
-            set => SetKey("gp_hotkey_modifier", value.ToString());
+            set => SetKey("gp_hotkey_modifier", ((int)value).ToString());
         }
 
         public int GpSize
@@ -303,6 +304,17 @@ namespace Clips.Controls
             set => SetKey("ignorewindows", value);
         }
 
+        public bool KeepOnTop
+        {
+            get
+            {
+                var s = FindKey("keep_on_top");
+                if (s == "")
+                    s = SetKey("keep_on_top", "false");
+                return bool.Parse(s);
+            }
+            set => SetKey("keep_on_top", value.ToString());
+        }
         public Color MenuBackColor
         {
             get
@@ -363,19 +375,19 @@ namespace Clips.Controls
             set => SetKey("open_form_at_cursor", value.ToString());
         }
 
-        public string PopupHotkey
+        public Keys PopupHotkey
         {
             get
             {
                 var s = FindKey("popup_hotkey");
                 if (s == "")
                     s = SetKey("popup_hotkey", "None");
-                return s;
+                return Funcs.StringToKey(s);
             }
-            set => SetKey("popup_hotkey", value);
+            set => SetKey("popup_hotkey", value.ToString());
         }
 
-        public int PopupHotkeyModifier
+        public Resolve.HotKeys.ModifierKey PopupHotkeyModifier
         {
             /* Modifier
                None = 0,
@@ -389,9 +401,9 @@ namespace Clips.Controls
                 var s = FindKey("popup_hotkey_modifier");
                 if (s == "")
                     s = SetKey("popup_hotkey_modifier", "0");
-                return Convert.ToInt32(s);
+                return (Resolve.HotKeys.ModifierKey)Int32.Parse(s);
             }
-            set => SetKey("popup_hotkey_modifier", value.ToString());
+            set => SetKey("popup_hotkey_modifier", ((int)value).ToString());
         }
 
         public Color PreviewBackColor
@@ -543,7 +555,6 @@ namespace Clips.Controls
             {
                 base.OnCreateControl();
                 OK.Click += OkButtonClick;
-                Key.Text = Config.PopupHotkey;
 
                 // fill out the hotkey modifiers
                 /* Modifier
@@ -553,25 +564,64 @@ namespace Clips.Controls
                        Shift = 4,
                        WinKey = 8*/
 
-                var m = Config.PopupHotkeyModifier;
+                var m = (int)Config.PopupHotkeyModifier;
                 Alt.Checked = m == 1 || m == 3 || m == 5 || m == 9;
                 Control.Checked = m == 2 || m == 3 || m == 6 || m == 10;
                 Shift.Checked = m == 4 || m == 5 || m == 6 || m == 12;
                 Windows.Checked = m == 8 || m == 9 || m == 10 || m == 12;
-                Startup.Checked = Funcs.StartWithWindows;
+
+                m = (int)Config.GpHotkeyModifier;
+                gpAlt.Checked = m == 1 || m == 3 || m == 5 || m == 9;
+                gpControl.Checked = m == 2 || m == 3 || m == 6 || m == 10;
+                gpShift.Checked = m == 4 || m == 5 || m == 6 || m == 12;
+                gpWindows.Checked = m == 8 || m == 9 || m == 10 || m == 12;
+
                 AutoHide.Checked = Config.AutoHide;
                 AutoSizeHeight.Checked = Config.AutoSizeHeight;
+                BackColor = Config.ClipsBackColor;
                 ClipBackColor.BackColor = Config.ClipsBackColor;
                 ClipFontColor.BackColor = Config.ClipsFontColor;
+                ClipRowColor.BackColor = Config.ClipsRowBackColor;
+                ClipSelected.BackColor = Config.ClipsSelectedColor;
+                ClipsLinesPerRow.BackColor = Config.ClipsBackColor;
+                ClipsLinesPerRow.ForeColor = Config.ClipsFontColor;
+                ClipsLinesPerRow.Value = Config.ClipsLinesPerRow;
+                ClipsMaxClips.BackColor = Config.ClipsBackColor;
+                ClipsMaxClips.ForeColor = Config.ClipsFontColor;
+                ClipsMaxClips.Value = Config.ClipsMaxClips;
+                ClipsToDisplay.BackColor = Config.ClipsBackColor;
+                ClipsToDisplay.ForeColor = Config.ClipsFontColor;
+                ClipsToDisplay.Value = Config.ClipsToDisplay;
+                ForeColor = Config.ClipsFontColor;
+                gbGenPass.ForeColor = Config.ClipsFontColor;
+                gbgpShortcut.ForeColor = Config.ClipsFontColor;
+                gpExample.BackColor = Config.ClipsBackColor;
+                gpExample.ForeColor = Config.ClipsFontColor;
+                gpKey.BackColor = Config.ClipsBackColor;
+                gpKey.ForeColor = Config.ClipsFontColor;
+                gpKey.Text = Config.GpHotkey.ToString();
+                gpNumbers.Checked = Config.GpIncNumbers;
+                gpSize.Value = Config.GpSize;
+                gpSymbols.Checked = Config.GpIncSymbols;
+                GroupClips.ForeColor = Config.ClipsFontColor;
+                GroupColorClips.ForeColor = Config.ClipsFontColor;
+                GroupColorHeader.ForeColor = Config.ClipsFontColor;
+                GroupColorMenu.ForeColor = Config.ClipsFontColor;
+                GroupColorPreview.ForeColor = Config.ClipsFontColor;
+                GroupColors.ForeColor = Config.ClipsFontColor;
+                GroupHotkey.ForeColor = Config.ClipsFontColor;
+                GroupPreview.ForeColor = Config.ClipsFontColor;
                 HeaderBackColor.BackColor = Config.HeaderBackColor;
                 HeaderButtonColor.BackColor = Config.HeaderButtonColor;
                 HeaderButtonSelectedColor.BackColor = Config.HeaderButtonSelectedColor;
                 HeaderFontColor.BackColor = Config.HeaderFontColor;
-                ClipRowColor.BackColor = Config.ClipsRowBackColor;
-                ClipsLinesPerRow.Value = Config.ClipsLinesPerRow;
-                ClipsMaxClips.Value = Config.ClipsMaxClips;
-                ClipsToDisplay.Value = Config.ClipsToDisplay;
-                ClipSelected.BackColor = Config.ClipsSelectedColor;
+                IgnoreWindows.BackColor = Config.ClipsBackColor;
+                IgnoreWindows.ForeColor = Config.ClipsFontColor;
+                IgnoreWindows.Text = Config.IgnoreWindows;
+                KeepOnTop.Checked = Config.KeepOnTop;
+                Key.BackColor = Config.ClipsBackColor;
+                Key.ForeColor = Config.ClipsFontColor;
+                Key.Text = Config.PopupHotkey.ToString();
                 MenuBackColor.BackColor = Config.MenuBackColor;
                 MenuBorderColor.BackColor = Config.MenuBorderColor;
                 MenuFontColor.BackColor = Config.MenuFontColor;
@@ -579,53 +629,17 @@ namespace Clips.Controls
                 OpenAtMouse.Checked = Config.OpenFormAtCursor;
                 PreviewBackColor.BackColor = Config.PreviewBackColor;
                 PreviewFontColor.BackColor = Config.PreviewFontColor;
-                PreviewMaxLines.Value = Config.PreviewMaxLines;
-                PreviewPopupDelay.Value = Config.PreviewPopupDelay;
-                BackColor = Config.ClipsBackColor;
-                ForeColor = Config.ClipsFontColor;
-                GroupClips.ForeColor = Config.ClipsFontColor;
-                GroupColorHeader.ForeColor = Config.ClipsFontColor;
-                GroupColorClips.ForeColor = Config.ClipsFontColor;
-                GroupColorMenu.ForeColor = Config.ClipsFontColor;
-                GroupColorPreview.ForeColor = Config.ClipsFontColor;
-                GroupColors.ForeColor = Config.ClipsFontColor;
-                GroupHotkey.ForeColor = Config.ClipsFontColor;
-                GroupPreview.ForeColor = Config.ClipsFontColor;
-                gbGenPass.ForeColor = Config.ClipsFontColor;
-                gbgpShortcut.ForeColor = Config.ClipsFontColor;
-                gpKey.ForeColor = Config.ClipsFontColor;
-                gpKey.BackColor = Config.ClipsBackColor;
-                gpExample.ForeColor = Config.ClipsFontColor;
-                gpExample.BackColor = Config.ClipsBackColor;
-                IgnoreWindows.Text = Config.IgnoreWindows;
-                IgnoreWindows.BackColor = Config.ClipsBackColor;
-                IgnoreWindows.ForeColor = Config.ClipsFontColor;
-                Key.BackColor = Config.ClipsBackColor;
-                ClipsMaxClips.BackColor = Config.ClipsBackColor;
-                ClipsLinesPerRow.BackColor = Config.ClipsBackColor;
                 PreviewMaxLines.BackColor = Config.ClipsBackColor;
-                PreviewPopupDelay.BackColor = Config.ClipsBackColor;
-                Key.ForeColor = Config.ClipsFontColor;
-                ClipsMaxClips.ForeColor = Config.ClipsFontColor;
-                ClipsLinesPerRow.ForeColor = Config.ClipsFontColor;
-                ClipsToDisplay.BackColor = Config.ClipsBackColor;
-                ClipsToDisplay.ForeColor = Config.ClipsFontColor;
                 PreviewMaxLines.ForeColor = Config.ClipsFontColor;
+                PreviewMaxLines.Value = Config.PreviewMaxLines;
+                PreviewPopupDelay.BackColor = Config.ClipsBackColor;
                 PreviewPopupDelay.ForeColor = Config.ClipsFontColor;
-                gpKey.Text = Config.GpHotkey;
-                m = Config.GpHotkeyModifier;
-                gpAlt.Checked = m == 1 || m == 3 || m == 5 || m == 9;
-                gpControl.Checked = m == 2 || m == 3 || m == 6 || m == 10;
-                gpShift.Checked = m == 4 || m == 5 || m == 6 || m == 12;
-                gpWindows.Checked = m == 8 || m == 9 || m == 10 || m == 12;
-                gpNumbers.Checked = Config.GpIncNumbers;
-                gpSymbols.Checked = Config.GpIncSymbols;
-                gpSize.Value = Config.GpSize;
+                PreviewPopupDelay.Value = Config.PreviewPopupDelay;
+                Startup.Checked = Funcs.StartWithWindows;
             }
 
             private void OkButtonClick(object sender, EventArgs e)
             {
-                Config.PopupHotkey = Key.Text;
                 /* Modifier
                    None = 0,
                    Alt = 1,
@@ -638,7 +652,15 @@ namespace Clips.Controls
                 if (Control.Checked) i += 2;
                 if (Shift.Checked) i += 4;
                 if (Windows.Checked) i += 8;
-                Config.PopupHotkeyModifier = i;
+                Config.PopupHotkeyModifier = (ModifierKey)i;
+
+                i = 0;
+                if (gpAlt.Checked) i++;
+                if (gpControl.Checked) i += 2;
+                if (gpShift.Checked) i += 4;
+                if (gpWindows.Checked) i += 8;
+                Config.GpHotkeyModifier = (ModifierKey)i;
+
                 Config.AutoHide = AutoHide.Checked;
                 Config.AutoSizeHeight = AutoSizeHeight.Checked;
                 Config.ClipsBackColor = ClipBackColor.BackColor;
@@ -646,15 +668,9 @@ namespace Clips.Controls
                 Config.ClipsLinesPerRow = Convert.ToInt32(ClipsLinesPerRow.Value);
                 Config.ClipsMaxClips = Convert.ToInt32(ClipsMaxClips.Value);
                 Config.ClipsRowBackColor = ClipRowColor.BackColor;
-                Config.ClipsToDisplay = Convert.ToInt32(ClipsToDisplay.Value);
                 Config.ClipsSelectedColor = ClipSelected.BackColor;
-                Config.GpHotkey = gpKey.Text;
-                i = 0;
-                if (gpAlt.Checked) i++;
-                if (gpControl.Checked) i += 2;
-                if (gpShift.Checked) i += 4;
-                if (gpWindows.Checked) i += 8;
-                Config.GpHotkeyModifier = i;
+                Config.ClipsToDisplay = Convert.ToInt32(ClipsToDisplay.Value);
+                Config.GpHotkey = Funcs.StringToKey(gpKey.Text);
                 Config.GpIncNumbers = gpNumbers.Checked;
                 Config.GpIncSymbols = gpSymbols.Checked;
                 Config.GpSize = (int)gpSize.Value;
@@ -663,11 +679,13 @@ namespace Clips.Controls
                 Config.HeaderButtonSelectedColor = HeaderButtonSelectedColor.BackColor;
                 Config.HeaderFontColor = HeaderFontColor.BackColor;
                 Config.IgnoreWindows = IgnoreWindows.Text;
+                Config.KeepOnTop = KeepOnTop.Checked;
                 Config.MenuBackColor = MenuBackColor.BackColor;
                 Config.MenuBorderColor = MenuBorderColor.BackColor;
                 Config.MenuFontColor = MenuFontColor.BackColor;
                 Config.MenuSelectedColor = MenuSelectedColor.BackColor;
                 Config.OpenFormAtCursor = OpenAtMouse.Checked;
+                Config.PopupHotkey = Funcs.StringToKey(Key.Text);
                 Config.PreviewBackColor = PreviewBackColor.BackColor;
                 Config.PreviewFontColor = PreviewFontColor.BackColor;
                 Config.PreviewMaxLines = Convert.ToInt32(PreviewMaxLines.Value);
