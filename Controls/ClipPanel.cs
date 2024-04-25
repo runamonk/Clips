@@ -276,7 +276,7 @@ namespace Clips.Controls
             if (!Directory.Exists(dirCache))
                 Directory.CreateDirectory(dirCache);
 
-            var files = Funcs.GetFiles(dirCache, "*.xml");
+            var files = Funcs.GetFiles(dirCache, "xml");
             foreach (var file in files) AddClipButton(file, null);
             InLoad = false;
             ResumeLayout();
