@@ -23,27 +23,19 @@ namespace Clips.Controls
             Renderer = new CustomToolstripRenderer(ClipsConfig);
         }
 
-        private void ConfigChanged()
-        {
-            SetColors();
-        }
+        private void ConfigChanged() { SetColors(); }
     }
 
     public class CustomToolstripRenderer : ToolStripProfessionalRenderer
     {
-        public CustomToolstripRenderer(Config myConfig) : base(new CustomColors(myConfig))
-        {
-        }
+        public CustomToolstripRenderer(Config myConfig) : base(new CustomColors(myConfig)) { }
     }
 
     public class CustomColors : ProfessionalColorTable
     {
         private readonly Config _config;
 
-        public CustomColors(Config myConfig)
-        {
-            _config = myConfig;
-        }
+        public CustomColors(Config myConfig) { _config = myConfig; }
 
         public override Color ButtonSelectedBorder => Color.Transparent;
 

@@ -6,6 +6,16 @@ namespace Clips.Controls
 {
     public class BasePanel : Panel
     {
+        public delegate void ClipAddedHandler(ClipButton clip);
+
+        public delegate void ClipClickedHandler(ClipButton clip);
+
+        public delegate void ClipDeletedHandler();
+
+        public delegate void ClipsLoadedHandler();
+
+        public delegate void ConfigChangedHandler();
+
         internal readonly ClipMenu MenuRc;
 
         public BasePanel(Config myConfig)
@@ -13,21 +23,38 @@ namespace Clips.Controls
             ClipsConfig = myConfig;
             ClipsConfig.ConfigChanged += ConfigChanged;
 
-            MenuRc = new ClipMenu(ClipsConfig)
-            {
-                ShowCheckMargin = false,
-                ShowImageMargin = false
-            };
+            MenuRc = new ClipMenu(ClipsConfig) { ShowCheckMargin = false, ShowImageMargin = false };
         }
 
         [Obsolete]
-        public BasePanel()
+        public BasePanel() { }
+
+        internal Config ClipsConfig { get; set; }
+        public bool InMenu { get; set; }
+        public bool InLoad { get; set; }
+
+        protected override void OnCreateControl()
         {
+            base.OnCreateControl();
+
+            // Hide scrollbars and then enable AutoScroll.
+            AutoScroll = false;
+            HorizontalScroll.Maximum = 0;
+            HorizontalScroll.Visible = false;
+            VerticalScroll.Maximum = 0;
+            VerticalScroll.Visible = false;
+            AutoScroll = true;
+            DoubleBuffered = true;
+            SetColors();
         }
 
-        protected virtual void ClipButtonClicked(ClipButton clip)
-        {
-        }
+        protected void ClipAdded(ClipButton clip) { OnClipAdded?.Invoke(clip); }
+
+        protected void ClipClicked(ClipButton clip) { OnClipClicked?.Invoke(clip); }
+
+        protected void ClipDeleted() { OnClipDeleted?.Invoke(); }
+
+        protected void ClipsLoaded() { OnClipsLoaded?.Invoke(); }
 
         public void DeleteClip(ClipButton clip)
         {
@@ -46,55 +73,9 @@ namespace Clips.Controls
             ClipDeleted();
         }
 
-        protected virtual void SetColors()
-        {
-            BackColor = ClipsConfig.ClipsBackColor;
-        }
+        protected virtual void SetColors() { BackColor = ClipsConfig.ClipsBackColor; }
 
-        protected override void OnCreateControl()
-        {
-            base.OnCreateControl();
-
-            // Hide scrollbars and then enable AutoScroll.
-            AutoScroll = false;
-            HorizontalScroll.Maximum = 0;
-            HorizontalScroll.Visible = false;
-            VerticalScroll.Maximum = 0;
-            VerticalScroll.Visible = false;
-            AutoScroll = true;
-            DoubleBuffered = true;
-            SetColors();
-        }
-
-        #region Properties
-
-        internal Config ClipsConfig { get; set; }
-        public bool InMenu { get; set; }
-        public bool InLoad { get; set; }
-
-        #endregion
-
-        #region Events
-
-        public delegate void ConfigChangedHandler();
-
-        public event ConfigChangedHandler OnConfigChanged;
-
-        public delegate void ClipAddedHandler(ClipButton clip);
-
-        public event ClipAddedHandler OnClipAdded;
-
-        public delegate void ClipClickedHandler(ClipButton clip);
-
-        public event ClipClickedHandler OnClipClicked;
-
-        public delegate void ClipDeletedHandler();
-
-        public event ClipDeletedHandler OnClipDeleted;
-
-        public delegate void ClipsLoadedHandler();
-
-        public event ClipsLoadedHandler OnClipsLoaded;
+        protected virtual void ClipButtonClicked(ClipButton clip) { }
 
         protected virtual void ConfigChanged()
         {
@@ -102,26 +83,14 @@ namespace Clips.Controls
             OnConfigChanged?.Invoke();
         }
 
-        protected void ClipAdded(ClipButton clip)
-        {
-            OnClipAdded?.Invoke(clip);
-        }
+        public event ClipAddedHandler OnClipAdded;
 
-        protected void ClipClicked(ClipButton clip)
-        {
-            OnClipClicked?.Invoke(clip);
-        }
+        public event ClipClickedHandler OnClipClicked;
 
-        protected void ClipDeleted()
-        {
-            OnClipDeleted?.Invoke();
-        }
+        public event ClipDeletedHandler OnClipDeleted;
 
-        protected void ClipsLoaded()
-        {
-            OnClipsLoaded?.Invoke();
-        }
+        public event ClipsLoadedHandler OnClipsLoaded;
 
-        #endregion
+        public event ConfigChangedHandler OnConfigChanged;
     }
 }

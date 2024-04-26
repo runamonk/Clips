@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using Resolve.HotKeys;
 using Utility;
 using static Clips.Controls.BasePanel;
-using Resolve.HotKeys;
 
 namespace Clips.Controls
 {
@@ -27,7 +27,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("auto_hide");
+                string s = FindKey("auto_hide");
                 if (s == "")
                     s = SetKey("auto_hide", "false");
                 return bool.Parse(s);
@@ -39,7 +39,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("auto_size_height");
+                string s = FindKey("auto_size_height");
                 if (s == "")
                     s = SetKey("auto_size_height", "false");
                 return bool.Parse(s);
@@ -51,7 +51,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("clips_back_color");
+                string s = FindKey("clips_back_color");
                 if (s == "")
                     s = SetKey("clips_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -63,7 +63,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("clips_font_color");
+                string s = FindKey("clips_font_color");
                 if (s == "")
                     s = SetKey("clips_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -75,7 +75,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("clips_lines_per_row");
+                string s = FindKey("clips_lines_per_row");
                 if (s == "")
                     s = SetKey("clips_lines_per_row", "1");
                 return Convert.ToInt32(s);
@@ -87,7 +87,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("clips_row_back_color");
+                string s = FindKey("clips_row_back_color");
                 if (s == "")
                     s = SetKey("clips_row_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -99,7 +99,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("clips_selected_color");
+                string s = FindKey("clips_selected_color");
                 if (s == "")
                     s = SetKey("clips_selected_color", Color.Gray.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -111,7 +111,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("clips_max_clips");
+                string s = FindKey("clips_max_clips");
                 if (s == "")
                     s = SetKey("clips_max_clips", "50");
                 return Convert.ToInt32(s);
@@ -123,7 +123,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("clips_to_display");
+                string s = FindKey("clips_to_display");
                 if (s == "")
                     s = SetKey("clips_to_display", "20");
                 return Convert.ToInt32(s);
@@ -135,7 +135,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("form_left");
+                string s = FindKey("form_left");
                 if (s == "")
                     s = SetKey("form_left", "0", true);
                 return Convert.ToInt32(s);
@@ -147,7 +147,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("form_top");
+                string s = FindKey("form_top");
                 if (s == "")
                     s = SetKey("form_top", "0", true);
                 return Convert.ToInt32(s);
@@ -159,12 +159,12 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("form_size");
-                var sc = new SizeConverter();
+                string s = FindKey("form_size");
+                SizeConverter sc = new SizeConverter();
 
                 if (s == "")
                 {
-                    var sz = new Size(400, 300);
+                    Size sz = new Size(400, 300);
                     s = SetKey("form_size", sc.ConvertToString(sz), true);
                 }
 
@@ -172,7 +172,7 @@ namespace Clips.Controls
             }
             set
             {
-                var sc = new SizeConverter();
+                SizeConverter sc = new SizeConverter();
                 SetKey("form_size", sc.ConvertToString(value), true);
             }
         }
@@ -181,7 +181,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("gp_hotkey");
+                string s = FindKey("gp_hotkey");
                 if (s == "")
                     s = SetKey("gp_hotkey", "None");
                 return Funcs.StringToKey(s);
@@ -189,7 +189,7 @@ namespace Clips.Controls
             set => SetKey("gp_hotkey", value.ToString());
         }
 
-        public Resolve.HotKeys.ModifierKey GpHotkeyModifier
+        public ModifierKey GpHotkeyModifier
         {
             /* Modifier
                None = 0,
@@ -197,13 +197,12 @@ namespace Clips.Controls
                Control = 2,
                Shift = 4,
                WinKey = 8*/
-
             get
             {
-                var s = FindKey("gp_hotkey_modifier");
+                string s = FindKey("gp_hotkey_modifier");
                 if (s == "")
                     s = SetKey("gp_hotkey_modifier", "0");
-                return (Resolve.HotKeys.ModifierKey)Int32.Parse(s);
+                return (ModifierKey)Int32.Parse(s);
             }
             set => SetKey("gp_hotkey_modifier", ((int)value).ToString());
         }
@@ -212,7 +211,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("gp_size");
+                string s = FindKey("gp_size");
                 if (s == "")
                     s = SetKey("gp_size", "5", true);
                 return Convert.ToInt32(s);
@@ -224,7 +223,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("gp_incnumbers");
+                string s = FindKey("gp_incnumbers");
                 if (s == "")
                     s = SetKey("gp_incnumbers", "false");
                 return bool.Parse(s);
@@ -236,7 +235,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("gp_incsymbols");
+                string s = FindKey("gp_incsymbols");
                 if (s == "")
                     s = SetKey("gp_incsymbols", "false");
                 return bool.Parse(s);
@@ -248,7 +247,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("header_back_color");
+                string s = FindKey("header_back_color");
                 if (s == "")
                     s = SetKey("header_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -260,7 +259,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("header_button_color");
+                string s = FindKey("header_button_color");
                 if (s == "")
                     s = SetKey("header_button_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -272,7 +271,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("header_font_color");
+                string s = FindKey("header_font_color");
                 if (s == "")
                     s = SetKey("header_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -284,7 +283,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("header_button_selected_color");
+                string s = FindKey("header_button_selected_color");
                 if (s == "")
                     s = SetKey("header_button_selected_color", Color.Gray.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -296,7 +295,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("ignorewindows");
+                string s = FindKey("ignorewindows");
                 if (s == "")
                     s = SetKey("ignorewindows", "");
                 return s;
@@ -308,18 +307,19 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("keep_on_top");
+                string s = FindKey("keep_on_top");
                 if (s == "")
                     s = SetKey("keep_on_top", "false");
                 return bool.Parse(s);
             }
             set => SetKey("keep_on_top", value.ToString());
         }
+
         public Color MenuBackColor
         {
             get
             {
-                var s = FindKey("menu_back_color");
+                string s = FindKey("menu_back_color");
                 if (s == "")
                     s = SetKey("menu_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -331,7 +331,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("menu_border_color");
+                string s = FindKey("menu_border_color");
                 if (s == "")
                     s = SetKey("menu_border_color", Color.Gray.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -343,7 +343,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("menu_font_color");
+                string s = FindKey("menu_font_color");
                 if (s == "")
                     s = SetKey("menu_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -355,7 +355,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("menu_selected_color");
+                string s = FindKey("menu_selected_color");
                 if (s == "")
                     s = SetKey("menu_selected_color", Color.Gray.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -367,7 +367,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("open_form_at_cursor");
+                string s = FindKey("open_form_at_cursor");
                 if (s == "")
                     s = SetKey("open_form_at_cursor", "false");
                 return bool.Parse(s);
@@ -379,7 +379,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("popup_hotkey");
+                string s = FindKey("popup_hotkey");
                 if (s == "")
                     s = SetKey("popup_hotkey", "None");
                 return Funcs.StringToKey(s);
@@ -387,7 +387,7 @@ namespace Clips.Controls
             set => SetKey("popup_hotkey", value.ToString());
         }
 
-        public Resolve.HotKeys.ModifierKey PopupHotkeyModifier
+        public ModifierKey PopupHotkeyModifier
         {
             /* Modifier
                None = 0,
@@ -395,13 +395,12 @@ namespace Clips.Controls
                Control = 2,
                Shift = 4,
                WinKey = 8*/
-
             get
             {
-                var s = FindKey("popup_hotkey_modifier");
+                string s = FindKey("popup_hotkey_modifier");
                 if (s == "")
                     s = SetKey("popup_hotkey_modifier", "0");
-                return (Resolve.HotKeys.ModifierKey)Int32.Parse(s);
+                return (ModifierKey)Int32.Parse(s);
             }
             set => SetKey("popup_hotkey_modifier", ((int)value).ToString());
         }
@@ -410,7 +409,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("preview_back_color");
+                string s = FindKey("preview_back_color");
                 if (s == "")
                     s = SetKey("preview_back_color", Color.White.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -422,7 +421,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("preview_font_color");
+                string s = FindKey("preview_font_color");
                 if (s == "")
                     s = SetKey("preview_font_color", Color.Black.ToArgb().ToString());
                 return Color.FromArgb(Convert.ToInt32(s));
@@ -434,7 +433,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("preview_popup_delay");
+                string s = FindKey("preview_popup_delay");
                 if (s == "")
                     s = SetKey("preview_popup_delay", "500");
                 return Convert.ToInt32(s);
@@ -446,7 +445,7 @@ namespace Clips.Controls
         {
             get
             {
-                var s = FindKey("preview_max_lines");
+                string s = FindKey("preview_max_lines");
                 if (s == "")
                     s = SetKey("preview_max_lines", "50");
                 return Convert.ToInt32(s);
@@ -454,41 +453,21 @@ namespace Clips.Controls
             set => SetKey("preview_max_lines", value.ToString());
         }
 
-        public event ConfigChangedHandler ConfigChanged;
-
-        ~Config()
-        {
-            _config.Clear();
-            _config = null;
-        }
-
-        private int GetKeyIndex(string key)
-        {
-            for (var i = 0; i < _config.Count; i++)
-                if (_config[i].IndexOf(key, StringComparison.Ordinal) > -1 && _config[i].Substring(0, key.Length) == key)
-                    return i;
-            return -1;
-        }
-
         private string FindKey(string key)
         {
-            foreach (var s in _config)
+            foreach (string s in _config)
                 if (s.Length > 0 && s.Substring(0, s.IndexOf('=')) == key)
                     return s.Substring(s.IndexOf('=') + 1, s.Length - (s.IndexOf('=') + 1));
 
             return "";
         }
 
-        private string SetKey(string key, string value, bool saveNow = false)
+        private int GetKeyIndex(string key)
         {
-            var i = GetKeyIndex(key);
-            if (i == -1)
-                _config.Add(key + "=" + value);
-            else
-                _config[i] = key + "=" + value;
-
-            if (saveNow) SaveConfiguration();
-            return value;
+            for (int i = 0; i < _config.Count; i++)
+                if (_config[i].IndexOf(key, StringComparison.Ordinal) > -1 && _config[i].Substring(0, key.Length) == key)
+                    return i;
+            return -1;
         }
 
         private void LoadConfiguration()
@@ -497,7 +476,7 @@ namespace Clips.Controls
             {
                 if (!File.Exists(Funcs.AppPath(ConfigFilename)))
                 {
-                    var fs = File.Create(Funcs.AppPath(ConfigFilename));
+                    FileStream fs = File.Create(Funcs.AppPath(ConfigFilename));
                     fs.Close();
                 }
 
@@ -516,9 +495,21 @@ namespace Clips.Controls
             File.WriteAllLines(Funcs.AppPath(ConfigFilename), _config.ToArray());
         }
 
+        private string SetKey(string key, string value, bool saveNow = false)
+        {
+            int i = GetKeyIndex(key);
+            if (i == -1)
+                _config.Add(key + "=" + value);
+            else
+                _config[i] = key + "=" + value;
+
+            if (saveNow) SaveConfiguration();
+            return value;
+        }
+
         public void ShowConfigForm(bool parentIsVisible)
         {
-            var f = new Settings(this);
+            Settings f = new Settings(this);
             if (!parentIsVisible)
             {
                 f.StartPosition = FormStartPosition.Manual;
@@ -538,16 +529,19 @@ namespace Clips.Controls
             f.Close();
         }
 
+        public event ConfigChangedHandler ConfigChanged;
+
+        ~Config()
+        {
+            _config.Clear();
+            _config = null;
+        }
+
         private class Settings : Forms.Settings
         {
-            public Settings()
-            {
-            }
+            public Settings() { }
 
-            public Settings(Config config)
-            {
-                Config = config ?? throw new Exception("Config cannot be null.");
-            }
+            public Settings(Config config) { Config = config ?? throw new Exception("Config cannot be null."); }
 
             private Config Config { get; }
 
@@ -564,7 +558,7 @@ namespace Clips.Controls
                        Shift = 4,
                        WinKey = 8*/
 
-                var m = (int)Config.PopupHotkeyModifier;
+                int m = (int)Config.PopupHotkeyModifier;
                 Alt.Checked = m == 1 || m == 3 || m == 5 || m == 9;
                 Control.Checked = m == 2 || m == 3 || m == 6 || m == 10;
                 Shift.Checked = m == 4 || m == 5 || m == 6 || m == 12;
@@ -646,7 +640,7 @@ namespace Clips.Controls
                    Control = 2,
                    Shift = 4,
                    WinKey = 8*/
-                var i = 0;
+                int i = 0;
 
                 if (Alt.Checked) i++;
                 if (Control.Checked) i += 2;

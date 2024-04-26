@@ -14,9 +14,34 @@ namespace Clips.Forms
             gpTrack.Maximum = (int)gpSize.Maximum;
         }
 
-        private void SetSamplePassword()
+        private void SetSamplePassword() { gpExample.Text = Funcs.GeneratePassword(gpNumbers.Checked, gpSymbols.Checked, (int)gpSize.Value); }
+
+        private void Clear_Click(object sender, EventArgs e) { Key.Clear(); }
+
+        private void ColorControl_MouseClick(object sender, MouseEventArgs e)
         {
-            gpExample.Text = Funcs.GeneratePassword(gpNumbers.Checked, gpSymbols.Checked, (int)gpSize.Value);
+            if (dlgColor.ShowDialog() == DialogResult.OK) ((Panel)sender).BackColor = dlgColor.Color;
+        }
+
+        private void DarkTheme_Click(object sender, EventArgs e)
+        {
+            LightTheme.Checked = false;
+            HeaderBackColor.BackColor = Color.FromArgb(56,   56, 56);
+            HeaderButtonColor.BackColor = Color.FromArgb(56, 56, 56);
+            HeaderFontColor.BackColor = Color.White;
+            HeaderButtonSelectedColor.BackColor = Color.DarkGray;
+            ClipBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            ClipFontColor.BackColor = Color.White;
+            ClipRowColor.BackColor = Color.FromArgb(56, 56, 56);
+            ClipSelected.BackColor = Color.DarkGray;
+            MenuBackColor.BackColor = Color.FromArgb(56,     56, 56);
+            MenuBorderColor.BackColor = Color.FromArgb(56,   56, 56);
+            HeaderButtonColor.BackColor = Color.FromArgb(56, 56, 56);
+            MenuSelectedColor.BackColor = Color.DarkGray;
+            MenuFontColor.BackColor = Color.White;
+            MenuSelectedColor.BackColor = Color.DarkGray;
+            PreviewBackColor.BackColor = Color.FromArgb(56, 56, 56);
+            PreviewFontColor.BackColor = Color.White;
         }
 
         private void FormConfig_KeyDown(object sender, KeyEventArgs e)
@@ -27,9 +52,35 @@ namespace Clips.Forms
                 Cancel.PerformClick();
         }
 
-        private void ColorControl_MouseClick(object sender, MouseEventArgs e)
+        private void gpClear_Click(object sender, EventArgs e) { gpKey.Clear(); }
+
+        private void gpKey_KeyDown(object sender, KeyEventArgs e)
         {
-            if (dlgColor.ShowDialog() == DialogResult.OK) ((Panel)sender).BackColor = dlgColor.Color;
+            Keys k = e.KeyCode;
+            gpKey.Text = k.ToString();
+        }
+
+        private void gpNumbers_CheckedChanged(object sender, EventArgs e) { SetSamplePassword(); }
+
+        private void gpSize_ValueChanged(object sender, EventArgs e)
+        {
+            gpTrack.Value = (int)gpSize.Value;
+            SetSamplePassword();
+        }
+
+        private void gpSymbols_CheckedChanged(object sender, EventArgs e) { SetSamplePassword(); }
+
+        private void gpTrack_ValueChanged(object sender, EventArgs e) { gpSize.Value = gpTrack.Value; }
+
+        private void Key_KeyDown(object sender, KeyEventArgs e)
+        {
+            Keys k = e.KeyCode;
+            Key.Text = k.ToString();
+        }
+
+        private void Key_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true; // this will stop the key pressed from actually entering into the text box.
         }
 
         private void LightTheme_Click(object sender, EventArgs e)
@@ -50,75 +101,6 @@ namespace Clips.Forms
             MenuSelectedColor.BackColor = Color.Gray;
             PreviewBackColor.BackColor = Color.White;
             PreviewFontColor.BackColor = Color.Black;
-        }
-
-        private void DarkTheme_Click(object sender, EventArgs e)
-        {
-            LightTheme.Checked = false;
-            HeaderBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            HeaderButtonColor.BackColor = Color.FromArgb(56, 56, 56);
-            HeaderFontColor.BackColor = Color.White;
-            HeaderButtonSelectedColor.BackColor = Color.DarkGray;
-            ClipBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            ClipFontColor.BackColor = Color.White;
-            ClipRowColor.BackColor = Color.FromArgb(56, 56, 56);
-            ClipSelected.BackColor = Color.DarkGray;
-            MenuBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            MenuBorderColor.BackColor = Color.FromArgb(56, 56, 56);
-            HeaderButtonColor.BackColor = Color.FromArgb(56, 56, 56);
-            MenuSelectedColor.BackColor = Color.DarkGray;
-            MenuFontColor.BackColor = Color.White;
-            MenuSelectedColor.BackColor = Color.DarkGray;
-            PreviewBackColor.BackColor = Color.FromArgb(56, 56, 56);
-            PreviewFontColor.BackColor = Color.White;
-        }
-
-        private void Key_KeyDown(object sender, KeyEventArgs e)
-        {
-            var k = e.KeyCode;
-            Key.Text = k.ToString();
-        }
-
-        private void Key_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            e.Handled = true; // this will stop the key pressed from actually entering into the text box.
-        }
-
-        private void Clear_Click(object sender, EventArgs e)
-        {
-            Key.Clear();
-        }
-
-        private void gpClear_Click(object sender, EventArgs e)
-        {
-            gpKey.Clear();
-        }
-
-        private void gpSize_ValueChanged(object sender, EventArgs e)
-        {
-            gpTrack.Value = (int)gpSize.Value;
-            SetSamplePassword();
-        }
-
-        private void gpTrack_ValueChanged(object sender, EventArgs e)
-        {
-            gpSize.Value = gpTrack.Value;
-        }
-
-        private void gpKey_KeyDown(object sender, KeyEventArgs e)
-        {
-            var k = e.KeyCode;
-            gpKey.Text = k.ToString();
-        }
-
-        private void gpSymbols_CheckedChanged(object sender, EventArgs e)
-        {
-            SetSamplePassword();
-        }
-
-        private void gpNumbers_CheckedChanged(object sender, EventArgs e)
-        {
-            SetSamplePassword();
         }
     }
 }

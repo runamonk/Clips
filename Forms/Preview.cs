@@ -26,7 +26,7 @@ namespace Clips.Forms
             get
             {
                 //Add a DropShadow
-                var cp = base.CreateParams;
+                CreateParams cp = base.CreateParams;
                 cp.ClassStyle |= 0x00020000;
                 return cp;
             }
@@ -34,18 +34,25 @@ namespace Clips.Forms
 
         protected override bool ShowWithoutActivation => true;
 
+        public void HidePreview()
+        {
+            TimerShowForm.Enabled = false;
+            PreviewText.Text = "";
+            PreviewImage.Image = null;
+            Hide();
+        }
+
 
         public void ShowPreview(ClipButton clipButton)
         {
-            if ((string.IsNullOrEmpty(clipButton.FullText) && !clipButton.HasImage) ||
-                ClipsConfig.PreviewPopupDelay == 0)
+            if ((string.IsNullOrEmpty(clipButton.FullText) && !clipButton.HasImage) || ClipsConfig.PreviewPopupDelay == 0)
                 return;
 
             BackColor = ClipsConfig.PreviewBackColor;
             ForeColor = ClipsConfig.PreviewFontColor;
             PreviewText.BackColor = ClipsConfig.PreviewBackColor;
             PreviewText.ForeColor = ClipsConfig.PreviewFontColor;
-            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30),(int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
+            MaximumSize = new Size((int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .40));
             PreviewText.MaximumSize = MaximumSize;
             PreviewText.Dock = DockStyle.Fill;
             PreviewImage.Dock = DockStyle.Fill;
@@ -56,8 +63,8 @@ namespace Clips.Forms
                 PreviewText.Visible = true;
                 PreviewImage.Visible = false;
 
-                var maxNoOfCharsPerLine = MaximumSize.Width / _fTextWidth;
-                var maxCharsAllRows = maxNoOfCharsPerLine * ClipsConfig.PreviewMaxLines;
+                int maxNoOfCharsPerLine = MaximumSize.Width / _fTextWidth;
+                int maxCharsAllRows = maxNoOfCharsPerLine * ClipsConfig.PreviewMaxLines;
 
                 PreviewText.Text = clipButton.FullText.Length <= maxCharsAllRows ? clipButton.FullText : clipButton.FullText.Substring(0, maxCharsAllRows);
 
@@ -75,10 +82,10 @@ namespace Clips.Forms
 
             // pop the form up to the left or right of the main form, try and keep
             // it on screen.
-            var mainForm = (Form)clipButton.Parent.Parent.Parent;
-            var mfRight = mainForm.Left + mainForm.Width;
-            var mfLeft = mainForm.Left - Width;
-            var mfTop = mainForm.Top;
+            Form mainForm = (Form)clipButton.Parent.Parent.Parent;
+            int mfRight = mainForm.Left + mainForm.Width;
+            int mfLeft = mainForm.Left - Width;
+            int mfTop = mainForm.Top;
 
             Top = mfTop;
             Left = mfRight + Width < Screen.PrimaryScreen.WorkingArea.Width ? mfRight : mfLeft;
@@ -87,23 +94,12 @@ namespace Clips.Forms
             TimerShowForm.Enabled = true;
         }
 
-        public void HidePreview()
-        {
-            TimerShowForm.Enabled = false;
-            PreviewText.Text = "";
-            PreviewImage.Image = null;
-            Hide();
-        }
+        private void Preview_FormClosing(object sender, FormClosingEventArgs e) { TimerShowForm.Enabled = false; }
 
         private void TimerShowForm_Tick(object sender, EventArgs e)
         {
             TimerShowForm.Enabled = false;
             Funcs.ShowInactiveTopmost(this);
-        }
-
-        private void Preview_FormClosing(object sender, FormClosingEventArgs e)
-        {
-            TimerShowForm.Enabled = false;
         }
     }
 }

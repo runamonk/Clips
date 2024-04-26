@@ -21,17 +21,17 @@ namespace Clips.Controls
 
     public class ClipButton : Button
     {
+        public delegate void ClipButtonClickedHandler(ClipButton button);
+
         // Segoe UI Symbol font escape codes.
         private const string IconPinned = "\uE1F6";
         private const string IconUnpinned = "\uE1F7";
         private const string IconMainmenu = "\uE0C2";
         private const string IconPassword = "\uE192";
 
-        #region Privates
-
         private const string NewXmlFile = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DATA PINNED=\"{0}\" PINNED_INDEX=\"{1}\" TYPE=\"{2}\">{3}\r\n</DATA>";
 
-        #endregion
+        private Preview _previewForm;
 
         public ClipButton(Config myConfig, ButtonType buttonType, string fileName, dynamic clipContents)
         {
@@ -49,8 +49,8 @@ namespace Clips.Controls
                     Width = Height;
                     Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
                     Text = IconPassword;
-                    var passwordButtonTooltip = new ToolTip();
-                    passwordButtonTooltip.SetToolTip(this,"Click to generate a random password and copy it to the clipboard.");
+                    ToolTip passwordButtonTooltip = new ToolTip();
+                    passwordButtonTooltip.SetToolTip(this, "Click to generate a random password and copy it to the clipboard.");
                     break;
                 }
                 case ButtonType.Menu:
@@ -63,8 +63,8 @@ namespace Clips.Controls
                     Width = Height;
                     Font = new Font("Segoe UI Symbol", 8, FontStyle.Regular);
                     Text = IconUnpinned;
-                    var pinButtonToolTip = new ToolTip();
-                    pinButtonToolTip.SetToolTip(this,"Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
+                    ToolTip pinButtonToolTip = new ToolTip();
+                    pinButtonToolTip.SetToolTip(this, "Click to pin/unpin form (overrides autohide). [Press Control + P to enable/disable]");
                     break;
                 }
                 case ButtonType.Clip:
@@ -76,7 +76,7 @@ namespace Clips.Controls
                     if (IsHeaderButton)
                     {
                         Padding = new Padding(0, 0, 0, 0);
-                        Margin = new Padding(0, 0, 0, 0);
+                        Margin = new Padding(0,  0, 0, 0);
                         TextAlign = ContentAlignment.MiddleCenter;
                     }
 
@@ -106,8 +106,6 @@ namespace Clips.Controls
             CalculateSize();
         }
 
-        #region Properties
-
         private Config ClipsConfig { get; }
 
         public ButtonType ButtonType { get; }
@@ -122,18 +120,16 @@ namespace Clips.Controls
 
         public int PinnedIndex { get; set; }
 
-        private Preview _previewForm;
-
         public Image PreviewImage
         {
             get
             {
                 if (!HasImage) return null;
 
-                var ms = new MemoryStream(PreviewImageBytes);
-                var img = Image.FromStream(ms);
+                MemoryStream ms = new MemoryStream(PreviewImageBytes);
+                Image img = Image.FromStream(ms);
                 ms.Dispose();
-                return Funcs.ScaleImage(img, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30),(int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
+                return Funcs.ScaleImage(img, (int)(Screen.PrimaryScreen.WorkingArea.Width * .30), (int)(Screen.PrimaryScreen.WorkingArea.Height * .30));
             }
             set
             {
@@ -152,194 +148,22 @@ namespace Clips.Controls
 
         public byte[] PreviewImageBytes { get; set; }
 
-        #endregion
+        // hides the focus rectangle
+        protected override bool ShowFocusCues => false;
 
-        #region Events
-
-        public delegate void ClipButtonClickedHandler(ClipButton button);
-
-        public event ClipButtonClickedHandler OnClipButtonClicked;
-
-        #endregion
-
-        #region Methods
-
-        private void CalculateSize()
+        protected override void Dispose(bool disposing)
         {
-            if (IsDisposed)
-                return;
-
-            if (ButtonType == ButtonType.Clip)
+            if (_previewForm != null)
             {
-                if (!HasImage && string.IsNullOrEmpty(FullText))
-                    return;
-
-                if (HasImage)
-                {
-                    Height = 60;
-                }
-                else
-                {
-                    Text = "";
-                    var g = CreateGraphics();
-
-                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
-                    var size = g.MeasureString("x", Font, new PointF(0, 0), StringFormat.GenericTypographic);
-                    var numOfCharsPerRow = (int)(ClipsConfig.FormSize.Width / size.Width);
-                    var maxChars = numOfCharsPerRow * ClipsConfig.ClipsLinesPerRow;
-
-                    if (maxChars > FullText.Length)
-                        maxChars = FullText.Length;
-
-                    Text = FullText.Substring(0, maxChars);
-
-                    var maxRows = maxChars / numOfCharsPerRow;
-                    if (maxRows == 0) maxRows = 1;
-                    var fHeight = Convert.ToInt32(size.Height);
-
-                    Height = maxRows * fHeight + 8;
-                }
+                _previewForm.Close();
+                _previewForm = null;
             }
+
+            base.Dispose(disposing);
         }
-
-        private void ConfigChanged()
-        {
-            if (!IsDisposed)
-            {
-                SetColors();
-                CalculateSize();
-            }
-        }
-
-        private void LoadFromCache(string fileName)
-        {
-            if (!File.Exists(fileName)) return;
-            FileName = fileName;
-            var doc = new XmlDocument();
-            doc.Load(fileName);
-            var data = doc.DocumentElement?.SelectSingleNode("/DATA");
-            var type = data?.Attributes?["TYPE"]?.InnerText;
-
-            if (doc.DocumentElement == null || data == null || type == null)
-            {
-                File.Delete(fileName);
-                return;
-            }
-
-            Pinned = data.Attributes["PINNED"]?.InnerText == "Y";
-            PinnedIndex = Convert.ToInt32(data.Attributes["PINNED_INDEX"]?.InnerText);
-
-            if (type == "IMAGE")
-            {
-                var ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
-                try
-                {
-                    PreviewImage = Image.FromStream(ms);
-                }
-                finally
-                {
-                    ms.Close();
-                }
-            }
-            else
-            {
-                var base64EncodedBytes = Convert.FromBase64String(data.InnerText);
-                var decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
-                FullText = decodedString;
-            }
-        }
-
-        public void Save()
-        {
-            if (File.Exists(FileName))
-            {
-                var doc = new XmlDocument();
-                doc.Load(FileName);
-                var data = doc.DocumentElement?.SelectSingleNode("/DATA");
-                if (doc.DocumentElement == null || data == null)
-                {
-                    File.Delete(FileName);
-                    return;
-                }
-
-                SetAttrib(doc, data, "PINNED", Pinned ? "Y" : "N");
-                SetAttrib(doc, data, "PINNED_INDEX", PinnedIndex.ToString());
-                doc.Save(FileName);
-            }
-        }
-
-        private void SaveToCache(dynamic clipContents)
-        {
-            var fileContents = "";
-            string base64;
-            var randFileName =
-                Funcs.AppPath() + "\\Cache\\" + Funcs.RandomString(20, true) +
-                ".xml"; // DateTime.Now.ToString("yyyymmddhhmmssfff")
-            var strPinned = Pinned ? "Y" : "N";
-
-            if (clipContents is string)
-            {
-                FullText = clipContents;
-                byte[] plainTextBytes = Encoding.UTF8.GetBytes(clipContents);
-                base64 = Convert.ToBase64String(plainTextBytes);
-                fileContents = string.Format(NewXmlFile, strPinned, PinnedIndex.ToString(), "TEXT", base64);
-            }
-            else if (clipContents is Image)
-            {
-                PreviewImage = clipContents;
-                base64 = Convert.ToBase64String(PreviewImageBytes);
-                fileContents = string.Format(NewXmlFile, strPinned, PinnedIndex.ToString(), "IMAGE", base64);
-            }
-
-            if (fileContents != "")
-            {
-                FileName = randFileName;
-                var doc = new XmlDocument();
-                doc.LoadXml(fileContents);
-                doc.Save(randFileName);
-            }
-        }
-
-        private void SetAttrib(XmlDocument doc, XmlNode node, string attribName, string value)
-        {
-            var xmlAtt = node.Attributes?[attribName] == null ? doc.CreateAttribute(attribName) : node.Attributes[attribName];
-            xmlAtt.Value = value;
-            node.Attributes?.Append(xmlAtt);
-        }
-
-        private void SetColors()
-        {
-            FlatAppearance.BorderColor = BackColor;
-            if (IsHeaderButton)
-            {
-                BackColor = ClipsConfig.HeaderButtonColor;
-                ForeColor = ClipsConfig.HeaderFontColor;
-            }
-            else
-            {
-                BackColor = ClipsConfig.ClipsRowBackColor;
-                ForeColor = ClipsConfig.ClipsFontColor;
-            }
-        }
-
-        #endregion
-
-        #region Overrides
 
         // Stops the black default border from being displayed on button when the preview form is shown.
-        public override void NotifyDefault(bool value)
-        {
-            base.NotifyDefault(false);
-        }
-
-        private void Button_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (ButtonType != ButtonType.Clip || e.KeyCode != Keys.Delete) return;
-            if (Parent is ClipPanel cp)
-                cp.DeleteClip(this);
-            else if (Parent is ClipPinnedPanel pp)
-                pp.DeleteClip(this);
-        }
+        public override void NotifyDefault(bool value) { base.NotifyDefault(false); }
 
         protected override void OnClick(EventArgs e)
         {
@@ -352,17 +176,6 @@ namespace Clips.Controls
             base.OnClick(e);
             if (ButtonType == ButtonType.Clip)
                 OnClipButtonClicked?.Invoke(this);
-        }
-
-        protected override void Dispose(bool disposing)
-        {
-            if (_previewForm != null)
-            {
-                _previewForm.Close();
-                _previewForm = null;
-            }
-
-            base.Dispose(disposing);
         }
 
         protected override void OnMouseEnter(EventArgs e)
@@ -397,16 +210,178 @@ namespace Clips.Controls
             if (Pinned)
             {
                 // Make a little triangle the upper right corner.
-                var pen = new Pen(ControlPaint.Dark(ClipsConfig.ClipsRowBackColor, 25), 10);
-                var pt1 = new PointF(Left + Width - 10, -10);
-                var pt2 = new PointF(Left + Width + 10, 10);
+                Pen pen = new Pen(ControlPaint.Dark(ClipsConfig.ClipsRowBackColor, 25), 10);
+                PointF pt1 = new PointF(Left + Width - 10, -10);
+                PointF pt2 = new PointF(Left + Width + 10, 10);
                 pea.Graphics.DrawLine(pen, pt1, pt2);
             }
         }
 
-        // hides the focus rectangle
-        protected override bool ShowFocusCues => false;
+        private void CalculateSize()
+        {
+            if (IsDisposed)
+                return;
 
-        #endregion
+            if (ButtonType == ButtonType.Clip)
+            {
+                if (!HasImage && string.IsNullOrEmpty(FullText))
+                    return;
+
+                if (HasImage)
+                {
+                    Height = 60;
+                }
+                else
+                {
+                    Text = "";
+                    Graphics g = CreateGraphics();
+
+                    g.TextRenderingHint = TextRenderingHint.AntiAlias;
+                    SizeF size = g.MeasureString("x", Font, new PointF(0, 0), StringFormat.GenericTypographic);
+                    int numOfCharsPerRow = (int)(ClipsConfig.FormSize.Width / size.Width);
+                    int maxChars = numOfCharsPerRow * ClipsConfig.ClipsLinesPerRow;
+
+                    if (maxChars > FullText.Length)
+                        maxChars = FullText.Length;
+
+                    Text = FullText.Substring(0, maxChars);
+
+                    int maxRows = maxChars / numOfCharsPerRow;
+                    if (maxRows == 0) maxRows = 1;
+                    int fHeight = Convert.ToInt32(size.Height);
+
+                    Height = maxRows * fHeight + 8;
+                }
+            }
+        }
+
+        private void LoadFromCache(string fileName)
+        {
+            if (!File.Exists(fileName)) return;
+            FileName = fileName;
+            XmlDocument doc = new XmlDocument();
+            doc.Load(fileName);
+            XmlNode data = doc.DocumentElement?.SelectSingleNode("/DATA");
+            string type = data?.Attributes?["TYPE"]?.InnerText;
+
+            if (doc.DocumentElement == null || data == null || type == null)
+            {
+                File.Delete(fileName);
+                return;
+            }
+
+            Pinned = data.Attributes["PINNED"]?.InnerText == "Y";
+            PinnedIndex = Convert.ToInt32(data.Attributes["PINNED_INDEX"]?.InnerText);
+
+            if (type == "IMAGE")
+            {
+                MemoryStream ms = new MemoryStream(Convert.FromBase64String(data.InnerText));
+                try
+                {
+                    PreviewImage = Image.FromStream(ms);
+                }
+                finally
+                {
+                    ms.Close();
+                }
+            }
+            else
+            {
+                byte[] base64EncodedBytes = Convert.FromBase64String(data.InnerText);
+                string decodedString = Encoding.UTF8.GetString(base64EncodedBytes);
+                FullText = decodedString;
+            }
+        }
+
+        public void Save()
+        {
+            if (File.Exists(FileName))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(FileName);
+                XmlNode data = doc.DocumentElement?.SelectSingleNode("/DATA");
+                if (doc.DocumentElement == null || data == null)
+                {
+                    File.Delete(FileName);
+                    return;
+                }
+
+                SetAttrib(doc, data, "PINNED",       Pinned ? "Y" : "N");
+                SetAttrib(doc, data, "PINNED_INDEX", PinnedIndex.ToString());
+                doc.Save(FileName);
+            }
+        }
+
+        private void SaveToCache(dynamic clipContents)
+        {
+            string fileContents = "";
+            string base64;
+            string randFileName = Funcs.AppPath() + "\\Cache\\" + Funcs.RandomString(20, true) + ".xml"; // DateTime.Now.ToString("yyyymmddhhmmssfff")
+            string strPinned = Pinned ? "Y" : "N";
+
+            if (clipContents is string)
+            {
+                FullText = clipContents;
+                byte[] plainTextBytes = Encoding.UTF8.GetBytes(clipContents);
+                base64 = Convert.ToBase64String(plainTextBytes);
+                fileContents = string.Format(NewXmlFile, strPinned, PinnedIndex.ToString(), "TEXT", base64);
+            }
+            else if (clipContents is Image)
+            {
+                PreviewImage = clipContents;
+                base64 = Convert.ToBase64String(PreviewImageBytes);
+                fileContents = string.Format(NewXmlFile, strPinned, PinnedIndex.ToString(), "IMAGE", base64);
+            }
+
+            if (fileContents != "")
+            {
+                FileName = randFileName;
+                XmlDocument doc = new XmlDocument();
+                doc.LoadXml(fileContents);
+                doc.Save(randFileName);
+            }
+        }
+
+        private void SetAttrib(XmlDocument doc, XmlNode node, string attribName, string value)
+        {
+            XmlAttribute xmlAtt = node.Attributes?[attribName] == null ? doc.CreateAttribute(attribName) : node.Attributes[attribName];
+            xmlAtt.Value = value;
+            node.Attributes?.Append(xmlAtt);
+        }
+
+        private void SetColors()
+        {
+            FlatAppearance.BorderColor = BackColor;
+            if (IsHeaderButton)
+            {
+                BackColor = ClipsConfig.HeaderButtonColor;
+                ForeColor = ClipsConfig.HeaderFontColor;
+            }
+            else
+            {
+                BackColor = ClipsConfig.ClipsRowBackColor;
+                ForeColor = ClipsConfig.ClipsFontColor;
+            }
+        }
+
+        private void Button_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (ButtonType != ButtonType.Clip || e.KeyCode != Keys.Delete) return;
+            if (Parent is ClipPanel cp)
+                cp.DeleteClip(this);
+            else if (Parent is ClipPinnedPanel pp)
+                pp.DeleteClip(this);
+        }
+
+        private void ConfigChanged()
+        {
+            if (!IsDisposed)
+            {
+                SetColors();
+                CalculateSize();
+            }
+        }
+
+        public event ClipButtonClickedHandler OnClipButtonClicked;
     }
 }

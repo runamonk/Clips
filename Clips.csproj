@@ -84,19 +84,19 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\Shared_Misc\HotKeys\HotKeys\HotKey.cs">
-      <Link>HotKeys\HotKey.cs</Link>
+      <Link>Shared\HotKey.cs</Link>
     </Compile>
     <Compile Include="..\Shared_Misc\HotKeys\HotKeys\ModifierKey.cs">
-      <Link>HotKeys\ModifierKey.cs</Link>
+      <Link>Shared\ModifierKey.cs</Link>
     </Compile>
     <Compile Include="..\Shared_Misc\HotKeys\HotKeys\NativeMethods.cs">
-      <Link>HotKeys\NativeMethods.cs</Link>
+      <Link>Shared\NativeMethods.cs</Link>
     </Compile>
     <Compile Include="..\Shared_Misc\Utility.cs">
-      <Link>Utility.cs</Link>
+      <Link>Shared\Utility.cs</Link>
     </Compile>
     <Compile Include="..\Shared_Misc\WindowTracker.cs">
-      <Link>WindowTracker.cs</Link>
+      <Link>Shared\WindowTracker.cs</Link>
     </Compile>
     <Compile Include="Controls\BasePanel.cs">
       <SubType>Component</SubType>
@@ -179,12 +179,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="..\Shared_Misc\HotKeys\HotKeys\HotKey.ico">
-      <Link>HotKeys\HotKey.ico</Link>
-    </Content>
-    <Content Include="..\Shared_Misc\HotKeys\HotKeys\HotKey.png">
-      <Link>HotKeys\HotKey.png</Link>
-    </Content>
     <Content Include="zclips.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -199,10 +193,6 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="..\Shared_Misc\HotKeys\HotKeys\Properties\">
-      <Link>HotKeys\Properties</Link>
-    </Folder>
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
