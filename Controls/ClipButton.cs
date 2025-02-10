@@ -260,7 +260,16 @@ namespace Clips.Controls
             if (!File.Exists(fileName)) return;
             FileName = fileName;
             XmlDocument doc = new XmlDocument();
-            doc.Load(fileName);
+            try
+            {
+                doc.Load(fileName);
+            }
+            catch
+            {
+                File.Delete(fileName);
+                return;
+            }
+
             XmlNode data = doc.DocumentElement?.SelectSingleNode("/DATA");
             string type = data?.Attributes?["TYPE"]?.InnerText;
 
